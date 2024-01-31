@@ -29,7 +29,7 @@ namespace Xalise.Interop.HL7.Core
         /// <param name="description">Description du type de la donnée.</param>
         /// <param name="maxLength">Longueur maximale autorisée.</param>
         /// <param name="usage">Condition d'usage de la donnée.</param>
-        /// <param name="codeTable">Code de la table de donnée associée</param>
+        /// <param name="codeTable">Code de la table de donnée associée.</param>
         public AbstractType(string description, int maxLength, EnumDataUsage usage, int codeTable)
         {
             this._description   = description;
