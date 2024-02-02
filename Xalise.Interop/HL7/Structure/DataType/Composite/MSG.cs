@@ -38,7 +38,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// MSG.1 - Message Code.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ID MessageCode
         {
             get
@@ -49,7 +49,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ID)this[1];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -62,7 +62,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[1] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -72,7 +72,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// MSG.2 - Trigger Event.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ID TriggerEvent
         {
             get
@@ -83,7 +83,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ID)this[2];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -96,7 +96,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[2] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -106,7 +106,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// MSG.3 - Message Structure.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ID MessageStructure
         {
             get
@@ -117,7 +117,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ID)this[3];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -130,7 +130,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[3] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }

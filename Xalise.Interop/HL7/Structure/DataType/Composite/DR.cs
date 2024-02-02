@@ -35,7 +35,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// DR.1 - Range Start Date/Time.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public TS RangeStartDateTime
         {
             get
@@ -46,7 +46,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (TS)this[1];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -59,7 +59,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[1] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -69,7 +69,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// DR.2 - Range End Date/Time.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public TS RangeEndDateTime
         {
             get
@@ -80,7 +80,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (TS)this[2];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -93,7 +93,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[2] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }

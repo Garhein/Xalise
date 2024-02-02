@@ -58,7 +58,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.1 - Id Number.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST IdNumber
         {
             get
@@ -69,7 +69,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[1];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -82,7 +82,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[1] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -92,7 +92,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.2 - Family Name.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public FN FamilyName
         {
             get
@@ -103,7 +103,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (FN)this[2];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -116,7 +116,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[2] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -126,7 +126,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.3 - Given Name.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST GivenName
         {
             get
@@ -137,7 +137,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[3];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -150,7 +150,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[3] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -160,7 +160,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.4 - Second And Further Given Names Or Initials Thereof.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST SecondAndFurtherGivennamesOrInitialsThereof
         {
             get
@@ -171,7 +171,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[4];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -184,7 +184,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[4] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -194,7 +194,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.5 - Suffix.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST Suffix
         {
             get
@@ -205,7 +205,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[5];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -218,7 +218,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[5] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -228,7 +228,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.6 - Prefix.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST Prefix
         {
             get
@@ -239,7 +239,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[6];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -252,7 +252,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[6] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -262,7 +262,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.7 - Degree.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public IS Degree
         {
             get
@@ -273,7 +273,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (IS)this[7];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -286,7 +286,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[7] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -296,7 +296,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.8 - Source Table.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public IS SourceTable
         {
             get
@@ -307,7 +307,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (IS)this[8];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -320,7 +320,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[8] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -330,7 +330,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.9 - Assigning Authority.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public HD AssigningAuthority
         {
             get
@@ -341,7 +341,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (HD)this[9];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -354,7 +354,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[9] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -364,7 +364,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.10 - Name Type Code.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ID NameTypeCode
         {
             get
@@ -375,7 +375,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ID)this[10];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -388,7 +388,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[10] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -398,7 +398,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.11 - Identifier Check Digit.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST IdentifierCheckDigit
         {
             get
@@ -409,7 +409,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[11];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -422,7 +422,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[11] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -432,7 +432,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.12 - Check Digit Scheme.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ID CheckDigitScheme
         {
             get
@@ -443,7 +443,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ID)this[12];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -456,7 +456,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[12] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -466,7 +466,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.13 - Identifier Type Code.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ID IdentifierTypeCode
         {
             get
@@ -477,7 +477,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ID)this[13];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -490,7 +490,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[13] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -500,7 +500,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.14 - Assigning Facility.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public HD AssigningFacility
         {
             get
@@ -511,7 +511,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (HD)this[14];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -524,7 +524,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[14] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -534,7 +534,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.15 - Name Representation Code.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ID NameRepresentationCode
         {
             get
@@ -545,7 +545,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ID)this[15];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -558,7 +558,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[15] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -568,7 +568,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.16 - Name Context.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public CE NameContext
         {
             get
@@ -579,7 +579,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (CE)this[16];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -592,7 +592,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[16] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -602,7 +602,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.17 - Name Validity Range.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public DR NameValidityRange
         {
             get
@@ -613,7 +613,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (DR)this[17];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -626,7 +626,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[17] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -636,7 +636,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.18 - Name Assembly Order.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ID NameAssemblyOrder
         {
             get
@@ -647,7 +647,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ID)this[18];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -660,7 +660,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[18] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -670,7 +670,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.19 - Effective Date.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public TS EffectiveDate
         {
             get
@@ -681,7 +681,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (TS)this[19];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -694,7 +694,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[19] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -704,7 +704,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.20 - Expiration Date.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public TS ExpirationDate
         {
             get
@@ -715,7 +715,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (TS)this[20];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -728,7 +728,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[20] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -738,7 +738,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.21 - Professional Suffix.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST ProfessionalSuffix
         {
             get
@@ -749,7 +749,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[21];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -762,7 +762,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[21] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -772,7 +772,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.22 - Assigning Jurisdiction.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public CWE AssigningJurisdiction
         {
             get
@@ -783,7 +783,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (CWE)this[22];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -796,7 +796,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[22] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -806,7 +806,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// XCN.23 - Assigning Agency Or Department.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public CWE AssigningAgencyOrDepartment
         {
             get
@@ -817,7 +817,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (CWE)this[23];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -830,7 +830,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[23] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }

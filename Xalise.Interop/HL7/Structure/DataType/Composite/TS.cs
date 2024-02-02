@@ -37,7 +37,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// TS.1 - Time.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public DTM Time
         {
             get
@@ -48,7 +48,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (DTM)this[1];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -61,7 +61,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[1] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -71,7 +71,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// TS.2 - Degree Of Precision.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ID DegreeOfPrecision
         {
             get
@@ -82,7 +82,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ID)this[2];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -95,7 +95,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[2] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }

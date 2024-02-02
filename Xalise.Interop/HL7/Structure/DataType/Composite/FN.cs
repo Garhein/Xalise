@@ -39,7 +39,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// FN.1 - Surname.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST Surname
         {
             get
@@ -50,7 +50,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[1];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -63,7 +63,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[1] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -73,7 +73,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// FN.2 - Own Surname Prefix.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST OwnSurnamePrefix
         {
             get
@@ -84,7 +84,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[2];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -97,7 +97,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[2] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -107,7 +107,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// FN.3 - Own Surname.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST OwnSurname
         {
             get
@@ -118,7 +118,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[3];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -131,7 +131,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[3] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -141,7 +141,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// FN.4 - Surname Prefix From Partner/Spouse.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST SurnamePrefixFromPartnerSpouse
         {
             get
@@ -152,7 +152,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[4];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -165,7 +165,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[4] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -175,7 +175,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// FN.5 - Surname From Partner/Spouse.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST SurnameFromPartnerSpouse
         {
             get
@@ -186,7 +186,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[5];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -199,7 +199,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[5] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }

@@ -39,7 +39,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// EI.1 - Entity Identifier.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST EntityIdentifier
         {
             get
@@ -50,7 +50,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[1];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -63,7 +63,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[1] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -73,7 +73,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// EI.2 - Namespace Id.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public IS NamespaceId
         {
             get
@@ -84,7 +84,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (IS)this[2];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -97,7 +97,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[2] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -107,7 +107,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// EI.3 - Universal Id.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ST UniversalId
         {
             get
@@ -118,7 +118,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ST)this[3];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -131,7 +131,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[3] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -141,7 +141,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// EI.4 - Universal Id Type.
         /// </summary>
-        /// <exception cref="DataTypeException">Si erreur à l'accès au composant.</exception>
+        /// <exception cref="InteropHL7Exception">Si erreur à l'accès au composant.</exception>
         public ID UniversalIdType
         {
             get
@@ -152,7 +152,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     ret = (ID)this[4];
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }
@@ -165,7 +165,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
                 {
                     this[4] = value;
                 }
-                catch (DataTypeException)
+                catch (InteropHL7Exception)
                 {
                     throw;
                 }

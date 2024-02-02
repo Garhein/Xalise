@@ -34,7 +34,7 @@ namespace Xalise.Interop.HL7.Core
         {
             if (!typeof(IType).IsAssignableFrom(type))
             {
-                throw new DataTypeException($"Le type '{type.FullName}' n'hérite pas de '{typeof(IType).FullName}'.");
+                throw new InteropHL7Exception($"Le type '{type.FullName}' n'hérite pas de '{typeof(IType).FullName}'.");
             }
 
             this._repetitions       = new List<IType>();
@@ -122,7 +122,7 @@ namespace Xalise.Interop.HL7.Core
                 return this._codeTable;
             }
         }
-    
+
         /// <summary>
         /// Récupère une répétition du champ.
         /// </summary>
@@ -131,7 +131,7 @@ namespace Xalise.Interop.HL7.Core
         /// </remarks>
         /// <param name="index">Index de la répétition à récupérer.</param>
         /// <returns>Répétition de type <see cref="IType"/>.</returns>
-        /// <exception cref="DataTypeException">Si <paramref name="index"/> est inférieur ou égal à 0 ou qu'il est hors bornes.</exception>
+        /// <exception cref="InteropHL7Exception">Si <paramref name="index"/> est inférieur ou égal à 0 ou qu'il est hors bornes.</exception>
         public IType this[int index]
         {
             get
@@ -140,7 +140,7 @@ namespace Xalise.Interop.HL7.Core
                 {
                     if (index <= 0)
                     {
-                        throw new DataTypeException($"L'accès à une répétition d'un champ doit être réalisé à partir de l'index 1 (index utilisé : {index}).");
+                        throw new InteropHL7Exception($"L'accès à une répétition d'un champ doit être réalisé à partir de l'index 1 (index utilisé : {index}).");
                     }
                     else
                     {
@@ -149,7 +149,7 @@ namespace Xalise.Interop.HL7.Core
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    throw new DataTypeException($"La répétition à la position {index} n'existe pas.");
+                    throw new InteropHL7Exception($"La répétition à la position {index} n'existe pas.");
                 }
             }
         }

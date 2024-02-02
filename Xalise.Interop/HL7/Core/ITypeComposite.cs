@@ -5,7 +5,7 @@
     /// </summary>
     /// <remarks>
     /// Un type composite contient plusieurs composants.<br/>
-    /// Exemples : CE.
+    /// Exemples : <seealso cref="Structure.DataType.Composite.CE"/>.
     /// </remarks>
     public interface ITypeComposite
     {
@@ -22,7 +22,7 @@
         /// </remarks>
         /// <param name="index">Index du composant à affecter ou récupérer.</param>
         /// <returns>Composant de type <see cref="IType"/>.</returns>
-        /// <exception cref="DataTypeException">Si <paramref name="index"/> est inférieur ou égal à 0 où que le composant n'existe pas pour l'index spécifié.</exception>
+        /// <exception cref="InteropHL7Exception">Si <paramref name="index"/> est inférieur ou égal à 0 où que le composant n'existe pas pour l'index spécifié.</exception>
         IType this[int index] { get; set; }
     }
 }

@@ -3,26 +3,26 @@
 namespace Xalise.Interop.HL7.Exceptions
 {
     /// <summary>
-    /// Exceptions levées/interceptées au niveau de la gestion des types de données.
+    /// Exceptions levées/interceptées au niveau de la gestion d'un message HL7.
     /// </summary>
-    public class DataTypeException : Exception
+    public class InteropHL7Exception : Exception
     {
         /// <summary>
         /// Constructeur vide.
         /// </summary>
-        public DataTypeException() { }
+        public InteropHL7Exception() { }
 
         /// <summary>
         /// Constructeur.
         /// </summary>
         /// <param name="message">Message de l'exception.</param>
-        public DataTypeException(string message) : base(message) { }
+        public InteropHL7Exception(string message) : base(message) { }
 
         /// <summary>
         /// Constructeur.
         /// </summary>
         /// <param name="message">Message de l'exception.</param>
         /// <param name="inner">Exception interne.</param>
-        public DataTypeException(string message, Exception inner) : base(message, inner) { }
+        public InteropHL7Exception(string message, Exception inner) : base(message, inner) { }
     }
 }

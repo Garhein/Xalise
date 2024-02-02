@@ -33,7 +33,7 @@ namespace Xalise.Interop.HL7.Core
         {
             if (nbComponents <= 0)
             {
-                throw new DataTypeException($"Le nombre de composant du type '{this.TypeName}' n'est pas valide.");
+                throw new InteropHL7Exception($"Le nombre de composant du type '{this.TypeName}' n'est pas valide.");
             }
 
             this._components = new IType[nbComponents];
@@ -58,7 +58,7 @@ namespace Xalise.Interop.HL7.Core
         /// </remarks>
         /// <param name="index">Index du composant à affecter ou récupérer.</param>
         /// <returns>Composant de type <see cref="IType"/>.</returns>
-        /// <exception cref="DataTypeException">Si <paramref name="index"/> est inférieur ou égal à 0 où que le composant n'existe pas pour l'index spécifié.</exception>
+        /// <exception cref="InteropHL7Exception">Si <paramref name="index"/> est inférieur ou égal à 0 où que le composant n'existe pas pour l'index spécifié.</exception>
         public IType this[int index]
         {
             get
@@ -67,7 +67,7 @@ namespace Xalise.Interop.HL7.Core
                 {
                     if (index < 1)
                     {
-                        throw new DataTypeException($"L'accès à un composant du type '{this.TypeName}' doit être réalisé à partir de l'index 1 (index utilisé : {index}).");
+                        throw new InteropHL7Exception($"L'accès à un composant du type '{this.TypeName}' doit être réalisé à partir de l'index 1 (index utilisé : {index}).");
                     }
                     else
                     {
@@ -76,7 +76,7 @@ namespace Xalise.Interop.HL7.Core
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
-                    throw new DataTypeException($"Le composant à la position {index - 1} n'existe pas pour le type '{this.TypeName}'.", ex);
+                    throw new InteropHL7Exception($"Le composant à la position {index - 1} n'existe pas pour le type '{this.TypeName}'.", ex);
                 }
             }
             set
@@ -85,7 +85,7 @@ namespace Xalise.Interop.HL7.Core
                 {
                     if (index < 1)
                     {
-                        throw new DataTypeException($"L'accès à un composant du type '{this.TypeName}' doit être réalisé à partir de l'index 1 (index utilisé : {index}).");
+                        throw new InteropHL7Exception($"L'accès à un composant du type '{this.TypeName}' doit être réalisé à partir de l'index 1 (index utilisé : {index}).");
                     }
                     else
                     {
@@ -94,7 +94,7 @@ namespace Xalise.Interop.HL7.Core
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
-                    throw new DataTypeException($"Le composant à la position {index - 1} n'existe pas pour le type '{this.TypeName}'.", ex);
+                    throw new InteropHL7Exception($"Le composant à la position {index - 1} n'existe pas pour le type '{this.TypeName}'.", ex);
                 }
             }
         }
