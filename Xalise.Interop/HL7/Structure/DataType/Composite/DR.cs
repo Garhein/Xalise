@@ -11,21 +11,10 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
     [Serializable]
     public class DR : AbstractTypeComposite
     {
-        /// <summary>
-        /// Constructeur.
-        /// </summary>
-        /// <param name="description">Description du type de la donnée.</param>
-        /// <param name="maxLength">Longueur maximale autorisée.</param>
-        /// <param name="usage">Condition d'usage de la donnée.</param>
+        /// <inheritdoc/>
         public DR(string description, int maxLength, EnumDataUsage usage) : this(description, maxLength, usage, 0) { }
 
-        /// <summary>
-        /// Constructeur.
-        /// </summary>
-        /// <param name="description">Description du type de la donnée.</param>
-        /// <param name="maxLength">Longueur maximale autorisée.</param>
-        /// <param name="usage">Condition d'usage de la donnée.</param>
-        /// <param name="codeTable">Code de la table de donnée associée</param>
+        /// <inheritdoc/>
         public DR(string description, int maxLength, EnumDataUsage usage, int codeTable) : base(2, description, maxLength, usage, codeTable)
         {
             this[1] = new TS("Range Start Date/Time", 26, EnumDataUsage.OPTIONAL);

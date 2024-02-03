@@ -19,6 +19,14 @@ namespace Xalise.Interop.HL7.Core
         private int             _maxRepetitions;
         private int             _codeTable;
 
+        /// <summary>
+        /// Constructeur.
+        /// </summary>
+        /// <param name="type">Type du champ.</param>
+        /// <param name="description">Description du champ.</param>
+        /// <param name="maxLength">Longueur maximale de chaque répétition.</param>
+        /// <param name="maxRepetitions">Nombre maximum de répétitions autorisées.</param>
+        /// <param name="usage">Condition d'usage du champ.</param>
         public SegmentItem(Type type, string description, int maxLength, int maxRepetitions, EnumDataUsage usage) : this(type, description, maxLength, maxRepetitions, usage, 0) { }
 
         /// <summary>
@@ -30,6 +38,7 @@ namespace Xalise.Interop.HL7.Core
         /// <param name="maxRepetitions">Nombre maximum de répétitions autorisées.</param>
         /// <param name="usage">Condition d'usage du champ.</param>
         /// <param name="codeTable">Code de la table de donnée associée.</param>
+        /// <exception cref="InteropHL7Exception">Si <paramref name="type"/> n'hérite pas de <seealso cref="IType"/>.</exception>
         public SegmentItem(Type type, string description, int maxLength, int maxRepetitions, EnumDataUsage usage, int codeTable)
         {
             if (!typeof(IType).IsAssignableFrom(type))

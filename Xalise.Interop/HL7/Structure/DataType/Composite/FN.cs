@@ -12,21 +12,10 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
     [Serializable]
     public class FN : AbstractTypeComposite
     {
-        /// <summary>
-        /// Constructeur.
-        /// </summary>
-        /// <param name="description">Description du type de la donnée.</param>
-        /// <param name="maxLength">Longueur maximale autorisée.</param>
-        /// <param name="usage">Condition d'usage de la donnée.</param>
+        /// <inheritdoc/>
         public FN(string description, int maxLength, EnumDataUsage usage) : this(description, maxLength, usage, 0) { }
 
-        /// <summary>
-        /// Constructeur.
-        /// </summary>
-        /// <param name="description">Description du type de la donnée.</param>
-        /// <param name="maxLength">Longueur maximale autorisée.</param>
-        /// <param name="usage">Condition d'usage de la donnée.</param>
-        /// <param name="codeTable">Code de la table de donnée associée</param>
+        /// <inheritdoc/>
         public FN(string description, int maxLength, EnumDataUsage usage, int codeTable) : base(5, description, maxLength, usage, codeTable)
         {
             this[1] = new ST("Surname", 50, EnumDataUsage.REQUIRED);

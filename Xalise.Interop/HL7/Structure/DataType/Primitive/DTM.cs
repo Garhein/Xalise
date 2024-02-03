@@ -14,21 +14,10 @@ namespace Xalise.Interop.HL7.Structure.DataType.Primitive
     [Serializable]
     public class DTM : AbstractTypePrimitive
     {
-        /// <summary>
-        /// Constructeur.
-        /// </summary>
-        /// <param name="description">Description du type de la donnée.</param>
-        /// <param name="maxLength">Longueur maximale autorisée.</param>
-        /// <param name="usage">Condition d'usage de la donnée.</param>
+        /// <inheritdoc/>
         public DTM(string description, int maxLength, EnumDataUsage usage) : this(description, maxLength, usage, 0) { }
 
-        /// <summary>
-        /// Constructeur.
-        /// </summary>
-        /// <param name="description">Description du type de la donnée.</param>
-        /// <param name="maxLength">Longueur maximale autorisée.</param>
-        /// <param name="usage">Condition d'usage de la donnée.</param>
-        /// <param name="codeTable">Code de la table de donnée associée</param>
+        /// <inheritdoc/>
         public DTM(string description, int maxLength, EnumDataUsage usage, int codeTable) : base(description, maxLength, usage, codeTable) { }
     }
 }

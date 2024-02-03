@@ -38,9 +38,7 @@ namespace Xalise.Interop.HL7.Core
             this._codeTable     = codeTable;
         }
 
-        /// <summary>
-        /// Récupère le nom du type de donnée.
-        /// </summary>
+        /// <inheritdoc/>
         public string TypeName
         {
             get

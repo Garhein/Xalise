@@ -31,9 +31,7 @@ namespace Xalise.Interop.HL7.Core
             this._value = string.Empty;
         }
 
-        /// <summary>
-        /// Affecte et récupère la valeur du type de donnée.
-        /// </summary>
+        /// <inheritdoc/>
         public string Value
         {
             get

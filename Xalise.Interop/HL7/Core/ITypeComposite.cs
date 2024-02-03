@@ -1,4 +1,6 @@
-﻿namespace Xalise.Interop.HL7.Core
+﻿using Xalise.Interop.HL7.Exceptions;
+
+namespace Xalise.Interop.HL7.Core
 {
     /// <summary>
     /// Déclaration des comportements communs aux types de données composites.
