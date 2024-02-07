@@ -106,6 +106,46 @@ namespace Xalise.Interop.HL7.Core
             return this._items[fieldNumber - 1].Repetitions.Count;
         }
 
+        /// <inheritdoc/>
+        public string GetFieldDescription(int fieldNumber)
+        {
+            this.CheckFieldNumber(fieldNumber);
+
+            return this._items[fieldNumber - 1].Description;
+        }
+
+        /// <inheritdoc/>
+        public EnumDataUsage GetFieldUsage(int fieldNumber)
+        {
+            this.CheckFieldNumber(fieldNumber);
+
+            return this._items[fieldNumber - 1].Usage;
+        }
+
+        /// <inheritdoc/>
+        public int GetFieldMaxLength(int fieldNumber)
+        {
+            this.CheckFieldNumber(fieldNumber);
+
+            return this._items[fieldNumber - 1].MaxLength;
+        }
+
+        /// <inheritdoc/>
+        public int GetFieldMaxRepetitions(int fieldNumber)
+        {
+            this.CheckFieldNumber(fieldNumber);
+
+            return this._items[fieldNumber - 1].MaxRepetitions;
+        }
+
+        /// <inheritdoc/>
+        public int GetFieldCodeTable(int fieldNumber)
+        {
+            this.CheckFieldNumber(fieldNumber);
+
+            return this._items[fieldNumber - 1].CodeTable;
+        }
+
         /// <summary>
         /// Vérifie si le champ auquel on souhaite accéder est valide.
         /// </summary>

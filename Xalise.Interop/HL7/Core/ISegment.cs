@@ -1,4 +1,5 @@
-﻿using Xalise.Interop.HL7.Exceptions;
+﻿using Xalise.Interop.HL7.Enums;
+using Xalise.Interop.HL7.Exceptions;
 
 namespace Xalise.Interop.HL7.Core
 {
@@ -35,6 +36,64 @@ namespace Xalise.Interop.HL7.Core
         /// <returns>Instance de <seealso cref="IType"/> représentant la répétition.</returns>
         IType GetField(int fieldNumber, int repNumber);
 
+        /// <summary>
+        /// Récupère le nombre de répétition d'un champ.
+        /// </summary>
+        /// <remarks>
+        /// Les champs sont numérotés à partir de 1.
+        /// </remarks>
+        /// <param name="fieldNumber">Numéro du champ.</param>
+        /// <returns>Nombre de répétition.</returns>
         int GetTotalFieldRepetitions(int fieldNumber);
+
+        /// <summary>
+        /// Récupère la description d'un champ.
+        /// </summary>
+        /// <remarks>
+        /// Les champs sont numérotés à partir de 1.
+        /// </remarks>
+        /// <param name="fieldNumber">Numéro du champ.</param>
+        /// <returns>Description du champ.</returns>
+        string GetFieldDescription(int fieldNumber);
+
+        /// <summary>
+        /// Récupère l'usage d'un champ.
+        /// </summary>
+        /// <remarks>
+        /// Les champs sont numérotés à partir de 1.
+        /// </remarks>
+        /// <param name="fieldNumber">Numéro du champ.</param>
+        /// <returns><seealso cref="EnumDataUsage"/> représentant l'usage du champ.</returns>
+        EnumDataUsage GetFieldUsage(int fieldNumber);
+
+        /// <summary>
+        /// Récupère la longueur maximale de chaque répétition d'un champ.
+        /// </summary>
+        /// <remarks>
+        /// Les champs sont numérotés à partir de 1.
+        /// </remarks>
+        /// <param name="fieldNumber">Numéro du champ.</param>
+        /// <returns>Longueur maximal de chaque répétition.</returns>
+        int GetFieldMaxLength(int fieldNumber);
+
+        /// <summary>
+        /// Récupère le nombre maximum de répétition d'un champ.
+        /// </summary>
+        /// <remarks>
+        /// Les champs sont numérotés à partir de 1.
+        /// </remarks>
+        /// <param name="fieldNumber">Numéro du champ.</param>
+        /// <returns>Nombre maximum de répétition.</returns>
+        int GetFieldMaxRepetitions(int fieldNumber);
+
+        /// <summary>
+        /// Récupère le code de la table de donnée associée à un champ.
+        /// </summary>
+        /// <remarks>
+        /// Les champs sont numérotés à partir de 1.
+        /// </remarks>
+        /// <param name="fieldNumber">Numéro du champ.</param>
+        /// <returns>Code de la table de donnée.</returns>
+        int GetFieldCodeTable(int fieldNumber);
     }
 }

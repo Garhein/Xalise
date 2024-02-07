@@ -50,7 +50,7 @@ namespace Xalise.Interop.HL7.Core
         /// <summary>
         /// Récupère la description du type de la donnée.
         /// </summary>
-        public string Description
+        protected string Description
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Xalise.Interop.HL7.Core
         /// <summary>
         /// Récupère la longueur maximale autorisée.
         /// </summary>
-        public int MaxLength
+        protected int MaxLength
         {
             get
             {
@@ -72,7 +72,7 @@ namespace Xalise.Interop.HL7.Core
         /// <summary>
         /// Récupère la condition d'usage de la donnée.
         /// </summary>
-        public EnumDataUsage Usage
+        protected EnumDataUsage Usage
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Xalise.Interop.HL7.Core
         /// <summary>
         /// Récupère le code de la table de donnée associée.
         /// </summary>
-        public int CodeTable
+        protected int CodeTable
         {
             get
             {
