@@ -154,7 +154,7 @@ namespace Xalise.Interop.HL7.Core
                     }
                     else
                     {
-                        return this._repetitions[index - 0];
+                        return this._repetitions[index - 1];
                     }
                 }
                 catch (ArgumentOutOfRangeException ex)
@@ -168,9 +168,16 @@ namespace Xalise.Interop.HL7.Core
         /// Convertit la liste des répétitions en un tableau de <see cref="IType"/>.
         /// </summary>
         /// <returns>Tableau des répétitions du champ.</returns>
-        public IType[] ConvertRepetitionsToITypeArray()
+        public FieldType[] ConvertRepetitionsToITypeArray<FieldType>()
         {
-            return this._repetitions.ToArray();
+            FieldType[] ret = new FieldType[this._repetitions.Count];
+
+            for (int i = 0; i < this._repetitions.Count; i++)
+            {
+                ret[i] = (FieldType)this._repetitions[i];
+            }
+
+            return ret;
         }
     }
 }
