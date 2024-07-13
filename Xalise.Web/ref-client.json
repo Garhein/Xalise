@@ -1,0 +1,22 @@
+[
+  {
+    "Id": 1,
+    "RaisonSociale": "Xalise",
+    "EstGestionnaire": true
+  },
+  {
+    "Id": 2,
+    "RaisonSociale": "AP-HP",
+    "EstGestionnaire": false
+  },
+  {
+    "Id": 3,
+    "RaisonSociale": "Fondation Sant\u00E9 Service",
+    "EstGestionnaire": false
+  },
+  {
+    "Id": 4,
+    "RaisonSociale": "Croix-Rouge Fran\u00E7aise",
+    "EstGestionnaire": false
+  }
+]

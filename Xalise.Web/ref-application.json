@@ -1,0 +1,18 @@
+[
+  {
+    "Id": 1,
+    "Nom": "Xalise Project"
+  },
+  {
+    "Id": 2,
+    "Nom": "Xalise API"
+  },
+  {
+    "Id": 3,
+    "Nom": "Xalise MQ"
+  },
+  {
+    "Id": 4,
+    "Nom": "Xalise CRM"
+  }
+]

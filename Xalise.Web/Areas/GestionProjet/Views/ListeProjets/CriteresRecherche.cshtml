@@ -1,0 +1,67 @@
+﻿@using Xalise.Web.Areas.GestionProjet.Models
+@model ListeProjetsCriteresRechercheModel
+
+<form asp-area="" asp-controller="" asp-action="" method="post">
+    <div class="row">
+        <div class="col-12 col-md-5 col-lg-5">
+            <div class="row mb-2">
+                <label asp-for="Client" class="col-12 col-md-4 col-xl-3 mb-1 mb-lg-0"></label>
+                <div class="col-12 col-md-8 col-xl-9">
+                    <input asp-for="Client" class="form-control form-control-sm" />
+                    <input asp-for="IdClient" />
+                </div>
+            </div>
+            <div class="row mb-2">
+                <label asp-for="RespProjet" class="col-12 col-md-4 col-xl-3 mb-1 mb-lg-0"></label>
+                <div class="col-12 col-md-8 col-xl-9">
+                    <input asp-for="RespProjet" class="form-control form-control-sm" />
+                    <input asp-for="IdRespProjet" />
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12 col-md-8 offset-md-4 col-xl-9 offset-xl-3">
+                    <div class="form-check ps-0">
+                        <input asp-for="ProjetInterne" />
+                        <label asp-for="ProjetInterne"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-5 col-lg-5">
+            <div class="row mb-2">
+                <label asp-for="IdApplication" class="col-12 col-md-4 col-xl-3 col-xxl-2 mb-1 mb-lg-0"></label>
+                <div class="col-12 col-md-8 col-xl-9 col-xxl-10">
+                    <select asp-for="IdApplication" asp-items="Model.ListeApplication" class="form-select form-select-sm"></select>
+                </div>
+            </div>
+            <div class="row mb-3 mb-md-2">
+                <label asp-for="IdTypeDeveloppement" class="col-12 col-md-4 col-xl-3 col-xxl-2 mb-1 mb-lg-0"></label>
+                <div class="col-12 col-md-8 col-xl-9 col-xxl-10">
+                    <select asp-for="IdTypeDeveloppement" asp-items="Model.ListeTypeDeveloppement" class="form-select form-select-sm"></select>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-2 px-md-0 px-xl-3">
+            <div class="row">
+                <div class="col-12 mb-2">
+                    <xalise-button size="eBootstrapButtonSize.btn_sm"
+                                   style="eBootstrapButtonStyle.btn_primary"
+                                   icon="eFontAwesomeIcon.magnifying_glass"
+                                   icon-style="eFontAwesomeIconStyle.solid"
+                                   css-classes="w-100"
+                                   title="Rechercher" />
+                </div>
+                <div class="col-12">
+                    <xalise-button size="eBootstrapButtonSize.btn_sm"
+                                   style="eBootstrapButtonStyle.btn_secondary"
+                                   icon="eFontAwesomeIcon.trash_can"
+                                   icon-style="eFontAwesomeIconStyle.solid"
+                                   css-classes="w-100"
+                                   title="Vider les filtres"
+                                   onclick="Xalise_ViderFormulaire(this)" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
