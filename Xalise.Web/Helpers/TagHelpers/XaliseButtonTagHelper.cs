@@ -39,8 +39,10 @@ namespace Xalise.Web.Helpers.TagHelpers
             
             if (cssClasses.IsNotNullOrWhiteSpace())
             {
-                cssClasses += " btn";
+                cssClasses += " ";
             }
+
+            cssClasses += "btn";
             
             if (this.Size.HasValue)
             {
