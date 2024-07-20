@@ -19,5 +19,18 @@ namespace Xalise.Core.Entites.Technique
             this.Id     = 0;
             this.Nom    = string.Empty;
         }
+
+        /// <summary>
+        /// Constructeur.
+        /// </summary>
+        /// <param name="application">Application à partir duquel instancier l'objet.</param>
+        public ApplicationDTO(Application application) : this()
+        {
+            if (application != null)
+            {
+                this.Id     = application.Id;
+                this.Nom    = application.Nom;
+            }
+        }
     }
 }

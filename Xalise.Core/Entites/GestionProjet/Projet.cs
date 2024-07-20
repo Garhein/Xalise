@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Xalise.Core.Entites.GestionProjet
 {
@@ -19,6 +20,7 @@ namespace Xalise.Core.Entites.GestionProjet
         public int                  ClientId { get; set; }
         public int                  ApplicationId { get; set; }
         public int                  TypeDeveloppementId { get; set; }
+        public bool                 EstAnnule { get; set; }
 
         /// <summary>
         /// Constructeur par défaut.
@@ -36,6 +38,7 @@ namespace Xalise.Core.Entites.GestionProjet
             this.ClientId               = 0;
             this.ApplicationId          = 0;
             this.TypeDeveloppementId    = 0;
+            this.EstAnnule              = false;
         }
     }
 }
