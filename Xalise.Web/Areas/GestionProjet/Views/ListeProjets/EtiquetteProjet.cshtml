@@ -1,0 +1,18 @@
+﻿@using Xalise.Core.Extensions
+@using Xalise.Core.Entites.GestionProjet
+@using Xalise.Web.Areas.GestionProjet.Models
+@model ProjetDTO
+
+<div class="container-fluid">
+    <div class="row border border-primary rounded py-1 x-block-project-indicators">
+        <div class="col-12">@Model.Intitule</div>
+        <div class="col-4 fst-italic">% réalisation</div>
+        <div class="col-2 fst-italic">@Model.PourcentageRealisation</div>
+        <div class="col-4 fst-italic">Tps estimé</div>
+        <div class="col-2 fst-italic">@Model.TempsEstime</div>
+        <div class="col-4 fst-italic">% écart</div>
+        <div class="col-2 fst-italic">@Model.PourcentageEcart</div>
+        <div class="col-4 fst-italic">Tps réel</div>
+        <div class="col-2 fst-italic">@Model.TempsReel</div>
+    </div>
+</div>

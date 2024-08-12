@@ -11,6 +11,8 @@ namespace Xalise.Web.Enums
         arrow_rotate_left,
         [CssClassName("fa-check")]
         check,
+        [CssClassName("fa-circle-info")]
+        circle_info,
         [CssClassName("fa-eye")]
         eye,
         [CssClassName("fa-lock")]

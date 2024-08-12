@@ -24,6 +24,14 @@ namespace Xalise.Web.Areas.GestionProjet.Models
         public List<SelectListItem> ListeTypeDeveloppement {  get; set; }
         [DisplayName("Type")]
         public int?                 IdTypeDeveloppement { get; set; }
+        [DisplayName("Non commencé")]
+        public bool                 EstNonCommence { get; set; }
+        [DisplayName("En cours")]
+        public bool                 EstEnCours { get; set; }
+        [DisplayName("Terminé")]
+        public bool                 EstTermine { get; set; }
+        [DisplayName("Annulé")]
+        public bool                 EstAnnule { get; set; }
 
         /// <summary>
         /// Constructeur par défaut.
@@ -39,6 +47,10 @@ namespace Xalise.Web.Areas.GestionProjet.Models
             this.IdApplication          = null;
             this.ListeTypeDeveloppement = new List<SelectListItem>();
             this.IdTypeDeveloppement    = null;
+            this.EstNonCommence         = false;
+            this.EstEnCours             = false;
+            this.EstTermine             = false;
+            this.EstAnnule              = false;
         }
     }
 }

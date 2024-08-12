@@ -1,0 +1,63 @@
+﻿@using Xalise.Core.Extensions
+@using Xalise.Core.Entites.GestionProjet
+@using Xalise.Web.Areas.GestionProjet.Models
+@model ListeProjetsViewModel
+
+@if (Model.ListeProjets.IsEmpty())
+{
+    <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
+        <xalise-alert css-classes="mb-3" alert-style="alert_dark" icon="eFontAwesomeIcon.circle_info" icon-style="eFontAwesomeIconStyle.solid">
+            Aucun résultat n'a été trouvé pour les critères de recherche indiqués.
+        </xalise-alert>
+    </div>
+}
+else
+{
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center x-ui-pourc-2">
+                            <input type="checkbox" />
+                        </th>
+                        <th class="text-center x-ui-pourc-4"></th>
+                        <th>Intitulé</th>
+                        <th class="x-ui-pourc-15">Suivi par</th>
+                        <th class="x-ui-pourc-15">Client</th>
+                        <th class="x-ui-pourc-15">Application</th>
+                        <th class="x-ui-pourc-15">Type développement</th>
+                        <th class="text-center x-ui-pourc-2"></th>
+                        <th class="text-center x-ui-pourc-2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ProjetDTO dto in Model.ListeProjets)
+                    {
+                        <tr>
+                            <td class="text-center x-ui-pourc-2">
+                                <input type="checkbox" />
+                            </td>
+                            <td class="text-center x-ui-pourc-4"></td>
+                            <td>
+                                <partial name="EtiquetteProjet" model="dto" />
+
+                                <!--
+                                <span data-bs-toggle="tooltip" data-bs-placement="right" data-bs-html="true" data-bs-title="@Model.UTooltipPourcentageEcart(dto)">
+                                    @dto.Intitule
+                                </span>
+                                -->
+                            </td>
+                            <td class="x-ui-pourc-15"></td>
+                            <td class="x-ui-pourc-15">@dto.Client.RaisonSociale</td>
+                            <td class="x-ui-pourc-15">@dto.Application.Nom</td>
+                            <td class="x-ui-pourc-15">@dto.TypeDeveloppement.Nom</td>
+                            <td class="text-center x-ui-pourc-2"></td>
+                            <td class="text-center x-ui-pourc-2"></td>
+                        </tr>
+                    }
+                </tbody>
+        </table>
+        </div>
+    </div>
+}

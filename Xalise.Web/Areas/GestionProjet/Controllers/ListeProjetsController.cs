@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Xalise.Core.Entites.GestionProjet;
+using Xalise.Core.Entites.Individus;
 using Xalise.Core.Entites.Technique;
 using Xalise.Core.Extensions;
 using Xalise.Web.Areas.GestionProjet.Models;
@@ -25,169 +26,6 @@ namespace Xalise.Web.Areas.GestionProjet.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            /*
-            List<Client> listeClients = new List<Client>();
-
-            listeClients.Add(new Client
-            {
-                Id  = 1,
-                RaisonSociale   = "Xalise",
-                EstGestionnaire = true
-            });
-
-            listeClients.Add(new Client
-            {
-                Id  = 2,
-                RaisonSociale   = "AP-HP",
-                EstGestionnaire = false
-            });
-
-            listeClients.Add(new Client
-            {
-                Id  = 3,
-                RaisonSociale   = "Fondation Santé Service",
-                EstGestionnaire = false
-            });
-
-            listeClients.Add(new Client
-            {
-                Id  = 4,
-                RaisonSociale   = "Croix-Rouge Française",
-                EstGestionnaire = false
-            });
-
-            JsonHelper.WriteEntities<Client>(JsonHelper.CSTS_FILENAME_CLIENT, listeClients);
-
-            List<Utilisateur> listeUtilisateurs = new List<Utilisateur>();
-
-            listeUtilisateurs.Add(new Utilisateur
-            {
-                Id  = 1,
-                Nom     = "VILLEMIN",
-                Prenom  = "Xavier"
-            });
-
-            listeUtilisateurs.Add(new Utilisateur
-            {
-                Id      = 2,
-                Nom     = "PORIAU",
-                Prenom  = "Yennick"
-            });
-
-            listeUtilisateurs.Add(new Utilisateur
-            {
-                Id      = 3,
-                Nom     = "MAIRET",
-                Prenom  = "Grégory"
-            });
-
-            listeUtilisateurs.Add(new Utilisateur
-            {
-                Id      = 4,
-                Nom     = "BATTUNG",
-                Prenom  = "Magalie"
-            });
-
-            listeUtilisateurs.Add(new Utilisateur
-            {
-                Id      = 5,
-                Nom     = "MILLOT",
-                Prenom  = "Damien"
-            });
-
-            listeUtilisateurs.Add(new Utilisateur
-            {
-                Id      = 6,
-                Nom     = "DUBOURG",
-                Prenom  = "Justine"
-            });
-
-            listeUtilisateurs.Add(new Utilisateur
-            {
-                Id      = 7,
-                Nom     = "ANDRIN",
-                Prenom  = "Laurence"
-            });
-
-            listeUtilisateurs.Add(new Utilisateur
-            {
-                Id      = 8,
-                Nom     = "PEREIRA",
-                Prenom  = "Carine"
-            });
-
-            JsonHelper.WriteEntities<Utilisateur>(JsonHelper.CSTS_FILENAME_UTILISATEUR, listeUtilisateurs);
-
-            List<Application> listeApplication = new List<Application>();
-
-            listeApplication.Add(new Application
-            {
-                Id  = 1,
-                Nom = "Xalise Project"
-            });
-
-            listeApplication.Add(new Application
-            {
-                Id  = 2,
-                Nom = "Xalise API"
-            });
-
-            listeApplication.Add(new Application
-            {
-                Id  = 3,
-                Nom = "Xalise MQ"
-            });
-
-            listeApplication.Add(new Application
-            {
-                Id  = 4,
-                Nom = "Xalise CRM"
-            });
-
-            JsonHelper.WriteEntities<Application>(JsonHelper.CSTS_FILENAME_APPLICATION, listeApplication);
-
-            List<TypeDeveloppement> listeTypeDev = new List<TypeDeveloppement>();
-
-            listeTypeDev.Add(new TypeDeveloppement
-            {
-                Id  = 1,
-                Nom = "Web"
-            });
-
-            listeTypeDev.Add(new TypeDeveloppement
-            {
-                Id  = 2,
-                Nom = "API"
-            });
-
-            listeTypeDev.Add(new TypeDeveloppement
-            {
-                Id  = 3,
-                Nom = "Analyse / Spécifications"
-            });
-
-            JsonHelper.WriteEntities<TypeDeveloppement>(JsonHelper.CSTS_FILENAME_TYPE_DEVELOPPEMENT, listeTypeDev);
-            
-            List<Projet> listeProjets = new List<Projet>();
-
-            listeProjets.Add(new Projet
-            {
-                Id                      = 1,
-                Intitule                = "Migration vers REST",
-                Description             = "",
-                PourcentageRealisation  = 12.25m,
-                TempsEstime             = 15.5m,
-                TempsReel               = 2.75m,
-                PourcentageEcart        = 10.75m,
-                RespProjetId            = new List<int> { 1, 7 },
-                ClientId                = 1,
-                ApplicationId           = 2,
-                TypeDeveloppementId     = 2
-            });
-
-            JsonHelper.WriteEntities<Projet>(JsonHelper.CSTS_FILENAME_PROJET, listeProjets);
-            */
-
             this.InitViewDataPageTitle("Liste des projets");
 
             // =-=-=-
@@ -204,6 +42,11 @@ namespace Xalise.Web.Areas.GestionProjet.Controllers
             return View(this.RechercherListeProjets(criteres));
         }
 
+        /// <summary>
+        /// Exécution de la recherche.
+        /// </summary>
+        /// <param name="criteres">Critères de recherche.</param>
+        /// <returns>Modèle de données contenant les critères de recherche et les résultats de celle-ci.</returns>
         private ListeProjetsViewModel RechercherListeProjets(ListeProjetsCriteresRechercheModel criteres)
         {
             ListeProjetsViewModel model = new ListeProjetsViewModel
@@ -211,13 +54,46 @@ namespace Xalise.Web.Areas.GestionProjet.Controllers
                 CriteresRecherche = criteres
             };
 
-            List<Projet> listeProjets = JsonHelper.ReadEntities<Projet>(JsonHelper.CSTS_FILENAME_PROJET);
+            List<Projet> listeProjets               = JsonHelper.ReadEntities<Projet>(JsonHelper.CSTS_FILENAME_PROJET);
+            List<Application> listeApp              = JsonHelper.ReadEntities<Application>(JsonHelper.CSTS_FILENAME_APPLICATION);
+            List<TypeDeveloppement> listeTypeDev    = JsonHelper.ReadEntities<TypeDeveloppement>(JsonHelper.CSTS_FILENAME_TYPE_DEVELOPPEMENT);
+            List<Utilisateur> listeUtilisateurs     = JsonHelper.ReadEntities<Utilisateur>(JsonHelper.CSTS_FILENAME_UTILISATEUR);
+            List<Client> listeClients               = JsonHelper.ReadEntities<Client>(JsonHelper.CSTS_FILENAME_CLIENT);
 
             if (listeProjets.IsNotEmpty())
             {
                 foreach (Projet projet in listeProjets)
                 {
+                    ProjetDTO dto = new ProjetDTO(projet);
 
+                    IEnumerable<Client> tmpClient = listeClients.Where(x => x.Id == projet.ClientId);
+                    if (tmpClient.IsNotEmpty())
+                    {
+                        dto.Client = new ClientDTO(tmpClient.First());
+                    }
+
+                    IEnumerable<Application> tmpApplication = listeApp.Where(x => x.Id == projet.ApplicationId);
+                    if (tmpApplication.IsNotEmpty())
+                    {
+                        dto.Application = new ApplicationDTO(tmpApplication.First());
+                    }
+
+                    IEnumerable<TypeDeveloppement> tmpTypeDev = listeTypeDev.Where(x => x.Id == projet.TypeDeveloppementId);
+                    if (tmpTypeDev.IsNotEmpty())
+                    {
+                        dto.TypeDeveloppement = new TypeDeveloppementDTO(tmpTypeDev.First());
+                    }
+
+                    IEnumerable<Utilisateur> tmpUtilisateur = listeUtilisateurs.Where(x => projet.RespProjetId.Contains(x.Id));
+                    if (tmpUtilisateur.IsNotEmpty())
+                    {
+                        foreach (Utilisateur user in tmpUtilisateur)
+                        {
+                            dto.ListeRespProjet.Add(new UtilisateurDTO(user));
+                        }
+                    }
+
+                    // model.ListeProjets.Add(dto);
                 }
             }
 

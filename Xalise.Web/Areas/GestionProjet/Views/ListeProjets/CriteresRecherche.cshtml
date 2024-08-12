@@ -21,8 +21,8 @@
             <div class="row mb-2">
                 <div class="col-12 col-md-8 offset-md-4 col-xl-9 offset-xl-3">
                     <div class="form-check ps-0">
-                        <input asp-for="ProjetInterne" />
-                        <label asp-for="ProjetInterne"></label>
+                        <input asp-for="ProjetInterne" class="form-check-input" />
+                        <label asp-for="ProjetInterne" class="form-check-label"></label>
                     </div>
                 </div>
             </div>
@@ -41,6 +41,36 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-md-2">
+            <div class="row mb-2">
+                <div class="col-4 col-sm-3 col-md-6">
+                    <div class="form-check">
+                        <input asp-for="EstNonCommence" class="form-check-input" />
+                        <label asp-for="EstNonCommence" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="col col-sm-3 col-md-6">
+                    <div class="form-check">
+                        <input asp-for="EstEnCours" class="form-check-input" />
+                        <label asp-for="EstEnCours" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="col col-sm-3 col-md-6">
+                    <div class="form-check">
+                        <input asp-for="EstTermine" class="form-check-input" />
+                        <label asp-for="EstTermine" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="col col-sm-3 col-md-6">
+                    <div class="form-check">
+                        <input asp-for="EstAnnule" class="form-check-input" />
+                        <label asp-for="EstAnnule" class="form-check-label"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--
         <div class="col-12 col-md-2 px-md-0 px-xl-3">
             <div class="row">
                 <div class="col-12 mb-2">
@@ -62,6 +92,7 @@
                 </div>
             </div>
         </div>
+        -->
     </div>
 </form>
 
