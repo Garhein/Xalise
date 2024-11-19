@@ -1,12 +1,15 @@
-﻿namespace Xalise.Interop.HL7.Core
+﻿using Xalise.Interop.HL7.Structure.DataType.Primitive;
+
+namespace Xalise.Interop.HL7.Core
 {
     /// <summary>
-    /// Déclaration des fonctionnalités commune à l'ensemble des types de données primitifs.
+    /// Fonctionnalités des types de données primitifs.
     /// </summary>
     /// <remarks>
     /// Un type primitif contient une valeur unique, c'est-à-dire qu'il ne contient pas de sous composants.<br/>
-    /// Exemples : ST et ID.
+    /// Exemples : <see cref="ST"/> ou <see cref="ID"/>.
     /// </remarks>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     public interface ITypePrimitive
     {
         /// <summary>

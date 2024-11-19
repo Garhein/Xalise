@@ -9,6 +9,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
     /// <summary>
     /// TS - Time Stamp.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public class TS : AbstractTypeComposite
     {
@@ -25,7 +26,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// TS.1 - Time.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public DTM Time
         {
             get
@@ -41,7 +41,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// TS.2 - Degree Of Precision.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public ID DegreeOfPrecision
         {
             get

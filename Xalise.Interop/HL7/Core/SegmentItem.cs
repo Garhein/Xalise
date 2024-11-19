@@ -4,8 +4,9 @@ using Xalise.Interop.HL7.Enums;
 namespace Xalise.Interop.HL7.Core
 {
     /// <summary>
-    /// Représentation d'un champ HL7.
+    /// Champ HL7.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public class SegmentItem
     {
@@ -93,10 +94,10 @@ namespace Xalise.Interop.HL7.Core
         /// Récupère une répétition du champ.
         /// </summary>
         /// <remarks>
-        /// Une base 1 est utilisée pour accèder aux répétitions.
+        /// L'accès aux répétitions est réalisé à partir de l'index 1.
         /// </remarks>
         /// <param name="index">Index de la répétition à récupérer.</param>
-        /// <returns>Répétition de type <see cref="IType"/>.</returns>
+        /// <returns>Une répétition de type <see cref="IType"/>.</returns>
         /// <exception cref="HL7Exception">Si <paramref name="index"/> est inférieur ou égal à 0 où que la répétition n'existe pas pour l'index spécifié.</exception>
         public IType this[int index]
         {
@@ -124,7 +125,7 @@ namespace Xalise.Interop.HL7.Core
         /// Convertit la liste des répétitions en un tableau.
         /// </summary>
         /// <typeparam name="FieldType">Type du tableau à construire.</typeparam>
-        /// <returns>Tableau des répétitions du champ.</returns>
+        /// <returns>Un tableau des répétitions du champ.</returns>
         public FieldType[] ConvertRepetitionsToITypeArray<FieldType>()
         {
             FieldType[] ret = new FieldType[this._repetitions.Count];

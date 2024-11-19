@@ -9,6 +9,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
     /// <summary>
     /// VID - Entity Identifier.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public class VID : AbstractTypeComposite
     {
@@ -26,7 +27,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// VID.1 - Version Id.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public ID VersionId
         {
             get
@@ -42,7 +42,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// VID.2 - Internationalization Code.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public CE InternationalizationCode
         {
             get
@@ -58,7 +57,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// VID.3 - International Version Id.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public CE InternationalVersionId
         {
             get

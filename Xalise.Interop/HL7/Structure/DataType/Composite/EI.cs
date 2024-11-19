@@ -9,6 +9,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
     /// <summary>
     /// EI - Entity Identifier.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public class EI : AbstractTypeComposite
     {
@@ -27,7 +28,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// EI.1 - Entity Identifier.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public ST EntityIdentifier
         {
             get
@@ -43,7 +43,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// EI.2 - Namespace Id.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public IS NamespaceId
         {
             get
@@ -59,7 +58,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// EI.3 - Universal Id.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public ST UniversalId
         {
             get
@@ -75,7 +73,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// EI.4 - Universal Id Type.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public ID UniversalIdType
         {
             get

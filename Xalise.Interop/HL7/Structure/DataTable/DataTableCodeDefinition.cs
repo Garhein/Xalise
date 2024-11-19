@@ -1,8 +1,9 @@
 ﻿namespace Xalise.Interop.HL7.Structure.DataTable
 {
     /// <summary>
-    /// Définition des codes des tables de données.
+    /// Codes des tables de données.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     public struct DataTableCodeDefinition
     {
         public const short T0003_EVENT_TYPE                                 = 3;

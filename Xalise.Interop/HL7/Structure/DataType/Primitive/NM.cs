@@ -14,6 +14,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Primitive
     /// En l'absence de signe, le nombre est considéré comme étant positif.<br/>
     /// En l'absence de point décimal, le nombre est considéré comme étant un nombre entier.
     /// </remarks>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public class NM : AbstractTypePrimitive
     {

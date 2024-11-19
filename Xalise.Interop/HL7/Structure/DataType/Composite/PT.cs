@@ -9,6 +9,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
     /// <summary>
     /// PT - Processing Type.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public class PT : AbstractTypeComposite
     {
@@ -25,7 +26,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// PT.1 - Processing Id.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public ID ProcessingId
         {
             get
@@ -41,7 +41,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// PT.2 - Processing Mode.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public ID ProcessingMode
         {
             get

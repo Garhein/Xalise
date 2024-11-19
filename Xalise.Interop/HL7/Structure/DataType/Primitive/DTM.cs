@@ -7,9 +7,10 @@ namespace Xalise.Interop.HL7.Structure.DataType.Primitive
     /// DTM - Date/time.
     /// </summary>
     /// <remarks>
-    /// Notation d'horloge de 24 heures.<br/>
+    /// Notation sur 24 heures.<br/>
     /// Formats autorisés : YYYY[MM[DD[HH[MM[SS]]]]].
     /// </remarks>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public class DTM : AbstractTypePrimitive
     {

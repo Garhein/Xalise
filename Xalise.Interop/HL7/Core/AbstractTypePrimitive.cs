@@ -3,8 +3,9 @@
 namespace Xalise.Interop.HL7.Core
 {
     /// <summary>
-    /// Représentation d'un type de données primitif.
+    /// Type de données primitif.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public abstract class AbstractTypePrimitive : AbstractType, ITypePrimitive
     {

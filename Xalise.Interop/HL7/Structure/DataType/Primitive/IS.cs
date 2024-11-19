@@ -6,6 +6,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Primitive
     /// <summary>
     /// IS - Coded value for user-defined tables.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public class IS : AbstractTypePrimitive
     {

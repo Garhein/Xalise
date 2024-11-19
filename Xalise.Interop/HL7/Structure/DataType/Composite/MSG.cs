@@ -9,6 +9,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
     /// <summary>
     /// MSG - Message Type.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public class MSG : AbstractTypeComposite
     {
@@ -26,7 +27,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// MSG.1 - Message Code.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public ID MessageCode
         {
             get
@@ -42,7 +42,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// MSG.2 - Trigger Event.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public ID TriggerEvent
         {
             get
@@ -58,7 +57,6 @@ namespace Xalise.Interop.HL7.Structure.DataType.Composite
         /// <summary>
         /// MSG.3 - Message Structure.
         /// </summary>
-        /// <exception cref="HL7Exception">Si erreur à l'accès au composant.</exception>
         public ID MessageStructure
         {
             get

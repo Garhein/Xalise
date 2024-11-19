@@ -7,15 +7,16 @@ using System.Reflection;
 namespace Xalise.Core.Extensions
 {
     /// <summary>
-    /// Méthodes d'extensions applicables aux <see cref="Enum"/>.
+    /// Extensions applicables aux <see cref="Enum"/>.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     public static class EnumExtension
     {
         /// <summary>
-        /// Récupère la valeur de l'attribut <see cref="DescriptionAttribute"/> indiqué sur le membre de l'énumération.
+        /// Récupère la valeur de l'attribut <see cref="DescriptionAttribute"/> indiqué sur un membre d'une énumération.
         /// </summary>
-        /// <param name="enumValue"></param>
-        /// <returns>Description positionnée sur le membre <paramref name="enumValue"/>.</returns>
+        /// <param name="enumValue">Membre pour lequel on souhaite récupérer la valeur de l'attribut <see cref="DescriptionAttribute"/>.</param>
+        /// <returns>La description positionnée sur le membre <paramref name="enumValue"/>.</returns>
         public static string Description(this Enum enumValue)
         {
             string descr = string.Empty;

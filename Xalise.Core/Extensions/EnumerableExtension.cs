@@ -4,8 +4,12 @@ using System.Linq;
 namespace Xalise.Core.Extensions
 {
     /// <summary>
-    /// Méthodes d'extension applicables aux <see cref="IEnumerable{T}"/>, incluant les listes mais aussi les dictionnaires.
+    /// Extensions applicables aux <see cref="IEnumerable{T}"/>, comprenant notamment :<br/>
+    /// - <see cref="IDictionary{TKey, TValue}"/><br/>
+    /// - <see cref="ICollection{T}"/><br/>
+    /// - <see cref="IList{T}"/>
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     public static class EnumerableExtension
     {
         /// <summary>

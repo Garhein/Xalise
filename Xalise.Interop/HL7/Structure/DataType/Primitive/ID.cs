@@ -6,6 +6,7 @@ namespace Xalise.Interop.HL7.Structure.DataType.Primitive
     /// <summary>
     /// ID - Coded value for HL7 defined tables.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     [Serializable]
     public class ID : AbstractTypePrimitive
     {

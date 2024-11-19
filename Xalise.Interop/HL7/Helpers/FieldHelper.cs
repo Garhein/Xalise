@@ -3,14 +3,18 @@
 namespace Xalise.Interop.HL7.Helpers
 {
     /// <summary>
-    /// Fonctions utilitaires de manipulation des champs.
+    /// Fonctions de manipulation associés aux champs d'un segment HL7.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     public static class FieldHelper
     {
         /// <summary>
-        /// Construit la représentation textuelle du numéro d'un champ.<br/>
-        /// Exemple : MSH-21.1/2 (2ème sous-champ de la 1ère répétition du champ 21 du segment MSH).
+        /// Construit la représentation textuelle du numéro d'un champ.
         /// </summary>
+        /// <remarks>
+        /// <c>FieldHelper.ConstructFieldNumber("MSH", 21, 1, 2)</c> retourne la valeur <c>MSH-21.1/2</c>.<br/>
+        /// Cette valeur correspondant au 2ème sous-champ de la 1ère répétition du champ 21 du segment MSH.
+        /// </remarks>
         /// <param name="segmentName">Nom du segment.</param>
         /// <param name="fieldNumber">Numéro du champ.</param>
         /// <param name="repNumber">Numéro de la répétition.</param>

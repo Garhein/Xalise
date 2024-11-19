@@ -3,8 +3,9 @@
 namespace Xalise.Core.Exceptions
 {
     /// <summary>
-    /// Représente une erreur détectée ou levée au niveau de la gestion d'un type de donnée.
+    /// Erreur détectée ou levée au niveau de la gestion d'un type de données.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     public class XaliseTypeException : Exception
     {
         /// <inheritdoc/>

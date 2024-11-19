@@ -1,8 +1,9 @@
 ﻿namespace Xalise.Interop.HL7.Core
 {
     /// <summary>
-    /// Déclaration des fonctionnalités commune à l'ensemble des types de données.
+    /// Fonctionnalités des types de données HL7.
     /// </summary>
+    /// <author>Xavier VILLEMIN - xavier.villemin@gmail.com</author>
     public interface IType
     {
         /// <summary>
