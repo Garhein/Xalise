@@ -1,4 +1,6 @@
-﻿namespace Xalise.Core.Extensions
+﻿using System;
+
+namespace Xalise.Core.Extensions
 {
     /// <summary>
     /// Extensions applicables aux <see cref="string"/>.
@@ -44,6 +46,38 @@
         public static bool IsNotNullOrWhiteSpace(this string src)
         {
             return !string.IsNullOrWhiteSpace(src);
+        }
+
+        /// <summary>
+        /// Tronque <paramref name="src"/> si la longueur est supérieure à <paramref name="maxLength"/>.
+        /// </summary>
+        /// <param name="src">Chaîne à tronquer.</param>
+        /// <param name="maxLength">Longueur maximale à conserver.</param>
+        /// <param name="startFromLeft"><see langword="true"/> si on tronque à partir du début de <paramref name="src"/> et <see langword="false"/> si on tronque à partir de la fin de <paramref name="src"/>.</param>
+        /// <returns>Une chaîne dont la taille maximale correspond à <paramref name="maxLength"/>.</returns>
+        /// <exception cref="ArgumentException">Si <paramref name="maxLength"/> est inférieur ou égal à 0.</exception>
+        public static string Truncate(this string src, int maxLength, bool startFromLeft = true)
+        {
+            if (maxLength <= 0)
+            {
+                throw new ArgumentException("Longueur maximale non valide.", nameof(maxLength));
+            }
+
+            string retVal = src;
+
+            if (!string.IsNullOrWhiteSpace(retVal) && retVal.Length > maxLength)
+            {
+                if (startFromLeft)
+                {
+                    retVal = retVal.Substring(0, maxLength);
+                }
+                else
+                {
+                    retVal = retVal.Substring(retVal.Length - maxLength, maxLength);
+                }
+            }
+
+            return retVal;
         }
     }
 }

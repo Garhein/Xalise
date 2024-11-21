@@ -1,3 +1,4 @@
+using System;
 using Xalise.Core.Extensions;
 
 namespace Xalise.Tests
@@ -51,6 +52,45 @@ namespace Xalise.Tests
         {
             string str = "value";
             Assert.That(str.IsNotNullOrWhiteSpace(), Is.True);
+        }
+        
+        [Test]
+        public void Truncate_TooLongLeft()
+        {
+            string str = "value";
+            Assert.That(str.Truncate(3), Is.EqualTo("val"));
+        }
+
+        [Test]
+        public void Truncate_TooLongRight()
+        {
+            string str = "value";
+            Assert.That(str.Truncate(3, false), Is.EqualTo("lue"));
+        }
+
+        [Test]
+        public void Truncate_TooShortLeft()
+        {
+            string str = "value";
+            Assert.That(str.Truncate(10), Is.EqualTo("value"));
+        }
+
+        [Test]
+        public void Truncate_TooShortRight()
+        {
+            string str = "value";
+            Assert.That(str.Truncate(10, false), Is.EqualTo("value"));
+        }
+
+        [Test]
+        public void Truncate_InvalidMaxLength()
+        {
+            string str = "value";
+            Assert.Throws<ArgumentException>(
+                delegate { 
+                    str.Truncate(0); 
+                }
+            );
         }
     }
 }
