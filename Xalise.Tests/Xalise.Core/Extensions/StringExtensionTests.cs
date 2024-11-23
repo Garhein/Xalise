@@ -92,5 +92,30 @@ namespace Xalise.Tests
                 }
             );
         }
+        
+        [Test]
+        public void CharsAreUnique_IsValid()
+        {
+            string str = "value";
+            Assert.That(str.CharsAreUnique(), Is.True);
+        }
+
+        [Test]
+        public void CharsAreUnique_NotValid()
+        {
+            string str = "vaaluee";
+            Assert.That(str.CharsAreUnique(), Is.False);
+        }
+
+        [Test]
+        public void CharsAreUnique_InvalidSource()
+        {
+            string str = "  ";
+            Assert.Throws<ArgumentException>(
+                delegate {
+                    str.CharsAreUnique();
+                }
+            );
+        }
     }
 }

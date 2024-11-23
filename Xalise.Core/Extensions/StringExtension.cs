@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Xalise.Core.Extensions
 {
@@ -78,6 +79,25 @@ namespace Xalise.Core.Extensions
             }
 
             return retVal;
+        }
+
+        /// <summary>
+        /// Vérifie si <paramref name="src"/> est composée de caractères uniques.
+        /// </summary>
+        /// <param name="src">Chaîne à vérifier.</param>
+        /// <returns><see langword="true"/> si <paramref name="src"/> est composée de caractères uniques ; sinon <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentException">Si <paramref name="src"/> est <see cref="IsNullOrWhiteSpace(string)"/>.</exception>
+        public static bool CharsAreUnique(this string src)
+        {
+            if (src.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("La chaîne à vérifier ne peut pas être NULL, vide ou composée uniquement d'espaces.", nameof(src));
+            }
+
+            var chars       = src.ToCharArray();
+            var distinct    = chars.Distinct().ToArray();
+
+            return chars.Length == distinct.Length;
         }
     }
 }
