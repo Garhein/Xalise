@@ -117,5 +117,51 @@ namespace Xalise.Tests
                 }
             );
         }
+
+        [Test]
+        public void RemoveIdenticalSuccessiveChars_FromLeft()
+        {
+            string str = "3|2|1|||||";
+            Assert.That(str.RemoveIdenticalSuccessiveChars('|', false), Is.EqualTo("3|2|1"));
+        }
+
+        [Test]
+        public void RemoveIdenticalSuccessiveChars_FromLeftOneChar()
+        {
+            string str = "3|2|1|";
+            Assert.That(str.RemoveIdenticalSuccessiveChars('|', false), Is.EqualTo("3|2|1"));
+        }
+
+        [Test]
+        public void RemoveIdenticalSuccessiveChars_FromRight()
+        {
+            string str = "|||||1|2|3";
+            Assert.That(str.RemoveIdenticalSuccessiveChars('|'), Is.EqualTo("1|2|3"));
+        }
+
+        [Test]
+        public void RemoveIdenticalSuccessiveChars_FromRightOneChar()
+        {
+            string str = "|1|2|3";
+            Assert.That(str.RemoveIdenticalSuccessiveChars('|'), Is.EqualTo("1|2|3"));
+        }
+
+        [Test]
+        public void RemoveIdenticalSuccessiveChars_WithoutCharsToRemove()
+        {
+            string str = "3|2|1";
+            Assert.That(str.RemoveIdenticalSuccessiveChars('|', false), Is.EqualTo("3|2|1"));
+        }
+
+        [Test]
+        public void RemoveIdenticalSuccessiveChars_InvalidSource()
+        {
+            string str = "  ";
+            Assert.Throws<ArgumentException>(
+                delegate {
+                    str.RemoveIdenticalSuccessiveChars('|');
+                }
+            );
+        }
     }
 }

@@ -99,5 +99,63 @@ namespace Xalise.Core.Extensions
 
             return chars.Length == distinct.Length;
         }
+    
+        /// <summary>
+        /// Retire de <paramref name="src"/> les caractères identiques et successifs.
+        /// </summary>
+        /// <param name="src">Chaîne à traiter.</param>
+        /// <param name="charToRemove">Caractère à retirer.</param>
+        /// <param name="startFromLeft"><see langword="true"/> si la recherche commence par le début de <paramref name="src"/>, sinon la recherche commence par la fin de <paramref name="src"/>.</param>
+        /// <returns>Une chaîne nettoyée des caractères identiques et successifs.</returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static string RemoveIdenticalSuccessiveChars(this string src, char charToRemove, bool startFromLeft = true)
+        {
+            if (src.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("La chaîne à vérifier ne peut pas être NULL, vide ou composée uniquement d'espaces.", nameof(src));
+            }
+
+            char[] chars = src.ToCharArray();
+            string ret   = string.Empty;
+
+            if (!startFromLeft)
+            {
+                chars = chars.Reverse().ToArray();
+            }
+
+            int posChar = 0;
+            bool found  = false;
+
+            while (posChar < chars.Length && !found)
+            {
+                if (chars[posChar] != charToRemove)
+                {
+                    found = true;
+                }
+                else
+                {
+                    posChar++;
+                }
+            }
+
+            if (found)
+            {
+                char[] charsToKeep = new char[chars.Length - posChar];
+
+                if (startFromLeft)
+                {
+                    Array.Copy(chars, posChar, charsToKeep, 0, chars.Length - posChar);
+                }
+                else
+                {
+                    Array.Copy(chars, posChar, charsToKeep, 0, chars.Length - posChar);
+                    charsToKeep = charsToKeep.Reverse().ToArray();
+                }
+
+                ret = new string(charsToKeep);
+            }
+
+            return ret;
+        }
     }
 }
