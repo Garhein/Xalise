@@ -99,7 +99,7 @@ namespace Xalise.Core.Extensions
 
             return chars.Length == distinct.Length;
         }
-    
+
         /// <summary>
         /// Retire de <paramref name="src"/> les caractères identiques et successifs.
         /// </summary>
@@ -107,7 +107,7 @@ namespace Xalise.Core.Extensions
         /// <param name="charToRemove">Caractère à retirer.</param>
         /// <param name="startFromLeft"><see langword="true"/> si la recherche commence par le début de <paramref name="src"/>, sinon la recherche commence par la fin de <paramref name="src"/>.</param>
         /// <returns>Une chaîne nettoyée des caractères identiques et successifs.</returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentException">Si <paramref name="src"/> est <see cref="IsNullOrWhiteSpace(string)"/>.</exception>
         public static string RemoveIdenticalSuccessiveChars(this string src, char charToRemove, bool startFromLeft = true)
         {
             if (src.IsNullOrWhiteSpace())
