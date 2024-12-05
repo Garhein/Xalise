@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Xalise.Core.Extensions;
+using Xalise.Interop.HL7.Core;
 
 namespace Xalise.Tests
 {
@@ -160,6 +162,118 @@ namespace Xalise.Tests
             Assert.Throws<ArgumentException>(
                 delegate {
                     str.RemoveIdenticalSuccessiveChars('|');
+                }
+            );
+        }
+
+        [Test]
+        public void EscapeText_Valid()
+        {
+            string strToEscape              = @"|NOM^PRENOM~PRENOM^NOM&\VAL1|";
+            string strEscape                = @"\F\NOM\S\PRENOM\R\PRENOM\S\NOM\T\\E\VAL1\F\";
+            Dictionary<char, string> dico   = new Dictionary<char, string>
+            {
+                { Constants.DEFAULT_SEP_FIELD, Constants.ESCAPE_FIELD },
+                { Constants.DEFAULT_SEP_COMPONENT, Constants.ESCAPE_COMPONENT },
+                { Constants.DEFAULT_SEP_REPETITION, Constants.ESCAPE_REPETITION },
+                { Constants.DEFAULT_ESCAPE_CHARACTER, Constants.ESCAPE_CHAR },
+                { Constants.DEFAULT_SEP_SUBCOMPONENT, Constants.ESCAPE_SUBCOMPONENT }
+            };
+
+            Assert.That(strToEscape.EscapeText(dico), Is.EqualTo(strEscape));
+        }
+
+        [Test]
+        public void EscapeText_WithoutEscape()
+        {
+            string strToEscape  = "NOM+PRENOM_PRENOM-NOM";
+            string strEscape    = "NOM+PRENOM_PRENOM-NOM";
+            Dictionary<char, string> dico = new Dictionary<char, string>
+            {
+                { Constants.DEFAULT_SEP_FIELD, Constants.ESCAPE_FIELD },
+                { Constants.DEFAULT_SEP_COMPONENT, Constants.ESCAPE_COMPONENT },
+                { Constants.DEFAULT_SEP_REPETITION, Constants.ESCAPE_REPETITION },
+                { Constants.DEFAULT_ESCAPE_CHARACTER, Constants.ESCAPE_CHAR },
+                { Constants.DEFAULT_SEP_SUBCOMPONENT, Constants.ESCAPE_SUBCOMPONENT }
+            };
+
+            Assert.That(strToEscape.EscapeText(dico), Is.EqualTo(strEscape));
+        }
+
+        [Test]
+        public void EscapeText_InvalidSource()
+        {
+            string str = "  ";
+            Assert.Throws<ArgumentException>(
+                delegate {
+                    str.EscapeText(new Dictionary<char, string>());
+                }
+            );
+        }
+
+        [Test]
+        public void EscapeText_InvalidDictionary()
+        {
+            string str = @"|NOM^PRENOM~PRENOM^NOM&\VAL1|"; ;
+            Assert.Throws<ArgumentException>(
+                delegate {
+                    str.EscapeText(new Dictionary<char, string>());
+                }
+            );
+        }
+
+        [Test]
+        public void UnescapeText_Valid()
+        {
+            string strToUnescape    = @"\F\NOM\S\PRENOM\R\PRENOM\S\NOM\T\\E\VAL1\F\";
+            string strUnescape      = @"|NOM^PRENOM~PRENOM^NOM&\VAL1|";
+            Dictionary<string, char> dico = new Dictionary<string, char>
+            {
+                { Constants.ESCAPE_FIELD, Constants.DEFAULT_SEP_FIELD },
+                { Constants.ESCAPE_COMPONENT, Constants.DEFAULT_SEP_COMPONENT },
+                { Constants.ESCAPE_REPETITION, Constants.DEFAULT_SEP_REPETITION },
+                { Constants.ESCAPE_CHAR, Constants.DEFAULT_ESCAPE_CHARACTER },
+                { Constants.ESCAPE_SUBCOMPONENT, Constants.DEFAULT_SEP_SUBCOMPONENT }
+            };
+
+            Assert.That(strToUnescape.UnescapeText(dico), Is.EqualTo(strUnescape));
+        }
+
+        [Test]
+        public void UnescapeText_WithoutUnescape()
+        {
+            string strToUnescape = @"|NOM^PRENOM~PRENOM^NOM&\VAL1|";
+            string strUnescape   = @"|NOM^PRENOM~PRENOM^NOM&\VAL1|";
+            Dictionary<string, char> dico = new Dictionary<string, char>
+            {
+                { Constants.ESCAPE_FIELD, Constants.DEFAULT_SEP_FIELD },
+                { Constants.ESCAPE_COMPONENT, Constants.DEFAULT_SEP_COMPONENT },
+                { Constants.ESCAPE_REPETITION, Constants.DEFAULT_SEP_REPETITION },
+                { Constants.ESCAPE_CHAR, Constants.DEFAULT_ESCAPE_CHARACTER },
+                { Constants.ESCAPE_SUBCOMPONENT, Constants.DEFAULT_SEP_SUBCOMPONENT }
+            };
+
+            Assert.That(strToUnescape.UnescapeText(dico), Is.EqualTo(strUnescape));
+        }
+
+        [Test]
+        public void UnescapeText_InvalidSource()
+        {
+            string str = "  ";
+            Assert.Throws<ArgumentException>(
+                delegate {
+                    str.UnescapeText(new Dictionary<string, char>());
+                }
+            );
+        }
+
+        [Test]
+        public void UnescapeText_InvalidDictionary()
+        {
+            string str = @"|NOM^PRENOM~PRENOM^NOM&\VAL1|"; ;
+            Assert.Throws<ArgumentException>(
+                delegate {
+                    str.UnescapeText(new Dictionary<string, char>());
                 }
             );
         }

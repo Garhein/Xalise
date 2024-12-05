@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Xalise.Core.Extensions
 {
@@ -10,7 +12,7 @@ namespace Xalise.Core.Extensions
     public static class StringExtension
     {
         /// <summary>
-        /// Indique si une chaîne est <see langword="null"/> ou vide (<c>""</c> ou <see cref="string.Empty"/>).
+        /// Indique si <paramref name="src"/> est <see langword="null"/> ou vide (<c>""</c> ou <see cref="string.Empty"/>).
         /// </summary>
         /// <param name="src">Chaîne à tester.</param>
         /// <returns><see langword="true"/> si <paramref name="src"/> est <see langword="null"/> ou vide (<c>""</c>) ; sinon <see langword="false"/>.</returns>
@@ -20,7 +22,7 @@ namespace Xalise.Core.Extensions
         }
 
         /// <summary>
-        /// Indique si une chaîne n'est pas <see langword="null"/> et non vide (<c>""</c> ou <see cref="string.Empty"/>).
+        /// Indique si <paramref name="src"/> n'est pas <see langword="null"/> et non vide (<c>""</c> ou <see cref="string.Empty"/>).
         /// </summary>
         /// <param name="src">Chaîne à tester.</param>
         /// <returns><see langword="true"/> si <paramref name="src"/> n'est pas <see langword="null"/> et non vide (<c>""</c>) ; sinon <see langword="false"/>.</returns>
@@ -30,7 +32,7 @@ namespace Xalise.Core.Extensions
         }
 
         /// <summary>
-        /// Indique si une chaîne est <see langword="null"/>, vide (<c>""</c> ou <see cref="string.Empty"/>) ou composée uniquement d'espaces.
+        /// Indique si <paramref name="src"/> est <see langword="null"/>, vide (<c>""</c> ou <see cref="string.Empty"/>) ou composée uniquement d'espaces.
         /// </summary>
         /// <param name="src">Chaîne à tester.</param>
         /// <returns><see langword="true"/> si <paramref name="src"/> est <see langword="null"/>, vide (<c>""</c> ou <see cref="string.Empty"/>) ou composée uniquement d'espaces ; sinon <see langword="false"/>.</returns>
@@ -40,7 +42,7 @@ namespace Xalise.Core.Extensions
         }
 
         /// <summary>
-        /// Indique si une chaîne n'est pas <see langword="null"/>, vide (<c>""</c> ou <see cref="string.Empty"/>) et composée uniquement d'espaces.
+        /// Indique si <paramref name="src"/> n'est pas <see langword="null"/>, vide (<c>""</c> ou <see cref="string.Empty"/>) et composée uniquement d'espaces.
         /// </summary>
         /// <param name="src">Chaîne à tester.</param>
         /// <returns><see langword="true"/> si <paramref name="src"/> n'est pas <see langword="null"/>, vide (<c>""</c> ou <see cref="string.Empty"/>) et composée uniquement d'espaces ; sinon <see langword="false"/>.</returns>
@@ -66,7 +68,7 @@ namespace Xalise.Core.Extensions
 
             string retVal = src;
 
-            if (!string.IsNullOrWhiteSpace(retVal) && retVal.Length > maxLength)
+            if (retVal.IsNotNullOrWhiteSpace() && retVal.Length > maxLength)
             {
                 if (startFromLeft)
                 {
@@ -156,6 +158,106 @@ namespace Xalise.Core.Extensions
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Échappe <paramref name="src"/>.
+        /// </summary>
+        /// <remarks>
+        /// L'échappement est réalisé caractère par caractère car une séquence d'échappement peut potentiellement introduire un caractère à échapper.<br/>
+        /// Exemple : le caractère <c>\</c> doit être échappé mais une séquence d'échappement pour un autre caractère à remplacer correspond à <c>\F\</c>.
+        /// </remarks>
+        /// <param name="src">Chaîne à échapper.</param>
+        /// <param name="escapeSequences">Définition des caracèteres à échapper et de leur valeur de remplacement.</param>
+        /// <returns>Une chaîne nettoyée des caractères à échapper.</returns>
+        /// <exception cref="ArgumentException">Si <paramref name="src"/> est <see cref="IsNullOrWhiteSpace(string)"/> ou que <paramref name="escapeSequences"/> est <see langword="null"/> ou vide.</exception>
+        public static string EscapeText(this string src, Dictionary<char, string> escapeSequences)
+        {
+            if (src.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("La chaîne à échapper ne peut pas être NULL, vide ou composée uniquement d'espaces.", nameof(src));
+            }
+
+            if (escapeSequences.IsEmpty())
+            {
+                throw new ArgumentException("La définition des caractères à remplacer et de leur valeur de remplacement n'est pas valide.", nameof(escapeSequences));
+            }
+
+            char[] chars             = src.ToCharArray();
+            StringBuilder retBuilder = new StringBuilder();
+
+            foreach (char charToEscape in chars)
+            {
+                if (escapeSequences.ContainsKey(charToEscape))
+                {
+                    retBuilder.Append(escapeSequences[charToEscape]);
+                }
+                else
+                {
+                    retBuilder.Append(charToEscape);
+                }
+            }
+
+            return retBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Annule l'échappement de <paramref name="src"/>.
+        /// </summary>
+        /// <param name="src">Chaîne sur laquelle annuler l'échappement.</param>
+        /// <param name="unescapeSequences">Définition des valeurs de remplacement et des caractères correspondants.</param>
+        /// <returns>Une chaîne dans laquelle les valeurs de remplacement ont été remplacées par leur caractère respectif.</returns>
+        /// <exception cref="ArgumentException">Si <paramref name="src"/> est <see cref="IsNullOrWhiteSpace(string)"/> ou que <paramref name="unescapeSequences"/> est <see langword="null"/> ou vide.</exception>
+        public static string UnescapeText(this string src, Dictionary<string, char> unescapeSequences)
+        {
+            if (src.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentException("La chaîne ne peut pas être NULL, vide ou composée uniquement d'espaces.", nameof(src));
+            }
+
+            if (unescapeSequences.IsEmpty())
+            {
+                throw new ArgumentException("La définition des valeurs de remplacement et des caractères correspondant n'est pas valide.", nameof(unescapeSequences));
+            }
+
+            char[] chars             = src.ToCharArray();
+            StringBuilder retBuilder = new StringBuilder();
+
+            int i = 0;
+
+            while (i < chars.Length)
+            {
+                bool foundSequence = false;
+
+                foreach (KeyValuePair<string, char> kvp in unescapeSequences)
+                {
+                    // S'il reste assez de caractères dans le tableau
+                    if (i + kvp.Key.Length <= chars.Length)
+                    {
+                        string str = string.Join(string.Empty, chars.Take(new Range(i, i + kvp.Key.Length)));
+                        if (str == kvp.Key)
+                        {
+                            retBuilder.Append(kvp.Value);
+                            i = i + kvp.Key.Length;
+                            foundSequence = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (foundSequence)
+                {
+                    continue;
+                }
+                else
+                {
+                    retBuilder.Append(chars[i]);
+                }
+                
+                i++;
+            }
+
+            return retBuilder.ToString();
         }
     }
 }
