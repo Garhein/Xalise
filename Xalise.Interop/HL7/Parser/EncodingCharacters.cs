@@ -11,11 +11,13 @@ namespace Xalise.Interop.HL7.Parser
     [Serializable]
     public class EncodingCharacters
     {
-        private char _fieldSeparator;
-        private char _componentSeparator;
-        private char _repetitionSeparator;
-        private char _espaceCharacter;
-        private char _subComponentSeparator;
+        private char                        _fieldSeparator;
+        private char                        _componentSeparator;
+        private char                        _repetitionSeparator;
+        private char                        _espaceCharacter;
+        private char                        _subComponentSeparator;
+        private Dictionary<char, string>    _dicoEscapeChars;
+        private Dictionary<string, char>    _dicoUnescapeChars;
 
         /// <summary>
         /// Constructeur prenant en charge les caractères d'encodage par défaut.
@@ -83,6 +85,24 @@ namespace Xalise.Interop.HL7.Parser
                 this._espaceCharacter       = encodingCharacters[2];
                 this._subComponentSeparator = encodingCharacters[3];
             }
+
+            this._dicoEscapeChars = new Dictionary<char, string>()
+            {
+                { this._fieldSeparator, Constants.ESCAPE_FIELD },
+                { this._componentSeparator, Constants.ESCAPE_COMPONENT },
+                { this._repetitionSeparator, Constants.ESCAPE_REPETITION },
+                { this._espaceCharacter, Constants.ESCAPE_CHAR },
+                { this._subComponentSeparator, Constants.ESCAPE_SUBCOMPONENT }
+            };
+
+            this._dicoUnescapeChars = new Dictionary<string, char>()
+            {
+                { Constants.ESCAPE_FIELD, this._fieldSeparator },
+                { Constants.ESCAPE_COMPONENT, this._componentSeparator },
+                { Constants.ESCAPE_REPETITION, this._repetitionSeparator },
+                { Constants.ESCAPE_CHAR, this._espaceCharacter },
+                { Constants.ESCAPE_SUBCOMPONENT, this._subComponentSeparator }
+            };
         }
 
         /// <summary>
@@ -109,5 +129,15 @@ namespace Xalise.Interop.HL7.Parser
         /// Séparateur de sous-composant.
         /// </summary>
         public char SubComponentSeparator => this._subComponentSeparator;
+
+        /// <summary>
+        /// Dictionnaire de correspondance entre les caractères à échapper et leur valeur de remplacement.
+        /// </summary>
+        public Dictionary<char, string> EscapeChars => this._dicoEscapeChars;
+
+        /// <summary>
+        /// Dictionnaire de correspondance entre les valeurs de remplacement et les caractères échappés.
+        /// </summary>
+        public Dictionary<string, char> UnescapeChars => this._dicoUnescapeChars;
     }
 }

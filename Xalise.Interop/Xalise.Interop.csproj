@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="HL7\Structure\Segment\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Xalise.Core\Xalise.Core.csproj" />
   </ItemGroup>
 
