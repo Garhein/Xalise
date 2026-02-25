@@ -1,0 +1,45 @@
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+// =-=-=-=-=-=-
+// Surcharge des variables Bootstrap
+// =-=-=-=-=-=-
+
+$body-bg: #f4f6f9;
+
+// =-=-=-=-=-=-
+// Définition des variables personnalisées
+// =-=-=-=-=-=-
+
+$xalise-color: #166278;
+$xalise-color-rgb: red($xalise-color), green($xalise-color), blue($xalise-color);
+
+// =-=-=-=-=-=-
+// Nouveau thème de couleur
+// =-=-=-=-=-=-
+
+$custom-xalise-themes-colors: (
+  "xalise": $xalise-color
+);
+
+$theme-colors: map-merge($theme-colors, $custom-xalise-themes-colors);
+
+// =-=-=-=-=-=-
+// Import des styles personnalisés et définition des variables CSS
+// =-=-=-=-=-=-
+
+@import "tokens";
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+@import "utilities";
+@import "layout";
+@import "sidebar";
+@import "toolbar";
+@import "notifications";
+@import "theme-xalise";
+
+:root {
+  --xalise-color: #{$xalise-color};
+  --xalise-color-rgb: #{$xalise-color-rgb};
+}
