@@ -11953,6 +11953,86 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.text-justify {
+  text-align: justify;
+}
+
+body:not([data-xal-page-fullheight]) {
+  padding-top: 3.25rem;
+}
+
+#xal-main-navbar {
+  height: 3.25rem;
+  z-index: 1030;
+}
+#xal-main-navbar .navbar-nav button[data-bs-toggle=dropdown][aria-expanded=true] .bi-chevron-down {
+  transform: rotate(180deg);
+}
+#xal-main-navbar .navbar-nav button[data-bs-toggle=dropdown] .bi-chevron-down {
+  transition: all 0.3s ease;
+}
+
+.xal-notification-center_indicator {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .xal-notification-center_indicator {
+    display: inline-block;
+  }
+}
+.xal-u-tooltip {
+  --bs-tooltip-opacity: 1;
+  --bs-tooltip-bg: var(--xalise-color);
+  --bs-tooltip-color: var(--bs-white);
+}
+
+.xal-u-gradient {
+  background: linear-gradient(10deg, #499699 0%, #135f76 100%);
+}
+
+.xal-dot-1-70 {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+[data-bs-theme=xalise] {
+  --bs-primary: var(--xalise-color);
+  --bs-primary-rgb: var(--xalise-color-rgb);
+}
+[data-bs-theme=xalise] .navbar .navbar-brand {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+[data-bs-theme=xalise] .navbar .btn-outline-secondary {
+  border: none;
+  margin-left: 0.5rem;
+  color: var(--bs-white);
+  background-color: color-mix(in srgb, var(--bs-primary) 85%, var(--bs-black));
+}
+[data-bs-theme=xalise] .navbar .btn-outline-secondary:hover {
+  background-color: color-mix(in srgb, var(--bs-primary) 70%, var(--bs-black));
+}
+[data-bs-theme=xalise] .navbar .btn-outline-secondary .badge {
+  font-weight: 500;
+  font-size: 0.6rem;
+  margin-left: 0.1rem;
+  padding: 0.35rem 0.45rem;
+}
+[data-bs-theme=xalise] .dropdown-menu {
+  --bs-dropdown-bg: var(--bs-primary);
+  --bs-dropdown-link-color: var(--bs-white);
+  --bs-dropdown-link-hover-color: var(--bs-white);
+  --bs-dropdown-link-active-color: var(--bs-white);
+  --bs-dropdown-link-hover-bg: color-mix(in srgb, var(--bs-primary) 70%, var(--bs-black));
+  --bs-dropdown-link-active-bg: color-mix(in srgb, var(--bs-primary) 55%, var(--bs-black));
+  --bs-dropdown-link-disabled-color: rgba(var(--bs-white-rgb), 0.5);
+  --bs-dropdown-header-color: var(--bs-white);
+  --bs-dropdown-header-padding-y: 0;
+}
+
 :root {
   --xalise-color: #166278;
   --xalise-color-rgb: 22, 98, 120;

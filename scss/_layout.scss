@@ -1,0 +1,24 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Mise en page générale
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+body:not([data-xal-page-fullheight]) {
+  padding-top: $xal-navbar-height;
+}
+
+// =-=-=-=-=-=-
+// Barre de navigation
+// =-=-=-=-=-=-
+
+#xal-main-navbar {
+  height: $xal-navbar-height;
+  z-index: 1030;
+
+  .navbar-nav button[data-bs-toggle="dropdown"][aria-expanded="true"] .bi-chevron-down {
+    transform: rotate(180deg);
+  }
+
+  .navbar-nav button[data-bs-toggle="dropdown"] .bi-chevron-down {
+    transition: all .3s ease;
+  }
+}

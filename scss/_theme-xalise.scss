@@ -1,0 +1,70 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Thème personnalisé Xalise
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-u-tooltip {
+  --bs-tooltip-opacity: 1;
+  --bs-tooltip-bg: var(--xalise-color);
+  --bs-tooltip-color: var(--bs-white);
+}
+
+.xal-u-gradient {
+    background: linear-gradient(10deg, #499699 0%, #135f76 100%);
+}
+
+.xal-dot-1-70 {
+  width: .7rem;
+  height: .7rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+[data-bs-theme="xalise"] {
+  --bs-primary: var(--xalise-color);
+  --bs-primary-rgb: var(--xalise-color-rgb);
+
+  // =-=-=-=-=-=-
+  // Barre de navigation
+  // =-=-=-=-=-=-
+  
+  .navbar {
+    .navbar-brand {
+      padding-top: .75rem;
+      padding-bottom: .75rem;
+    }
+    
+    .btn-outline-secondary {
+      border: none;
+      margin-left: 0.5rem;
+      color: var(--bs-white);
+      background-color: color-mix(in srgb, var(--bs-primary) 85%, var(--bs-black));
+
+      &:hover {
+        background-color: color-mix(in srgb, var(--bs-primary) 70%, var(--bs-black));
+      }
+
+      .badge {
+        font-weight: 500;
+        font-size: 0.6rem;
+        margin-left: 0.1rem;
+        padding: 0.35rem 0.45rem;
+      }
+    }
+  }
+
+  // =-=-=-=-=-=-
+  // Menu déroulant
+  // =-=-=-=-=-=-
+
+  .dropdown-menu {
+    --bs-dropdown-bg: var(--bs-primary);
+    --bs-dropdown-link-color: var(--bs-white);
+    --bs-dropdown-link-hover-color: var(--bs-white);
+    --bs-dropdown-link-active-color: var(--bs-white);
+    --bs-dropdown-link-hover-bg: color-mix(in srgb, var(--bs-primary) 70%, var(--bs-black));
+    --bs-dropdown-link-active-bg: color-mix(in srgb, var(--bs-primary) 55%, var(--bs-black));
+    --bs-dropdown-link-disabled-color: rgba(var(--bs-white-rgb), 0.5);
+    --bs-dropdown-header-color: var(--bs-white);
+    --bs-dropdown-header-padding-y: 0;
+  }
+}

@@ -1,0 +1,18 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Centre de notifications
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+// =-=-=-=-=-=-
+// Nombre de notifications
+// Affiché à partir du breakpoint md
+// =-=-=-=-=-=-
+
+.xal-notification-center_indicator {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .xal-notification-center_indicator {
+    display: inline-block;
+  }
+}

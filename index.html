@@ -8,6 +8,107 @@
     <title>Xalise > Dashboard</title>
   </head>
   <body data-bs-theme="xalise">
+    <!-- Barre de navigation -->
+    <header>
+      <nav role="navigation"
+           id="xal-main-navbar"
+           class="navbar navbar-expand fixed-top flex-md-nowrap p-0 xal-u-gradient"
+           aria-label="Navigation principale">
+        <div class="container-fluid justify-content-start p-0">
+          <!-- Boutons toggle/offcanvas -->
+          <div class="xal-main-navbar__left-zone align-items-center d-md-none d-lg-flex">
+            <button id="xal-btn-toggle-main-sidebar"
+                    class="btn btn-outline-secondary d-none d-lg-block"
+                    type="button">
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button id="xal-btn-toggle-offcanvas-main-sidebar"
+                    class="btn btn-outline-secondary d-md-none"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#xal-main-sidebar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+              <i class="bi bi-list"></i>
+            </button>
+          </div>
+
+          <!-- .navbar-brand -->
+          <a href="#" class="navbar-brand me-0 px-3 fs-6 text-white">Xalise</a>
+
+          <!-- .navbar-nav -->
+          <div class="navbar-nav flex-row ms-auto me-3">
+            <button type="button"
+                    class="btn btn-outline-secondary position-relative"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#xal-notification-center"
+                    aria-controls="xal-notification-center"
+                    aria-label="Notifications">
+              <i class="bi bi-bell" aria-hidden="true"></i>
+              <span class="badge bg-danger rounded-pill xal-notification-center_indicator">
+                <span class="xal-notification-center__badge">99+</span>
+                <span class="visually-hidden">notifications non lues</span>
+              </span>
+              <span class="xal-dot-1-70 ms-1 d-md-none bg-danger xal-notification-center__badge-dot" aria-hidden="true"></span>
+            </button>
+            <button type="button"
+                    class="btn btn-outline-secondary"
+                    aria-label="Messages">
+              <i class="bi bi-envelope" aria-hidden="true"></i>
+              <span class="badge bg-danger rounded-pill d-none d-md-inline-block">
+                99+
+                <span class="visually-hidden">messages non lus</span>
+              </span>
+              <span class="xal-dot-1-70 ms-1 d-md-none bg-danger" aria-hidden="true"></span>
+            </button>
+            <div class="dropdown">
+              <button type="button"
+                      class="btn btn-outline-secondary d-flex"
+                      data-bs-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                      aria-controls="xal-user-menu">
+                <img src="./assets/img/user.jpg" alt="Avatar" class="rounded-circle me-2" width="24" height="24"/>
+                <span class="d-none d-md-inline">Laura Bellerose</span>
+                <i class="bi bi-chevron-down m-0 ms-md-2" aria-hidden="true"></i>
+              </button>
+              <ul id="xal-user-menu" class="dropdown-menu dropdown-menu-end mt-2">
+                <li class="dropdown-header">
+                  <div class="fw-semibold">Laura Bellerose</div>
+                  <div class="fst-italic small fw-semibold text-body-secondary">Directrice Générale</div>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a href="#" class="dropdown-item">
+                    <i class="bi bi-person-fill me-1" aria-hidden="true"></i>
+                    Profil
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="dropdown-item active" aria-current="true">
+                    <i class="bi bi-gear-fill me-1" aria-hidden="true"></i>
+                    Paramètres
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="dropdown-item disabled" aria-disabled="true">
+                    <i class="bi bi-envelope-fill me-1" aria-hidden="true"></i>
+                    Menu désactivé
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a href="#" class="dropdown-item">
+                    <i class="bi bi-door-closed-fill me-1" aria-hidden="true"></i>
+                    Se déconnecter
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
