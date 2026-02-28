@@ -110,6 +110,196 @@
       </nav>
     </header>
 
+    <div id="xal-notification-center"
+         class="offcanvas offcanvas-end"
+         aria-labelledby="xal-notification-center__title"
+         tabindex="-1">
+      <!-- En-tête -->
+      <div class="xal-notification-center__header">
+        <!-- Informations -->
+         <div class="xal-notification-center__header-meta">
+          <div class="xal-notification-center__header-title" id="xal-notification-center__title">
+            <span>Notifications</span>
+            <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis xal-notification-center_indicator">
+              <span class="xal-notification-center__badge">99+</span>
+            </span>
+            <span class="visually-hidden">notifications non lues</span>
+          </div>
+          <div class="xal-notification-center__header-subtitle">
+            Derniers événements et activités
+          </div>
+         </div>
+
+         <!-- Actions de masse -->
+        <div class="xal-notification-center__header-actions">
+          <button class="btn btn-sm xal-notification-center__bulk-action xal-notification-center__bulk-action-read"
+                  aria-label="Marquer toutes les notifications comme lues">
+            <i class="bi bi-check2-all"></i>
+          </button>
+          <button class="btn btn-sm xal-notification-center__bulk-action xal-notification-center__bulk-action-unread"
+                  aria-label="Marquer toutes les notifications comme non lues">
+            <i class="bi bi-envelope"></i>
+          </button>
+          <button class="btn btn-sm xal-notification-center__bulk-action xal-notification-center__bulk-action-delete"
+                  aria-label="Supprimer toutes les notifications">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+
+        <!-- Bouton de fermeture -->
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+      </div>
+    
+      <!-- Confirmation contextuelle -->
+      <div class="xal-notification-center__bulk-confirm" hidden>
+        <p class="mb-2 text-center">
+          Souhaitez-vous supprimer les <strong><span class="xal-notification-center__bulk-confirm-counter">X</span></strong> notifications ?
+        </p>
+        <div class="text-center">
+          <button class="btn btn-secondary btn-sm xal-notification-center__bulk-confirm-cancel">
+            <i class="bi bi-x"></i>
+            Annuler l'action
+          </button>
+          <button class="btn btn-danger btn-sm xal-notification-center__bulk-confirm-delete">
+            <i class="bi bi-check2"></i>
+            Supprimer les notifications
+          </button>
+        </div>
+      </div>
+
+      <!-- Liste des notifications -->
+      <div class="offcanvas-body p-0">
+        <ul class="xal-notification-center__list" role="list">
+          <li class="xal-notification-center__list-item" role="listitem" data-role="empty" hidden>
+              <i class="bi bi-bell-slash fs-4"></i>
+              <div class="small mt-1">
+                Aucune notification récente !
+              </div>
+          </li>
+          <li class="xal-notification-center__list-item xal-notification-center__list-item--unread" role="listitem" data-role="notification">
+            <a href="#" class="xal-notification__link">
+              <div class="xal-notification">
+                <span class="dot"></span>
+                <i class="bi bi-info-circle text-primary"></i>
+                <div class="xal-notification__content flex-grow-1">
+                  Nouvelle facture disponible
+                </div>
+                <time class="xal-notification__time" datetime="2026-02-01T10:42:00">
+                  Aujourd'hui à 10:42
+                </time>
+                <span class="xal-notification__spinner" aria-hidden="true">
+                  <span class="spinner-border spinner-border-sm"></span>
+                </span>
+              </div>
+              <div class="xal-notification__actions">
+                <button class="btn btn-sm btn-link xal-notification__action-mark-read" aria-label="Marquer comme lue">
+                  <i class="bi bi-check2"></i>
+                </button>
+                <button class="btn btn-sm btn-link xal-notification__action-mark-unread" aria-label="Marquer comme non lue">
+                  <i class="bi bi-envelope"></i>
+                </button>
+                <button class="btn btn-sm btn-link text-danger xal-notification__action-delete" aria-label="Supprimer">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </a>
+          </li>
+          <li class="xal-notification-center__list-item xal-notification-center__list-item--unread" role="listitem" data-role="notification">
+            <a href="#" class="xal-notification__link">
+              <div class="xal-notification">
+                <span class="dot" aria-hidden="true"></span>
+                <i class="bi bi-check-circle text-primary" aria-hidden="true"></i>
+                <div class="xal-notification__content flex-grow-1">
+                  Génération du planning terminé
+                </div>
+                <time class="xal-notification__time" datetime="2026-02-01T10:42:00">
+                  Aujourd'hui à 10:42
+                </time>
+                <span class="xal-notification__spinner" aria-hidden="true">
+                  <span class="spinner-border spinner-border-sm"></span>
+                </span>
+              </div>
+              <div class="xal-notification__actions">
+                <button class="btn btn-sm btn-link xal-notification__action-mark-read" aria-label="Marquer comme lue">
+                  <i class="bi bi-check2"></i>
+                </button>
+                <button class="btn btn-sm btn-link xal-notification__action-mark-unread" aria-label="Marquer comme non lue">
+                  <i class="bi bi-envelope"></i>
+                </button>
+                <button class="btn btn-sm btn-link text-danger xal-notification__action-delete" aria-label="Supprimer">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </a>
+          </li>
+          <li class="xal-notification-center__list-item xal-notification-center__list-item--unread" role="listitem" data-role="notification">
+            <a href="#" class="xal-notification__link">
+              <div class="xal-notification">
+                <span class="dot" aria-hidden="true"></span>
+                <i class="bi bi-exclamation-triangle text-primary" aria-hidden="true"></i>
+                <div class="xal-notification__content flex-grow-1">
+                  Facture non réglée (retard : 3 jours)
+                </div>
+                <time class="xal-notification__time" datetime="2026-02-01T10:42:00">
+                  Aujourd'hui à 10:42
+                </time>
+                <span class="xal-notification__spinner" aria-hidden="true">
+                  <span class="spinner-border spinner-border-sm"></span>
+                </span>
+              </div>
+              <div class="xal-notification__actions">
+                <button class="btn btn-sm btn-link xal-notification__action-mark-read" aria-label="Marquer comme lue">
+                  <i class="bi bi-check2"></i>
+                </button>
+                <button class="btn btn-sm btn-link xal-notification__action-mark-unread" aria-label="Marquer comme non lue">
+                  <i class="bi bi-envelope"></i>
+                </button>
+                <button class="btn btn-sm btn-link text-danger xal-notification__action-delete" aria-label="Supprimer">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </a>
+          </li>
+          <li class="xal-notification-center__list-item xal-notification-center__list-item--unread" role="listitem" data-role="notification">
+            <a href="#" class="xal-notification__link">
+              <div class="xal-notification">
+                <span class="dot" aria-hidden="true"></span>
+                <i class="bi bi-x-circle text-primary" aria-hidden="true"></i>
+                <div class="xal-notification__content flex-grow-1">
+                  Virement SEPA en erreur
+                </div>
+                <time class="xal-notification__time" datetime="2026-02-01T10:42:00">
+                  Aujourd'hui à 10:42
+                </time>
+                <span class="xal-notification__spinner" aria-hidden="true">
+                  <span class="spinner-border spinner-border-sm"></span>
+                </span>
+              </div>
+              <div class="xal-notification__actions">
+                <button class="btn btn-sm btn-link xal-notification__action-mark-read" aria-label="Marquer comme lue">
+                  <span class="xal-notification__action-icon">
+                    <i class="bi bi-check2"></i>
+                  </span>
+                </button>
+                <button class="btn btn-sm btn-link xal-notification__action-mark-unread" aria-label="Marquer comme non lue">
+                  <i class="bi bi-envelope"></i>
+                </button>
+                <button class="btn btn-sm btn-link text-danger xal-notification__action-delete" aria-label="Supprimer">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <div class="xal-notification-center__footer xal-u-gradient">
+          <button class="btn btn-sm">
+            <i class="bi bi-eye-fill" aria-hidden="true"></i>
+            Visualiser toutes les notifications
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
     <script src="./assets/js/xalise.js"></script>
