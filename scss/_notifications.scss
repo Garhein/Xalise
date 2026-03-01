@@ -390,3 +390,22 @@
     display: inline-block;
   }
 }
+
+// =-=-=-=-=-=-
+// Suppression unitaire
+// Barre de progression synchronisée avec le délai autorisé pour la suppression
+// =-=-=-=-=-=-
+
+.xal-notification-toast-undo__progress {
+  height: 2px;
+  display: block;
+  margin-top: .25rem;
+  transform-origin: left;
+  background-color: $xalise-color;
+  animation: xal-notification-toast-progress var(--toast-duration, 0ms) linear forwards;
+}
+
+@keyframes xal-notification-toast-progress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}

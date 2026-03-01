@@ -12286,6 +12286,23 @@ body:not([data-xal-page-fullheight]) {
     display: inline-block;
   }
 }
+.xal-notification-toast-undo__progress {
+  height: 2px;
+  display: block;
+  margin-top: 0.25rem;
+  transform-origin: left;
+  background-color: #166278;
+  animation: xal-notification-toast-progress var(--toast-duration, 0ms) linear forwards;
+}
+
+@keyframes xal-notification-toast-progress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
 .xal-u-tooltip {
   --bs-tooltip-opacity: 1;
   --bs-tooltip-bg: var(--xalise-color);

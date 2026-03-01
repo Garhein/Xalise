@@ -110,6 +110,7 @@
       </nav>
     </header>
 
+    <!-- Centre de notifications -->
     <div id="xal-notification-center"
          class="offcanvas offcanvas-end"
          aria-labelledby="xal-notification-center__title"
@@ -297,6 +298,29 @@
             Visualiser toutes les notifications
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Conteneur des toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="xal-notification-toast-undo"
+           class="toast"
+           aria-live="assertive"
+           aria-atomic="true"
+           role="alert">
+          <div class="toast-body w-100">
+            <div class="d-flex align-items-center">
+              <span>Notification supprimée</span>
+              <button class="btn btn-link btn-sm text-decoration-none ms-2 xal-notification-toast-undo__action">
+                Annuler
+              </button>
+              <button type="button"
+                      class="btn-close ms-auto"
+                      aria-label="Fermer"
+                      data-bs-dismiss="toast"></button>
+              </div>
+            <div class="xal-notification-toast-undo__progress" aria-hidden="true"></div>
+          </div>
       </div>
     </div>
 
