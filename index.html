@@ -45,11 +45,11 @@
                     aria-controls="xal-notification-center"
                     aria-label="Notifications">
               <i class="bi bi-bell" aria-hidden="true"></i>
-              <span class="badge bg-danger rounded-pill xal-notification-center_indicator">
-                <span class="xal-notification-center__badge">99+</span>
+              <span class="xal-notification-indicator badge bg-danger rounded-pill">
+                <span class="xal-notification-indicator__badge">99+</span>
                 <span class="visually-hidden">notifications non lues</span>
               </span>
-              <span class="xal-dot-1-70 ms-1 d-md-none bg-danger xal-notification-center__badge-dot" aria-hidden="true"></span>
+              <span class="xal-u-dot-1-70 ms-1 d-md-none bg-danger xal-notification-indicator__dot" aria-hidden="true"></span>
             </button>
             <button type="button"
                     class="btn btn-outline-secondary"
@@ -59,7 +59,7 @@
                 99+
                 <span class="visually-hidden">messages non lus</span>
               </span>
-              <span class="xal-dot-1-70 ms-1 d-md-none bg-danger" aria-hidden="true"></span>
+              <span class="xal-u-dot-1-70 ms-1 d-md-none bg-danger" aria-hidden="true"></span>
             </button>
             <div class="dropdown">
               <button type="button"
@@ -113,16 +113,16 @@
     <!-- Centre de notifications -->
     <div id="xal-notification-center"
          class="offcanvas offcanvas-end"
-         aria-labelledby="xal-notification-center__title"
+         aria-labelledby="xal-notification-center-title"
          tabindex="-1">
       <!-- En-tête -->
       <div class="xal-notification-center__header">
         <!-- Informations -->
          <div class="xal-notification-center__header-meta">
-          <div class="xal-notification-center__header-title" id="xal-notification-center__title">
+          <div class="xal-notification-center__header-title" id="xal-notification-center-title">
             <span>Notifications</span>
-            <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis xal-notification-center_indicator">
-              <span class="xal-notification-center__badge">99+</span>
+            <span class="xal-notification-indicator badge rounded-pill bg-primary-subtle text-primary-emphasis">
+              <span class="xal-notification-indicator__badge">99+</span>
             </span>
             <span class="visually-hidden">notifications non lues</span>
           </div>
@@ -133,15 +133,15 @@
 
          <!-- Actions de masse -->
         <div class="xal-notification-center__header-actions">
-          <button class="btn btn-sm xal-notification-center__bulk-action xal-notification-center__bulk-action-read"
+          <button class="btn btn-sm xal-notification-center__bulk-action xal-notification-center__bulk-action--read"
                   aria-label="Marquer toutes les notifications comme lues">
             <i class="bi bi-check2-all"></i>
           </button>
-          <button class="btn btn-sm xal-notification-center__bulk-action xal-notification-center__bulk-action-unread"
+          <button class="btn btn-sm xal-notification-center__bulk-action xal-notification-center__bulk-action--unread"
                   aria-label="Marquer toutes les notifications comme non lues">
             <i class="bi bi-envelope"></i>
           </button>
-          <button class="btn btn-sm xal-notification-center__bulk-action xal-notification-center__bulk-action-delete"
+          <button class="btn btn-sm xal-notification-center__bulk-action xal-notification-center__bulk-action--delete"
                   aria-label="Supprimer toutes les notifications">
             <i class="bi bi-trash"></i>
           </button>
@@ -171,16 +171,16 @@
       <!-- Liste des notifications -->
       <div class="offcanvas-body p-0">
         <ul class="xal-notification-center__list" role="list">
-          <li class="xal-notification-center__list-item" role="listitem" data-role="empty" hidden>
+          <li class="xal-notification-center__list-empty" role="listitem" hidden>
               <i class="bi bi-bell-slash fs-4"></i>
               <div class="small mt-1">
                 Aucune notification récente !
               </div>
           </li>
-          <li class="xal-notification-center__list-item xal-notification-center__list-item--unread" role="listitem" data-role="notification">
+          <li class="xal-notification xal-notification--unread" role="listitem" data-xal-notification>
             <a href="#" class="xal-notification__link">
-              <div class="xal-notification">
-                <span class="dot"></span>
+              <div class="xal-notification__body">
+                <span class="xal-notification__dot"></span>
                 <i class="bi bi-info-circle text-primary"></i>
                 <div class="xal-notification__content flex-grow-1">
                   Nouvelle facture disponible
@@ -193,22 +193,22 @@
                 </span>
               </div>
               <div class="xal-notification__actions">
-                <button class="btn btn-sm btn-link xal-notification__action-mark-read" aria-label="Marquer comme lue">
+                <button class="btn btn-sm btn-link xal-notification__action xal-notification__action--mark-read" aria-label="Marquer comme lue">
                   <i class="bi bi-check2"></i>
                 </button>
-                <button class="btn btn-sm btn-link xal-notification__action-mark-unread" aria-label="Marquer comme non lue">
+                <button class="btn btn-sm btn-link xal-notification__action xal-notification__action--mark-unread" aria-label="Marquer comme non lue">
                   <i class="bi bi-envelope"></i>
                 </button>
-                <button class="btn btn-sm btn-link text-danger xal-notification__action-delete" aria-label="Supprimer">
+                <button class="btn btn-sm btn-link text-danger xal-notification__action xal-notification__action--delete" aria-label="Supprimer">
                   <i class="bi bi-trash"></i>
                 </button>
               </div>
             </a>
           </li>
-          <li class="xal-notification-center__list-item xal-notification-center__list-item--unread" role="listitem" data-role="notification">
+          <li class="xal-notification xal-notification--unread" role="listitem" data-xal-notification>
             <a href="#" class="xal-notification__link">
-              <div class="xal-notification">
-                <span class="dot" aria-hidden="true"></span>
+              <div class="xal-notification__body">
+                <span class="xal-notification__dot" aria-hidden="true"></span>
                 <i class="bi bi-check-circle text-primary" aria-hidden="true"></i>
                 <div class="xal-notification__content flex-grow-1">
                   Génération du planning terminé
@@ -221,22 +221,22 @@
                 </span>
               </div>
               <div class="xal-notification__actions">
-                <button class="btn btn-sm btn-link xal-notification__action-mark-read" aria-label="Marquer comme lue">
+                <button class="btn btn-sm btn-link xal-notification__action xal-notification__action--mark-read" aria-label="Marquer comme lue">
                   <i class="bi bi-check2"></i>
                 </button>
-                <button class="btn btn-sm btn-link xal-notification__action-mark-unread" aria-label="Marquer comme non lue">
+                <button class="btn btn-sm btn-link xal-notification__action xal-notification__action--mark-unread" aria-label="Marquer comme non lue">
                   <i class="bi bi-envelope"></i>
                 </button>
-                <button class="btn btn-sm btn-link text-danger xal-notification__action-delete" aria-label="Supprimer">
+                <button class="btn btn-sm btn-link text-danger xal-notification__action xal-notification__action--delete" aria-label="Supprimer">
                   <i class="bi bi-trash"></i>
                 </button>
               </div>
             </a>
           </li>
-          <li class="xal-notification-center__list-item xal-notification-center__list-item--unread" role="listitem" data-role="notification">
+          <li class="xal-notification xal-notification--unread" role="listitem" data-xal-notification>
             <a href="#" class="xal-notification__link">
-              <div class="xal-notification">
-                <span class="dot" aria-hidden="true"></span>
+              <div class="xal-notification__body">
+                <span class="xal-notification__dot" aria-hidden="true"></span>
                 <i class="bi bi-exclamation-triangle text-primary" aria-hidden="true"></i>
                 <div class="xal-notification__content flex-grow-1">
                   Facture non réglée (retard : 3 jours)
@@ -249,22 +249,22 @@
                 </span>
               </div>
               <div class="xal-notification__actions">
-                <button class="btn btn-sm btn-link xal-notification__action-mark-read" aria-label="Marquer comme lue">
+                <button class="btn btn-sm btn-link xal-notification__action xal-notification__action--mark-read" aria-label="Marquer comme lue">
                   <i class="bi bi-check2"></i>
                 </button>
-                <button class="btn btn-sm btn-link xal-notification__action-mark-unread" aria-label="Marquer comme non lue">
+                <button class="btn btn-sm btn-link xal-notification__action xal-notification__action--mark-unread" aria-label="Marquer comme non lue">
                   <i class="bi bi-envelope"></i>
                 </button>
-                <button class="btn btn-sm btn-link text-danger xal-notification__action-delete" aria-label="Supprimer">
+                <button class="btn btn-sm btn-link text-danger xal-notification__action xal-notification__action--delete" aria-label="Supprimer">
                   <i class="bi bi-trash"></i>
                 </button>
               </div>
             </a>
           </li>
-          <li class="xal-notification-center__list-item xal-notification-center__list-item--unread" role="listitem" data-role="notification">
+          <li class="xal-notification xal-notification--unread" role="listitem" data-xal-notification>
             <a href="#" class="xal-notification__link">
-              <div class="xal-notification">
-                <span class="dot" aria-hidden="true"></span>
+              <div class="xal-notification__body">
+                <span class="xal-notification__dot" aria-hidden="true"></span>
                 <i class="bi bi-x-circle text-primary" aria-hidden="true"></i>
                 <div class="xal-notification__content flex-grow-1">
                   Virement SEPA en erreur
@@ -277,15 +277,13 @@
                 </span>
               </div>
               <div class="xal-notification__actions">
-                <button class="btn btn-sm btn-link xal-notification__action-mark-read" aria-label="Marquer comme lue">
-                  <span class="xal-notification__action-icon">
-                    <i class="bi bi-check2"></i>
-                  </span>
+                <button class="btn btn-sm btn-link xal-notification__action xal-notification__action--mark-read" aria-label="Marquer comme lue">
+                  <i class="bi bi-check2"></i>
                 </button>
-                <button class="btn btn-sm btn-link xal-notification__action-mark-unread" aria-label="Marquer comme non lue">
+                <button class="btn btn-sm btn-link xal-notification__action xal-notification__action--mark-unread" aria-label="Marquer comme non lue">
                   <i class="bi bi-envelope"></i>
                 </button>
-                <button class="btn btn-sm btn-link text-danger xal-notification__action-delete" aria-label="Supprimer">
+                <button class="btn btn-sm btn-link text-danger xal-notification__action xal-notification__action--delete" aria-label="Supprimer">
                   <i class="bi bi-trash"></i>
                 </button>
               </div>
@@ -304,14 +302,14 @@
     <!-- Conteneur des toast -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
       <div id="xal-notification-toast-undo"
-           class="toast"
+           class="toast xal-notification-toast"
            aria-live="assertive"
            aria-atomic="true"
            role="alert">
           <div class="toast-body w-100">
             <div class="d-flex align-items-center">
               <span>Notification supprimée</span>
-              <button class="btn btn-link btn-sm text-decoration-none ms-2 xal-notification-toast-undo__action">
+              <button class="btn btn-link btn-sm text-decoration-none ms-2 xal-notification-toast__action">
                 Annuler
               </button>
               <button type="button"
@@ -319,7 +317,7 @@
                       aria-label="Fermer"
                       data-bs-dismiss="toast"></button>
               </div>
-            <div class="xal-notification-toast-undo__progress" aria-hidden="true"></div>
+            <div class="xal-notification-toast__progress" aria-hidden="true"></div>
           </div>
       </div>
     </div>

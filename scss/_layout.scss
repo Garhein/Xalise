@@ -21,5 +21,20 @@ body:not([data-xal-page-fullheight]) {
   .navbar-nav button[data-bs-toggle="dropdown"] .bi-chevron-down {
     transition: all .3s ease;
   }
+
+  // =-=-=-=-=-=-
+  // Centre de notifications : nombre de notifications
+  // Affiché à partir du breakpoint md
+  // =-=-=-=-=-=-
+
+  .xal-notification-indicator {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .xal-notification-indicator {
+      display: inline-block;
+    }
+  }
 }
 

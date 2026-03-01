@@ -11971,6 +11971,14 @@ body:not([data-xal-page-fullheight]) {
 #xal-main-navbar .navbar-nav button[data-bs-toggle=dropdown] .bi-chevron-down {
   transition: all 0.3s ease;
 }
+#xal-main-navbar .xal-notification-indicator {
+  display: none;
+}
+@media (min-width: 768px) {
+  #xal-main-navbar .xal-notification-indicator {
+    display: inline-block;
+  }
+}
 
 #xal-notification-center {
   --bs-offcanvas-width: 420px;
@@ -12042,18 +12050,18 @@ body:not([data-xal-page-fullheight]) {
   opacity: 1;
   transform: scale(1.04);
 }
-#xal-notification-center .xal-notification-center__bulk-action-read:hover, #xal-notification-center .xal-notification-center__bulk-action-read:focus-visible, #xal-notification-center .xal-notification-center__bulk-action-unread:hover, #xal-notification-center .xal-notification-center__bulk-action-unread:focus-visible {
+#xal-notification-center .xal-notification-center__bulk-action--read:hover, #xal-notification-center .xal-notification-center__bulk-action--read:focus-visible, #xal-notification-center .xal-notification-center__bulk-action--unread:hover, #xal-notification-center .xal-notification-center__bulk-action--unread:focus-visible {
   color: var(--bs-primary-text-emphasis);
   background-color: color-mix(in srgb, var(--bs-primary) 16%, var(--bs-body-bg));
 }
-#xal-notification-center .xal-notification-center__bulk-action-read:focus-visible, #xal-notification-center .xal-notification-center__bulk-action-unread:focus-visible {
+#xal-notification-center .xal-notification-center__bulk-action--read:focus-visible, #xal-notification-center .xal-notification-center__bulk-action--unread:focus-visible {
   box-shadow: 0 0 0 2px rgba(var(--bs-primary-rgb), 0.25);
 }
-#xal-notification-center .xal-notification-center__bulk-action-delete:hover, #xal-notification-center .xal-notification-center__bulk-action-delete:focus-visible {
+#xal-notification-center .xal-notification-center__bulk-action--delete:hover, #xal-notification-center .xal-notification-center__bulk-action--delete:focus-visible {
   color: var(--bs-danger-text-emphasis);
   background-color: color-mix(in srgb, var(--bs-danger) 14%, var(--bs-body-bg));
 }
-#xal-notification-center .xal-notification-center__bulk-action-delete:focus-visible {
+#xal-notification-center .xal-notification-center__bulk-action--delete:focus-visible {
   box-shadow: 0 0 0 2px rgba(var(--bs-danger-rgb), 0.25);
 }
 #xal-notification-center .xal-notification-center__bulk-action--disabled {
@@ -12079,64 +12087,64 @@ body:not([data-xal-page-fullheight]) {
   list-style: none;
   overflow-y: auto;
 }
-#xal-notification-center .xal-notification-center__list.is-busy {
+#xal-notification-center .xal-notification-center__list.xal-notification-center__list--busy {
   opacity: 0.6;
   pointer-events: none;
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=empty] {
+#xal-notification-center .xal-notification-center__list-empty {
   padding: 1rem;
   text-align: center;
   color: var(--bs-secondary-color);
   background-color: var(--bs-tertiary-bg);
   border-bottom: 1px solid var(--bs-border-color);
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=empty] i {
+#xal-notification-center .xal-notification-center__list-empty i {
   opacity: 0.5;
   font-size: 1.25rem;
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification] {
+#xal-notification-center .xal-notification[data-xal-notification] {
   padding: 0;
   line-height: normal;
   border-bottom: 1px solid var(--bs-border-color);
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification].xal-notification-center__list-item--read .dot {
+#xal-notification-center .xal-notification[data-xal-notification].xal-notification--read .xal-notification__dot {
   opacity: 0.25;
   background-color: var(--bs-secondary-text-emphasis);
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification].xal-notification-center__list-item--read .xal-notification__action-mark-read {
+#xal-notification-center .xal-notification[data-xal-notification].xal-notification--read .xal-notification__action--mark-read {
   display: none;
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification].xal-notification-center__list-item--unread {
+#xal-notification-center .xal-notification[data-xal-notification].xal-notification--unread {
   border-left: 4px solid var(--bs-primary);
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification].xal-notification-center__list-item--unread .xal-notification__link {
+#xal-notification-center .xal-notification[data-xal-notification].xal-notification--unread .xal-notification__link {
   background-color: color-mix(in srgb, var(--bs-primary-bg-subtle) 55%, var(--bs-body-bg));
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification].xal-notification-center__list-item--unread .xal-notification__link:hover, #xal-notification-center .xal-notification-center__list-item[data-role=notification].xal-notification-center__list-item--unread .xal-notification__link:focus-visible {
+#xal-notification-center .xal-notification[data-xal-notification].xal-notification--unread .xal-notification__link:hover, #xal-notification-center .xal-notification[data-xal-notification].xal-notification--unread .xal-notification__link:focus-visible {
   background-color: var(--bs-secondary-bg);
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification].xal-notification-center__list-item--unread .xal-notification__action-mark-unread {
+#xal-notification-center .xal-notification[data-xal-notification].xal-notification--unread .xal-notification__action--mark-unread {
   display: none;
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification].is-busy {
+#xal-notification-center .xal-notification[data-xal-notification].xal-notification--busy {
   opacity: 0.6;
   cursor: progress;
   pointer-events: none;
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification].is-busy .xal-notification__spinner {
+#xal-notification-center .xal-notification[data-xal-notification].xal-notification--busy .xal-notification__spinner {
   display: inline-flex;
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification].is-busy .xal-notification__actions {
+#xal-notification-center .xal-notification[data-xal-notification].xal-notification--busy .xal-notification__actions {
   opacity: 0;
   visibility: hidden;
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification].is-busy .xal-notification__link {
+#xal-notification-center .xal-notification[data-xal-notification].xal-notification--busy .xal-notification__link {
   pointer-events: none;
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification]:not(.is-busy):hover .dot {
+#xal-notification-center .xal-notification[data-xal-notification]:not(.xal-notification--busy):hover .xal-notification__dot {
   transform: scale(1.1);
 }
-#xal-notification-center .xal-notification-center__list-item[data-role=notification]:not(.is-busy) .xal-notification__link:hover .xal-notification__actions, #xal-notification-center .xal-notification-center__list-item[data-role=notification]:not(.is-busy) .xal-notification__link:focus-within .xal-notification__actions {
+#xal-notification-center .xal-notification[data-xal-notification]:not(.xal-notification--busy) .xal-notification__link:hover .xal-notification__actions, #xal-notification-center .xal-notification[data-xal-notification]:not(.xal-notification--busy) .xal-notification__link:focus-within .xal-notification__actions {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -12163,7 +12171,7 @@ body:not([data-xal-page-fullheight]) {
   outline: 2px solid var(--bs-primary);
   box-shadow: inset 0 0 0 1px var(--bs-border-color);
 }
-#xal-notification-center .xal-notification {
+#xal-notification-center .xal-notification__body {
   display: grid;
   row-gap: 0.125rem;
   column-gap: 0.5rem;
@@ -12171,18 +12179,18 @@ body:not([data-xal-page-fullheight]) {
   padding-right: 2.5rem;
   grid-template-columns: 0.875rem 0.875rem 1fr;
 }
-#xal-notification-center .xal-notification .dot {
+#xal-notification-center .xal-notification__body .xal-notification__dot {
   width: 0.8rem;
   height: 0.8rem;
   border-radius: 50%;
   background-color: var(--bs-primary);
 }
-#xal-notification-center .xal-notification .bi {
+#xal-notification-center .xal-notification__body .bi {
   line-height: 1;
   flex-shrink: 0;
   font-size: 0.875rem;
 }
-#xal-notification-center .xal-notification__content {
+#xal-notification-center .xal-notification__body .xal-notification__content {
   display: flex;
   overflow: hidden;
   line-height: 1.5;
@@ -12191,13 +12199,13 @@ body:not([data-xal-page-fullheight]) {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-#xal-notification-center .xal-notification__time {
+#xal-notification-center .xal-notification__body .xal-notification__time {
   grid-column: 3;
   line-height: 1.2;
   font-size: 0.75rem;
   color: var(--bs-secondary-color);
 }
-#xal-notification-center .xal-notification__spinner {
+#xal-notification-center .xal-notification__body .xal-notification__spinner {
   top: 50%;
   right: 0.75rem;
   display: none;
@@ -12240,10 +12248,6 @@ body:not([data-xal-page-fullheight]) {
   outline: none;
   box-shadow: 0 0 0 2px rgba(var(--bs-primary-rgb), 0.25);
 }
-#xal-notification-center .xal-notification__actions:has(.is-busy) {
-  opacity: 1;
-  visibility: visible;
-}
 #xal-notification-center .xal-notification-center__footer {
   padding: 0.75rem 1rem;
   background-color: var(--bs-primary);
@@ -12277,16 +12281,7 @@ body:not([data-xal-page-fullheight]) {
   }
 }
 
-.xal-notification-center_indicator {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .xal-notification-center_indicator {
-    display: inline-block;
-  }
-}
-.xal-notification-toast-undo__progress {
+.xal-notification-toast__progress {
   height: 2px;
   display: block;
   margin-top: 0.25rem;
@@ -12313,7 +12308,7 @@ body:not([data-xal-page-fullheight]) {
   background: linear-gradient(10deg, #499699 0%, #135f76 100%);
 }
 
-.xal-dot-1-70 {
+.xal-u-dot-1-70 {
   width: 0.7rem;
   height: 0.7rem;
   border-radius: 50%;

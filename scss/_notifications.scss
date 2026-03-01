@@ -80,8 +80,8 @@
       transform: scale(1.04);
     }
 
-    &-read,
-    &-unread {
+    &--read,
+    &--unread {
       &:hover,
       &:focus-visible {
         color: var(--bs-primary-text-emphasis);
@@ -93,7 +93,7 @@
       }
     }
 
-    &-delete {
+    &--delete {
       &:hover,
       &:focus-visible {
         color: var(--bs-danger-text-emphasis);
@@ -133,13 +133,13 @@
     list-style: none;
     overflow-y: auto;
 
-    &.is-busy {
+    &.xal-notification-center__list--busy {
       opacity: .6;
       pointer-events: none;
     }
   }
 
-  .xal-notification-center__list-item[data-role="empty"] {
+  .xal-notification-center__list-empty {
     padding: 1rem;
     text-align: center;
     color: var(--bs-secondary-color);
@@ -152,23 +152,23 @@
     }
   }
 
-  .xal-notification-center__list-item[data-role="notification"] {
+  .xal-notification[data-xal-notification] {
     padding: 0;
     line-height: normal;
     border-bottom: 1px solid var(--bs-border-color);
 
-    &.xal-notification-center__list-item--read {
-      .dot {
+    &.xal-notification--read {
+      .xal-notification__dot {
         opacity: .25;
         background-color: var(--bs-secondary-text-emphasis);
       }
 
-      .xal-notification__action-mark-read {
+      .xal-notification__action--mark-read {
         display: none;
       }
     }
 
-    &.xal-notification-center__list-item--unread {
+    &.xal-notification--unread {
       border-left: 4px solid var(--bs-primary);
 
       .xal-notification__link {
@@ -180,12 +180,12 @@
         }
       }
 
-      .xal-notification__action-mark-unread {
+      .xal-notification__action--mark-unread {
         display: none;
       }
     }
 
-    &.is-busy {
+    &.xal-notification--busy {
       opacity: .6;
       cursor: progress;
       pointer-events: none;
@@ -204,12 +204,12 @@
       }
     }
   
-    &:not(.is-busy):hover .dot {
+    &:not(.xal-notification--busy):hover .xal-notification__dot {
       transform: scale(1.1);
     }
   
-    &:not(.is-busy) .xal-notification__link:hover .xal-notification__actions,
-    &:not(.is-busy) .xal-notification__link:focus-within .xal-notification__actions {
+    &:not(.xal-notification--busy) .xal-notification__link:hover .xal-notification__actions,
+    &:not(.xal-notification--busy) .xal-notification__link:focus-within .xal-notification__actions {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
@@ -243,7 +243,7 @@
     }
   }
 
-  .xal-notification {
+  .xal-notification__body {
     display: grid;
     row-gap: .125rem;
     column-gap: .5rem;
@@ -251,7 +251,7 @@
     padding-right: 2.5rem;
     grid-template-columns: .875rem .875rem 1fr;
 
-    .dot {
+    .xal-notification__dot {
       width: .8rem;
       height: .8rem;
       border-radius: 50%;
@@ -264,7 +264,7 @@
       font-size: .875rem;
     }
 
-    &__content {
+    .xal-notification__content {
       display: flex;
       overflow: hidden;
       line-height: 1.5;
@@ -274,14 +274,14 @@
       text-overflow: ellipsis;
     }
 
-    &__time {
+    .xal-notification__time {
       grid-column: 3;
       line-height: 1.2;
       font-size: .75rem;
       color: var(--bs-secondary-color);
     }
 
-    &__spinner {
+    .xal-notification__spinner {
       top: 50%;
       right: .75rem;
       display: none;
@@ -330,10 +330,10 @@
       }
     }
 
-    &:has(.is-busy) {
-      opacity: 1;
-      visibility: visible;
-    }
+    // &:has(.is-busy) {
+    //   opacity: 1;
+    //   visibility: visible;
+    // }
   }
 
   .xal-notification-center__footer {
@@ -377,26 +377,11 @@
 }
 
 // =-=-=-=-=-=-
-// Nombre de notifications
-// Affiché à partir du breakpoint md
-// =-=-=-=-=-=-
-
-.xal-notification-center_indicator {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .xal-notification-center_indicator {
-    display: inline-block;
-  }
-}
-
-// =-=-=-=-=-=-
 // Suppression unitaire
 // Barre de progression synchronisée avec le délai autorisé pour la suppression
 // =-=-=-=-=-=-
 
-.xal-notification-toast-undo__progress {
+.xal-notification-toast__progress {
   height: 2px;
   display: block;
   margin-top: .25rem;
