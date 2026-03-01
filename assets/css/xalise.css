@@ -12102,49 +12102,49 @@ body:not([data-xal-page-fullheight]) {
   opacity: 0.5;
   font-size: 1.25rem;
 }
-#xal-notification-center .xal-notification[data-xal-notification] {
+#xal-notification-center .xal-notification {
   padding: 0;
   line-height: normal;
   border-bottom: 1px solid var(--bs-border-color);
 }
-#xal-notification-center .xal-notification[data-xal-notification].xal-notification--read .xal-notification__dot {
+#xal-notification-center .xal-notification.xal-notification--read .xal-notification__dot {
   opacity: 0.25;
   background-color: var(--bs-secondary-text-emphasis);
 }
-#xal-notification-center .xal-notification[data-xal-notification].xal-notification--read .xal-notification__action--mark-read {
+#xal-notification-center .xal-notification.xal-notification--read .xal-notification__action--mark-read {
   display: none;
 }
-#xal-notification-center .xal-notification[data-xal-notification].xal-notification--unread {
+#xal-notification-center .xal-notification.xal-notification--unread {
   border-left: 4px solid var(--bs-primary);
 }
-#xal-notification-center .xal-notification[data-xal-notification].xal-notification--unread .xal-notification__link {
+#xal-notification-center .xal-notification.xal-notification--unread .xal-notification__link {
   background-color: color-mix(in srgb, var(--bs-primary-bg-subtle) 55%, var(--bs-body-bg));
 }
-#xal-notification-center .xal-notification[data-xal-notification].xal-notification--unread .xal-notification__link:hover, #xal-notification-center .xal-notification[data-xal-notification].xal-notification--unread .xal-notification__link:focus-visible {
+#xal-notification-center .xal-notification.xal-notification--unread .xal-notification__link:hover, #xal-notification-center .xal-notification.xal-notification--unread .xal-notification__link:focus-visible {
   background-color: var(--bs-secondary-bg);
 }
-#xal-notification-center .xal-notification[data-xal-notification].xal-notification--unread .xal-notification__action--mark-unread {
+#xal-notification-center .xal-notification.xal-notification--unread .xal-notification__action--mark-unread {
   display: none;
 }
-#xal-notification-center .xal-notification[data-xal-notification].xal-notification--busy {
+#xal-notification-center .xal-notification.xal-notification--busy {
   opacity: 0.6;
   cursor: progress;
   pointer-events: none;
 }
-#xal-notification-center .xal-notification[data-xal-notification].xal-notification--busy .xal-notification__spinner {
+#xal-notification-center .xal-notification.xal-notification--busy .xal-notification__spinner {
   display: inline-flex;
 }
-#xal-notification-center .xal-notification[data-xal-notification].xal-notification--busy .xal-notification__actions {
+#xal-notification-center .xal-notification.xal-notification--busy .xal-notification__actions {
   opacity: 0;
   visibility: hidden;
 }
-#xal-notification-center .xal-notification[data-xal-notification].xal-notification--busy .xal-notification__link {
+#xal-notification-center .xal-notification.xal-notification--busy .xal-notification__link {
   pointer-events: none;
 }
-#xal-notification-center .xal-notification[data-xal-notification]:not(.xal-notification--busy):hover .xal-notification__dot {
+#xal-notification-center .xal-notification:not(.xal-notification--busy):hover .xal-notification__dot {
   transform: scale(1.1);
 }
-#xal-notification-center .xal-notification[data-xal-notification]:not(.xal-notification--busy) .xal-notification__link:hover .xal-notification__actions, #xal-notification-center .xal-notification[data-xal-notification]:not(.xal-notification--busy) .xal-notification__link:focus-within .xal-notification__actions {
+#xal-notification-center .xal-notification:not(.xal-notification--busy) .xal-notification__link:hover .xal-notification__actions, #xal-notification-center .xal-notification:not(.xal-notification--busy) .xal-notification__link:focus-within .xal-notification__actions {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
