@@ -240,6 +240,53 @@ const BsBreakpoints = (() => {
             }
 
             return 'xs';
+        },
+
+        /**
+         * Observe les changements d'un media query et notifie le callback.
+         *
+         * - Évite les doublons d'écoute
+         * - Fournit l'état actuel lors de l'inscription
+         * - Retourne une fonction de désinscription propre
+         * 
+         * @example
+         * const unsubscribe = BsBreakpoints.onChange(
+         *      BsBreakpoints.up('lg'),
+         *      (e) => {
+         *          if (e.matches) {
+         *              console.log('≥ lg');
+         *          } else {
+         *              console.log('< lg');
+         *          }
+         *      }
+         * );
+         *
+         * @param {string} query - Media query complet à observer
+         * @param {(event: MediaQueryListEvent) => void} callback - Fonction appelée lors d'un changement
+         * @returns {Function} Fonction de désinscription
+         */
+        onChange(query, callback) {
+            const mql = window.matchMedia(query);
+
+            if (typeof callback !== 'function') {
+                throw new TypeError('callback must be a function');
+            }
+
+            const handler = (event) => callback(event);
+
+            // Évite les doublons d’écoute
+            mql.removeEventListener('change', handler);
+            mql.addEventListener('change', handler);
+
+            // Expose l'état actuel (utile pour synchroniser l'UI immédiatement)
+            callback({
+                matches: mql.matches,
+                media: mql.media
+            });
+
+            return () => {
+                mql.removeEventListener('change', handler);
+            };
         }
     });
 })();
