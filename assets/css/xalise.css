@@ -12111,8 +12111,23 @@ body:not([data-xal-page-fullheight]) {
 }
 #xal-notification-center .xal-notification {
   padding: 0;
+  position: relative;
   line-height: normal;
   border-bottom: 1px solid var(--bs-border-color);
+}
+#xal-notification-center .xal-notification::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+#xal-notification-center .xal-notification:hover::after {
+  opacity: 1;
+}
+#xal-notification-center .xal-notification.xal-notification--read::after {
+  background: rgba(var(--bs-primary-rgb), 0.05);
 }
 #xal-notification-center .xal-notification.xal-notification--read .xal-notification__dot {
   opacity: 0.25;
@@ -12122,13 +12137,10 @@ body:not([data-xal-page-fullheight]) {
   display: none;
 }
 #xal-notification-center .xal-notification.xal-notification--unread {
-  border-left: 4px solid var(--bs-primary);
-}
-#xal-notification-center .xal-notification.xal-notification--unread .xal-notification__link {
   background-color: color-mix(in srgb, var(--bs-primary-bg-subtle) 55%, var(--bs-body-bg));
 }
-#xal-notification-center .xal-notification.xal-notification--unread .xal-notification__link:hover, #xal-notification-center .xal-notification.xal-notification--unread .xal-notification__link:focus-visible {
-  background-color: var(--bs-secondary-bg);
+#xal-notification-center .xal-notification.xal-notification--unread::after {
+  background: rgba(var(--bs-primary-rgb), 0.15);
 }
 #xal-notification-center .xal-notification.xal-notification--unread .xal-notification__action--mark-unread {
   display: none;
@@ -12164,9 +12176,6 @@ body:not([data-xal-page-fullheight]) {
   padding: 0.5rem 0.75rem;
   text-decoration: none;
   border-radius: inherit;
-}
-#xal-notification-center .xal-notification__link:hover, #xal-notification-center .xal-notification__link:focus-visible {
-  background-color: var(--bs-tertiary-bg);
 }
 #xal-notification-center .xal-notification__link:hover .xal-notification__content, #xal-notification-center .xal-notification__link:focus-visible .xal-notification__content {
   text-decoration: underline;
@@ -12249,7 +12258,7 @@ body:not([data-xal-page-fullheight]) {
   visibility: visible;
   transform: scale(1.04);
   color: var(--bs-primary-text-emphasis);
-  background-color: color-mix(in srgb, var(--bs-primary) 14%, var(--bs-body-bg));
+  background-color: color-mix(in srgb, var(--bs-primary) 25%, var(--bs-body-bg));
 }
 #xal-notification-center .xal-notification__actions .btn:focus-visible {
   outline: none;

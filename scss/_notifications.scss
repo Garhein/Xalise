@@ -154,10 +154,28 @@
 
   .xal-notification {
     padding: 0;
+    position: relative;
     line-height: normal;
     border-bottom: 1px solid var(--bs-border-color);
 
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+    }
+
+    &:hover::after {
+      opacity: 1;
+    }
+
     &.xal-notification--read {
+      &::after {
+        background: rgba(var(--bs-primary-rgb), .05);
+      }
+
       .xal-notification__dot {
         opacity: .25;
         background-color: var(--bs-secondary-text-emphasis);
@@ -169,15 +187,10 @@
     }
 
     &.xal-notification--unread {
-      border-left: 4px solid var(--bs-primary);
+      background-color: color-mix(in srgb, var(--bs-primary-bg-subtle) 55%, var(--bs-body-bg));
 
-      .xal-notification__link {
-        background-color: color-mix(in srgb, var(--bs-primary-bg-subtle) 55%, var(--bs-body-bg));
-
-        &:hover,
-        &:focus-visible {
-          background-color: var(--bs-secondary-bg);
-        }
+      &::after {
+        background: rgba(var(--bs-primary-rgb), .15);
       }
 
       .xal-notification__action--mark-unread {
@@ -227,8 +240,6 @@
 
     &:hover,
     &:focus-visible {
-      background-color: var(--bs-tertiary-bg);
-
       .xal-notification__content {
         text-decoration: underline;
         text-underline-offset: 2px;
@@ -321,7 +332,7 @@
         visibility: visible;
         transform: scale(1.04);
         color: var(--bs-primary-text-emphasis);
-        background-color: color-mix(in srgb, var(--bs-primary) 14%, var(--bs-body-bg));
+        background-color: color-mix(in srgb, var(--bs-primary) 25%, var(--bs-body-bg));
       }
 
       &:focus-visible {
