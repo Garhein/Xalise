@@ -14,6 +14,15 @@ body:not([data-xal-page-fullheight]) {
   height: $xal-navbar-height;
   z-index: 1030;
 
+  .btn {
+    transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0,.08);
+  }
+
   .navbar-nav button[data-bs-toggle="dropdown"][aria-expanded="true"] .bi-chevron-down {
     transform: rotate(180deg);
   }
@@ -37,4 +46,3 @@ body:not([data-xal-page-fullheight]) {
     }
   }
 }
-
