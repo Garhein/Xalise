@@ -276,6 +276,7 @@
     }
 
     .xal-notification__content {
+      flex-grow: 1;
       display: flex;
       overflow: hidden;
       line-height: 1.5;
