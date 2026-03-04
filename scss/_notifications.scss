@@ -2,7 +2,7 @@
 // Centre de notifications
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
-#xal-notification-center {
+.xal-notification-center {
   --bs-offcanvas-width: 420px;
 
   @include media-breakpoint-down(md) {
