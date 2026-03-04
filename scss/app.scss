@@ -1,37 +1,18 @@
 
+// 1. Fonctions Bootstrap (sans variables, sans CSS)
 @import "../node_modules/bootstrap/scss/functions";
+
+// 2. Variables Bootstrap par défaut
 @import "../node_modules/bootstrap/scss/variables";
 
-// =-=-=-=-=-=-
-// Surcharge des variables Bootstrap
-// =-=-=-=-=-=-
+// 3. Variables personnalisées et surcharge des variables Bootstrap
+@import "variables";
 
-$body-bg: #f4f6f9;
-
-// =-=-=-=-=-=-
-// Définition des variables personnalisées
-// =-=-=-=-=-=-
-
-$xalise-color: #166278;
-$xalise-color-rgb: red($xalise-color), green($xalise-color), blue($xalise-color);
-
-// =-=-=-=-=-=-
-// Nouveau thème de couleur
-// =-=-=-=-=-=-
-
-$custom-xalise-themes-colors: (
-  "xalise": $xalise-color
-);
-
-$theme-colors: map-merge($theme-colors, $custom-xalise-themes-colors);
-
-// =-=-=-=-=-=-
-// Import des styles personnalisés et définition des variables CSS
-// =-=-=-=-=-=-
-
-@import "tokens";
+// 4. Bootstrap complet
 @import "../node_modules/bootstrap/scss/bootstrap";
 
+// 5. Styles personnalisés
+@import "tokens";
 @import "utilities";
 @import "layout";
 @import "sidebar";
