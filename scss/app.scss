@@ -38,8 +38,3 @@ $theme-colors: map-merge($theme-colors, $custom-xalise-themes-colors);
 @import "toolbar";
 @import "notifications";
 @import "theme-xalise";
-
-:root {
-  --xalise-color: #{$xalise-color};
-  --xalise-color-rgb: #{$xalise-color-rgb};
-}

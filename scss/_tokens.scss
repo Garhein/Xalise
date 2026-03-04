@@ -1,2 +1,11 @@
 $xal-navbar-height: 3.25rem;
 $xal-notification-center-width: 420px;
+
+// =-=-=-=-=-=-
+// Variables CSS globales
+// =-=-=-=-=-=-
+
+:root {
+  --xalise-color: #{$xalise-color};
+  --xalise-color-rgb: #{$xalise-color-rgb};
+}
