@@ -5,3 +5,20 @@
 .text-justify {
   text-align: justify;
 }
+
+.xal-u-tooltip {
+  --bs-tooltip-opacity: 1;
+  --bs-tooltip-bg: var(--xalise-color);
+  --bs-tooltip-color: var(--bs-white);
+}
+
+.xal-u-gradient {
+    background: linear-gradient(10deg, #499699 0%, #135f76 100%);
+}
+
+.xal-u-dot-1-70 {
+  width: .7rem;
+  height: .7rem;
+  border-radius: 50%;
+  display: inline-block;
+}
