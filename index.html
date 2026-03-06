@@ -11,22 +11,22 @@
     <!-- Barre de navigation -->
     <header>
       <nav role="navigation"
-           id="xal-main-navbar"
-           class="navbar navbar-expand fixed-top flex-md-nowrap p-0 xal-u-gradient"
+           id="xal-id-main-navbar"
+           class="navbar navbar-expand fixed-top flex-md-nowrap p-0 xal-main-navbar xal-u-gradient"
            aria-label="Navigation principale">
         <div class="container-fluid justify-content-start p-0">
           <!-- Boutons toggle/offcanvas -->
           <div class="xal-main-navbar__left-zone align-items-center d-md-none d-lg-flex">
-            <button id="xal-btn-toggle-main-sidebar"
+            <button id="xal-id-btn-toggle-main-sidebar"
                     class="btn btn-outline-secondary d-none d-lg-block"
                     type="button">
               <i class="bi bi-layout-sidebar"></i>
             </button>
-            <button id="xal-btn-toggle-offcanvas-main-sidebar"
+            <button id="xal-id-btn-toggle-offcanvas-main-sidebar"
                     class="btn btn-outline-secondary d-md-none"
                     type="button"
                     data-bs-toggle="offcanvas"
-                    data-bs-target="#xal-main-sidebar"
+                    data-bs-target="#xal-id-main-sidebar"
                     aria-expanded="false"
                     aria-label="Toggle navigation">
               <i class="bi bi-list"></i>
@@ -41,8 +41,8 @@
             <button type="button"
                     class="btn btn-outline-secondary position-relative"
                     data-bs-toggle="offcanvas"
-                    data-bs-target="#xal-notification-center"
-                    aria-controls="xal-notification-center"
+                    data-bs-target="#xal-id-notification-center"
+                    aria-controls="xal-id-notification-center"
                     aria-label="Notifications">
               <i class="bi bi-bell" aria-hidden="true"></i>
               <span class="xal-notification-indicator badge bg-danger rounded-pill">
@@ -72,7 +72,7 @@
                 <span class="d-none d-md-inline">Laura Bellerose</span>
                 <i class="bi bi-chevron-down m-0 ms-md-2" aria-hidden="true"></i>
               </button>
-              <ul id="xal-user-menu" class="dropdown-menu dropdown-menu-end mt-2">
+              <ul id="xal-id-user-menu" class="dropdown-menu dropdown-menu-end mt-2">
                 <li class="dropdown-header">
                   <div class="fw-semibold">Laura Bellerose</div>
                   <div class="fst-italic small fw-semibold text-body-secondary">Directrice Générale</div>
@@ -110,9 +110,21 @@
       </nav>
     </header>
 
-    <div id="xal-portals">
+    <div id="xal-id-application-layout" class="xal-application-layout">
+      <!-- Barre latérale -->
+      <aside id="xal-id-sidebar" class="xal-sidebar">
+        
+      </aside>
+      <!-- Contenu principal -->
+      <main id="xal-id-main-content" class="xal-main-content">
+        
+      </main>
+    </div>
+
+    <!-- Éléments hors flux -->
+    <div id="xal-id-portals">
       <!-- Centre de notifications -->
-      <div id="xal-notification-center"
+      <div id="xal-id-notification-center"
           class="offcanvas offcanvas-end xal-notification-center"
           aria-labelledby="xal-notification-center-title"
           tabindex="-1">
@@ -120,7 +132,7 @@
         <div class="xal-notification-center__header">
           <!-- Informations -->
           <div class="xal-notification-center__header-meta">
-            <div class="xal-notification-center__header-title" id="xal-notification-center-title">
+            <div class="xal-notification-center__header-title" id="xal-id-notification-center-title">
               <span>Notifications</span>
               <span class="xal-notification-indicator badge rounded-pill bg-primary-subtle text-primary-emphasis">
                 <span class="xal-notification-indicator__badge">99+</span>
@@ -302,7 +314,7 @@
 
       <!-- Conteneur des toast -->
       <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="xal-notification-toast-undo"
+        <div id="xal-id-notification-toast-undo"
             class="toast xal-notification-toast"
             aria-live="assertive"
             aria-atomic="true"
@@ -326,7 +338,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
-    <script src="./assets/js/BsBreakpoints.js"></script>
+    <script src="./assets/js/constants.js"></script>
     <script src="./assets/js/xalise.js"></script>
   </body>
 </html>

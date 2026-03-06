@@ -10,7 +10,7 @@ body:not([data-xal-page-fullheight]) {
 // Barre de navigation
 // =-=-=-=-=-=-
 
-#xal-main-navbar {
+.xal-main-navbar {
   height: var(--xal-navbar-height);
   z-index: 1030;
 
@@ -45,4 +45,34 @@ body:not([data-xal-page-fullheight]) {
       display: inline-block;
     }
   }
+}
+
+// =-=-=-=-=-=-
+// Layout de l'application
+// =-=-=-=-=-=-
+
+.xal-application-layout {
+  display: flex;
+  min-height: calc(100vh - var(--xal-navbar-height));
+
+  &.xal-application-layout--sidebar-collapsed {
+    --xal-sidebar-width: var(--xal-sidebar-width-collapsed);
+  }
+}
+
+.xal-sidebar {
+  // En mobile : la sidebar est un offcanvas géré par Bootstrap, elle sort du flux et n'a plus de rôle dans le layout
+  display: none;
+  flex-shrink: 0;
+  width: var(--xal-sidebar-width);
+
+  @include media-breakpoint-up(lg) {
+    display: block;
+  }
+}
+
+.xal-main-content {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-y: auto;
 }
