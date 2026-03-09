@@ -50,4 +50,46 @@
     --bs-dropdown-header-color: var(--bs-white);
     --bs-dropdown-header-padding-y: 0;
   }
+
+  // =-=-=-=-=-=-
+  // Barre latérale
+  // =-=-=-=-=-=-
+
+  .xal-sidebar {
+    border-right: 1px solid color-mix(in srgb, var(--bs-primary) 25%, white);
+    background-color: color-mix(in srgb, var(--bs-primary) 12.5%, white) !important;
+
+    .offcanvas-header {
+      background-color: color-mix(in srgb, var(--bs-primary) 12.5%, white);
+      border-bottom: 1px solid color-mix(in srgb, var(--bs-primary) 25%, white);
+    }
+
+    .nav-link {
+      color: var(--bs-primary);
+
+      &:hover,
+      &[data-bs-target][aria-expanded="true"]:not(.active) {
+          color: var(--bs-primary);
+          background-color: color-mix(in srgb, var(--bs-primary) 20%, white);
+      }
+
+      &.active {
+        font-weight: 600;
+        color: var(--bs-white);
+        background-color: color-mix(in srgb, var(--bs-primary) 80%, white);
+      }
+    }
+
+    .nav-submenu {
+      background-color: color-mix(in srgb, var(--bs-primary) 7.5%, white);
+    }
+
+    .nav-submenu .nav-link.active {
+      background-color: color-mix(in srgb, var(--bs-primary) 60%, white);
+    }
+  }
+
+  .xal-sidebar__footer {
+    border-top: 1px solid color-mix(in srgb, var(--bs-primary) 25%, white);
+  }
 }

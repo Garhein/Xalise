@@ -26,7 +26,7 @@
                     class="btn btn-outline-secondary d-md-none"
                     type="button"
                     data-bs-toggle="offcanvas"
-                    data-bs-target="#xal-id-main-sidebar"
+                    data-bs-target="#xal-id-sidebar"
                     aria-expanded="false"
                     aria-label="Toggle navigation">
               <i class="bi bi-list"></i>
@@ -112,8 +112,206 @@
 
     <div id="xal-id-application-layout" class="xal-application-layout">
       <!-- Barre latérale -->
-      <aside id="xal-id-sidebar" class="xal-sidebar">
-        
+      <aside id="xal-id-sidebar" class="xal-sidebar p-0 offcanvas-md offcanvas-start" tabindex="-1" aria-labelledby="xalise-id-sidebar-title">
+        <div class="offcanvas-header">
+          <h5 id="xalise-id-sidebar-title" class="offcanvas-title d-inline-block">Xalise SAS</h5>
+          <button class="btn-close"
+                  type="button"
+                  data-bs-dismiss="offcanvas"
+                  data-bs-target="#xal-id-sidebar"
+                  aria-label="Fermer"></button>
+        </div>
+        <div class="offcanvas-body">
+          <nav class="sidebar-nav">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a href="#" class="nav-link d-flex align-items-center gap-2" aria-current="page">
+                  <i class="bi bi-house-fill d-flex"></i>
+                  <span class="nav-link-text">Accueil</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link d-flex align-items-center gap-2 w-100 active"
+                        data-bs-target="#xal-id-sidebar-tiers"
+                        data-bs-toggle="collapse"
+                        aria-expanded="false">
+                  <i class="bi bi-people-fill d-flex"></i>
+                  <span class="nav-link-text">Gestion des tiers</span>
+                  <i class="bi bi-chevron-down"></i>
+                </button>
+                <div id="xal-id-sidebar-tiers" class="collapse bg-body-secondary">
+                  <ul class="nav nav-submenu flex-column">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2 active">
+                        <i class="bi bi-person-fill-dash d-flex"></i>
+                        <span>Fournisseurs</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-person-fill-add d-flex"></i>
+                        <span>Clients</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link d-flex align-items-center w-100 gap-2"
+                        data-bs-target="#xal-id-sidebar-articles"
+                        data-bs-toggle="collapse"
+                        aria-expanded="false">
+                  <i class="bi bi-box-fill d-flex"></i>
+                  <span class="nav-link-text">Gestion des articles</span>
+                  <i class="bi bi-chevron-down"></i>
+                </button>
+                <div id="xal-id-sidebar-articles" class="collapse bg-body-secondary">
+                  <ul class="nav nav-submenu flex-column">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-handbag-fill d-flex"></i>
+                        <span>Articles</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-cart-fill d-flex"></i>
+                        <span>Stocks</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-calculator-fill d-flex"></i>
+                        <span>Inventaires</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link d-flex align-items-center w-100 gap-2"
+                        data-bs-target="#xal-id-sidebar-params"
+                        data-bs-toggle="collapse"
+                        aria-expanded="false">
+                  <i class="bi bi-gear-fill d-flex"></i>
+                  <span class="nav-link-text">Paramètres</span>
+                  <i class="bi bi-chevron-down"></i>
+                </button>
+                <div id="xal-id-sidebar-params" class="collapse bg-body-secondary">
+                  <ul class="nav nav-submenu flex-column">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-option d-flex"></i>
+                        <span>Options</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-universal-access d-flex"></i>
+                        <span>Gestion des utilisateurs</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-unlock2-fill d-flex"></i>
+                        <span>Droits utilisateurs</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link d-flex align-items-center w-100 gap-2"
+                        data-bs-target="#xal-id-sidebar-reps"
+                        data-bs-toggle="collapse"
+                        aria-expanded="false">
+                  <i class="bi bi-folder-fill d-flex"></i>
+                  <span class="nav-link-text">Référentiels</span>
+                  <i class="bi bi-chevron-down"></i>
+                </button>
+                <div id="xal-id-sidebar-reps" class="collapse bg-body-secondary">
+                  <ul class="nav nav-submenu flex-column">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #01</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #02</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #03</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #04</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #05</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #06</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #07</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #08</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #09</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #10</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-flex align-items-center gap-2">
+                        <i class="bi bi-grid-fill d-flex"></i>
+                        <span>Répertoire #11</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Version -->
+          <div class="xal-sidebar__footer text-body-secondary">
+            <span>v1.0.1</span>
+            <span class="badge text-bg-success ms-1">Production</span>
+            <!-- <span class="badge text-bg-warning ms-1">Recette</span> -->
+            <!-- <span class="badge text-bg-secondary ms-1">Developpement</span> -->
+            <!-- <span class="badge text-bg-dark ms-1">Local</span> -->
+          </div>
+        </div>
       </aside>
       <!-- Contenu principal -->
       <main id="xal-id-main-content" class="xal-main-content">

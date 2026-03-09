@@ -15,7 +15,7 @@ body:not([data-xal-page-fullheight]) {
   z-index: 1030;
 
   .btn {
-    transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease;
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
   }
 
   .btn:hover {
@@ -33,7 +33,6 @@ body:not([data-xal-page-fullheight]) {
 
   // =-=-=-=-=-=-
   // Centre de notifications : nombre de notifications
-  // Affiché à partir du breakpoint md
   // =-=-=-=-=-=-
 
   .xal-notification-indicator {
@@ -57,17 +56,6 @@ body:not([data-xal-page-fullheight]) {
 
   &.xal-application-layout--sidebar-collapsed {
     --xal-sidebar-width: var(--xal-sidebar-width-collapsed);
-  }
-}
-
-.xal-sidebar {
-  // En mobile : la sidebar est un offcanvas géré par Bootstrap, elle sort du flux et n'a plus de rôle dans le layout
-  display: none;
-  flex-shrink: 0;
-  width: var(--xal-sidebar-width);
-
-  @include media-breakpoint-up(lg) {
-    display: block;
   }
 }
 
