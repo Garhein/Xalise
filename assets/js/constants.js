@@ -25,3 +25,17 @@ const XalSelectors = Object.freeze({
 const XalClasses = Object.freeze({
     sidebarCollapsed: 'xal-application-layout--sidebar-collapsed'
 });
+
+/**
+ * Sélecteurs CSS utilisés pour les initialisations et requêtes DOM.
+ *
+ * Centralise les sélecteurs d'attributs et de composants utilisés
+ * dans les querySelectorAll.
+ * Toute modification doit être répercutée ici uniquement.
+ *
+ * @constant
+ * @type {Readonly<Record<string, string>>}
+ */
+const XalQueries = Object.freeze({
+    tooltip: '[data-bs-toggle="tooltip"]',
+});

@@ -57,8 +57,78 @@
 
 .xal-sidebar__footer {
     flex-shrink: 0;
+    overflow: hidden;
     font-size: 0.875em;
     text-align: center;
     padding-top: .5rem;
     padding-bottom: .5rem;
+    border-top: 1px solid color-mix(in srgb, var(--bs-primary) 23.5%, white);
+
+    &-collapsed {
+        display: none;
+    }
+
+    &-full {
+        display: block;
+        white-space: nowrap;
+    }
+}
+
+// Mixin d'affichage en mode réduit
+@mixin xal-sidebar-collapsed {
+    width: var(--xal-sidebar-width-collapsed);
+
+    .nav-link {
+        justify-content: center;
+        position: relative;
+        padding: .5rem 0;
+    }
+
+    .nav-link[data-bs-target] .bi-chevron-down {
+        display: none;
+    }
+
+    // Chevron affiché au survol d'un menu parent et
+    // lorsque le sous menu est ouvert
+    .nav-link[data-bs-target]::after,
+    .nav-link[data-bs-target][aria-expanded="true"]::after {
+        opacity: 0;
+        content: "›";
+        font-size: 1rem;
+        position: absolute;
+        right: .5rem;
+        top: 45%;
+        transform: translateY(-50%) scale(.8);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+    }
+
+    .nav-item:hover 
+    .nav-link[data-bs-target]::after,
+    .nav-link[data-bs-target][aria-expanded="true"]::after {
+        opacity: .7;
+        transform: translateY(-50%) scale(1);
+    }
+
+    .nav-link .nav-link-text {
+        display: none;
+    }
+
+    .nav-link .nav-link-text {
+        display: none;
+    }
+
+    .xal-sidebar__footer-collapsed {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .xal-sidebar__footer-full {
+        display: none;
+    }
+}
+
+.xal-application-layout--sidebar-collapsed .xal-sidebar {
+    @include xal-sidebar-collapsed
 }

@@ -19,12 +19,28 @@ const toggleXalSidebar = () => {
 };
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Tooltips
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+/**
+ * Initialise tous les tooltips présents dans le DOM.
+ *
+ * @returns {bootstrap.Tooltip[]} Liste des instances de tooltips créées.
+ */
+const initTooltips = () => {
+    const tooltipElements = document.querySelectorAll(XalQueries.tooltip);
+
+    return [...tooltipElements].map((el) => new bootstrap.Tooltip(el));
+};
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 // Initialisation de la page
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
 document.addEventListener('DOMContentLoaded', () => {
-    const btnToggleSidebar = document.getElementById(XalSelectors.btnToggleSidebar);
+    initTooltips();
 
+    const btnToggleSidebar = document.getElementById(XalSelectors.btnToggleSidebar);
     if (btnToggleSidebar) {
         btnToggleSidebar.addEventListener('click', toggleXalSidebar);
     }
