@@ -7,6 +7,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     font-size: .9rem;
+    transition: width .25s ease;
     width: var(--xal-sidebar-width);
     height: calc(100vh - var(--xal-navbar-height));
 
@@ -31,7 +32,7 @@
     .sidebar-nav {
         flex: 1 1 auto;
         overflow-y: auto;
-        overflow-x: hidden;
+        overflow-x: visible;
     }
 
     .nav-link {
@@ -40,18 +41,46 @@
         padding-right: .75rem;
     }
 
-    .nav-link[data-bs-target][aria-expanded="true"] .bi-chevron-down {
-        transform: rotate(180deg);
+    .nav-link-text {
+        opacity: 1;
+        max-width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: opacity .2s ease, max-width .25s ease;
     }
 
-    .nav-link[data-bs-target] .bi-chevron-down {
+    &__nav-item {
+        position: relative;
+    }
+
+    &__chevron {
         margin-left: auto;
         transition: transform .3s ease;
+
+        .nav-link[aria-expanded="true"] & {
+            transform: rotate(180deg);
+        }
     }
 
-    .nav-submenu .nav-link {
-        font-size: .875rem;
-        padding-left: 2rem;
+    &__submenu {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows .25s ease;
+        overflow: hidden;
+
+        > * {
+            min-height: 0;
+        }
+
+        &:not([hidden]) {
+            display: grid;
+            grid-template-rows: 1fr;
+        }
+
+        .nav-link {
+            font-size: .875rem;
+            padding-left: 2rem;
+        }
     }
 }
 
@@ -74,9 +103,27 @@
     }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .xal-sidebar,
+    .xal-sidebar__submenu,
+    .xal-sidebar__chevron,
+    .nav-link-text {
+        transition: none;
+    }
+}
+
 // Mixin d'affichage en mode réduit
 @mixin xal-sidebar-collapsed {
+    overflow: visible;
     width: var(--xal-sidebar-width-collapsed);
+
+    .offcanvas-body {
+        overflow: visible;
+    }
+
+    .sidebar-nav {
+        overflow: visible;
+    } 
 
     .nav-link {
         justify-content: center;
@@ -84,14 +131,14 @@
         padding: .5rem 0;
     }
 
-    .nav-link[data-bs-target] .bi-chevron-down {
+    .xal-sidebar__chevron {
         display: none;
     }
 
     // Chevron affiché au survol d'un menu parent et
     // lorsque le sous menu est ouvert
-    .nav-link[data-bs-target]::after,
-    .nav-link[data-bs-target][aria-expanded="true"]::after {
+    .nav-link[data-xal-target]::after,
+    .nav-link[data-xal-target][aria-expanded="true"]::after {
         opacity: 0;
         content: "›";
         font-size: 1rem;
@@ -104,18 +151,15 @@
     }
 
     .nav-item:hover 
-    .nav-link[data-bs-target]::after,
-    .nav-link[data-bs-target][aria-expanded="true"]::after {
+    .nav-link[data-xal-target]::after,
+    .nav-link[data-xal-target][aria-expanded="true"]::after {
         opacity: .7;
         transform: translateY(-50%) scale(1);
     }
 
     .nav-link .nav-link-text {
-        display: none;
-    }
-
-    .nav-link .nav-link-text {
-        display: none;
+        opacity: 0;
+        max-width: 0;
     }
 
     .xal-sidebar__footer-collapsed {
@@ -126,6 +170,42 @@
 
     .xal-sidebar__footer-full {
         display: none;
+    }
+
+    .xal-sidebar__submenu {
+        position: absolute;
+        left: calc(100% + .5rem);
+        top: 0;
+        min-width: 220px;
+        border-radius: .5rem;
+        border: 1px solid rgba(0, 0, 0, .15);
+        box-shadow: 4px 4px 12px rgba(0, 0, 0, .12);
+
+        opacity: 0;
+        transform: translateX(-.5rem);
+        transition: opacity .2s ease, transform .2s ease;
+        pointer-events: none;
+
+        &:not([hidden]) {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .nav-link {
+            justify-content: flex-start;
+            padding-left: 1rem;
+        }
+
+        .nav-item:first-child .nav-link {
+            border-top-left-radius: .5rem;
+            border-top-right-radius: .5rem;
+        }
+
+        .nav-item:last-child .nav-link {
+            border-bottom-left-radius: .5rem;
+            border-bottom-right-radius: .5rem;
+        }
     }
 }
 

@@ -80,11 +80,11 @@
       }
     }
 
-    .nav-submenu {
+    .xal-sidebar__submenu {
       background-color: color-mix(in srgb, var(--bs-primary) 7.5%, white);
     }
 
-    .nav-submenu .nav-link.active {
+    .xal-sidebar__submenu .nav-link.active {
       background-color: color-mix(in srgb, var(--bs-primary) 60%, white);
     }
   }
