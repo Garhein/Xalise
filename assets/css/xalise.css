@@ -12085,12 +12085,17 @@ body:not([data-xal-page-fullheight]) {
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.25s ease;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 .xal-sidebar__submenu > * {
   min-height: 0;
 }
-.xal-sidebar__submenu:not([hidden]) {
+.xal-sidebar__submenu[hidden] {
   display: grid;
+}
+.xal-sidebar__submenu:not([hidden]) {
   grid-template-rows: 1fr;
 }
 .xal-sidebar__submenu .nav-link {

@@ -67,13 +67,19 @@
         grid-template-rows: 0fr;
         transition: grid-template-rows .25s ease;
         overflow: hidden;
+        margin: 0;
+        padding: 0;
+        list-style: none;
 
         > * {
             min-height: 0;
         }
 
-        &:not([hidden]) {
+        &[hidden] {
             display: grid;
+        }
+
+        &:not([hidden]) {
             grid-template-rows: 1fr;
         }
 
