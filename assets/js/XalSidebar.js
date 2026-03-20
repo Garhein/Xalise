@@ -181,5 +181,40 @@ const XalSidebar = {
         }
 
         this.initSubmenus();
+        this.initResponsive();
+    },
+
+    /**
+     * Initialise le comportement responsive de la sidebar.
+     *
+     * Observe le breakpoint md via BsBreakpoints et ajuste automatiquement
+     * l'état de la sidebar en fonction de la largeur du viewport :
+     * - En dessous de md : réduit la sidebar et ferme tous les sous-menus.
+     * - Au-dessus de md  : restaure l'état persisté dans localStorage.
+     *
+     * Note : les changements d'état déclenchés par le responsive ne sont pas
+     * persistés dans localStorage afin de ne pas écraser la préférence
+     * manuelle de l'utilisateur.
+     */
+    initResponsive() {
+        BsBreakpoints.onChange(BsBreakpoints.down('md'), (e) => {
+            const layout = document.getElementById(XalConstants.elementIds.layout);
+
+            if (!layout) return;
+
+            if (e.matches) {
+                // Passage en dessous de md : réduit la sidebar
+                layout.classList.add(XalConstants.cssClasses.sidebarCollapsed);
+                this.closeAllSubmenus();
+            } else {
+                // Passage au-dessus de md : restaure l'état persisté
+                const wasCollapsed = localStorage.getItem(XalConstants.elementIds.layout) === 'true';
+
+                layout.classList.toggle(
+                    XalConstants.cssClasses.sidebarCollapsed,
+                    wasCollapsed
+                );
+            }
+        });
     },
 };
