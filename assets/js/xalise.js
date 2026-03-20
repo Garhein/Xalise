@@ -4,6 +4,6 @@
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
 document.addEventListener('DOMContentLoaded', () => {
-    XalSidebar.init();
     XalTooltips.init();
+    XalSidebar.init();
 });
