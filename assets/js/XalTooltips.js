@@ -1,6 +1,8 @@
 /**
- * Namespace du composant des tooltips.
- * Gère l'initialisation des tooltips Bootstrap présents dans le DOM.
+ * Gestion des tooltips Bootstrap dans l'application.
+ * 
+ * @namespace XalTooltips
+ * @author  Xavier VILLEMIN
  */
 const XalTooltips = {
     /**
@@ -9,8 +11,8 @@ const XalTooltips = {
      * @returns {bootstrap.Tooltip[]} Liste des instances de tooltips créées.
      */
     init() {
-        const tooltipElements = document.querySelectorAll(XalQueries.tooltip);
+        const tooltipElements = document.querySelectorAll(XalConstants.cssQueries.tooltip);
 
         return [...tooltipElements].map((el) => new bootstrap.Tooltip(el));
-    }
+    },
 };

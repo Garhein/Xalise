@@ -1,31 +1,26 @@
-
 /**
- * Namespace du composant de la barre latérale (sidebar) de l'application.
- *
- * Ce composant gère l'affichage et le comportement de la barre latérale, notamment :
- * - La gestion des sous-menus
- * - La persistance de l'état (ouvert/fermé) de la sidebar
+ * Gestion de la barre latérale (sidebar) de l'application.
+ * 
+ * @namespace XalSidebar
+ * @author  Xavier VILLEMIN
  */
 const XalSidebar = {
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
-    // Sous-menus
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
-
     /**
-     * Mise à jour de l'attribut aria-expanded d'un menu.
+     * Synchronise l'attribut aria-expanded d'un bouton déclencheur
+     * avec l'état d'affichage de son sous-menu.
      *
-     * @param {HTMLElement} menu - Le menu sur lequel appliquer la mise à jour.
-     * @param {boolean} state - true = ouvert, false = fermé.
+     * @param {HTMLElement} menu - Le bouton à mettre à jour.
+     * @param {boolean} state - true = sous-menu ouvert, false = sous-menu fermé.
      */
     updateAriaExpanded(menu, state) {
-        menu.setAttribute(XalAriaNames.expanded, state.toString());
+        menu.setAttribute(XalConstants.ariaNames.expanded, state.toString());
     },
 
     /**
-     * Ferme un sous-menu et met à jour son parent.
+     * Ferme un sous-menu et synchronise l'état aria-expanded de son bouton déclencheur.
      *
-     * Le bouton est retrouvé via l'attribut data-xal-target pointant
-     * vers l'ID du sous-menu.
+     * Le bouton déclencheur est retrouvé dynamiquement via l'attribut
+     * data-xal-target pointant vers l'ID du sous-menu.
      *
      * @param {HTMLElement} submenu - Le sous-menu à fermer.
      */
@@ -33,7 +28,7 @@ const XalSidebar = {
         submenu.hidden = true;
 
         const button = document.querySelector(
-            `${XalQueries.sidebarSubmenuToggleBtn}[${XalAttributes.target}="#${submenu.id}"]`
+            `${XalConstants.cssQueries.sidebarSubmenuToggleBtn}[${XalConstants.attributeNames.xalTarget}="#${submenu.id}"]`
         );
 
         if (button) {
@@ -42,10 +37,10 @@ const XalSidebar = {
     },
 
     /**
-     * Ferme tous les sous-menus ouverts.
+     * Ferme tous les sous-menus ouverts de la sidebar.
      */
     closeAllSubmenus() {
-        document.querySelectorAll(XalQueries.sidebarSubmenu)
+        document.querySelectorAll(XalConstants.cssQueries.sidebarSubmenu)
                 .forEach((submenu) => {
                     if (!submenu.hidden) {
                         this.closeSubmenu(submenu);
@@ -54,9 +49,9 @@ const XalSidebar = {
     },
 
     /**
-     * Ouvre un sous-menu et met à jour son bouton déclencheur.
+     * Ouvre un sous-menu et synchronise l'état aria-expanded de son bouton déclencheur.
      *
-     * @param {HTMLElement} submenu - L'élément sous-menu à ouvrir.
+     * @param {HTMLElement} submenu - Le sous-menu à ouvrir.
      * @param {HTMLElement} button  - Le bouton déclencheur associé.
      */
     openSubmenu(submenu, button) {
@@ -65,32 +60,33 @@ const XalSidebar = {
     },
 
     /**
-     * Indique si la sidebar est actuellement en mode réduit.
+     * Indique si la sidebar est actuellement affichée en mode réduit.
      *
-     * @returns {boolean}
+     * @returns {boolean} true = mode réduit, false = mode étendu.
      */
     isCollapsed() {
-        const layout = document.getElementById(XalSelectors.layout);
+        const layout = document.getElementById(XalConstants.elementIds.layout);
 
         return layout
-            ? layout.classList.contains(XalClasses.sidebarCollapsed)
+            ? layout.classList.contains(XalConstants.cssClasses.sidebarCollapsed)
             : false;
     },
 
     /**
-     * Gère le clic sur un bouton de sous-menu.
+     * Gère l'ouverture et la fermeture d'un sous-menu au clic sur son bouton déclencheur.
      *
-     * Règles :
-     * - Un seul sous-menu ouvert à la fois
-     * - Mode étendu : le sous-menu contenant un lien .active reste ouvert
-     *   lors de l'ouverture d'un autre sous-menu
+     * Règles appliquées :
+     * - Si le sous-menu ciblé est déjà ouvert, il est fermé.
+     * - Un seul sous-menu peut être ouvert à la fois.
+     * - Mode étendu : le sous-menu contenant un lien actif reste ouvert
+     *   lors de l'ouverture d'un autre sous-menu.
      * - Mode réduit : tous les sous-menus sont fermés sans exception
-     *   avant d'ouvrir le sous-menu ciblé
+     *   avant l'ouverture du sous-menu ciblé.
      *
      * @param {HTMLElement} button - Le bouton déclencheur cliqué.
      */
     handleSubmenuToggle(button) {
-        const targetSelector = button.getAttribute(XalAttributes.target);
+        const targetSelector = button.getAttribute(XalConstants.attributeNames.xalTarget);
         const submenu        = document.querySelector(targetSelector);
 
         if (!submenu) return;
@@ -103,11 +99,11 @@ const XalSidebar = {
         }
 
         // Ferme les sous-menus ouverts selon le mode courant
-        document.querySelectorAll(XalQueries.sidebarSubmenu).forEach((el) => {
+        document.querySelectorAll(XalConstants.cssQueries.sidebarSubmenu).forEach((el) => {
             if (el === submenu) return;
 
             // Mode étendu : préserve le sous-menu contenant un lien actif
-            if (!this.isCollapsed() && el.querySelector(XalQueries.sidebarActiveNavLink)) return;
+            if (!this.isCollapsed() && el.querySelector(XalConstants.cssQueries.sidebarActiveNavLink)) return;
 
             this.closeSubmenu(el);
         });
@@ -116,18 +112,18 @@ const XalSidebar = {
     },
 
     /**
-     * Initialise la gestion des sous-menus.
+     * Initialise la gestion des sous-menus de la sidebar.
      *
      * Utilise la délégation d'événements sur le conteneur sidebar
-     * pour éviter N listeners individuels sur chaque bouton.
+     * pour éviter d'attacher un listener sur chaque bouton déclencheur.
      */
     initSubmenus() {
-        const sidebar = document.getElementById(XalSelectors.sidebar);
+        const sidebar = document.getElementById(XalConstants.elementIds.sidebar);
 
         if (!sidebar) return;
 
         sidebar.addEventListener('click', (e) => {
-            const button = e.target.closest(XalQueries.sidebarSubmenuToggleBtn);
+            const button = e.target.closest(XalConstants.cssQueries.sidebarSubmenuToggleBtn);
 
             if (!button) return;
 
@@ -135,61 +131,55 @@ const XalSidebar = {
         });
     },
 
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
-    // Toggle collapsed
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
-
     /**
-     * Bascule l'état réduit/étendu de la barre latérale.
+     * Bascule l'état réduit/étendu de la sidebar.
      *
-     * Ferme tous les sous-menus ouverts lors du passage en mode réduit,
-     * et persiste l'état dans localStorage.
+     * Effets de bord :
+     * - Ajoute ou supprime la classe CSS collapsed sur le layout
+     * - Ferme tous les sous-menus ouverts lors du passage en mode réduit
+     * - Persiste l'état dans localStorage
      *
      * @throws {Error} Si l'élément layout est introuvable dans le DOM.
      */
     toggle() {
-        const layout = document.getElementById(XalSelectors.layout);
+        const layout = document.getElementById(XalConstants.elementIds.layout);
 
         if (!layout) {
-            throw new Error(`Element #${XalSelectors.layout} not found.`);
+            throw new Error(`Element #${XalConstants.elementIds.layout} not found.`);
         }
 
-        const isCollapsed = layout.classList.toggle(XalClasses.sidebarCollapsed);
+        const isCollapsed = layout.classList.toggle(XalConstants.cssClasses.sidebarCollapsed);
 
         // Ferme tous les sous-menus quand on passe en mode réduit
         if (isCollapsed) {
             this.closeAllSubmenus();
         }
 
-        localStorage.setItem(XalSelectors.layout, isCollapsed);
+        localStorage.setItem(XalConstants.elementIds.layout, isCollapsed);
     },
 
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
-    // Initialisation
-    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
-
     /**
-     * Initialise le composant.
+     * Initialise le composant sidebar.
      *
      * - Restaure l'état collapsed depuis localStorage
      * - Attache le listener du bouton toggle
-     * - Initialise les sous-menus
+     * - Initialise la gestion des sous-menus
      */
     init() {
         // Restaure l'état collapsed depuis localStorage
-        const wasCollapsed = localStorage.getItem(XalSelectors.layout) === 'true';
+        const wasCollapsed = localStorage.getItem(XalConstants.elementIds.layout) === 'true';
 
         if (wasCollapsed) {
-            document.getElementById(XalSelectors.layout)
-                    ?.classList.add(XalClasses.sidebarCollapsed);
+            document.getElementById(XalConstants.elementIds.layout)
+                    ?.classList.add(XalConstants.cssClasses.sidebarCollapsed);
         }
 
-        const btnToggleSidebar = document.getElementById(XalSelectors.btnToggleSidebar);
+        const btnToggleSidebar = document.getElementById(XalConstants.elementIds.btnToggleSidebar);
 
         if (btnToggleSidebar) {
             btnToggleSidebar.addEventListener('click', () => this.toggle());
         }
 
         this.initSubmenus();
-    }
+    },
 };
