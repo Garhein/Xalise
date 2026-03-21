@@ -22,7 +22,8 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     ariaNames: Object.freeze({
-        expanded: 'aria-expanded',
+        expanded:   'aria-expanded',
+        hidden:     'aria-hidden',
     }),
 
     /**
@@ -57,6 +58,7 @@ const XalConstants = Object.freeze({
         btnToggleSidebar:       'xal-id-btn-toggle-sidebar',
         notificationCenter:     'xal-id-notification-center',
         notificationToastUndo:  'xal-id-notification-toast-undo',
+        navbarLoader:           'xal-id-loader-nav',
     }),
 
     /**

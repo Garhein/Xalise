@@ -1,0 +1,91 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Barre de progression
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-loader-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    overflow: hidden;
+    pointer-events: none;
+
+    &[aria-hidden="true"] {
+        .xal-loader-nav__track {
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+    }
+
+    &__track {
+        height: 100%;
+        width: 45%;
+        opacity: 1;
+        border-radius: 0 2px 2px 0;
+        background-color: var(--bs-white);
+        box-shadow: 0 0 8px rgba(255, 255, 255, .6);
+        animation: xal-loader-nav-fill 1.2s ease-in-out infinite;
+    }
+}
+
+@keyframes xal-loader-nav-fill {
+    0%   { transform: translateX(-100%); }
+    60%  { transform: translateX(280%); }
+    100% { transform: translateX(280%); }
+}
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Skeleton
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-skeleton {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    pointer-events: none;
+
+    &__block {
+        display: block;
+        border-radius: .25rem;
+        background: linear-gradient(
+            90deg,
+            #e9ecef 25%,
+            #f8f9fa 50%,
+            #e9ecef 75%
+        );
+        background-size: 200% 100%;
+        animation: xal-skeleton-shimmer 1.5s ease-in-out infinite;
+    }
+}
+
+@keyframes xal-skeleton-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Toast de chargement
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-loading-toast {
+    .toast-body {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+    }
+
+    &__spinner {
+        flex-shrink: 0;
+        width: 1rem;
+        height: 1rem;
+        border: 2px solid var(--bs-border-color);
+        border-top-color: var(--bs-primary);
+        border-radius: 50%;
+        animation: xal-spinner-rotate .7s linear infinite;
+    }
+}
+
+@keyframes xal-spinner-rotate {
+    to { transform: rotate(360deg); }
+}
