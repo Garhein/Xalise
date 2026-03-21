@@ -9,6 +9,7 @@
  * @author Xavier VILLEMIN
  */
 const XalNotifications = (() => {
+
     /**
      * Durée (en ms) pendant laquelle l'utilisateur peut annuler une suppression unitaire
      * avant que celle-ci soit définitivement appliquée.
@@ -37,6 +38,7 @@ const XalNotifications = (() => {
      * et éviter toute modification accidentelle à l'exécution.
      */
     const css = Object.freeze({
+
         /**
          * Sélecteurs CSS ciblant des éléments du DOM.
          *
@@ -95,12 +97,12 @@ const XalNotifications = (() => {
          */
         classes: Object.freeze({
             // États de lecture
-            read:   'xal-notification--read',
-            unread: 'xal-notification--unread',
+            read:       'xal-notification--read',
+            unread:     'xal-notification--unread',
 
             // États d'interaction
-            busy:     'xal-notification--busy',
-            disabled: 'xal-notification-center__bulk-action--disabled',
+            busy:       'xal-notification--busy',
+            disabled:   'xal-notification-center__bulk-action--disabled',
         }),
     });
 
@@ -147,7 +149,7 @@ const XalNotifications = (() => {
          * le point de non-retour — elle n'est pas testée directement mais son absence
          * de correspondance dans cancelNotificationDeletion() bloque implicitement l'annulation.
          */
-        API:  'api',
+        API: 'api',
     });
 
     /**
@@ -231,6 +233,36 @@ const XalNotifications = (() => {
      * @type {import('bootstrap').Toast|null}
      */
     let undoDeleteToast = null;
+
+    /**
+     * Abstration nommée qui exécute une fonction après le délai de simulation d'appel API (MOCK_API_DELAY_MS).
+     *
+     * @param {() => void} fn - Fonction à exécuter après le délai.
+     * @returns {number} Identifiant du timer retourné par setTimeout.
+     */
+    const _delayApi = (fn) => setTimeout(fn, MOCK_API_DELAY_MS);
+
+    /**
+     * Abstration nommée qui exécute une fonction après le délai d'annulation (UNDO_DELETE_DELAY_MS).
+     *
+     * @param {() => void} fn - Fonction à exécuter après le délai.
+     * @returns {number} Identifiant du timer retourné par setTimeout.
+     */
+    const _delayUndo = (fn) => setTimeout(fn, UNDO_DELETE_DELAY_MS);
+
+    /**
+     * Réinitialise toutes les références et états transitoires
+     * liés au cycle de suppression unitaire.
+     *
+     * Appelée à l'issue d'une suppression (finalisation ou annulation)
+     * pour garantir un état propre avant la prochaine interaction.
+     */
+    const _resetSingleDeleteState = () => {
+        pendingSingleDeleteItem = null;
+        pendingDeleteApiTimer   = null;
+        undoDeleteToast         = null;
+        _singleDeletePhase      = null;
+    };
 
     return {
 
@@ -430,7 +462,7 @@ const XalNotifications = (() => {
          *
          * Déclenche une action unitaire simulant :
          * - un verrouillage temporaire de la notification
-         * - un appel API asynchrone (délai MOCK_API_DELAY_MS)
+         * - un appel API asynchrone via _delayApi()
          * - une mise à jour de l'état visuel à l'issue du traitement
          *
          * L'action est ignorée si :
@@ -445,11 +477,11 @@ const XalNotifications = (() => {
 
             this.setItemBusy(item);
 
-            setTimeout(() => {
+            _delayApi(() => {
                 item.classList.replace(css.classes.unread, css.classes.read);
                 this.setItemBusy(item, false);
                 this.updateGlobalUIIndicators();
-            }, MOCK_API_DELAY_MS);
+            });
         },
 
         /**
@@ -457,7 +489,7 @@ const XalNotifications = (() => {
          *
          * Déclenche une action unitaire simulant :
          * - un verrouillage temporaire de la notification
-         * - un appel API asynchrone (délai MOCK_API_DELAY_MS)
+         * - un appel API asynchrone via _delayApi()
          * - une mise à jour de l'état visuel à l'issue du traitement
          *
          * L'action est ignorée si :
@@ -472,11 +504,11 @@ const XalNotifications = (() => {
 
             this.setItemBusy(item);
 
-            setTimeout(() => {
+            _delayApi(() => {
                 item.classList.replace(css.classes.read, css.classes.unread);
                 this.setItemBusy(item, false);
                 this.updateGlobalUIIndicators();
-            }, MOCK_API_DELAY_MS);
+            });
         },
 
         /**
@@ -510,7 +542,7 @@ const XalNotifications = (() => {
          * - verrouille visuellement la notification concernée
          * - enregistre l'élément comme suppression en attente
          * - configure et affiche le toast d'annulation avec barre de progression
-         * - déclenche un compte à rebours (UNDO_DELETE_DELAY_MS) avant suppression définitive
+         * - déclenche un compte à rebours via _delayUndo() avant suppression définitive
          *
          * À l'issue du délai, et en l'absence d'annulation explicite,
          * la phase API est automatiquement déclenchée via startNotificationDeletionCommit().
@@ -531,9 +563,9 @@ const XalNotifications = (() => {
 
             undoDeleteToast.show();
 
-            pendingDeleteTimer = setTimeout(() => {
+            pendingDeleteTimer = _delayUndo(() => {
                 this.startNotificationDeletionCommit(item);
-            }, UNDO_DELETE_DELAY_MS);
+            });
         },
 
         /**
@@ -542,7 +574,7 @@ const XalNotifications = (() => {
          * Appelée automatiquement après l'expiration du délai d'annulation.
          * À partir de ce point, la suppression ne peut plus être annulée.
          *
-         * Simule un appel API de persistance via un délai MOCK_API_DELAY_MS,
+         * Simule un appel API de persistance via _delayApi(),
          * à l'issue duquel finalizeNotificationDeletion() est appelée
          * pour retirer définitivement l'élément du DOM.
          *
@@ -552,9 +584,9 @@ const XalNotifications = (() => {
             pendingDeleteTimer = null;
             _singleDeletePhase = SingleDeletePhase.API;
 
-            pendingDeleteApiTimer = setTimeout(() => {
+            pendingDeleteApiTimer = _delayApi(() => {
                 this.finalizeNotificationDeletion(item);
-            }, MOCK_API_DELAY_MS);
+            });
         },
 
         /**
@@ -566,23 +598,17 @@ const XalNotifications = (() => {
          * Effets de bord :
          * - retire l'élément du DOM s'il est encore connecté
          * - annule le timer API résiduel
-         * - réinitialise toutes les références et états transitoires
+         * - réinitialise toutes les références et états transitoires via _resetSingleDeleteState()
          * - libère le verrou global des actions destructives
          * - synchronise les indicateurs globaux de l'interface
          *
          * @param {HTMLElement} item - Notification à supprimer définitivement.
          */
         finalizeNotificationDeletion(item) {
-            if (item?.isConnected) {
-                item.remove();
-            }
+            if (item?.isConnected) item.remove();
 
             clearTimeout(pendingDeleteApiTimer);
-
-            pendingDeleteApiTimer   = null;
-            pendingSingleDeleteItem = null;
-            undoDeleteToast         = null;
-            _singleDeletePhase      = null;
+            _resetSingleDeleteState();
 
             this.unlockDeleteAction();
             this.updateGlobalUIIndicators();
@@ -596,8 +622,9 @@ const XalNotifications = (() => {
          * encore dans la phase UNDO — toute tentative hors de cette phase est ignorée.
          *
          * Effets de bord :
+         * - annule le timer d'undo (pendingDeleteTimer)
          * - réactive visuellement la notification (retire l'état busy)
-         * - réinitialise les références de suppression en attente
+         * - réinitialise les références de suppression en attente via _resetSingleDeleteState()
          * - libère le verrou global des actions destructives
          * - masque le toast d'annulation
          *
@@ -608,13 +635,16 @@ const XalNotifications = (() => {
             if (!pendingSingleDeleteItem) return;
             if (_singleDeletePhase !== SingleDeletePhase.UNDO) return;
 
+            clearTimeout(pendingDeleteTimer);
+            pendingDeleteTimer = null;
+
             this.setItemBusy(pendingSingleDeleteItem, false);
-            pendingSingleDeleteItem = null;
+
+            const toast = undoDeleteToast;
+            _resetSingleDeleteState();
 
             this.unlockDeleteAction();
-
-            undoDeleteToast?.hide();
-            undoDeleteToast = null;
+            toast?.hide();
         },
 
         //#endregion
@@ -626,7 +656,7 @@ const XalNotifications = (() => {
          *
          * Déclenche une action de masse simulant :
          * - un verrouillage global de la liste (lockBulkAction)
-         * - un appel API asynchrone (délai MOCK_API_DELAY_MS)
+         * - un appel API asynchrone via _delayApi()
          * - une mise à jour atomique de l'état visuel des notifications concernées
          *
          * L'action est ignorée si :
@@ -651,17 +681,17 @@ const XalNotifications = (() => {
                 return;
             }
 
-            unreadNotifications.forEach(notification => this.setItemBusy(notification));
+            unreadNotifications.forEach(n => this.setItemBusy(n));
 
-            setTimeout(() => {
-                unreadNotifications.forEach(notification => {
-                    notification.classList.replace(css.classes.unread, css.classes.read);
-                    this.setItemBusy(notification, false);
+            _delayApi(() => {
+                unreadNotifications.forEach(n => {
+                    n.classList.replace(css.classes.unread, css.classes.read);
+                    this.setItemBusy(n, false);
                 });
 
                 this.unlockBulkAction();
                 this.updateGlobalUIIndicators();
-            }, MOCK_API_DELAY_MS);
+            });
         },
 
         /**
@@ -669,7 +699,7 @@ const XalNotifications = (() => {
          *
          * Déclenche une action de masse simulant :
          * - un verrouillage global de la liste (lockBulkAction)
-         * - un appel API asynchrone (délai MOCK_API_DELAY_MS)
+         * - un appel API asynchrone via _delayApi()
          * - une mise à jour atomique de l'état visuel des notifications concernées
          *
          * L'action est ignorée si :
@@ -694,17 +724,17 @@ const XalNotifications = (() => {
                 return;
             }
 
-            readNotifications.forEach(notification => this.setItemBusy(notification));
+            readNotifications.forEach(n => this.setItemBusy(n));
 
-            setTimeout(() => {
-                readNotifications.forEach(notification => {
-                    notification.classList.replace(css.classes.read, css.classes.unread);
-                    this.setItemBusy(notification, false);
+            _delayApi(() => {
+                readNotifications.forEach(n => {
+                    n.classList.replace(css.classes.read, css.classes.unread);
+                    this.setItemBusy(n, false);
                 });
 
                 this.unlockBulkAction();
                 this.updateGlobalUIIndicators();
-            }, MOCK_API_DELAY_MS);
+            });
         },
 
         /**
@@ -743,7 +773,7 @@ const XalNotifications = (() => {
          * - verrouille toutes les actions (unitaires et de masse)
          * - masque le bloc de confirmation
          * - place chaque notification en état busy
-         * - simule un appel API (délai MOCK_API_DELAY_MS)
+         * - simule un appel API via _delayApi()
          * - supprime définitivement toutes les notifications du DOM
          * - libère les verrous et synchronise l'interface
          */
@@ -762,19 +792,15 @@ const XalNotifications = (() => {
 
             items.forEach(item => this.setItemBusy(item));
 
-            bulkDeleteTimer = setTimeout(() => {
-                items.forEach(item => {
-                    if (item?.isConnected) {
-                        item.remove();
-                    }
-                });
+            bulkDeleteTimer = _delayApi(() => {
+                items.forEach(item => { if (item?.isConnected) item.remove(); });
 
                 bulkDeleteTimer = null;
 
                 this.unlockDeleteAction();
                 this.unlockBulkAction();
                 this.updateGlobalUIIndicators();
-            }, MOCK_API_DELAY_MS);
+            });
         },
 
         //#endregion
@@ -794,9 +820,7 @@ const XalNotifications = (() => {
          * - après confirmation et exécution d'une suppression de masse
          */
         hideBulkDeleteConfirmation() {
-            if (bulkDeleteConfirmWrapper) {
-                bulkDeleteConfirmWrapper.hidden = true;
-            }
+            if (bulkDeleteConfirmWrapper) bulkDeleteConfirmWrapper.hidden = true;
         },
 
         /**
@@ -805,6 +829,12 @@ const XalNotifications = (() => {
          * Méthode strictement visuelle — ne modifie que les classes CSS des contrôles
          * et ne déclenche aucune action métier.
          *
+         * Parcours unique via tableau de règles, supprimant le double
+         * parcours (désactivation globale puis règles spécifiques) de l'implémentation précédente.
+         *
+         * Capture unique des listes DOM en début de méthode pour éviter
+         * les appels DOM redondants au sein d'une même opération de mise à jour.
+         *
          * Règles appliquées :
          * - toutes les actions sont désactivées si une suppression ou une action de masse est en cours
          * - "tout marquer comme lu"  : actif uniquement s'il existe des notifications non lues
@@ -812,33 +842,20 @@ const XalNotifications = (() => {
          * - "tout supprimer" : actif uniquement s'il existe des notifications
          */
         updateBulkActionsAvailability() {
-            const disabled = this.isDeleteActionLocked() || this.isBulkActionInProgress();
+            const disabled    = this.isDeleteActionLocked() || this.isBulkActionInProgress();
+            const allItems    = disabled ? [] : this.items();
+            const unreadCount = disabled ? 0  : this.unreadItems().length;
+            const readCount   = disabled ? 0  : this.readItems().length;
 
-            // Désactivation globale des actions de masse
-            Object.values(css.selectors.bulkActions).forEach(selector => {
-                document.querySelector(selector)?.classList.toggle(css.classes.disabled, disabled);
+            const rules = [
+                { selector: css.selectors.bulkActions.read,   isDisabled: disabled || unreadCount === 0 },
+                { selector: css.selectors.bulkActions.unread, isDisabled: disabled || readCount === 0 },
+                { selector: css.selectors.bulkActions.delete, isDisabled: disabled || allItems.length === 0 },
+            ];
+
+            rules.forEach(({ selector, isDisabled }) => {
+                document.querySelector(selector)?.classList.toggle(css.classes.disabled, isDisabled);
             });
-
-            // Application des règles spécifiques lorsque les actions sont autorisées
-            if (!disabled) {
-                document.querySelector(css.selectors.bulkActions.read)
-                    ?.classList.toggle(
-                        css.classes.disabled,
-                        this.unreadItems().length === 0
-                    );
-
-                document.querySelector(css.selectors.bulkActions.unread)
-                    ?.classList.toggle(
-                        css.classes.disabled,
-                        this.readItems().length === 0
-                    );
-
-                document.querySelector(css.selectors.bulkActions.delete)
-                    ?.classList.toggle(
-                        css.classes.disabled,
-                        this.items().length === 0
-                    );
-            }
         },
 
         /**
@@ -847,6 +864,9 @@ const XalNotifications = (() => {
          * Le DOM est considéré comme la source de vérité visuelle.
          * Méthode strictement visuelle — ne modifie aucun état métier
          * et ne déclenche aucune action utilisateur.
+         *
+         * Capture unique de items() et unreadItems() en début de méthode
+         * pour éviter les appels DOM redondants au sein d'une même synchronisation.
          *
          * Met à jour :
          * - les compteurs numériques de notifications non lues et leur visibilité
@@ -857,6 +877,7 @@ const XalNotifications = (() => {
          * Doit être appelée après toute modification du contenu ou de l'état des notifications.
          */
         updateGlobalUIIndicators() {
+            const allItems    = this.items();
             const unreadCount = this.unreadItems().length;
 
             // Mise à jour des compteurs numériques et de leur visibilité
@@ -869,7 +890,7 @@ const XalNotifications = (() => {
             unreadCounterDotElt?.toggleAttribute('hidden', unreadCount === 0);
 
             // État "aucune notification"
-            emptyStateElt?.toggleAttribute('hidden', this.items().length > 0);
+            emptyStateElt?.toggleAttribute('hidden', allItems.length > 0);
 
             // Mise à jour des règles de disponibilité des actions de masse
             this.updateBulkActionsAvailability();
@@ -893,8 +914,11 @@ const XalNotifications = (() => {
          * les correspondances entre l'UI et les intentions métier.
          * La résolution effective est effectuée par handleClickAction().
          *
+         * Type de retour précisé en {Array<[string, () => void]>}
+         * au lieu du générique {Array<[string, Function]>}.
+         *
          * @param {HTMLElement} notificationItem - Notification de référence pour les actions unitaires.
-         * @returns {Array<[string, Function]>} Liste de paires [sélecteur CSS, handler].
+         * @returns {Array<[string, () => void]>} Liste de paires [sélecteur CSS, handler].
          */
         createActionDispatchMap(notificationItem) {
             return [
@@ -930,9 +954,7 @@ const XalNotifications = (() => {
          * @param {HTMLElement} notificationItem - Notification de référence pour les actions unitaires.
          */
         handleClickAction(event, notificationItem) {
-            const actionMap = this.createActionDispatchMap(notificationItem);
-
-            for (const [cssSelector, actionHandler] of actionMap) {
+            for (const [cssSelector, actionHandler] of this.createActionDispatchMap(notificationItem)) {
                 // Vérifie si la cible du clic (ou un de ses parents) correspond au sélecteur de l'action
                 if (event.target.closest(cssSelector)) {
                     actionHandler();
@@ -1002,11 +1024,11 @@ const XalNotifications = (() => {
                 pendingDeleteTimer = null;
 
                 this.setItemBusy(pendingSingleDeleteItem, false);
-                pendingSingleDeleteItem = null;
 
-                undoDeleteToast?.hide();
-                undoDeleteToast = null;
+                const toast = undoDeleteToast;
+                _resetSingleDeleteState();
 
+                toast?.hide();
                 this.unlockDeleteAction();
             }
 
@@ -1032,7 +1054,7 @@ const XalNotifications = (() => {
          *
          * Séquence d'initialisation :
          * 1. Résout et stocke les références DOM utilisées par le gestionnaire
-         * 2. Attache le listener hidden.bs.toast pour réinitialiser la barre de progression du toast
+         * 2. Attache le listener hidden.bs.toast pour réinitialiser la barre de progression
          * 3. Initialise la délégation d'événements via initEventHandlers()
          * 4. Synchronise l'état initial de l'interface via updateGlobalUIIndicators()
          */
