@@ -48,40 +48,6 @@ const XalLoaderToast = (() => {
      */
     let _messageElt = null;
 
-    /**
-     * Crée l'élément DOM du toast et l'insère dans le conteneur de toasts.
-     *
-     * Le toast est créé sans bouton de fermeture et avec autohide désactivé
-     * pour rester visible jusqu'à l'appel explicite de hide().
-     *
-     * Le conteneur `.toast-container` est supposé déjà présent dans le HTML.
-     */
-    const _createToastElement = () => {
-        _toastElt           = document.createElement('div');
-        _toastElt.className = 'toast xal-loader-toast';
-        _toastElt.setAttribute(XalConstants.attributeNames.role, XalConstants.attributeValues.status);
-        _toastElt.setAttribute(XalConstants.ariaNames.live, XalConstants.attributeValues.polite);
-        _toastElt.setAttribute(XalConstants.ariaNames.atomic, XalConstants.attributeValues.true);
-
-        _toastElt.innerHTML = `
-            <div class="toast-body">
-                <div class="xal-loader-toast__spinner" aria-hidden="true"></div>
-                <span class="xal-loader-toast__message"></span>
-            </div>
-        `;
-
-        // Insertion dans le conteneur de toasts existant
-        const container = document.querySelector(XalConstants.cssQueries.toastContainer);
-
-        if (container) {
-            container.appendChild(_toastElt);
-        } else {
-            document.body.appendChild(_toastElt);
-        }
-
-        _messageElt = _toastElt.querySelector(XalConstants.cssQueries.toastLoaderMessage);
-    };
-
     return {
         /**
          * Affiche le toast de chargement avec le message fourni.
@@ -153,6 +119,18 @@ const XalLoaderToast = (() => {
             if (!_messageElt || !_toastInstance) return;
 
             _messageElt.textContent = message;
+        },
+
+        /**
+         * Initialise le composant toast de chargement.
+         *
+         * Résout les références DOM depuis le HTML statique.
+         * Doit être appelé une seule fois depuis xalise.js au DOMContentLoaded,
+         * avant tout appel à show() ou hide().
+         */
+        init() {
+            _toastElt   = document.getElementById(XalConstants.elementIds.toastLoader);
+            _messageElt = _toastElt?.querySelector(XalConstants.cssQueries.toastLoaderMessage);
         },
     };
 })();
