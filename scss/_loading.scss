@@ -39,7 +39,7 @@
 // Skeleton
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
-.xal-skeleton {
+.xal-loader-placeholder {
     display: block;
     width: 100%;
     padding: 1rem;
@@ -50,16 +50,16 @@
         border-radius: .25rem;
         background: linear-gradient(
             90deg,
-            #e9ecef 25%,
-            #f8f9fa 50%,
-            #e9ecef 75%
+            #ced4da 25%,
+            #dee2e6 50%,
+            #ced4da 75%
         );
         background-size: 200% 100%;
-        animation: xal-skeleton-shimmer 1.5s ease-in-out infinite;
+        animation: xal-loader-placeholder-shimmer 1.5s ease-in-out infinite;
     }
 }
 
-@keyframes xal-skeleton-shimmer {
+@keyframes xal-loader-placeholder-shimmer {
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 }

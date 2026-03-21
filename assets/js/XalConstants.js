@@ -53,13 +53,14 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     elementIds: Object.freeze({
-        layout:                 'xal-id-application-layout',
-        sidebar:                'xal-id-sidebar',
-        btnToggleSidebar:       'xal-id-btn-toggle-sidebar',
-        notificationCenter:     'xal-id-notification-center',
-        notificationToastUndo:  'xal-id-notification-toast-undo',
-        navbarLoader:           'xal-id-loader-nav',
-        toastLoader:            'xal-id-loader-toast',
+        layout:                     'xal-id-application-layout',
+        sidebar:                    'xal-id-sidebar',
+        btnToggleSidebar:           'xal-id-btn-toggle-sidebar',
+        notificationCenter:         'xal-id-notification-center',
+        notificationToastUndo:      'xal-id-notification-toast-undo',
+        navbarLoader:               'xal-id-loader-nav',
+        toastLoader:                'xal-id-loader-toast',
+        placeholderLoaderTemplate:  'xal-id-loader-placeholder-template',
     }),
 
     /**
@@ -68,7 +69,8 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     cssClasses: Object.freeze({
-        sidebarCollapsed: 'xal-application-layout--sidebar-collapsed',
+        sidebarCollapsed:           'xal-application-layout--sidebar-collapsed',
+        loaderPlacerholderActive:   'xal-loader-placeholder--active'
     }),
 
     /**
@@ -83,6 +85,7 @@ const XalConstants = Object.freeze({
     cssQueries: Object.freeze({
         tooltip:                        `[data-bs-toggle="tooltip"]`,
         toastLoaderMessage:             `.xal-loader-toast__message`,
+        placeholderLoader:              '.xal-loader-placeholder',
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
