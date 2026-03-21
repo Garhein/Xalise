@@ -51,9 +51,11 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     elementIds: Object.freeze({
-        layout:           'xal-id-application-layout',
-        sidebar:          'xal-id-sidebar',
-        btnToggleSidebar: 'xal-id-btn-toggle-sidebar',
+        layout:                 'xal-id-application-layout',
+        sidebar:                'xal-id-sidebar',
+        btnToggleSidebar:       'xal-id-btn-toggle-sidebar',
+        notificationCenter:     'xal-id-notification-center',
+        notificationToastUndo:  'xal-id-notification-toast-undo',
     }),
 
     /**
@@ -75,9 +77,11 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     cssQueries: Object.freeze({
-        tooltip:                 `[data-bs-toggle="tooltip"]`,
-        sidebarSubmenuToggleBtn: `[data-xal-action="toggle-submenu"]`,
-        sidebarSubmenu:          `.xal-sidebar__submenu`,
-        sidebarActiveNavLink:    `.nav-link.active`,
+        tooltip:                        `[data-bs-toggle="tooltip"]`,
+
+        // Sidebar
+        sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
+        sidebarSubmenu:                 `.xal-sidebar__submenu`,
+        sidebarActiveNavLink:           `.nav-link.active`,
     }),
 });
