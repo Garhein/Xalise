@@ -164,6 +164,7 @@ const XalSidebar = {
      * - Restaure l'état collapsed depuis localStorage
      * - Attache le listener du bouton toggle
      * - Initialise la gestion des sous-menus
+     * - Initialise le comportement responsive
      */
     init() {
         // Restaure l'état collapsed depuis localStorage
