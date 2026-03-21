@@ -197,23 +197,37 @@ const XalSidebar = {
      * manuelle de l'utilisateur.
      */
     initResponsive() {
+        // En dessous de md : retire le mode réduit pour l'offcanvas
         BsBreakpoints.onChange(BsBreakpoints.down('md'), (e) => {
             const layout = document.getElementById(XalConstants.elementIds.layout);
 
             if (!layout) return;
 
             if (e.matches) {
-                // Passage en dessous de md : réduit la sidebar
-                layout.classList.add(XalConstants.cssClasses.sidebarCollapsed);
+                // Mobile : retire le mode réduit, l'offcanvas prend le relais
+                layout.classList.remove(XalConstants.cssClasses.sidebarCollapsed);
                 this.closeAllSubmenus();
             } else {
-                // Passage au-dessus de md : restaure l'état persisté
+                // Desktop : restaure l'état persisté
                 const wasCollapsed = localStorage.getItem(XalConstants.elementIds.layout) === 'true';
 
                 layout.classList.toggle(
                     XalConstants.cssClasses.sidebarCollapsed,
                     wasCollapsed
                 );
+            }
+        });
+
+        // À partir de md et jusqu'à lg : réduit automatiquement la sidebar
+        BsBreakpoints.onChange(BsBreakpoints.only('md'), (e) => {
+            const layout = document.getElementById(XalConstants.elementIds.layout);
+
+            if (!layout) return;
+
+            if (e.matches) {
+                // Breakpoint md : réduit automatiquement
+                layout.classList.add(XalConstants.cssClasses.sidebarCollapsed);
+                this.closeAllSubmenus();
             }
         });
     },

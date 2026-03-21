@@ -215,6 +215,8 @@
     }
 }
 
-.xal-application-layout--sidebar-collapsed .xal-sidebar {
-    @include xal-sidebar-collapsed
+@include media-breakpoint-up(md) {
+    .xal-application-layout--sidebar-collapsed .xal-sidebar {
+        @include xal-sidebar-collapsed
+    }
 }
