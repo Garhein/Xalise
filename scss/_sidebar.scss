@@ -215,8 +215,16 @@
     }
 }
 
+// Mode réduit disponible à partir du breakpoint md
 @include media-breakpoint-up(md) {
     .xal-application-layout--sidebar-collapsed .xal-sidebar {
         @include xal-sidebar-collapsed
+    }
+}
+
+// En mode offcanvas (xs et sm), la sidebar prend toute la hauteur
+@include media-breakpoint-down(md) {
+    .xal-sidebar {
+        height: 100vh;
     }
 }

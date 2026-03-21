@@ -12207,6 +12207,11 @@ body:not([data-xal-page-fullheight]) {
     border-bottom-right-radius: 0.5rem;
   }
 }
+@media (max-width: 767.98px) {
+  .xal-sidebar {
+    height: 100vh;
+  }
+}
 .xal-notification-center {
   --bs-offcanvas-width: 420px;
 }
