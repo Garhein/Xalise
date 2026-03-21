@@ -469,6 +469,19 @@ const XalTooltips = (() => {
             _observeDomMutations();
             this.initTooltips();
         },
+
+        /**
+         * Active ou désactive le mode debug à la volée.
+         *
+         * Permet de modifier le niveau de verbosité sans réinitialiser
+         * le composant. Utile pour investiguer un comportement en production
+         * ou depuis la console du navigateur.
+         *
+         * @param {boolean} value - true pour activer, false pour désactiver.
+         */
+        setDebug(value) {
+            _debug = Boolean(value);
+        },
     };
 
     return api;
