@@ -12026,6 +12026,12 @@ body:not([data-xal-page-fullheight]) {
   min-width: 0;
   overflow-y: auto;
 }
+@media (min-width: 768px) {
+  .xal-main-content {
+    margin-left: var(--xal-sidebar-width);
+    transition: margin-left 0.25s ease;
+  }
+}
 
 .xal-sidebar {
   position: fixed;

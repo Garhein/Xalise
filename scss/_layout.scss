@@ -63,4 +63,10 @@ body:not([data-xal-page-fullheight]) {
   flex: 1 1 0;
   min-width: 0;
   overflow-y: auto;
+
+  // En dessous de md : pas de décalage, la sidebar est en offcanvas
+  @include media-breakpoint-up(md) {
+      margin-left: var(--xal-sidebar-width);
+      transition: margin-left .25s ease;
+  }
 }
