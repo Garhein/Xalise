@@ -33,6 +33,7 @@ const XalConstants = Object.freeze({
     attributeNames: Object.freeze({
         xalAction: 'data-xal-action',
         xalTarget: 'data-xal-target',
+        tooltip:   'data-tooltip',
     }),
 
     /**
