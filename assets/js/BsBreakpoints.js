@@ -400,6 +400,38 @@ const BsBreakpoints = (() => {
                     _listenerRegistry.delete(query);
                 }
             };
-        }
+        },
+
+        /**
+         * Affiche le breakpoint courant dans la console.
+         *
+         * Utile en développement pour surveiller les transitions de breakpoints
+         * sans inspecter manuellement les media queries.
+         *
+         * Utilise onChange() sur la media query "all" pour être notifié
+         * à chaque changement, et current() pour résoudre le nom du breakpoint actif.
+         *
+         * @param {Object}  [options={}]
+         * @param {boolean} [options.onResize=false] - Si true, notifie à chaque changement
+         *                                             de viewport. Si false, affiche une seule fois.
+         * @returns {() => void} Fonction de désinscription pour arrêter les notifications.
+         */
+        notifyBreakpoint({ onResize = false } = {}) {
+            const log = () => {
+                console.info('[BsBreakpoints] Breakpoint courant :', this.current());
+            };
+
+            if (!onResize) {
+                log();
+                return () => {};
+            }
+
+            // onChange appelle déjà le callback immédiatement — pas besoin de log() séparé
+            const unsubscribers = keys.map(key =>
+                this.onChange(this.up(key), () => log())
+            );
+
+            return () => unsubscribers.forEach(unsub => unsub());
+        },
     });
 })();
