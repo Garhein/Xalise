@@ -24,26 +24,32 @@ const XalConstants = Object.freeze({
     ariaNames: Object.freeze({
         expanded:   'aria-expanded',
         hidden:     'aria-hidden',
+        live:       'aria-live',
+        atomic:     'aria-atomic',
     }),
 
     /**
-     * Noms des attributs utilisés comme hooks JS dans le DOM.
+     * Noms des attributs.
      *
      * @type {Readonly<Record<string, string>>}
      */
     attributeNames: Object.freeze({
-        xalAction: 'data-xal-action',
-        xalTarget: 'data-xal-target',
-        tooltip:   'data-tooltip',
+        xalAction:  'data-xal-action',
+        xalTarget:  'data-xal-target',
+        tooltip:    'data-tooltip',
+        role:       'role',
     }),
 
     /**
-     * Valeurs attendues des attributs utilisés comme hooks JS dans le DOM.
+     * Valeurs attendues des attributs.
      *
      * @type {Readonly<Record<string, string>>}
      */
     attributeValues: Object.freeze({
-        sidebarToggleSubmenu: 'toggle-submenu',
+        sidebarToggleSubmenu:   'toggle-submenu',
+        status:                 'status',
+        polite:                 'polite',
+        true:                   'true',
     }),
 
     /**
@@ -81,6 +87,9 @@ const XalConstants = Object.freeze({
      */
     cssQueries: Object.freeze({
         tooltip:                        `[data-bs-toggle="tooltip"]`,
+        
+        toastContainer:                 `.toast-container`,
+        toastLoaderMessage:             `.xal-loader-toast__message`,
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,

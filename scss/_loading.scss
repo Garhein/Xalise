@@ -68,7 +68,7 @@
 // Toast de chargement
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
-.xal-loading-toast {
+.xal-loader-toast {
     .toast-body {
         display: flex;
         align-items: center;
@@ -82,10 +82,10 @@
         border: 2px solid var(--bs-border-color);
         border-top-color: var(--bs-primary);
         border-radius: 50%;
-        animation: xal-spinner-rotate .7s linear infinite;
+        animation: xal-loader-toast-spinner-rotate .7s linear infinite;
     }
 }
 
-@keyframes xal-spinner-rotate {
+@keyframes xal-loader-toast-spinner-rotate {
     to { transform: rotate(360deg); }
 }

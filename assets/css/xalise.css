@@ -12602,22 +12602,22 @@ body:not([data-xal-page-fullheight]) {
     background-position: -200% 0;
   }
 }
-.xal-loading-toast .toast-body {
+.xal-loader-toast .toast-body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
-.xal-loading-toast__spinner {
+.xal-loader-toast__spinner {
   flex-shrink: 0;
   width: 1rem;
   height: 1rem;
   border: 2px solid var(--bs-border-color);
   border-top-color: var(--bs-primary);
   border-radius: 50%;
-  animation: xal-spinner-rotate 0.7s linear infinite;
+  animation: xal-loader-toast-spinner-rotate 0.7s linear infinite;
 }
 
-@keyframes xal-spinner-rotate {
+@keyframes xal-loader-toast-spinner-rotate {
   to {
     transform: rotate(360deg);
   }
