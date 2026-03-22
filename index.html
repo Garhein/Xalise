@@ -568,6 +568,17 @@
             <div class="xal-loader-placeholder__block" style="width: 90%; height: .75rem;"></div>
         </div>
       </template>
+
+      <!-- Overlay appliqué sur la page lors de certaines actions -->
+      <div id="xal-id-loader-overlay"
+           class="xal-loader-overlay"
+           aria-hidden="true"
+           hidden>
+        <div class="xal-loader-overlay__content">
+          <div class="xal-loader-overlay__spinner" aria-hidden="true"></div>
+          <span class="xal-loader-overlay__message"></span>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

@@ -36,7 +36,7 @@
 }
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
-// Skeleton
+// Placeholder
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
 .xal-loader-placeholder {
@@ -82,10 +82,58 @@
         border: 2px solid var(--bs-border-color);
         border-top-color: var(--bs-primary);
         border-radius: 50%;
-        animation: xal-loader-toast-spinner-rotate .7s linear infinite;
+        animation: xal-loader-spinner-rotate .7s linear infinite;
     }
 }
 
-@keyframes xal-loader-toast-spinner-rotate {
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Overlay de chargement
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-loader-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: $zindex-modal - 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(var(--bs-body-bg-rgb), .45);
+    pointer-events: all;
+    user-select: none;
+    cursor: wait;
+    animation: xal-loader-overlay-fadein .2s ease forwards;
+
+    &__spinner {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 3px solid var(--bs-border-color);
+        border-top-color: var(--bs-primary);
+        border-radius: 50%;
+        animation: xal-loader-spinner-rotate .8s linear infinite;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    &__message {
+        color: var(--bs-body-color);
+        font-size: .875rem;
+
+        &:empty {
+            display: none;
+        }
+    }
+}
+
+@keyframes xal-loader-overlay-fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes xal-loader-spinner-rotate {
     to { transform: rotate(360deg); }
 }

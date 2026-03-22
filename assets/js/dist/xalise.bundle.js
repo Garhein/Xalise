@@ -61,6 +61,7 @@ const XalConstants = Object.freeze({
         navbarLoader:               'xal-id-loader-nav',
         toastLoader:                'xal-id-loader-toast',
         placeholderLoaderTemplate:  'xal-id-loader-placeholder-template',
+        loaderOverlay:              'xal-id-loader-overlay',
     }),
 
     /**
@@ -86,6 +87,7 @@ const XalConstants = Object.freeze({
         tooltip:                        `[data-bs-toggle="tooltip"]`,
         toastLoaderMessage:             `.xal-loader-toast__message`,
         placeholderLoader:              '.xal-loader-placeholder',
+        loaderOverlayMessage:           '.xal-loader-overlay__message',
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
@@ -881,15 +883,165 @@ const XalLoaderToast = (() => {
     };
 })();
 /**
+ * Gestion de l'overlay de chargement.
+ *
+ * Affiche un voile semi-transparent sur la page afin de bloquer
+ * toute interaction utilisateur pendant une opération en cours
+ * (action destructive, soumission de formulaire, opération longue).
+ *
+ * Supporte les appels concurrents via un compteur interne :
+ * l'overlay reste visible tant qu'au moins un appel est en cours.
+ *
+ * Utilisation typique :
+ * - Suppression ou archivage d'un enregistrement
+ * - Soumission de formulaire
+ * - Opération longue nécessitant de bloquer les interactions
+ *
+ * L'overlay est déclaré en HTML statique dans index.html et
+ * résolu une seule fois dans init().
+ *
+ * HTML requis dans index.html :
+ * <div id="xal-id-loader-overlay" class="xal-loader-overlay" aria-hidden="true" hidden>
+ *     <div class="xal-loader-overlay__spinner" aria-hidden="true"></div>
+ * </div>
+ *
+ * Dépendances :
+ * - XalConstants.js → XalConstants
+ *
+ * @namespace XalLoaderOverlay
+ * @author Xavier VILLEMIN
+ */
+const XalLoaderOverlay = (() => {
+    /**
+     * Nombre d'appels ayant demandé l'affichage de l'overlay.
+     *
+     * L'overlay est masqué uniquement quand ce compteur atteint 0,
+     * ce qui permet de gérer correctement les appels concurrents
+     * sans masquer l'overlay prématurément.
+     *
+     * @type {number}
+     */
+    let _pendingCount = 0;
+
+    /**
+     * Référence vers l'élément DOM de l'overlay.
+     * Résolu une seule fois dans init() depuis le HTML statique.
+     *
+     * @type {HTMLElement|null}
+     */
+    let _overlayElt = null;
+
+    /**
+     * Référence vers l'élément DOM du message.
+     *
+     * @type {HTMLElement|null}
+     */
+    let _messageElt = null;
+
+    /**
+     * Met à jour la visibilité de l'overlay selon le compteur courant.
+     *
+     * - _pendingCount > 0 : overlay visible, interactions bloquées
+     * - _pendingCount = 0 : overlay masqué, interactions restaurées
+     */
+    const _update = () => {
+        if (!_overlayElt) return;
+
+        const isActive = _pendingCount > 0;
+
+        _overlayElt.hidden = !isActive;
+        _overlayElt.setAttribute(XalConstants.ariaNames.hidden, String(!isActive));
+    };
+
+    return {
+        /**
+         * Affiche l'overlay et bloque les interactions utilisateur.
+         *
+         * Incrémente le compteur interne — l'overlay reste visible
+         * tant que hide() n'a pas été appelé autant de fois que show().
+         * Peut être appelé plusieurs fois en parallèle sans effet de bord.
+         *
+         * @param {string} [message=''] - Message optionnel affiché sous le spinner.
+         */
+        show(message = '') {
+            _pendingCount++;
+
+            if (_messageElt) {
+                _messageElt.textContent = message;
+            }
+
+            _update();
+        },
+
+        /**
+         * Masque l'overlay et restaure les interactions utilisateur.
+         *
+         * Décrémente le compteur interne et masque l'overlay uniquement
+         * si plus aucun appel n'est en cours.
+         * Ne descend jamais en dessous de 0.
+         */
+        hide() {
+            _pendingCount = Math.max(0, _pendingCount - 1);
+            _update();
+        },
+
+        /**
+         * Réinitialise le compteur et masque immédiatement l'overlay.
+         *
+         * Utile en cas d'erreur globale ou de navigation pour garantir
+         * un état propre sans attendre la fin de tous les appels en cours.
+         */
+        reset() {
+            _pendingCount = 0;
+            _update();
+        },
+
+        /**
+         * Indique si l'overlay est actuellement visible.
+         *
+         * @returns {boolean} true si l'overlay est actif, false sinon.
+         */
+        isActive() {
+            return _pendingCount > 0;
+        },
+
+        /**
+         * Met à jour le message affiché sans masquer ni réafficher l'overlay.
+         *
+         * Sans effet si l'overlay n'est pas affiché.
+         *
+         * @param {string} message - Nouveau message à afficher.
+         */
+        updateMessage(message) {
+            if (!_messageElt || !_overlayElt) return;
+
+            _messageElt.textContent = message;
+        },
+
+        /**
+         * Initialise le composant.
+         *
+         * Résout les références DOM depuis le HTML statique.
+         * Doit être appelé une seule fois depuis xalise.js au DOMContentLoaded,
+         * avant tout appel à show() ou hide().
+         */
+        init() {
+            _overlayElt = document.getElementById(XalConstants.elementIds.loaderOverlay);
+            _messageElt = _overlayElt?.querySelector(XalConstants.cssQueries.loaderOverlayMessage);
+        },
+    };
+})();
+/**
  * Couche HTTP de l'application Xalise.
  *
  * Enveloppe fetch() avec la gestion automatique des indicateurs
  * visuels de chargement (barre navbar, skeleton, toast).
  *
  * Dépendances :
- * - XalProgressBar.js  → XalProgressBar
- * - XalSkeleton.js     → XalSkeleton
- * - XalLoadingToast.js → XalLoadingToast
+ * - XalLoaderNav.js            → XalLoaderNav
+ * - XalLoaderPlaceholder.js    → XalLoaderPlaceholder
+ * - XalLoaderToast.js          → XalLoaderToast
+ * - XalLoaderOverlay.js        → XalLoaderOverlay
  *
  * @namespace XalHttp
  * @author Xavier VILLEMIN
@@ -899,26 +1051,37 @@ const XalHttp = {
      * Enveloppe un appel fetch avec les indicateurs visuels appropriés.
      *
      * La barre de progression navbar est toujours activée.
-     * Le skeleton et le toast sont optionnels selon le contexte.
+     * Les indicateurs placeholder, toast et overlay sont optionnels
+     * et peuvent être combinés librement selon le contexte.
      *
-     * @param {string}  url                       - URL de la ressource.
-     * @param {Object}  [fetchOptions={}]         - Options passées à fetch().
-     * @param {Object}  [indicators={}]           - Indicateurs visuels à activer.
-     * @param {string}  [indicators.placeholder]  - Sélecteur de la zone de placeholder.
-     * @param {string}  [indicators.toast]        - Message du toast de chargement.
+     * Les indicateurs sont systématiquement masqués dans le bloc finally()
+     * afin de garantir leur nettoyage même en cas d'erreur réseau.
+     *
+     * @param {string}          url                      - URL de la ressource.
+     * @param {Object}          [fetchOptions={}]        - Options passées à fetch().
+     * @param {Object}          [indicators={}]          - Indicateurs visuels à activer.
+     * @param {string}          [indicators.placeholder] - Sélecteur CSS de la zone placeholder.
+     * @param {string}          [indicators.toast]       - Message du toast de chargement.
+     * @param {boolean|string}  [indicators.overlay]     - Si true, affiche l'overlay sans message.
+     *                                                     Si string, affiche l'overlay avec ce message.
      * @returns {Promise<Response>}
      */
-    fetch(url, fetchOptions = {}, { placeholder, toast } = {}) {
-        XalLoaderNav.start();
+    fetch(url, fetchOptions = {}, { placeholder, toast, overlay = false } = {}) {
+        // La barre navbar est inutile si l'overlay est actif —
+        // le spinner et le message de l'overlay suffisent comme retour visuel.
+        if (!overlay) XalLoaderNav.start();
 
         if (placeholder) XalLoaderPlaceholder.show(placeholder);
-        if (toast) XalLoaderToast.show(toast);
+        if (toast)       XalLoaderToast.show(toast);
+        if (overlay)     XalLoaderOverlay.show(typeof overlay === 'string' ? overlay : '');
 
         return fetch(url, fetchOptions)
             .finally(() => {
-                XalLoaderNav.stop();
+                if (!overlay)    XalLoaderNav.stop();
+
                 if (placeholder) XalLoaderPlaceholder.hide(placeholder);
-                if (toast) XalLoaderToast.hide();
+                if (toast)       XalLoaderToast.hide();
+                if (overlay)     XalLoaderOverlay.hide();
             });
     },
 
@@ -930,26 +1093,33 @@ const XalHttp = {
      * Utile pour le développement front-end sans backend disponible,
      * ou pour tester les états de chargement.
      *
-     * @param {*}       [data=null]          - Données fictives à retourner.
-     * @param {Object}  [options={}]
-     * @param {number}  [options.delay=1000] - Délai en ms avant la résolution.
-     * @param {boolean} [options.fail=false] - Si true, simule une erreur réseau.
-     * @param {Object}  [indicators={}]      - Mêmes indicateurs que fetch().
-     * @param {string}  [indicators.placeholder]
-     * @param {string}  [indicators.toast]
+     * @param {*}               [data=null]                 - Données fictives à retourner.
+     * @param {Object}          [options={}]
+     * @param {number}          [options.delay=1000]        - Délai en ms avant la résolution.
+     * @param {boolean}         [options.fail=false]        - Si true, simule une erreur réseau.
+     * @param {Object}          [indicators={}]             - Mêmes indicateurs que fetch().
+     * @param {string}          [indicators.placeholder]    - Sélecteur CSS de la zone placeholder.
+     * @param {string}          [indicators.toast]          - Message du toast de chargement.
+     * @param {boolean|string}  [indicators.overlay]        - Si true, affiche l'overlay sans message.
+     *                                                        Si string, affiche l'overlay avec ce message.
      * @returns {Promise<*>} Promesse résolue avec les données ou rejetée si fail=true.
      */
-    mock(data = null, { delay = 5000, fail = false } = {}, { placeholder, toast } = {}) {
-        XalLoaderNav.start();
+    mock(data = null, { delay = 5000, fail = false } = {}, { placeholder, toast, overlay = false } = {}) {
+        // La barre navbar est inutile si l'overlay est actif —
+        // le spinner et le message de l'overlay suffisent comme retour visuel.
+        if (!overlay) XalLoaderNav.start();
 
         if (placeholder) XalLoaderPlaceholder.show(placeholder);
-        if (toast) XalLoaderToast.show(toast);
+        if (toast)       XalLoaderToast.show(toast);
+        if (overlay)     XalLoaderOverlay.show(typeof overlay === 'string' ? overlay : '');
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                XalLoaderNav.stop();
+                if (!overlay)    XalLoaderNav.stop();
+
                 if (placeholder) XalLoaderPlaceholder.hide(placeholder);
-                if (toast) XalLoaderToast.hide();
+                if (toast)       XalLoaderToast.hide();
+                if (overlay)     XalLoaderOverlay.hide();
 
                 if (fail) {
                     reject(new Error('[XalHttp.mock] Erreur simulée.'));
@@ -2775,6 +2945,7 @@ document.addEventListener('DOMContentLoaded', () => {
     XalLoaderNav.init();
     XalLoaderPlaceholder.init();
     XalLoaderToast.init();
+    XalLoaderOverlay.init();
     XalTooltips.init();
     XalSidebar.init();
     XalNotifications.init();

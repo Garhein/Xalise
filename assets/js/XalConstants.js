@@ -61,6 +61,7 @@ const XalConstants = Object.freeze({
         navbarLoader:               'xal-id-loader-nav',
         toastLoader:                'xal-id-loader-toast',
         placeholderLoaderTemplate:  'xal-id-loader-placeholder-template',
+        loaderOverlay:              'xal-id-loader-overlay',
     }),
 
     /**
@@ -86,6 +87,7 @@ const XalConstants = Object.freeze({
         tooltip:                        `[data-bs-toggle="tooltip"]`,
         toastLoaderMessage:             `.xal-loader-toast__message`,
         placeholderLoader:              '.xal-loader-placeholder',
+        loaderOverlayMessage:           '.xal-loader-overlay__message',
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
