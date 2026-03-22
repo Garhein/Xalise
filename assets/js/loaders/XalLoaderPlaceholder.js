@@ -96,7 +96,7 @@ const XalLoaderPlaceholder = (() => {
 
             if (!el) return;
 
-            el.querySelector(XalConstants.cssQueries.placeholderLoader)?.remove();
+            el.querySelector(XalConstants.cssQueries.loaderPlaceholder)?.remove();
         },
 
         /**
@@ -107,7 +107,7 @@ const XalLoaderPlaceholder = (() => {
          */
         isActive(target) {
             const el = _resolveTarget(target);
-            return !!el?.querySelector(XalConstants.cssQueries.placeholderLoader);
+            return !!el?.querySelector(XalConstants.cssQueries.loaderPlaceholder);
         },
 
         /**
@@ -118,7 +118,7 @@ const XalLoaderPlaceholder = (() => {
          * avant tout appel à show().
          */
         init() {
-            _templateElt = document.getElementById(XalConstants.elementIds.placeholderLoaderTemplate);
+            _templateElt = document.getElementById(XalConstants.elementIds.loaderPlaceholderTemplate);
         },
     };
 })();

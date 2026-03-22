@@ -84,7 +84,7 @@ const XalLoaderNav = (() => {
          * Résout la référence DOM et garantit l'état initial masqué.
          */
         init() {
-            _barElt = document.getElementById(XalConstants.elementIds.navbarLoader);
+            _barElt = document.getElementById(XalConstants.elementIds.loaderNavbar);
         },
     };
 })();

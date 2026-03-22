@@ -129,8 +129,8 @@ const XalLoaderToast = (() => {
          * avant tout appel à show() ou hide().
          */
         init() {
-            _toastElt   = document.getElementById(XalConstants.elementIds.toastLoader);
-            _messageElt = _toastElt?.querySelector(XalConstants.cssQueries.toastLoaderMessage);
+            _toastElt   = document.getElementById(XalConstants.elementIds.loaderToast);
+            _messageElt = _toastElt?.querySelector(XalConstants.cssQueries.loaderToastMessage);
         },
     };
 })();

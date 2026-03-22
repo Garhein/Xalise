@@ -58,9 +58,9 @@ const XalConstants = Object.freeze({
         btnToggleSidebar:           'xal-id-btn-toggle-sidebar',
         notificationCenter:         'xal-id-notification-center',
         notificationToastUndo:      'xal-id-notification-toast-undo',
-        navbarLoader:               'xal-id-loader-nav',
-        toastLoader:                'xal-id-loader-toast',
-        placeholderLoaderTemplate:  'xal-id-loader-placeholder-template',
+        loaderNavbar:               'xal-id-loader-nav',
+        loaderToast:                'xal-id-loader-toast',
+        loaderPlaceholderTemplate:  'xal-id-loader-placeholder-template',
         loaderOverlay:              'xal-id-loader-overlay',
     }),
 
@@ -85,8 +85,8 @@ const XalConstants = Object.freeze({
      */
     cssQueries: Object.freeze({
         tooltip:                        `[data-bs-toggle="tooltip"]`,
-        toastLoaderMessage:             `.xal-loader-toast__message`,
-        placeholderLoader:              '.xal-loader-placeholder',
+        loaderToastMessage:             `.xal-loader-toast__message`,
+        loaderPlaceholder:              '.xal-loader-placeholder',
         loaderOverlayMessage:           '.xal-loader-overlay__message',
 
         // Sidebar
@@ -618,7 +618,7 @@ const XalLoaderNav = (() => {
          * Résout la référence DOM et garantit l'état initial masqué.
          */
         init() {
-            _barElt = document.getElementById(XalConstants.elementIds.navbarLoader);
+            _barElt = document.getElementById(XalConstants.elementIds.loaderNavbar);
         },
     };
 })();
@@ -720,7 +720,7 @@ const XalLoaderPlaceholder = (() => {
 
             if (!el) return;
 
-            el.querySelector(XalConstants.cssQueries.placeholderLoader)?.remove();
+            el.querySelector(XalConstants.cssQueries.loaderPlaceholder)?.remove();
         },
 
         /**
@@ -731,7 +731,7 @@ const XalLoaderPlaceholder = (() => {
          */
         isActive(target) {
             const el = _resolveTarget(target);
-            return !!el?.querySelector(XalConstants.cssQueries.placeholderLoader);
+            return !!el?.querySelector(XalConstants.cssQueries.loaderPlaceholder);
         },
 
         /**
@@ -742,7 +742,7 @@ const XalLoaderPlaceholder = (() => {
          * avant tout appel à show().
          */
         init() {
-            _templateElt = document.getElementById(XalConstants.elementIds.placeholderLoaderTemplate);
+            _templateElt = document.getElementById(XalConstants.elementIds.loaderPlaceholderTemplate);
         },
     };
 })();
@@ -877,8 +877,8 @@ const XalLoaderToast = (() => {
          * avant tout appel à show() ou hide().
          */
         init() {
-            _toastElt   = document.getElementById(XalConstants.elementIds.toastLoader);
-            _messageElt = _toastElt?.querySelector(XalConstants.cssQueries.toastLoaderMessage);
+            _toastElt   = document.getElementById(XalConstants.elementIds.loaderToast);
+            _messageElt = _toastElt?.querySelector(XalConstants.cssQueries.loaderToastMessage);
         },
     };
 })();
