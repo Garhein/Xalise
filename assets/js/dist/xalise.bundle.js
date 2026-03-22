@@ -85,9 +85,10 @@ const XalConstants = Object.freeze({
      */
     cssQueries: Object.freeze({
         tooltip:                        `[data-bs-toggle="tooltip"]`,
+        toastContainer:                 `.toast-container`,
         loaderToastMessage:             `.xal-loader-toast__message`,
-        loaderPlaceholder:              '.xal-loader-placeholder',
-        loaderOverlayMessage:           '.xal-loader-overlay__message',
+        loaderPlaceholder:              `.xal-loader-placeholder`,
+        loaderOverlayMessage:           `.xal-loader-overlay__message`,
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
@@ -1032,27 +1033,256 @@ const XalLoaderOverlay = (() => {
     };
 })();
 /**
+ * Gestion des toasts de feedback de l'application.
+ *
+ * Affiche des toasts Bootstrap contextuels pour informer l'utilisateur
+ * du résultat d'une opération : succès, erreur, avertissement ou information.
+ *
+ * Distinct de XalLoaderToast qui est réservé aux indicateurs de chargement :
+ * - XalLoaderToast → opération en cours (spinner, non dismissible)
+ * - XalToast       → résultat d'une opération (icône, auto-masqué)
+ *
+ * Les toasts sont créés dynamiquement et insérés dans le conteneur
+ * Bootstrap `.toast-container` existant dans index.html.
+ * Ils se masquent automatiquement après le délai configuré
+ * et sont retirés du DOM après masquage.
+ *
+ * Dépendances :
+ * - XalConstants.js → XalConstants
+ *
+ * @namespace XalToast
+ * @author Xavier VILLEMIN
+ */
+const XalToast = (() => {
+    /**
+     * Délai par défaut en ms avant masquage automatique du toast.
+     *
+     * @type {number}
+     */
+    const DEFAULT_DELAY_MS = 5000;
+
+    /**
+     * Configuration des variantes de toast.
+     *
+     * Chaque variante définit :
+     * - cssClass  : classe CSS Bootstrap appliquée sur le toast
+     * - icon      : icône Bootstrap Icons affichée dans l'en-tête
+     * - label     : libellé de l'en-tête du toast
+     *
+     * @type {Readonly<Record<string, {cssClass: string, icon: string, label: string}>>}
+     */
+    const VARIANTS = Object.freeze({
+        success: Object.freeze({
+            cssClass: 'text-bg-success',
+            icon:     'bi-check-circle-fill',
+            label:    'Succès',
+        }),
+        error: Object.freeze({
+            cssClass: 'text-bg-danger',
+            icon:     'bi-x-circle-fill',
+            label:    'Erreur',
+        }),
+        warning: Object.freeze({
+            cssClass: 'text-bg-warning',
+            icon:     'bi-exclamation-triangle-fill',
+            label:    'Avertissement',
+        }),
+        info: Object.freeze({
+            cssClass: 'text-bg-info',
+            icon:     'bi-info-circle-fill',
+            label:    'Information',
+        }),
+    });
+
+    /**
+     * Crée, insère et affiche un toast Bootstrap dans le conteneur de toasts.
+     *
+     * Le toast est retiré du DOM automatiquement après masquage
+     * via l'événement hidden.bs.toast.
+     *
+     * @param {string} message          - Message à afficher dans le corps du toast.
+     * @param {string} variant          - Variante du toast ('success', 'error', 'warning', 'info').
+     * @param {number} [delay]          - Délai en ms avant masquage automatique.
+     */
+    const _show = (message, variant, delay = DEFAULT_DELAY_MS) => {
+        const config = VARIANTS[variant] ?? VARIANTS.info;
+
+        // Création de l'élément toast
+        const toastElt       = document.createElement('div');
+        toastElt.className   = `toast xal-toast ${config.cssClass}`;
+        toastElt.setAttribute('role', 'alert');
+        toastElt.setAttribute('aria-live', variant === 'error' ? 'assertive' : 'polite');
+        toastElt.setAttribute('aria-atomic', 'true');
+
+        toastElt.innerHTML = `
+            <div class="toast-header">
+                <i class="bi ${config.icon} me-2" aria-hidden="true"></i>
+                <strong class="me-auto">${config.label}</strong>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="toast"
+                        aria-label="Fermer">
+                </button>
+            </div>
+            <div class="toast-body">
+                ${message}
+            </div>
+        `;
+
+        // Insertion dans le conteneur de toasts existant
+        const container = document.querySelector(XalConstants.cssQueries.toastContainer);
+
+        if (container) {
+            container.appendChild(toastElt);
+        } else {
+            document.body.appendChild(toastElt);
+        }
+
+        // Création et affichage de l'instance Bootstrap Toast
+        const toastInstance = new bootstrap.Toast(toastElt, {
+            autohide: true,
+            delay,
+        });
+
+        // Nettoyage du DOM après masquage
+        toastElt.addEventListener('hidden.bs.toast', () => {
+            toastInstance.dispose();
+            toastElt.remove();
+        }, { once: true });
+
+        toastInstance.show();
+    };
+
+    return {
+        /**
+         * Affiche un toast de succès.
+         *
+         * @param {string} message      - Message à afficher.
+         * @param {number} [delay]      - Délai en ms avant masquage automatique.
+         */
+        success(message, delay = DEFAULT_DELAY_MS) {
+            _show(message, 'success', delay);
+        },
+
+        /**
+         * Affiche un toast d'erreur.
+         *
+         * Utilise aria-live="assertive" pour une annonce immédiate
+         * aux technologies d'assistance.
+         *
+         * @param {string} message      - Message à afficher.
+         * @param {number} [delay]      - Délai en ms avant masquage automatique.
+         */
+        error(message, delay = DEFAULT_DELAY_MS) {
+            _show(message, 'error', delay);
+        },
+
+        /**
+         * Affiche un toast d'avertissement.
+         *
+         * @param {string} message      - Message à afficher.
+         * @param {number} [delay]      - Délai en ms avant masquage automatique.
+         */
+        warning(message, delay = DEFAULT_DELAY_MS) {
+            _show(message, 'warning', delay);
+        },
+
+        /**
+         * Affiche un toast d'information.
+         *
+         * @param {string} message      - Message à afficher.
+         * @param {number} [delay]      - Délai en ms avant masquage automatique.
+         */
+        info(message, delay = DEFAULT_DELAY_MS) {
+            _show(message, 'info', delay);
+        },
+    };
+})();
+/**
  * Couche HTTP de l'application Xalise.
  *
  * Enveloppe fetch() avec la gestion automatique des indicateurs
- * visuels de chargement (barre navbar, skeleton, toast).
+ * visuels de chargement (barre navbar, placeholder, toast, overlay)
+ * et la gestion des erreurs HTTP via XalToast.
+ *
+ * Gestion des erreurs :
+ * - Erreur réseau (fetch rejeté)    → toast d'erreur générique
+ * - Erreur HTTP (statut 4xx, 5xx)   → toast d'erreur avec le statut HTTP
+ * - Comportement personnalisable    → paramètre onError par appel
  *
  * Dépendances :
- * - XalLoaderNav.js            → XalLoaderNav
- * - XalLoaderPlaceholder.js    → XalLoaderPlaceholder
- * - XalLoaderToast.js          → XalLoaderToast
- * - XalLoaderOverlay.js        → XalLoaderOverlay
+ * - XalLoaderNav.js         → XalLoaderNav
+ * - XalLoaderPlaceholder.js → XalLoaderPlaceholder
+ * - XalLoaderToast.js       → XalLoaderToast
+ * - XalLoaderOverlay.js     → XalLoaderOverlay
+ * - XalToast.js             → XalToast
  *
  * @namespace XalHttp
  * @author Xavier VILLEMIN
  */
 const XalHttp = {
     /**
-     * Enveloppe un appel fetch avec les indicateurs visuels appropriés.
+     * Message d'erreur affiché par défaut lors d'une erreur réseau.
      *
-     * La barre de progression navbar est toujours activée.
-     * Les indicateurs placeholder, toast et overlay sont optionnels
-     * et peuvent être combinés librement selon le contexte.
+     * @type {string}
+     */
+    DEFAULT_NETWORK_ERROR_MESSAGE: 'Une erreur réseau est survenue. Veuillez réessayer.',
+
+    /**
+     * Active ou désactive les indicateurs visuels de chargement.
+     *
+     * @param {Object}          indicators              - Indicateurs visuels.
+     * @param {string}          indicators.placeholder
+     * @param {string}          indicators.toast
+     * @param {boolean|string}  indicators.overlay
+     * @param {boolean}         show                    - true pour afficher, false pour masquer.
+     */
+    _toggleIndicators({ placeholder, toast, overlay }, show) {
+        const action = show ? 'show' : 'hide';
+
+        if (!overlay) show ? XalLoaderNav.start() : XalLoaderNav.stop();
+
+        if (placeholder) XalLoaderPlaceholder[action](placeholder);
+        if (toast)       XalLoaderToast[action](toast);
+        if (overlay)     show
+            ? XalLoaderOverlay.show(typeof overlay === 'string' ? overlay : '')
+            : XalLoaderOverlay.hide();
+    },
+
+    /**
+     * Gère une erreur survenue lors d'un appel HTTP.
+     *
+     * - Si un callback onError est fourni, il est appelé avec l'erreur.
+     * - Sinon, un toast d'erreur est affiché avec le message approprié.
+     *
+     * @param {Error|Response}  error    - Erreur survenue.
+     * @param {Function|null}   onError  - Callback d'erreur personnalisé.
+     */
+    _handleError(error, onError) {
+        if (typeof onError === 'function') {
+            onError(error);
+            return;
+        }
+
+        // Erreur HTTP (statut 4xx, 5xx)
+        if (error instanceof Response) {
+            XalToast.error(`Erreur ${error.status} : ${error.statusText || 'Une erreur est survenue.'}`);
+            return;
+        }
+
+        // Erreur réseau
+        XalToast.error(this.DEFAULT_NETWORK_ERROR_MESSAGE);
+    },
+
+    /**
+     * Enveloppe un appel fetch avec les indicateurs visuels appropriés
+     * et la gestion des erreurs HTTP.
+     *
+     * La barre navbar est désactivée si l'overlay est actif —
+     * le spinner de l'overlay suffit comme retour visuel.
+     *
+     * Les réponses HTTP avec un statut 4xx ou 5xx sont considérées
+     * comme des erreurs et déclenchent le handler onError.
      *
      * Les indicateurs sont systématiquement masqués dans le bloc finally()
      * afin de garantir leur nettoyage même en cas d'erreur réseau.
@@ -1064,66 +1294,89 @@ const XalHttp = {
      * @param {string}          [indicators.toast]       - Message du toast de chargement.
      * @param {boolean|string}  [indicators.overlay]     - Si true, affiche l'overlay sans message.
      *                                                     Si string, affiche l'overlay avec ce message.
+     * @param {Function|null}   [indicators.onError]     - Callback appelé en cas d'erreur réseau ou HTTP.
+     *                                                     Reçoit la Response (erreur HTTP) ou une Error (erreur réseau) en paramètre.
+     *                                                     Si absent, un toast d'erreur est affiché.
+     * @param {Function|null}   [indicators.onSuccess]   - Callback appelé après une réponse HTTP réussie.
+     *                                                     Reçoit la Response en paramètre.
      * @returns {Promise<Response>}
      */
-    fetch(url, fetchOptions = {}, { placeholder, toast, overlay = false } = {}) {
-        // La barre navbar est inutile si l'overlay est actif —
-        // le spinner et le message de l'overlay suffisent comme retour visuel.
-        if (!overlay) XalLoaderNav.start();
+    fetch(url, fetchOptions = {}, { placeholder, toast, overlay = false, onError = null, onSuccess = null } = {}) {
+        const indicators = { placeholder, toast, overlay };
 
-        if (placeholder) XalLoaderPlaceholder.show(placeholder);
-        if (toast)       XalLoaderToast.show(toast);
-        if (overlay)     XalLoaderOverlay.show(typeof overlay === 'string' ? overlay : '');
+        this._toggleIndicators(indicators, true);
 
         return fetch(url, fetchOptions)
-            .finally(() => {
-                if (!overlay)    XalLoaderNav.stop();
+            .then(response => {
+                // Les erreurs HTTP ne rejettent pas la promesse nativement —
+                // on doit vérifier response.ok et rejeter manuellement.
+                if (!response.ok) {
+                    this._handleError(response, onError);
+                    return Promise.reject(response);
+                }
 
-                if (placeholder) XalLoaderPlaceholder.hide(placeholder);
-                if (toast)       XalLoaderToast.hide();
-                if (overlay)     XalLoaderOverlay.hide();
+                if (typeof onSuccess === 'function') {
+                    onSuccess(response);
+                }
+
+                return response;
+            })
+            .catch(error => {
+                // Évite de traiter deux fois les erreurs HTTP déjà gérées dans .then()
+                if (!(error instanceof Response)) {
+                    this._handleError(error, onError);
+                }
+
+                return Promise.reject(error);
+            })
+            .finally(() => {
+                this._toggleIndicators(indicators, false);
             });
     },
 
     /**
      * Simule un appel HTTP avec un délai configurable.
      *
-     * Déclenche les mêmes indicateurs visuels que fetch(),
-     * mais retourne une réponse fictive après le délai spécifié.
-     * Utile pour le développement front-end sans backend disponible,
-     * ou pour tester les états de chargement.
+     * Déclenche les mêmes indicateurs visuels et la même gestion d'erreurs
+     * que fetch(), mais retourne une réponse fictive après le délai spécifié.
      *
-     * @param {*}               [data=null]                 - Données fictives à retourner.
+     * Utile pour le développement front-end sans backend disponible,
+     * ou pour tester les états de chargement et les scénarios d'erreur.
+     *
+     * @param {*}               [data=null]              - Données fictives à retourner.
      * @param {Object}          [options={}]
-     * @param {number}          [options.delay=1000]        - Délai en ms avant la résolution.
-     * @param {boolean}         [options.fail=false]        - Si true, simule une erreur réseau.
-     * @param {Object}          [indicators={}]             - Mêmes indicateurs que fetch().
-     * @param {string}          [indicators.placeholder]    - Sélecteur CSS de la zone placeholder.
-     * @param {string}          [indicators.toast]          - Message du toast de chargement.
-     * @param {boolean|string}  [indicators.overlay]        - Si true, affiche l'overlay sans message.
-     *                                                        Si string, affiche l'overlay avec ce message.
+     * @param {number}          [options.delay=5000]     - Délai en ms avant la résolution.
+     * @param {boolean}         [options.fail=false]     - Si true, simule une erreur réseau.
+     * @param {Object}          [indicators={}]          - Mêmes indicateurs que fetch().
+     * @param {string}          [indicators.placeholder] - Sélecteur CSS de la zone placeholder.
+     * @param {string}          [indicators.toast]       - Message du toast de chargement.
+     * @param {boolean|string}  [indicators.overlay]     - Si true, affiche l'overlay sans message.
+     *                                                     Si string, affiche l'overlay avec ce message.
+     * @param {Function|null}   [indicators.onError]     - Callback appelé en cas d'erreur réseau ou HTTP.
+     *                                                     Reçoit la Response (erreur HTTP) ou une Error (erreur réseau) en paramètre.
+     *                                                     Si absent, un toast d'erreur est affiché.
+     * @param {Function|null}   [indicators.onSuccess]   - Callback appelé après une réponse HTTP réussie.
+     *                                                     Reçoit les données directement.
      * @returns {Promise<*>} Promesse résolue avec les données ou rejetée si fail=true.
      */
-    mock(data = null, { delay = 5000, fail = false } = {}, { placeholder, toast, overlay = false } = {}) {
-        // La barre navbar est inutile si l'overlay est actif —
-        // le spinner et le message de l'overlay suffisent comme retour visuel.
-        if (!overlay) XalLoaderNav.start();
+    mock(data = null, { delay = 5000, fail = false } = {}, { placeholder, toast, overlay = false, onError = null, onSuccess = null } = {}) {
+        const indicators = { placeholder, toast, overlay };
 
-        if (placeholder) XalLoaderPlaceholder.show(placeholder);
-        if (toast)       XalLoaderToast.show(toast);
-        if (overlay)     XalLoaderOverlay.show(typeof overlay === 'string' ? overlay : '');
+        this._toggleIndicators(indicators, true);
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                if (!overlay)    XalLoaderNav.stop();
-
-                if (placeholder) XalLoaderPlaceholder.hide(placeholder);
-                if (toast)       XalLoaderToast.hide();
-                if (overlay)     XalLoaderOverlay.hide();
+                this._toggleIndicators(indicators, false);
 
                 if (fail) {
-                    reject(new Error('[XalHttp.mock] Erreur simulée.'));
+                    const error = new Error('[XalHttp.mock] Erreur simulée.');
+                    this._handleError(error, onError);
+                    reject(error);
                 } else {
+                    if (typeof onSuccess === 'function') {
+                        onSuccess(data);
+                    }
+
                     resolve(data);
                 }
             }, delay);

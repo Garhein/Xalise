@@ -85,9 +85,10 @@ const XalConstants = Object.freeze({
      */
     cssQueries: Object.freeze({
         tooltip:                        `[data-bs-toggle="tooltip"]`,
+        toastContainer:                 `.toast-container`,
         loaderToastMessage:             `.xal-loader-toast__message`,
-        loaderPlaceholder:              '.xal-loader-placeholder',
-        loaderOverlayMessage:           '.xal-loader-overlay__message',
+        loaderPlaceholder:              `.xal-loader-placeholder`,
+        loaderOverlayMessage:           `.xal-loader-overlay__message`,
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
