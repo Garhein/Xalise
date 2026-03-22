@@ -200,7 +200,8 @@ const XalSidebar = {
     initResponsive() {
         // En dessous de md : retire le mode réduit pour l'offcanvas
         BsBreakpoints.onChange(BsBreakpoints.down('md'), (e) => {
-            const layout = document.getElementById(XalConstants.elementIds.layout);
+            const layout  = document.getElementById(XalConstants.elementIds.layout);
+            const sidebar = document.getElementById(XalConstants.elementIds.sidebar);
 
             if (!layout) return;
 
@@ -209,6 +210,14 @@ const XalSidebar = {
                 layout.classList.remove(XalConstants.cssClasses.sidebarCollapsed);
                 this.closeAllSubmenus();
             } else {
+                // Fermeture propre de l'offcanvas avant le passage en mode desktop
+                // Évite que le backdrop reste affiché après le redimensionnement.
+                const offcanvasInstance = bootstrap.Offcanvas.getInstance(sidebar);
+
+                if (offcanvasInstance) {
+                    offcanvasInstance.hide();
+                }
+
                 // Desktop : restaure l'état persisté
                 const wasCollapsed = localStorage.getItem(XalConstants.elementIds.layout) === 'true';
 
