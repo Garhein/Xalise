@@ -1,5 +1,19 @@
 {
-  "dependencies": {
-    "bootstrap": "^5.3.8"
-  }
+    "name": "xalise",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "commonjs",
+    "scripts": {
+        "build:js": "concat -o assets/js/dist/xalise.bundle.js assets/js/XalConstants.js assets/js/BsBreakpoints.js assets/js/XalLoaderNav.js assets/js/XalLoaderPlaceholder.js assets/js/XalLoaderToast.js assets/js/XalHttp.js assets/js/XalTooltips.js assets/js/XalSidebar.js assets/js/XalNotifications.js assets/js/xalise.js",
+        "watch:js": "npm run build:js && chokidar \"assets/js/*.js\" --ignore \"assets/js/dist/**\" -c \"npm run build:js\""
+    },
+    "dependencies": {
+        "bootstrap": "^5.3.8"
+    },
+    "devDependencies": {
+        "chokidar-cli": "^3.0.0",
+        "concat": "^1.0.3",
+        "vite": "^8.0.1"
+    }
 }
