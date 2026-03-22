@@ -8,7 +8,11 @@ tout en déclenchant les mêmes indicateurs visuels que `XalHttp.fetch()`.
 **Signature :**
 
 ```js
-XalHttp.mock(data, { delay, fail }, { placeholder, toast })
+XalHttp.mock(
+    data,
+    { delay, fail },
+    { placeholder, toast, overlay = false }
+)
 ```
 
 | Paramètre | Type | Défaut | Description |
@@ -18,6 +22,8 @@ XalHttp.mock(data, { delay, fail }, { placeholder, toast })
 | `fail` | `boolean` | `false` | Si `true`, simule une erreur réseau |
 | `placeholder` | `string` | — | Sélecteur CSS de la zone placeholder |
 | `toast` | `string` | — | Message du toast de chargement |
+| `overlay` | `boolean` | `false` | Si `true`, affiche l'overlay sans message. |
+| `overlay` | `string` | — | Si `string`, affiche l'overlay avec ce message. |
 
 ---
 
