@@ -59,3 +59,23 @@ XalHttp.mock(
     { toast: 'Génération du PDF en cours…' }
 );
 ```
+
+---
+
+### Overlay bloquant toute interaction avec la page
+
+```js
+XalHttp.mock(
+    { url: '/exports/rapport-2026.pdf' },
+    { delay: 20000 },
+    { overlay: true }
+);
+```
+
+```js
+XalHttp.mock(
+    { url: '/exports/rapport-2026.pdf' },
+    { delay: 20000 },
+    { overlay: "Génération du PDF en cours..." }
+);
+```
