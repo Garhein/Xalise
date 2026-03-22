@@ -62,6 +62,10 @@ const XalConstants = Object.freeze({
         loaderToast:                'xal-id-loader-toast',
         loaderPlaceholderTemplate:  'xal-id-loader-placeholder-template',
         loaderOverlay:              'xal-id-loader-overlay',
+        toastTemplateSuccess:       'xal-id-toast-template-success',
+        toastTemplateError:         'xal-id-toast-template-error',
+        toastTemplateWarning:       'xal-id-toast-template-warning',
+        toastTemplateInfo:          'xal-id-toast-template-info',
     }),
 
     /**
@@ -89,6 +93,8 @@ const XalConstants = Object.freeze({
         loaderToastMessage:             `.xal-loader-toast__message`,
         loaderPlaceholder:              `.xal-loader-placeholder`,
         loaderOverlayMessage:           `.xal-loader-overlay__message`,
+        toast:                          `.xal-toast`,
+        toastMessage:                   `.xal-toast__message`,
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
@@ -1062,89 +1068,71 @@ const XalToast = (() => {
     const DEFAULT_DELAY_MS = 5000;
 
     /**
-     * Configuration des variantes de toast.
+     * Référence vers les templates HTML des variantes de toast.
+     * Clé : ID du template, Valeur : HTMLTemplateElement.
      *
-     * Chaque variante définit :
-     * - cssClass  : classe CSS Bootstrap appliquée sur le toast
-     * - icon      : icône Bootstrap Icons affichée dans l'en-tête
-     * - label     : libellé de l'en-tête du toast
-     *
-     * @type {Readonly<Record<string, {cssClass: string, icon: string, label: string}>>}
+     * @type {Map<string, HTMLTemplateElement>}
      */
-    const VARIANTS = Object.freeze({
-        success: Object.freeze({
-            cssClass: 'text-bg-success',
-            icon:     'bi-check-circle-fill',
-            label:    'Succès',
-        }),
-        error: Object.freeze({
-            cssClass: 'text-bg-danger',
-            icon:     'bi-x-circle-fill',
-            label:    'Erreur',
-        }),
-        warning: Object.freeze({
-            cssClass: 'text-bg-warning',
-            icon:     'bi-exclamation-triangle-fill',
-            label:    'Avertissement',
-        }),
-        info: Object.freeze({
-            cssClass: 'text-bg-info',
-            icon:     'bi-info-circle-fill',
-            label:    'Information',
-        }),
+    let _templates = new Map();
+
+    /**
+     * Table de correspondance entre les noms de variantes de toast
+     * et les identifiants DOM de leurs templates HTML respectifs.
+     *
+     * Centralise la résolution interne des variantes sans dupliquer
+     * les identifiants définis dans XalConstants.elementIds.
+     *
+     * Utilisée dans init() pour résoudre les références aux templates,
+     * et dans _show() pour sélectionner le template à cloner.
+     *
+     * @type {Readonly<Record<string, string>>}
+     */
+    const VARIANT_TEMPLATE_IDS = Object.freeze({
+        success: XalConstants.elementIds.toastTemplateSuccess,
+        error:   XalConstants.elementIds.toastTemplateError,
+        warning: XalConstants.elementIds.toastTemplateWarning,
+        info:    XalConstants.elementIds.toastTemplateInfo,
     });
 
     /**
-     * Crée, insère et affiche un toast Bootstrap dans le conteneur de toasts.
+     * Crée, insère et affiche un toast Bootstrap depuis son template HTML.
      *
-     * Le toast est retiré du DOM automatiquement après masquage
-     * via l'événement hidden.bs.toast.
+     * Séquence d'exécution :
+     * 1. Résolution du template correspondant à la variante
+     * 2. Clonage du template et injection du message
+     * 3. Insertion dans le conteneur de toasts
+     * 4. Création de l'instance Bootstrap Toast et affichage
+     * 5. Nettoyage du DOM après masquage via hidden.bs.toast
+     *
+     * Si la variante est inconnue, la variante "info" est utilisée par défaut.
+     * Sans effet si le template de la variante n'a pas été résolu dans init().
      *
      * @param {string} message          - Message à afficher dans le corps du toast.
      * @param {string} variant          - Variante du toast ('success', 'error', 'warning', 'info').
      * @param {number} [delay]          - Délai en ms avant masquage automatique.
      */
     const _show = (message, variant, delay = DEFAULT_DELAY_MS) => {
-        const config = VARIANTS[variant] ?? VARIANTS.info;
+        const templateId  = VARIANT_TEMPLATE_IDS[variant] ?? VARIANT_TEMPLATE_IDS.info;
+        const templateElt = _templates.get(templateId);
 
-        // Création de l'élément toast
-        const toastElt       = document.createElement('div');
-        toastElt.className   = `toast xal-toast ${config.cssClass}`;
-        toastElt.setAttribute('role', 'alert');
-        toastElt.setAttribute('aria-live', variant === 'error' ? 'assertive' : 'polite');
-        toastElt.setAttribute('aria-atomic', 'true');
+        if (!templateElt) return;
 
-        toastElt.innerHTML = `
-            <div class="toast-header">
-                <i class="bi ${config.icon} me-2" aria-hidden="true"></i>
-                <strong class="me-auto">${config.label}</strong>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="toast"
-                        aria-label="Fermer">
-                </button>
-            </div>
-            <div class="toast-body">
-                ${message}
-            </div>
-        `;
+        // Clone indépendant du template — permet plusieurs toasts simultanés
+        const clone    = document.importNode(templateElt.content, true);
+        const toastElt = clone.querySelector(XalConstants.cssQueries.toast);
 
-        // Insertion dans le conteneur de toasts existant
+        // Injection du message dans le corps du toast
+        toastElt.querySelector(XalConstants.cssQueries.toastMessage).textContent = message;
+
+        // Insertion dans le conteneur de toasts, ou dans body en dernier recours
         const container = document.querySelector(XalConstants.cssQueries.toastContainer);
+        (container ?? document.body).appendChild(toastElt);
 
-        if (container) {
-            container.appendChild(toastElt);
-        } else {
-            document.body.appendChild(toastElt);
-        }
+        // Création de l'instance Bootstrap avec masquage automatique
+        const toastInstance = new bootstrap.Toast(toastElt, { autohide: true, delay });
 
-        // Création et affichage de l'instance Bootstrap Toast
-        const toastInstance = new bootstrap.Toast(toastElt, {
-            autohide: true,
-            delay,
-        });
-
-        // Nettoyage du DOM après masquage
+        // Nettoyage du DOM après la fin de l'animation de masquage —
+        // { once: true } garantit que le listener se supprime automatiquement.
         toastElt.addEventListener('hidden.bs.toast', () => {
             toastInstance.dispose();
             toastElt.remove();
@@ -1195,6 +1183,20 @@ const XalToast = (() => {
          */
         info(message, delay = DEFAULT_DELAY_MS) {
             _show(message, 'info', delay);
+        },
+
+        /**
+         * Initialise le composant.
+         *
+         * Résout les références vers les templates HTML de chaque variante.
+         * Doit être appelé une seule fois depuis xalise.js au DOMContentLoaded,
+         * avant tout appel à success(), error(), warning() ou info().
+         */
+        init() {
+            Object.values(VARIANT_TEMPLATE_IDS).forEach(id => {
+                const templateElt = document.getElementById(id);
+                if (templateElt) _templates.set(id, templateElt);
+            });
         },
     };
 })();
@@ -3211,4 +3213,5 @@ document.addEventListener('DOMContentLoaded', () => {
     XalTooltips.init();
     XalSidebar.init();
     XalNotifications.init();
+    XalToast.init();
 });

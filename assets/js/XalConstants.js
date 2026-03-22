@@ -62,6 +62,10 @@ const XalConstants = Object.freeze({
         loaderToast:                'xal-id-loader-toast',
         loaderPlaceholderTemplate:  'xal-id-loader-placeholder-template',
         loaderOverlay:              'xal-id-loader-overlay',
+        toastTemplateSuccess:       'xal-id-toast-template-success',
+        toastTemplateError:         'xal-id-toast-template-error',
+        toastTemplateWarning:       'xal-id-toast-template-warning',
+        toastTemplateInfo:          'xal-id-toast-template-info',
     }),
 
     /**
@@ -89,6 +93,8 @@ const XalConstants = Object.freeze({
         loaderToastMessage:             `.xal-loader-toast__message`,
         loaderPlaceholder:              `.xal-loader-placeholder`,
         loaderOverlayMessage:           `.xal-loader-overlay__message`,
+        toast:                          `.xal-toast`,
+        toastMessage:                   `.xal-toast__message`,
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
