@@ -46,6 +46,7 @@ XalHttp.mock(
     { placeholder: '#tooltip-div' }
 );
 ```
+![Loader placeholder](./screenshots/loader-placeholder.png)
 
 ---
 
@@ -60,6 +61,8 @@ XalHttp.mock(null, { fail: true })
 
 ### Simulation d'une opération longue avec toast
 
+Le toast est affiché dans le coin inférieur droit de la page.
+
 ```js
 XalHttp.mock(
     { url: '/exports/rapport-2026.pdf' },
@@ -67,6 +70,7 @@ XalHttp.mock(
     { toast: 'Génération du PDF en cours…' }
 );
 ```
+![Loader toast](./screenshots/loader-toast.png)
 
 ---
 
@@ -89,6 +93,7 @@ XalHttp.mock(
     { overlay: 'Génération du PDF en cours…' }
 );
 ```
+![Loader overlay](./screenshots/loader-overlay.png)
 
 ---
 
@@ -349,7 +354,7 @@ XalHttp.fetch('/api/export/fournisseurs', {}, {
 ## XalToast — Toasts de feedback
 
 Affiche des toasts Bootstrap contextuels pour informer l'utilisateur
-du résultat d'une opération.
+du résultat d'une opération. Ceux-ci sont affichés dans le coin inférieur droit de la page.
 
 **Signature :**
 
@@ -372,6 +377,7 @@ XalToast.info(message, delay)
 ```js
 XalToast.success('Fournisseur créé avec succès.');
 ```
+![Toast de succès](./screenshots/toast-success.png)
 
 ---
 
@@ -380,6 +386,7 @@ XalToast.success('Fournisseur créé avec succès.');
 ```js
 XalToast.error('Une erreur est survenue. Veuillez réessayer.');
 ```
+![Toast d'erreur](./screenshots/toast-error.png)
 
 ---
 
@@ -388,6 +395,7 @@ XalToast.error('Une erreur est survenue. Veuillez réessayer.');
 ```js
 XalToast.warning('Ce fournisseur est lié à des commandes existantes.');
 ```
+![Toast d'avertissement](./screenshots/toast-warning.png)
 
 ---
 
@@ -396,6 +404,7 @@ XalToast.warning('Ce fournisseur est lié à des commandes existantes.');
 ```js
 XalToast.info('Les données ont été mises à jour.');
 ```
+![Toast d'information](./screenshots/toast-info.png)
 
 ---
 
@@ -438,3 +447,4 @@ XalHttp.fetch('/api/import', { method: 'POST', body: formData }, {
     onError: () => XalToast.error('L\'import a échoué. Vérifiez le format du fichier.'),
 });
 ```
+![Toasts multiples](./screenshots/toasts-multiples.png)
