@@ -1,9 +1,10 @@
 /**
  * Couche HTTP de l'application Xalise.
  *
- * Enveloppe fetch() avec la gestion automatique des indicateurs
- * visuels de chargement (barre navbar, placeholder, toast, overlay)
- * et la gestion des erreurs HTTP via XalToast.
+ * Surcouche de la méthode fetch() native pour les appels Ajax,
+ * avec gestion automatique des indicateurs visuels de chargement 
+ * (barre navbar, placeholder, toast, overlay) et la gestion
+ * des erreurs HTTP.
  *
  * Gestion des erreurs :
  * - Erreur réseau (fetch rejeté)    → toast d'erreur générique
