@@ -32,6 +32,7 @@ XalHttp.fetch(
 | `overlay` | `string` | — | Si `string`, affiche l'overlay avec le message indiqué |
 | `onSuccess` | `Function` | — | Callback appelé après une réponse HTTP réussie. Reçoit la `Response` en paramètre |
 | `onError` | `Function` | — | Callback appelé en cas d'erreur réseau ou HTTP. Reçoit la `Response` (erreur HTTP) ou une `Error` (erreur réseau). Si non renseigné, un toast d'erreur générique est affiché |
+| `errorMessages` | `Record<number, string>` | — | Messages d'erreur personnalisés par statut HTTP |
 
 ### ![GET](./badges/GET.svg) Chargement d'une liste
 
@@ -105,44 +106,24 @@ XalHttp.fetch(
     });
 ```
 
-### ![DELETE](./badges/DELETE.svg) Suppression avec gestion différenciée des erreurs
-
-<details>
-<summary>Voir le code</summary>
+### ![DELETE](./badges/DELETE.svg) Suppression avec surcharge des messages des statuts HTTP
 
 ```js
 XalHttp.fetch(
     '/api/fournisseurs/42',
     { method: 'DELETE' },
     {
-        overlay: 'Suppression en cours…',
+        overlay:       'Suppression en cours…',
         onSuccess: () => {
             XalToast.success('Fournisseur supprimé avec succès.');
             document.querySelector('#xal-id-row-42')?.remove();
         },
-        onError: (error) => {
-            if (error instanceof Response) {
-                switch (error.status) {
-                    case 403:
-                        XalToast.error('Vous n\'avez pas les droits pour effectuer cette action.');
-                        break;
-                    case 404:
-                        XalToast.error('Ce fournisseur n\'existe plus.');
-                        break;
-                    case 409:
-                        XalToast.warning('Ce fournisseur est lié à des commandes existantes.');
-                        break;
-                    default:
-                        XalToast.error(`Erreur ${error.status} : ${error.statusText}`);
-                }
-            } else {
-                XalToast.error('Connexion impossible. Vérifiez votre réseau.');
-            }
+        errorMessages: {
+            404: 'Ce fournisseur n\'existe plus.',
+            409: 'Ce fournisseur est lié à des commandes existantes.',
         },
-});
+    });
 ```
-
-</details>
 
 ### ![POST](./badges/POST.svg) Upload de fichier
 
@@ -220,7 +201,7 @@ XalHttp.mock(
 | `overlay` | `string` | — | Si `string`, affiche l'overlay avec le message indiqué |
 | `onSuccess` | `Function` | — | Callback appelé après une réponse HTTP réussie. Reçoit la `Response` en paramètre |
 | `onError` | `Function` | — | Callback appelé en cas d'erreur réseau ou HTTP. Reçoit la `Response` (erreur HTTP) ou une `Error` (erreur réseau). Si non renseigné, un toast d'erreur générique est affiché |
-
+| `errorMessages` | `Record<number, string>` | — | Messages d'erreur personnalisés par statut HTTP |
 
 ### Succès avec délai par défaut (5s)
 
