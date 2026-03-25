@@ -9,7 +9,7 @@
     "license": "ISC",
     "homepage": "https://github.com/Garhein/Xalise#readme",
     "scripts": {
-        "build:js": "concat -o assets/js/dist/xalise.bundle.js assets/js/core/XalConstants.js assets/js/core/BsBreakpoints.js assets/js/loaders/XalLoaderNav.js assets/js/loaders/XalLoaderPlaceholder.js assets/js/loaders/XalLoaderToast.js assets/js/loaders/XalLoaderOverlay.js assets/js/components/XalToast.js assets/js/core/XalHttp.js assets/js/components/XalTooltips.js assets/js/components/XalSidebar.js assets/js/components/XalNotifications.js assets/js/xalise.js",
+        "build:js": "concat -o assets/js/dist/xalise.bundle.js assets/js/core/XalConstants.js assets/js/core/BsBreakpoints.js assets/js/loaders/XalLoaderNav.js assets/js/loaders/XalLoaderPlaceholder.js assets/js/loaders/XalLoaderToast.js assets/js/loaders/XalLoaderOverlay.js assets/js/components/XalToast.js assets/js/core/XalHttp.js assets/js/components/XalTooltips.js assets/js/components/XalSidebar.js assets/js/components/XalNotifications.js assets/js/components/XalConfirm.js assets/js/xalise.js",
         "watch:js": "npm run build:js && chokidar \"assets/js/**/*.js\" --ignore \"assets/js/dist/**\" -c \"npm run build:js\""
     },
     "dependencies": {

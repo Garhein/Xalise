@@ -627,6 +627,31 @@
           <span class="xal-loader-overlay__message"></span>
         </div>
       </div>
+
+      <!-- Template modale de confirmation -->
+      <template id="xal-id-confirm-template">
+        <div class="modal fade xal-confirm" tabindex="-1" aria-modal="true" role="dialog">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title xal-confirm__title"></h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Fermer">
+                </button>
+              </div>
+              <div class="modal-body xal-confirm__body"></div>
+              <div class="modal-footer xal-confirm__footer"></div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <!-- Template bouton de confirmation -->
+      <template id="xal-id-confirm-button-template">
+        <button type="button" class="btn xal-confirm__button"></button>
+      </template>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

@@ -66,6 +66,8 @@ const XalConstants = Object.freeze({
         toastTemplateError:         'xal-id-toast-template-error',
         toastTemplateWarning:       'xal-id-toast-template-warning',
         toastTemplateInfo:          'xal-id-toast-template-info',
+        confirmTemplate:            'xal-id-confirm-template',
+        confirmButtonTemplate:      'xal-id-confirm-button-template',
     }),
 
     /**
@@ -95,6 +97,13 @@ const XalConstants = Object.freeze({
         loaderOverlayMessage:           `.xal-loader-overlay__message`,
         toast:                          `.xal-toast`,
         toastMessage:                   `.xal-toast__message`,
+
+        // Modale de confirmation
+        confirmModal:                   '.xal-confirm',
+        confirmTitle:                   '.xal-confirm__title',
+        confirmBody:                    '.xal-confirm__body',
+        confirmFooter:                  '.xal-confirm__footer',
+        confirmButton:                  '.xal-confirm__button',
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
