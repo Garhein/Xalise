@@ -35,6 +35,7 @@ const XalConstants = Object.freeze({
         xalAction:  'data-xal-action',
         xalTarget:  'data-xal-target',
         tooltip:    'data-tooltip',
+        hidden:     'hidden',
     }),
 
     /**
@@ -68,6 +69,7 @@ const XalConstants = Object.freeze({
         toastTemplateInfo:          'xal-id-toast-template-info',
         confirmTemplate:            'xal-id-confirm-template',
         confirmButtonTemplate:      'xal-id-confirm-button-template',
+        confirmIconTemplate:        'xal-id-confirm-icon-template',
     }),
 
     /**
@@ -104,6 +106,8 @@ const XalConstants = Object.freeze({
         confirmBody:                    '.xal-confirm__body',
         confirmFooter:                  '.xal-confirm__footer',
         confirmButton:                  '.xal-confirm__button',
+        confirmIcon:                    '.xal-confirm__icon',
+        confirmCloseButton:             '.xal-confirm__close-button',
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
@@ -3259,15 +3263,16 @@ const XalNotifications = (() => {
  * Gestion de la modale de confirmation réutilisable.
  *
  * Affiche une modale Bootstrap avec un titre, un contenu et des boutons
- * configurables, chacun associé à un callback ou à la fermeture de la modale.
+ * configurables, chacun associé à un callback et à des classes CSS.
  *
  * Cas d'usage typiques :
  * - Confirmation avant suppression d'un enregistrement
  * - Demande de validation avant modification
  *
- * La structure HTML est entièrement définie dans index.html via deux templates :
+ * La structure HTML est entièrement définie dans index.html via trois templates :
  * - xal-id-confirm-template        → structure de la modale
  * - xal-id-confirm-button-template → structure d'un bouton
+ * - xal-id-confirm-icon-template   → structure d'une icône Bootstrap Icons
  *
  * Une seule instance de modale est présente dans le DOM à tout moment.
  * Elle est réinitialisée à chaque appel à show().
@@ -3292,6 +3297,14 @@ const XalConfirm = (() => {
      * @type {HTMLTemplateElement|null}
      */
     let _buttonTemplate = null;
+
+    /**
+     * Référence vers le template HTML d'une icône Bootstrap Icons.
+     * Cloné uniquement si un bouton spécifie une icône.
+     *
+     * @type {HTMLTemplateElement|null}
+     */
+    let _iconTemplate = null;
 
     /**
      * Élément DOM de la modale actuellement insérée dans le DOM.
@@ -3325,16 +3338,21 @@ const XalConfirm = (() => {
     /**
      * Crée un bouton depuis le template HTML et l'insère dans le conteneur de boutons.
      *
-     * Attache le callback onClick si fourni, ou ferme la modale si onClose est true.
+     * Si une icône est spécifiée, elle est clonée depuis le template d'icône
+     * et insérée avant le libellé du bouton.
+     * La modale est systématiquement fermée après exécution du callback onClick.
      *
-     * @param {HTMLElement} container                           - Conteneur des boutons de la modale.
-     * @param {Object}      buttonConfig                        - Configuration du bouton.
-     * @param {string}      [buttonConfig.label]                - Libellé du bouton.
-     * @param {string}      [buttonConfig.variant='secondary']  - Variante Bootstrap (btn-primary, btn-danger, etc.).
-     * @param {Function}    [buttonConfig.onClick]              - Callback exécuté au clic. La modale est fermée après exécution.
-     * @param {boolean}     [buttonConfig.onClose=false]        - Si true, ferme simplement la modale sans callback.
+     * @param {HTMLElement} container                       - Conteneur des boutons de la modale.
+     * @param {Object}      buttonConfig                    - Configuration du bouton.
+     * @param {string}      buttonConfig.label              - Libellé du bouton.
+     * @param {string[]}    [buttonConfig.cssClasses=[]]    - Classes CSS Bootstrap à appliquer (ex : ['btn-outline-primary']).
+     *                                                        Permet de combiner plusieurs classes (ex : ['btn-small', 'btn-primary']).
+     * @param {string}      [buttonConfig.icon]             - Classe Bootstrap Icons à appliquer sur l'icône (ex : 'bi-trash').
+     *                                                        L'icône est positionnée avant le libellé.
+     * @param {Function}    [buttonConfig.onClick]          - Callback exécuté au clic.
+     *                                                        La modale est fermée après exécution.
      */
-    const _createButton = (container, { label, variant = 'btn-secondary', onClick, onClose = false }) => {
+    const _createButton = (container, { label, cssClasses = [], icon, onClick }) => {
         if (!_buttonTemplate) return;
 
         const clone     = document.importNode(_buttonTemplate.content, true);
@@ -3342,10 +3360,27 @@ const XalConfirm = (() => {
 
         if (!buttonElt) return;
 
-        // Application de la variante Bootstrap
-        buttonElt.classList.add(variant);
-        buttonElt.textContent = label;
+        // Application des classes CSS Bootstrap
+        if (cssClasses.length > 0) {
+            buttonElt.classList.add(...cssClasses);
+        }
 
+        // Icône positionnée avant le libellé — clonée depuis le template
+        // sans aucune construction HTML dans le JS.
+        if (icon && _iconTemplate) {
+            const iconClone = document.importNode(_iconTemplate.content, true);
+            const iconElt   = iconClone.querySelector(XalConstants.cssQueries.confirmIcon);
+
+            if (iconElt) {
+                iconElt.classList.add(icon);
+                buttonElt.appendChild(iconClone);
+            }
+        }
+
+        // Injection du libellé dans un nœud texte pour éviter tout XSS
+        buttonElt.appendChild(document.createTextNode(label));
+
+        // La modale est toujours fermée après exécution du callback
         buttonElt.addEventListener('click', () => {
             if (typeof onClick === 'function') {
                 onClick();
@@ -3365,18 +3400,18 @@ const XalConfirm = (() => {
          * Clone le template, injecte le titre, le contenu et les boutons,
          * puis affiche la modale via Bootstrap.
          *
-         * @param {Object}      config                          - Configuration de la modale.
-         * @param {string}      config.title                    - Titre affiché dans l'en-tête de la modale.
-         * @param {string}      config.message                  - Contenu affiché dans le corps de la modale.
-         * @param {Object[]}    config.buttons                  - Liste des boutons à afficher.
-         * @param {string}      [config.buttons[].label]        - Libellé du bouton.
-         * @param {string}      [config.buttons[].variant]      - Variante Bootstrap du bouton.
-         * @param {Function}    [config.buttons[].onClick]      - Callback exécuté au clic.
-         * @param {boolean}     [config.buttons[].onClose]      - Si true, ferme la modale sans callback.
-         * @param {boolean}     [config.dismissible=true]       - Si true, la modale peut être fermée
-         *                                                        via la touche Echap ou le clic extérieur.
+         * @param {Object}      config                              - Configuration de la modale.
+         * @param {string}      config.title                        - Titre affiché dans l'en-tête.
+         * @param {string}      config.message                      - Contenu affiché dans le corps.
+         * @param {Object[]}    [config.buttons=[]]                 - Liste des boutons à afficher.
+         * @param {string}      config.buttons[].label              - Libellé du bouton.
+         * @param {string[]}    [config.buttons[].cssClasses=[]]    - Classes CSS Bootstrap à appliquer.
+         * @param {string}      [config.buttons[].icon]             - Classe Bootstrap Icons (ex : 'bi-trash').
+         * @param {Function}    [config.buttons[].onClick]          - Callback exécuté au clic.
+         * @param {boolean}     [config.dismissible=true]           - Si true, la modale peut être fermée via la touche Echap ou le clic extérieur.
+         * @param {boolean}     [config.showCloseButton=true]       - Si true, le bouton de fermeture présent dans l'entête est affiché
          */
-        show({ title, message, buttons = [], dismissible = true } = {}) {
+        show({ title, message, buttons = [], dismissible = true, showCloseButton = true } = {}) {
             if (!_modalTemplate) return;
 
             // Nettoyage de toute modale précédente
@@ -3388,6 +3423,11 @@ const XalConfirm = (() => {
 
             if (!_modalElt) return;
 
+            if (!showCloseButton) {
+                const closeBtn = _modalElt.querySelector(XalConstants.cssQueries.confirmCloseButton);
+                if (closeBtn) closeBtn.toggleAttribute(XalConstants.attributeNames.hidden, true);
+            }
+
             // Injection du titre et du contenu
             const titleElt = _modalElt.querySelector(XalConstants.cssQueries.confirmTitle);
             const bodyElt  = _modalElt.querySelector(XalConstants.cssQueries.confirmBody);
@@ -3395,7 +3435,7 @@ const XalConfirm = (() => {
             if (titleElt) titleElt.textContent = title;
             if (bodyElt)  bodyElt.textContent  = message;
 
-            // Génération des boutons
+            // Génération des boutons dans le pied de la modale
             const footerElt = _modalElt.querySelector(XalConstants.cssQueries.confirmFooter);
 
             if (footerElt) {
@@ -3405,13 +3445,13 @@ const XalConfirm = (() => {
             // Insertion dans le DOM
             document.body.appendChild(_modalElt);
 
-            // Création et affichage de l'instance Bootstrap Modal
+            // Création de l'instance Bootstrap Modal
             _modalInstance = new bootstrap.Modal(_modalElt, {
                 backdrop: dismissible ? true : 'static',
                 keyboard: dismissible,
             });
 
-            // Nettoyage automatique après fermeture
+            // Nettoyage automatique après fermeture de l'animation Bootstrap
             _modalElt.addEventListener('hidden.bs.modal', () => {
                 _cleanup();
             }, { once: true });
@@ -3431,6 +3471,7 @@ const XalConfirm = (() => {
 
         /**
          * Indique si la modale est actuellement affichée.
+         *
          * @returns {boolean} true si la modale est visible, false sinon.
          */
         isVisible() {
@@ -3447,6 +3488,7 @@ const XalConfirm = (() => {
         init() {
             _modalTemplate  = document.getElementById(XalConstants.elementIds.confirmTemplate);
             _buttonTemplate = document.getElementById(XalConstants.elementIds.confirmButtonTemplate);
+            _iconTemplate   = document.getElementById(XalConstants.elementIds.confirmIconTemplate);
         },
     };
 

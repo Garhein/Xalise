@@ -12033,6 +12033,19 @@ body:not([data-xal-page-fullheight]) {
   }
 }
 
+.xal-confirm__header {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.xal-confirm__title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.xal-confirm__icon {
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
 .xal-sidebar {
   position: fixed;
   overflow-y: auto;

@@ -35,6 +35,7 @@ const XalConstants = Object.freeze({
         xalAction:  'data-xal-action',
         xalTarget:  'data-xal-target',
         tooltip:    'data-tooltip',
+        hidden:     'hidden',
     }),
 
     /**
@@ -68,6 +69,7 @@ const XalConstants = Object.freeze({
         toastTemplateInfo:          'xal-id-toast-template-info',
         confirmTemplate:            'xal-id-confirm-template',
         confirmButtonTemplate:      'xal-id-confirm-button-template',
+        confirmIconTemplate:        'xal-id-confirm-icon-template',
     }),
 
     /**
@@ -104,6 +106,8 @@ const XalConstants = Object.freeze({
         confirmBody:                    '.xal-confirm__body',
         confirmFooter:                  '.xal-confirm__footer',
         confirmButton:                  '.xal-confirm__button',
+        confirmIcon:                    '.xal-confirm__icon',
+        confirmCloseButton:             '.xal-confirm__close-button',
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
