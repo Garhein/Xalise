@@ -108,6 +108,7 @@ const XalConstants = Object.freeze({
         confirmButton:                  '.xal-confirm__button',
         confirmIcon:                    '.xal-confirm__icon',
         confirmCloseButton:             '.xal-confirm__close-button',
+        confirmModalDialog:             '.modal-dialog',
 
         // Sidebar
         sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,

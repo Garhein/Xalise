@@ -142,6 +142,7 @@ const XalConfirm = (() => {
          * @param {Object}      config                              - Configuration de la modale.
          * @param {string}      config.title                        - Titre affiché dans l'en-tête.
          * @param {string}      config.message                      - Contenu affiché dans le corps.
+         * @param {Object[]}    config.modalClasses                 - Classes CSS à appliquer à la modale.
          * @param {Object[]}    [config.buttons=[]]                 - Liste des boutons à afficher.
          * @param {string}      config.buttons[].label              - Libellé du bouton.
          * @param {string[]}    [config.buttons[].cssClasses=[]]    - Classes CSS Bootstrap à appliquer.
@@ -150,7 +151,7 @@ const XalConfirm = (() => {
          * @param {boolean}     [config.dismissible=true]           - Si true, la modale peut être fermée via la touche Echap ou le clic extérieur.
          * @param {boolean}     [config.showCloseButton=true]       - Si true, le bouton de fermeture présent dans l'entête est affiché
          */
-        show({ title, message, buttons = [], dismissible = true, showCloseButton = true } = {}) {
+        show({ title, message, modalClasses = [], buttons = [], dismissible = true, showCloseButton = true } = {}) {
             if (!_modalTemplate) return;
 
             // Nettoyage de toute modale précédente
@@ -167,12 +168,20 @@ const XalConfirm = (() => {
                 if (closeBtn) closeBtn.toggleAttribute(XalConstants.attributeNames.hidden, true);
             }
 
+            // Ajout des classes sur la modale
+            if (modalClasses.length > 0) {
+                const modalDialog = _modalElt.querySelector(XalConstants.cssQueries.confirmModalDialog);
+                if (modalDialog) {
+                    modalDialog.classList.add(...modalClasses);
+                }
+            }
+
             // Injection du titre et du contenu
             const titleElt = _modalElt.querySelector(XalConstants.cssQueries.confirmTitle);
             const bodyElt  = _modalElt.querySelector(XalConstants.cssQueries.confirmBody);
 
             if (titleElt) titleElt.textContent = title;
-            if (bodyElt)  bodyElt.textContent  = message;
+            if (bodyElt)  bodyElt.innerHTML    = message;
 
             // Génération des boutons dans le pied de la modale
             const footerElt = _modalElt.querySelector(XalConstants.cssQueries.confirmFooter);
