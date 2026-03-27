@@ -93,12 +93,14 @@ const XalConstants = Object.freeze({
      */
     cssQueries: Object.freeze({
         tooltip:                        `[data-bs-toggle="tooltip"]`,
-        toastContainer:                 `.toast-container`,
         loaderToastMessage:             `.xal-loader-toast__message`,
         loaderPlaceholder:              `.xal-loader-placeholder`,
         loaderOverlayMessage:           `.xal-loader-overlay__message`,
-        toast:                          `.xal-toast`,
-        toastMessage:                   `.xal-toast__message`,
+        
+        // Toasts
+        toastContainer:                 '.toast-container',
+        xalToast:                       '.xal-toast',
+        xalToastMessage:                '.xal-toast__message',
 
         // Modale de confirmation
         confirmModal:                   '.xal-confirm',
