@@ -59,14 +59,23 @@ const XalConstants = Object.freeze({
         btnToggleSidebar:           'xal-id-btn-toggle-sidebar',
         notificationCenter:         'xal-id-notification-center',
         notificationToastUndo:      'xal-id-notification-toast-undo',
+
+        // Toast
+        toastTemplateFeedback:      'xal-id-toast-template-feedback',
+
+
+
+
+
+
+
+        // Loaders
         loaderNavbar:               'xal-id-loader-nav',
         loaderToast:                'xal-id-loader-toast',
         loaderPlaceholderTemplate:  'xal-id-loader-placeholder-template',
         loaderOverlay:              'xal-id-loader-overlay',
-        toastTemplateSuccess:       'xal-id-toast-template-success',
-        toastTemplateError:         'xal-id-toast-template-error',
-        toastTemplateWarning:       'xal-id-toast-template-warning',
-        toastTemplateInfo:          'xal-id-toast-template-info',
+        
+        // Modale de confirmation
         confirmTemplate:            'xal-id-confirm-template',
         confirmButtonTemplate:      'xal-id-confirm-button-template',
         confirmIconTemplate:        'xal-id-confirm-icon-template',
@@ -79,7 +88,19 @@ const XalConstants = Object.freeze({
      */
     cssClasses: Object.freeze({
         sidebarCollapsed:           'xal-application-layout--sidebar-collapsed',
-        loaderPlacerholderActive:   'xal-loader-placeholder--active'
+        loaderPlacerholderActive:   'xal-loader-placeholder--active',
+
+        // Icônes Bootstrap
+        biCheckCircleFill:          'bi-check-circle-fill',
+        biXCircleFill:              'bi-x-circle-fill',
+        biExclamationTriangleFill:  'bi-exclamation-triangle-fill',
+        biInfoCircleFill:           'bi-info-circle-fill',
+
+        // Couleurs de fond
+        textBgSuccess:              'text-bg-success',
+        textBgDanger:               'text-bg-danger',
+        textBgWarning:              'text-bg-warning',
+        textBgInfo:                 'text-bg-info',
     }),
 
     /**
@@ -93,14 +114,24 @@ const XalConstants = Object.freeze({
      */
     cssQueries: Object.freeze({
         tooltip:                        `[data-bs-toggle="tooltip"]`,
-        loaderToastMessage:             `.xal-loader-toast__message`,
-        loaderPlaceholder:              `.xal-loader-placeholder`,
-        loaderOverlayMessage:           `.xal-loader-overlay__message`,
         
         // Toasts
         toastContainer:                 '.toast-container',
+        toastHeader:                    '.toast-header',
         xalToast:                       '.xal-toast',
+        xalToastIcon:                   '.xal-toast__icon',
+        xalToastLabel:                  '.xal-toast__label',
         xalToastMessage:                '.xal-toast__message',
+
+
+
+
+
+
+        // Loaders
+        loaderToastMessage:             `.xal-loader-toast__message`,
+        loaderPlaceholder:              `.xal-loader-placeholder`,
+        loaderOverlayMessage:           `.xal-loader-overlay__message`,
 
         // Modale de confirmation
         confirmModal:                   '.xal-confirm',

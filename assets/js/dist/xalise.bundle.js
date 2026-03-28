@@ -59,14 +59,23 @@ const XalConstants = Object.freeze({
         btnToggleSidebar:           'xal-id-btn-toggle-sidebar',
         notificationCenter:         'xal-id-notification-center',
         notificationToastUndo:      'xal-id-notification-toast-undo',
+
+        // Toast
+        toastTemplateFeedback:      'xal-id-toast-template-feedback',
+
+
+
+
+
+
+
+        // Loaders
         loaderNavbar:               'xal-id-loader-nav',
         loaderToast:                'xal-id-loader-toast',
         loaderPlaceholderTemplate:  'xal-id-loader-placeholder-template',
         loaderOverlay:              'xal-id-loader-overlay',
-        toastTemplateSuccess:       'xal-id-toast-template-success',
-        toastTemplateError:         'xal-id-toast-template-error',
-        toastTemplateWarning:       'xal-id-toast-template-warning',
-        toastTemplateInfo:          'xal-id-toast-template-info',
+        
+        // Modale de confirmation
         confirmTemplate:            'xal-id-confirm-template',
         confirmButtonTemplate:      'xal-id-confirm-button-template',
         confirmIconTemplate:        'xal-id-confirm-icon-template',
@@ -79,7 +88,19 @@ const XalConstants = Object.freeze({
      */
     cssClasses: Object.freeze({
         sidebarCollapsed:           'xal-application-layout--sidebar-collapsed',
-        loaderPlacerholderActive:   'xal-loader-placeholder--active'
+        loaderPlacerholderActive:   'xal-loader-placeholder--active',
+
+        // Icônes Bootstrap
+        biCheckCircleFill:          'bi-check-circle-fill',
+        biXCircleFill:              'bi-x-circle-fill',
+        biExclamationTriangleFill:  'bi-exclamation-triangle-fill',
+        biInfoCircleFill:           'bi-info-circle-fill',
+
+        // Couleurs de fond
+        textBgSuccess:              'text-bg-success',
+        textBgDanger:               'text-bg-danger',
+        textBgWarning:              'text-bg-warning',
+        textBgInfo:                 'text-bg-info',
     }),
 
     /**
@@ -93,12 +114,24 @@ const XalConstants = Object.freeze({
      */
     cssQueries: Object.freeze({
         tooltip:                        `[data-bs-toggle="tooltip"]`,
-        toastContainer:                 `.toast-container`,
+        
+        // Toasts
+        toastContainer:                 '.toast-container',
+        toastHeader:                    '.toast-header',
+        xalToast:                       '.xal-toast',
+        xalToastIcon:                   '.xal-toast__icon',
+        xalToastLabel:                  '.xal-toast__label',
+        xalToastMessage:                '.xal-toast__message',
+
+
+
+
+
+
+        // Loaders
         loaderToastMessage:             `.xal-loader-toast__message`,
         loaderPlaceholder:              `.xal-loader-placeholder`,
         loaderOverlayMessage:           `.xal-loader-overlay__message`,
-        toast:                          `.xal-toast`,
-        toastMessage:                   `.xal-toast__message`,
 
         // Modale de confirmation
         confirmModal:                   '.xal-confirm',
@@ -1053,27 +1086,33 @@ const XalLoaderOverlay = (() => {
     };
 })();
 /**
- * Gestion des toasts de feedback de l'application.
+ * API de gestion des toasts de notification.
  *
- * Affiche des toasts Bootstrap contextuels pour informer l'utilisateur
- * du résultat d'une opération : succès, erreur, avertissement ou information.
+ * Permet d'afficher des toasts Bootstrap signalant le résultat
+ * d'une action utilisateur : succès, erreur, avertissement, information ou personnalisé.
  *
- * Distinct de XalLoaderToast qui est réservé aux indicateurs de chargement :
+ * Les toasts sont instanciés dynamiquement, injectés dans `.toast-container`,
+ * puis automatiquement masqués et supprimés du DOM après expiration du délai configuré.
+ *
+ * Cette API est distincte de XalLoaderToast, dédié aux indicateurs de chargement :
  * - XalLoaderToast → opération en cours (spinner, non dismissible)
- * - XalToast       → résultat d'une opération (icône, auto-masqué)
- *
- * Les toasts sont créés dynamiquement et insérés dans le conteneur
- * Bootstrap `.toast-container` existant dans index.html.
- * Ils se masquent automatiquement après le délai configuré
- * et sont retirés du DOM après masquage.
- *
+ * - XalToast       → retour utilisateur (icône, masquage automatique)
+ * 
  * Dépendances :
- * - XalConstants.js → XalConstants
+ * - XalConstants
  *
  * @namespace XalToast
- * @author Xavier VILLEMIN
  */
 const XalToast = (() => {
+
+    /**
+     * @typedef {Object} ToastOptions
+     * @property {string} title
+     * @property {string} message
+     * @property {string} icon
+     * @property {string} color
+     */
+
     /**
      * Délai par défaut en ms avant masquage automatique du toast.
      *
@@ -1082,71 +1121,155 @@ const XalToast = (() => {
     const DEFAULT_DELAY_MS = 5000;
 
     /**
-     * Référence vers les templates HTML des variantes de toast.
-     * Clé : ID du template, Valeur : HTMLTemplateElement.
+     * Énumération des différentes variantes des toasts supportées par l'API.
      *
-     * @type {Map<string, HTMLTemplateElement>}
+     * Utilisée pour qualifier le type de notification et appliquer
+     * le rendu Bootstrap correspondant.
+     *
+     * @constant
+     * @readonly
+     * @enum {string}
      */
-    let _templates = new Map();
-
-    /**
-     * Table de correspondance entre les noms de variantes de toast
-     * et les identifiants DOM de leurs templates HTML respectifs.
-     *
-     * Centralise la résolution interne des variantes sans dupliquer
-     * les identifiants définis dans XalConstants.elementIds.
-     *
-     * Utilisée dans init() pour résoudre les références aux templates,
-     * et dans _show() pour sélectionner le template à cloner.
-     *
-     * @type {Readonly<Record<string, string>>}
-     */
-    const VARIANT_TEMPLATE_IDS = Object.freeze({
-        success: XalConstants.elementIds.toastTemplateSuccess,
-        error:   XalConstants.elementIds.toastTemplateError,
-        warning: XalConstants.elementIds.toastTemplateWarning,
-        info:    XalConstants.elementIds.toastTemplateInfo,
+    const ToastVariant = Object.freeze({
+        success:    'success',
+        error:      'error',
+        warning:    'warning',
+        info:       'info',
     });
 
     /**
-     * Crée, insère et affiche un toast Bootstrap depuis son template HTML.
+     * Configuration des différentes variantes des toasts.
+     *
+     * Chaque variante définit le titre, l'icône et la classe de couleur
+     * appliqués lors de l'affichage du toast.
+     *
+     * Le champ message est intentionnellement vide. Il est rempli dynamiquement
+     * dans _getOptions() sans muter l'objet source.
+     *
+     * @constant
+     * @readonly
+     * @type {Readonly<Record<keyof typeof ToastVariant, ToastOptions>>}
+     */
+    const ToastVariantConfig = Object.freeze({
+        success: Object.freeze({
+            title:      'Succès',
+            icon:       XalConstants.cssClasses.biCheckCircleFill,
+            color:      XalConstants.cssClasses.textBgSuccess,
+        }),
+        error: Object.freeze({
+            title:      'Erreur',
+            icon:       XalConstants.cssClasses.biXCircleFill,
+            color:      XalConstants.cssClasses.textBgDanger,
+        }),
+        warning: Object.freeze({
+            title:      'Avertissement',
+            icon:       XalConstants.cssClasses.biExclamationTriangleFill,
+            color:      XalConstants.cssClasses.textBgWarning,
+        }),
+        info: Object.freeze({
+            title:      'Information',
+            icon:       XalConstants.cssClasses.biInfoCircleFill,
+            color:      XalConstants.cssClasses.textBgInfo,
+        }),
+    });
+
+    /**
+     * Référence vers le template HTML des toasts.
+     *
+     * Initialisée via init().
+     *
+     * @type {HTMLTemplateElement|null}
+     * @private
+     */
+    let _templateElt = null;
+
+    /**
+     * Construit les options d'un toast à partir de sa variante.
+     *
+     * Fusionne la configuration associée à la variante avec le message fourni.
+     * Si la variante est inconnue, la variante `info` est utilisée par défaut.
+     *
+     * @param {keyof typeof ToastVariant} variant - Variante du toast (ex : success, error, warning, info)
+     * @param {string}                    message - Message à afficher dans le toast
+     * @returns {ToastOptions}
+     *
+     * @private
+     */
+    const _getOptions = (variant, message) => {
+        if (!ToastVariantConfig[variant]) {
+            console.warn(`[XalToast] Variante inconnue "${variant}", fallback sur "info".`);
+        }
+
+        const base = ToastVariantConfig[variant] ?? ToastVariantConfig[ToastVariant.info];
+        return Object.freeze({ ...base, message });
+    };
+
+    /**
+     * Crée, insère et affiche un toast Bootstrap à partir du template HTML.
      *
      * Séquence d'exécution :
-     * 1. Résolution du template correspondant à la variante
-     * 2. Clonage du template et injection du message
-     * 3. Insertion dans le conteneur de toasts
-     * 4. Création de l'instance Bootstrap Toast et affichage
-     * 5. Nettoyage du DOM après masquage via hidden.bs.toast
+     * 1. Clonage du template et injection du message
+     * 2. Insertion dans le conteneur des toasts
+     * 3. Création de l'instance Bootstrap Toast et affichage
+     * 4. Nettoyage du DOM après masquage via hidden.bs.toast
      *
-     * Si la variante est inconnue, la variante "info" est utilisée par défaut.
-     * Sans effet si le template de la variante n'a pas été résolu dans init().
+     * Sans effet si le template n'a pas été résolu dans init().
      *
-     * @param {string} message          - Message à afficher dans le corps du toast.
-     * @param {string} variant          - Variante du toast ('success', 'error', 'warning', 'info').
+     * @param {ToastOptions} options    - Configuration du toast issue de _getOptions() ou de custom().
      * @param {number} [delay]          - Délai en ms avant masquage automatique.
+     * 
+     * @private
      */
-    const _show = (message, variant, delay = DEFAULT_DELAY_MS) => {
-        const templateId  = VARIANT_TEMPLATE_IDS[variant] ?? VARIANT_TEMPLATE_IDS.info;
-        const templateElt = _templates.get(templateId);
+    const _show = (options, delay = DEFAULT_DELAY_MS) => {
+        if (!_templateElt) {
+            console.warn('[XalToast] init() doit être appelé avant utilisation.');
+            return;
+        }
 
-        if (!templateElt) return;
+        // Clone indépendant du template permettant d'afficher plusieurs toasts simultanément
+        const fragment = document.importNode(_templateElt.content, true);
+        const toastElt = fragment.querySelector(XalConstants.cssQueries.xalToast);
 
-        // Clone indépendant du template — permet plusieurs toasts simultanés
-        const clone    = document.importNode(templateElt.content, true);
-        const toastElt = clone.querySelector(XalConstants.cssQueries.toast);
+        if (!toastElt) {
+            console.warn('[XalToast] Template invalide : élément toast introuvable.');
+            return;
+        }
+
+        const header = toastElt.querySelector(XalConstants.cssQueries.toastHeader);
+        const icon   = toastElt.querySelector(XalConstants.cssQueries.xalToastIcon);
+        const label  = toastElt.querySelector(XalConstants.cssQueries.xalToastLabel);
+
+        // Classe supplémentaire sur le toast
+        if (options.color) toastElt.classList.add(options.color);
+
+        // Gestion du titre et de l'icône bootstrap
+        const hasTitle = Boolean(options.title);
+        const hasIcon  = Boolean(options.icon);
+
+        header.toggleAttribute(XalConstants.attributeNames.hidden, !hasTitle);
+        icon.toggleAttribute(XalConstants.attributeNames.hidden, !hasIcon);
+
+        if (hasTitle) {
+            label.textContent = options.title;
+        }
+
+        if (hasIcon) {
+            options.icon.split(' ').forEach(cls => icon.classList.add(cls));
+        }
 
         // Injection du message dans le corps du toast
-        toastElt.querySelector(XalConstants.cssQueries.toastMessage).textContent = message;
+        toastElt.querySelector(XalConstants.cssQueries.xalToastMessage).textContent = options.message;
 
-        // Insertion dans le conteneur de toasts, ou dans body en dernier recours
+        // Insertion dans le conteneur des toasts, ou dans body en dernier recours
         const container = document.querySelector(XalConstants.cssQueries.toastContainer);
-        (container ?? document.body).appendChild(toastElt);
+        const parent    = container ?? document.body;
+        parent.appendChild(toastElt);
 
         // Création de l'instance Bootstrap avec masquage automatique
         const toastInstance = new bootstrap.Toast(toastElt, { autohide: true, delay });
 
-        // Nettoyage du DOM après la fin de l'animation de masquage —
-        // { once: true } garantit que le listener se supprime automatiquement.
+        // Nettoyage du DOM après la fin de l'animation de masquage
+        // { once: true } garantit que le listener se supprime automatiquement
         toastElt.addEventListener('hidden.bs.toast', () => {
             toastInstance.dispose();
             toastElt.remove();
@@ -1159,58 +1282,66 @@ const XalToast = (() => {
         /**
          * Affiche un toast de succès.
          *
-         * @param {string} message      - Message à afficher.
-         * @param {number} [delay]      - Délai en ms avant masquage automatique.
+         * @param {string} message  - Message à afficher.
+         * @param {number} [delay]  - Délai en ms avant masquage automatique.
          */
         success(message, delay = DEFAULT_DELAY_MS) {
-            _show(message, 'success', delay);
+            _show(_getOptions(ToastVariant.success, message), delay);
         },
 
         /**
          * Affiche un toast d'erreur.
          *
-         * Utilise aria-live="assertive" pour une annonce immédiate
-         * aux technologies d'assistance.
-         *
-         * @param {string} message      - Message à afficher.
-         * @param {number} [delay]      - Délai en ms avant masquage automatique.
+         * @param {string} message  - Message à afficher.
+         * @param {number} [delay]  - Délai en ms avant masquage automatique.
          */
         error(message, delay = DEFAULT_DELAY_MS) {
-            _show(message, 'error', delay);
+            _show(_getOptions(ToastVariant.error, message), delay);
         },
 
         /**
          * Affiche un toast d'avertissement.
          *
-         * @param {string} message      - Message à afficher.
-         * @param {number} [delay]      - Délai en ms avant masquage automatique.
+         * @param {string} message  - Message à afficher.
+         * @param {number} [delay]  - Délai en ms avant masquage automatique.
          */
         warning(message, delay = DEFAULT_DELAY_MS) {
-            _show(message, 'warning', delay);
+            _show(_getOptions(ToastVariant.warning, message), delay);
         },
 
         /**
          * Affiche un toast d'information.
          *
-         * @param {string} message      - Message à afficher.
-         * @param {number} [delay]      - Délai en ms avant masquage automatique.
+         * @param {string} message - Message à afficher.
+         * @param {number} [delay] - Délai en ms avant masquage automatique.
          */
         info(message, delay = DEFAULT_DELAY_MS) {
-            _show(message, 'info', delay);
+            _show(_getOptions(ToastVariant.info, message), delay);
         },
 
         /**
-         * Initialise le composant.
+         * Affiche un toast avec une configuration personnalisée.
          *
-         * Résout les références vers les templates HTML de chaque variante.
-         * Doit être appelé une seule fois depuis xalise.js au DOMContentLoaded,
-         * avant tout appel à success(), error(), warning() ou info().
+         * Permet d'afficher un toast en dehors des variantes prédéfinies,
+         * en fournissant directement un objet options.
+         *
+         * @param {ToastOptions} options   - Configuration du toast.
+         * @param {number}       [delay]   - Délai en ms avant masquage automatique.
+         */
+        custom(options, delay = DEFAULT_DELAY_MS) {
+            _show(options, delay);
+        },
+
+        /**
+         * Initialise le composant en résolvant le template HTML.
+         *
+         * Doit être appelé avant toute utilisation de l'API.
          */
         init() {
-            Object.values(VARIANT_TEMPLATE_IDS).forEach(id => {
-                const templateElt = document.getElementById(id);
-                if (templateElt) _templates.set(id, templateElt);
-            });
+            // Assure l'idempotence : évite une double initialisation
+            if (_templateElt) return;
+
+            _templateElt = document.getElementById(XalConstants.elementIds.toastTemplateFeedback);
         },
     };
 })();

@@ -555,48 +555,12 @@
           </div>
         </div>
 
-        <!-- Template du toast de succès -->
-        <template id="xal-id-toast-template-success">
-          <div class="toast xal-toast text-bg-success" role="alert" aria-live="polite" aria-atomic="true">
+        <!-- Template des toast de feedback -->
+        <template id="xal-id-toast-template-feedback">
+          <div class="toast xal-toast" role="alert" aria-live="polite" aria-atomic="true">
             <div class="toast-header">
-              <i class="bi bi-check-circle-fill me-2" aria-hidden="true"></i>
-              <strong class="me-auto xal-toast__label">Succès</strong>
-              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
-            </div>
-            <div class="toast-body xal-toast__message"></div>
-          </div>
-        </template>
-
-        <!-- Template du toast d'erreur -->
-        <template id="xal-id-toast-template-error">
-          <div class="toast xal-toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-              <i class="bi bi-x-circle-fill me-2" aria-hidden="true"></i>
-              <strong class="me-auto xal-toast__label">Erreur</strong>
-              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
-            </div>
-            <div class="toast-body xal-toast__message"></div>
-          </div>
-        </template>
-
-        <!-- Template du toast d'avertissement -->
-        <template id="xal-id-toast-template-warning">
-          <div class="toast xal-toast text-bg-warning" role="alert" aria-live="polite" aria-atomic="true">
-            <div class="toast-header">
-              <i class="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i>
-              <strong class="me-auto xal-toast__label">Avertissement</strong>
-              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
-            </div>
-            <div class="toast-body xal-toast__message"></div>
-          </div>
-        </template>
-
-        <!-- Template du toast d'information -->
-        <template id="xal-id-toast-template-info">
-          <div class="toast xal-toast text-bg-info" role="alert" aria-live="polite" aria-atomic="true">
-            <div class="toast-header">
-              <i class="bi bi-info-circle-fill me-2" aria-hidden="true"></i>
-              <strong class="me-auto xal-toast__label">Information</strong>
+              <i class="bi me-2 xal-toast__icon" aria-hidden="true"></i>
+              <strong class="me-auto xal-toast__label"></strong>
               <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
             </div>
             <div class="toast-body xal-toast__message"></div>
