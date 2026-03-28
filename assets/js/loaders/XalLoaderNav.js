@@ -2,7 +2,7 @@
  * API de gestion de la barre de progression globale.
  *
  * Permet d'afficher une barre de progression indéterminée à 
- * l'exécution de traitements longs.
+ * l'exécution de traitements.
  *
  * Supporte les appels concurrents via un compteur interne :
  * la barre reste visible tant qu'au moins un appel est en cours.
@@ -15,6 +15,7 @@
 const XalLoaderNav = (() => {
     /**
      * Nombre de traitements en cours.
+     * 
      * La barre est masquée uniquement quand ce compteur atteint 0.
      *
      * @type {number}
@@ -24,6 +25,7 @@ const XalLoaderNav = (() => {
 
     /**
      * Référence vers l'élément DOM de la barre de progression.
+     * 
      * Initialisée dans init().
      *
      * @type {HTMLElement|null}
@@ -35,7 +37,7 @@ const XalLoaderNav = (() => {
      * Indique si au moins un traitement est en cours.
      *
      * @returns {boolean} `true` si la barre de progression est active,
-     * `false` sinon
+     * `false` sinon.
      */
     const _isActive = () => {
         return _pendingCount > 0;
@@ -53,7 +55,10 @@ const XalLoaderNav = (() => {
             return;
         }
 
-        _barElt.setAttribute(XalConstants.ariaNames.hidden, !_isActive());
+        const isActive = _isActive();
+
+        _barElt.hidden = !isActive;
+        _barElt.setAttribute(XalConstants.ariaNames.hidden, !isActive);
     };
 
     return {
