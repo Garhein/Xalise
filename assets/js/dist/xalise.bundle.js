@@ -1261,7 +1261,7 @@ const XalToast = (() => {
         }
 
         // Injection du message dans le corps du toast
-        toastElt.querySelector(XalConstants.cssQueries.xalToastMessage).textContent = options.message;
+        toastElt.querySelector(XalConstants.cssQueries.xalToastMessage).innerHTML = options.message;
 
         // Insertion dans le conteneur des toasts, ou dans body en dernier recours
         const container = document.querySelector(XalConstants.cssQueries.toastContainer);
