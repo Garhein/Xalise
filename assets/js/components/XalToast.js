@@ -255,7 +255,7 @@ const XalToast = (() => {
 
             _templateElt = document.getElementById(XalConstants.elementIds.toastTemplateFeedback);
         
-            if (!_barElt) {
+            if (!_templateElt) {
                 console.warn('[XalToast] Élément introuvable dans le DOM.');
                 return;
             }
