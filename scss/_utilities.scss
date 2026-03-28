@@ -6,6 +6,11 @@
   text-align: justify;
 }
 
+.text-bg-primary-default {
+    background-color: var(--bs-primary-default);
+    color: #fff;
+}
+
 .xal-u-tooltip {
   --bs-tooltip-opacity: 1;
   --bs-tooltip-bg: var(--xalise-color);
