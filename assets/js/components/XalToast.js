@@ -17,7 +17,6 @@
  * @namespace XalToast
  */
 const XalToast = (() => {
-
     /**
      * @typedef {Object} ToastOptions
      * @property {string} title
@@ -255,6 +254,11 @@ const XalToast = (() => {
             if (_templateElt) return;
 
             _templateElt = document.getElementById(XalConstants.elementIds.toastTemplateFeedback);
+        
+            if (!_barElt) {
+                console.warn('[XalToast] Élément introuvable dans le DOM.');
+                return;
+            }
         },
     };
 })();
