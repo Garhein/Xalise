@@ -590,7 +590,7 @@ const BsBreakpoints = (() => {
  * API de gestion de la barre de progression globale.
  *
  * Permet d'afficher une barre de progression indéterminée à 
- * l'exécution de traitements longs.
+ * l'exécution de traitements.
  *
  * Supporte les appels concurrents via un compteur interne :
  * la barre reste visible tant qu'au moins un appel est en cours.
@@ -603,6 +603,7 @@ const BsBreakpoints = (() => {
 const XalLoaderNav = (() => {
     /**
      * Nombre de traitements en cours.
+     * 
      * La barre est masquée uniquement quand ce compteur atteint 0.
      *
      * @type {number}
@@ -612,6 +613,7 @@ const XalLoaderNav = (() => {
 
     /**
      * Référence vers l'élément DOM de la barre de progression.
+     * 
      * Initialisée dans init().
      *
      * @type {HTMLElement|null}
@@ -623,7 +625,7 @@ const XalLoaderNav = (() => {
      * Indique si au moins un traitement est en cours.
      *
      * @returns {boolean} `true` si la barre de progression est active,
-     * `false` sinon
+     * `false` sinon.
      */
     const _isActive = () => {
         return _pendingCount > 0;
@@ -641,7 +643,10 @@ const XalLoaderNav = (() => {
             return;
         }
 
-        _barElt.setAttribute(XalConstants.ariaNames.hidden, !_isActive());
+        const isActive = _isActive();
+
+        _barElt.hidden = !isActive;
+        _barElt.setAttribute(XalConstants.ariaNames.hidden, !isActive);
     };
 
     return {
@@ -957,71 +962,72 @@ const XalLoaderToast = (() => {
     };
 })();
 /**
- * Gestion de l'overlay de chargement.
+ * API de gestion de l'overlay de chargement.
  *
  * Affiche un voile semi-transparent sur la page afin de bloquer
- * toute interaction utilisateur pendant une opération en cours
- * (action destructive, soumission de formulaire, opération longue).
+ * toute interaction utilisateur pendant un traitement.
  *
  * Supporte les appels concurrents via un compteur interne :
  * l'overlay reste visible tant qu'au moins un appel est en cours.
  *
- * Utilisation typique :
- * - Suppression ou archivage d'un enregistrement
- * - Soumission de formulaire
- * - Opération longue nécessitant de bloquer les interactions
- *
- * L'overlay est déclaré en HTML statique dans index.html et
- * résolu une seule fois dans init().
- *
- * HTML requis dans index.html :
- * <div id="xal-id-loader-overlay" class="xal-loader-overlay" aria-hidden="true" hidden>
- *     <div class="xal-loader-overlay__spinner" aria-hidden="true"></div>
- * </div>
- *
  * Dépendances :
  * - XalConstants.js → XalConstants
  *
- * @namespace XalLoaderOverlay
- * @author Xavier VILLEMIN
+ * @namespace XalLoaderOverlay 
  */
 const XalLoaderOverlay = (() => {
     /**
-     * Nombre d'appels ayant demandé l'affichage de l'overlay.
+     * Nombre de traitements en cours.
      *
-     * L'overlay est masqué uniquement quand ce compteur atteint 0,
-     * ce qui permet de gérer correctement les appels concurrents
-     * sans masquer l'overlay prématurément.
+     * L'overlay est masqué uniquement quand ce compteur atteint 0.
      *
      * @type {number}
+     * @private
      */
     let _pendingCount = 0;
 
     /**
      * Référence vers l'élément DOM de l'overlay.
-     * Résolu une seule fois dans init() depuis le HTML statique.
+     * 
+     * Initialisée dans init().
      *
      * @type {HTMLElement|null}
+     * @private
      */
     let _overlayElt = null;
 
     /**
      * Référence vers l'élément DOM du message.
+     * 
+     * Initialisée dans init().
      *
      * @type {HTMLElement|null}
+     * @private
      */
     let _messageElt = null;
 
     /**
-     * Met à jour la visibilité de l'overlay selon le compteur courant.
+     * Indique si au moins un traitement est en cours.
      *
-     * - _pendingCount > 0 : overlay visible, interactions bloquées
-     * - _pendingCount = 0 : overlay masqué, interactions restaurées
+     * @returns {boolean} `true` si l'overlay' est active, `false` sinon.
+     */
+    const _isActive = () => {
+        return _pendingCount > 0;
+    };
+
+    /**
+     * Met à jour la visibilité de l'overlay en fonction du nombre
+     * de traitements en cours
+     *
+     * @private
      */
     const _update = () => {
-        if (!_overlayElt) return;
+        if (!_overlayElt) {
+            console.warn('[XalLoaderOverlay] init() doit être appelé avant utilisation.');
+            return;
+        }
 
-        const isActive = _pendingCount > 0;
+        const isActive = _isActive();
 
         _overlayElt.hidden = !isActive;
         _overlayElt.setAttribute(XalConstants.ariaNames.hidden, String(!isActive));
@@ -1031,28 +1037,29 @@ const XalLoaderOverlay = (() => {
         /**
          * Affiche l'overlay et bloque les interactions utilisateur.
          *
-         * Incrémente le compteur interne — l'overlay reste visible
-         * tant que hide() n'a pas été appelé autant de fois que show().
-         * Peut être appelé plusieurs fois en parallèle sans effet de bord.
+         * Incrémente le compteur interne et affiche l'overlay si nécessaire.
+         * Supporte les appels concurrents.
          *
          * @param {string} [message=''] - Message optionnel affiché sous le spinner.
          */
         show(message = '') {
+            const wasActive = _isActive();
             _pendingCount++;
 
-            if (_messageElt) {
-                _messageElt.textContent = message;
-            }
+            if (!wasActive) {
+                if (_messageElt) {
+                    _messageElt.textContent = message;
+                }
 
-            _update();
+                _update();
+            }
         },
 
         /**
          * Masque l'overlay et restaure les interactions utilisateur.
          *
-         * Décrémente le compteur interne et masque l'overlay uniquement
-         * si plus aucun appel n'est en cours.
-         * Ne descend jamais en dessous de 0.
+         * Décrémente le compteur (sans passer sous 0) et masque l'overlay
+         * si aucun traitement n'est en cours.
          */
         hide() {
             _pendingCount = Math.max(0, _pendingCount - 1);
@@ -1062,21 +1069,11 @@ const XalLoaderOverlay = (() => {
         /**
          * Réinitialise le compteur et masque immédiatement l'overlay.
          *
-         * Utile en cas d'erreur globale ou de navigation pour garantir
-         * un état propre sans attendre la fin de tous les appels en cours.
+         * Utile en cas d'erreur globale ou de navigation.
          */
         reset() {
             _pendingCount = 0;
             _update();
-        },
-
-        /**
-         * Indique si l'overlay est actuellement visible.
-         *
-         * @returns {boolean} true si l'overlay est actif, false sinon.
-         */
-        isActive() {
-            return _pendingCount > 0;
         },
 
         /**
@@ -1093,15 +1090,26 @@ const XalLoaderOverlay = (() => {
         },
 
         /**
-         * Initialise le composant.
+         * Initialise le composant en résolvant les éléments DOM/.
          *
-         * Résout les références DOM depuis le HTML statique.
-         * Doit être appelé une seule fois depuis xalise.js au DOMContentLoaded,
-         * avant tout appel à show() ou hide().
+         * Doit être appelé avant toute utilisation.
          */
         init() {
+            // Assure l'idempotence : évite une double initialisation
+            if (_overlayElt) return;
+
             _overlayElt = document.getElementById(XalConstants.elementIds.loaderOverlay);
             _messageElt = _overlayElt?.querySelector(XalConstants.cssQueries.loaderOverlayMessage);
+
+            if (!_overlayElt) {
+                console.warn('[XalLoaderOverlay] Élément (overlay) introuvable dans le DOM.');
+                return;
+            }
+
+            if (!_messageElt) {
+                console.warn('[XalLoaderOverlay] Élément (message) introuvable dans le DOM.');
+                return;
+            }
         },
     };
 })();
