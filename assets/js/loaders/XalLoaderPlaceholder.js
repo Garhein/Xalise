@@ -61,7 +61,7 @@ const XalLoaderPlaceholder = (() => {
     const _insertPlaceholder = (el) => {
         const clone = document.importNode(_templateElt.content, true);
         el.prepend(clone);
-        return el.querySelector(XalConstants.cssQueries.loaderPlaceholder);
+        return el.querySelector(XalConstants.cssQueries.loader.placeholder);
     };
 
     return {
@@ -96,7 +96,7 @@ const XalLoaderPlaceholder = (() => {
 
             if (!el) return;
 
-            el.querySelector(XalConstants.cssQueries.loaderPlaceholder)?.remove();
+            el.querySelector(XalConstants.cssQueries.loader.placeholder)?.remove();
         },
 
         /**
@@ -107,7 +107,7 @@ const XalLoaderPlaceholder = (() => {
          */
         isActive(target) {
             const el = _resolveTarget(target);
-            return !!el?.querySelector(XalConstants.cssQueries.loaderPlaceholder);
+            return !!el?.querySelector(XalConstants.cssQueries.loader.placeholder);
         },
 
         /**
@@ -118,7 +118,7 @@ const XalLoaderPlaceholder = (() => {
          * avant tout appel à show().
          */
         init() {
-            _templateElt = document.getElementById(XalConstants.elementIds.loaderPlaceholderTemplate);
+            _templateElt = document.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
         },
     };
 })();

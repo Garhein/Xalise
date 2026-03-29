@@ -28,7 +28,7 @@ const XalSidebar = {
         submenu.hidden = true;
 
         const button = document.querySelector(
-            `${XalConstants.cssQueries.sidebarSubmenuToggleBtn}[${XalConstants.attributeNames.xalTarget}="#${submenu.id}"]`
+            `${XalConstants.cssQueries.sidebar.submenuToggleBtn}[${XalConstants.attributeNames.xalTarget}="#${submenu.id}"]`
         );
 
         if (button) {
@@ -40,7 +40,7 @@ const XalSidebar = {
      * Ferme tous les sous-menus ouverts de la sidebar.
      */
     closeAllSubmenus() {
-        document.querySelectorAll(XalConstants.cssQueries.sidebarSubmenu)
+        document.querySelectorAll(XalConstants.cssQueries.sidebar.submenu)
                 .forEach((submenu) => {
                     if (!submenu.hidden) {
                         this.closeSubmenu(submenu);
@@ -99,11 +99,11 @@ const XalSidebar = {
         }
 
         // Ferme les sous-menus ouverts selon le mode courant
-        document.querySelectorAll(XalConstants.cssQueries.sidebarSubmenu).forEach((el) => {
+        document.querySelectorAll(XalConstants.cssQueries.sidebar.submenu).forEach((el) => {
             if (el === submenu) return;
 
             // Mode étendu : préserve le sous-menu contenant un lien actif
-            if (!this.isCollapsed() && el.querySelector(XalConstants.cssQueries.sidebarActiveNavLink)) return;
+            if (!this.isCollapsed() && el.querySelector(XalConstants.cssQueries.sidebar.activeNavLink)) return;
 
             this.closeSubmenu(el);
         });
@@ -123,7 +123,7 @@ const XalSidebar = {
         if (!sidebar) return;
 
         sidebar.addEventListener('click', (e) => {
-            const button = e.target.closest(XalConstants.cssQueries.sidebarSubmenuToggleBtn);
+            const button = e.target.closest(XalConstants.cssQueries.sidebar.submenuToggleBtn);
 
             if (!button) return;
 

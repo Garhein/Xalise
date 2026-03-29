@@ -95,7 +95,7 @@ const XalConfirm = (() => {
         if (!_buttonTemplate) return;
 
         const clone     = document.importNode(_buttonTemplate.content, true);
-        const buttonElt = clone.querySelector(XalConstants.cssQueries.confirmButton);
+        const buttonElt = clone.querySelector(XalConstants.cssQueries.confirm.button);
 
         if (!buttonElt) return;
 
@@ -108,7 +108,7 @@ const XalConfirm = (() => {
         // sans aucune construction HTML dans le JS.
         if (icon && _iconTemplate) {
             const iconClone = document.importNode(_iconTemplate.content, true);
-            const iconElt   = iconClone.querySelector(XalConstants.cssQueries.confirmIcon);
+            const iconElt   = iconClone.querySelector(XalConstants.cssQueries.confirm.icon);
 
             if (iconElt) {
                 iconElt.classList.add(icon);
@@ -159,32 +159,32 @@ const XalConfirm = (() => {
 
             // Clonage du template
             const clone = document.importNode(_modalTemplate.content, true);
-            _modalElt   = clone.querySelector(XalConstants.cssQueries.confirmModal);
+            _modalElt   = clone.querySelector(XalConstants.cssQueries.confirm.container);
 
             if (!_modalElt) return;
 
             if (!showCloseButton) {
-                const closeBtn = _modalElt.querySelector(XalConstants.cssQueries.confirmCloseButton);
+                const closeBtn = _modalElt.querySelector(XalConstants.cssQueries.confirm.closeButton);
                 if (closeBtn) closeBtn.toggleAttribute(XalConstants.attributeNames.hidden, true);
             }
 
             // Ajout des classes sur la modale
             if (modalClasses.length > 0) {
-                const modalDialog = _modalElt.querySelector(XalConstants.cssQueries.confirmModalDialog);
+                const modalDialog = _modalElt.querySelector(XalConstants.cssQueries.modalDialog);
                 if (modalDialog) {
                     modalDialog.classList.add(...modalClasses);
                 }
             }
 
             // Injection du titre et du contenu
-            const titleElt = _modalElt.querySelector(XalConstants.cssQueries.confirmTitle);
-            const bodyElt  = _modalElt.querySelector(XalConstants.cssQueries.confirmBody);
+            const titleElt = _modalElt.querySelector(XalConstants.cssQueries.confirm.title);
+            const bodyElt  = _modalElt.querySelector(XalConstants.cssQueries.confirm.body);
 
             if (titleElt) titleElt.textContent = title;
             if (bodyElt)  bodyElt.innerHTML    = message;
 
             // Génération des boutons dans le pied de la modale
-            const footerElt = _modalElt.querySelector(XalConstants.cssQueries.confirmFooter);
+            const footerElt = _modalElt.querySelector(XalConstants.cssQueries.confirm.footer);
 
             if (footerElt) {
                 buttons.forEach(buttonConfig => _createButton(footerElt, buttonConfig));
@@ -234,9 +234,9 @@ const XalConfirm = (() => {
          * avant tout appel à show().
          */
         init() {
-            _modalTemplate  = document.getElementById(XalConstants.elementIds.confirmTemplate);
-            _buttonTemplate = document.getElementById(XalConstants.elementIds.confirmButtonTemplate);
-            _iconTemplate   = document.getElementById(XalConstants.elementIds.confirmIconTemplate);
+            _modalTemplate  = document.getElementById(XalConstants.elementIds.confirm.template);
+            _buttonTemplate = document.getElementById(XalConstants.elementIds.confirm.buttonTemplate);
+            _iconTemplate   = document.getElementById(XalConstants.elementIds.confirm.iconTemplate);
         },
     };
 

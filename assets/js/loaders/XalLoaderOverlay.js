@@ -111,8 +111,8 @@ const XalLoaderOverlay = (() => {
             // Assure l'idempotence : évite une double initialisation
             if (_overlayElt) return;
 
-            _overlayElt = document.getElementById(XalConstants.elementIds.loaderOverlay);
-            _messageElt = _overlayElt?.querySelector(XalConstants.cssQueries.loaderOverlayMessage);
+            _overlayElt = document.getElementById(XalConstants.elementIds.loader.overlay);
+            _messageElt = _overlayElt?.querySelector(XalConstants.cssQueries.loader.overlayMessage);
 
             if (!_overlayElt) {
                 console.warn('[XalLoaderOverlay] Élément (overlay) introuvable dans le DOM.');

@@ -22,8 +22,8 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     ariaNames: Object.freeze({
-        expanded:   'aria-expanded',
-        hidden:     'aria-hidden',
+        expanded: 'aria-expanded',
+        hidden:   'aria-hidden',
     }),
 
     /**
@@ -37,8 +37,8 @@ const XalConstants = Object.freeze({
             target: 'data-xal-target',
         }),
 
-        tooltip:    'data-tooltip',
-        hidden:     'hidden',
+        tooltip: 'data-tooltip',
+        hidden:  'hidden',
     }),
 
     /**
@@ -62,26 +62,20 @@ const XalConstants = Object.freeze({
         btnToggleSidebar:           'xal-id-btn-toggle-sidebar',
         notificationCenter:         'xal-id-notification-center',
         notificationToastUndo:      'xal-id-notification-toast-undo',
-
-        // Toast
         toastTemplateFeedback:      'xal-id-toast-template-feedback',
 
+        loader: Object.freeze({ 
+            navbar:                 'xal-id-loader-nav',
+            toast:                  'xal-id-loader-toast',
+            placeholderTemplate:    'xal-id-loader-placeholder-template',
+            overlay:                'xal-id-loader-overlay',
+        }),
 
-
-
-
-
-
-        // Loaders
-        loaderNavbar:               'xal-id-loader-nav',
-        loaderToast:                'xal-id-loader-toast',
-        loaderPlaceholderTemplate:  'xal-id-loader-placeholder-template',
-        loaderOverlay:              'xal-id-loader-overlay',
-        
-        // Modale de confirmation
-        confirmTemplate:            'xal-id-confirm-template',
-        confirmButtonTemplate:      'xal-id-confirm-button-template',
-        confirmIconTemplate:        'xal-id-confirm-icon-template',
+        confirm: Object.freeze({ 
+            template:       'xal-id-confirm-template',
+            buttonTemplate: 'xal-id-confirm-button-template',
+            iconTemplate:   'xal-id-confirm-icon-template',
+        }),
     }),
 
     /**
@@ -111,14 +105,11 @@ const XalConstants = Object.freeze({
     /**
      * Sélecteurs CSS utilisés dans querySelector et querySelectorAll.
      *
-     * Note : les sélecteurs dérivés d'autres constantes sont écrits en dur
-     * car les propriétés d'un objet littéral ne peuvent pas se référencer
-     * entre elles lors de la définition.
-     *
      * @type {Readonly<Record<string, string>>}
      */
     cssQueries: Object.freeze({
-        tooltip: `[data-bs-toggle="tooltip"]`,
+        tooltip:     '[data-bs-toggle="tooltip"]',
+        modalDialog: '.modal-dialog',
         
         toast: Object.freeze({ 
             container:       '.toast-container',
@@ -129,30 +120,27 @@ const XalConstants = Object.freeze({
             xalToastMessage: '.xal-toast__message',
         }),
 
+        loader: Object.freeze({ 
+            toastMessage:   '.xal-loader-toast__message',
+            placeholder:    '.xal-loader-placeholder',
+            overlayMessage: '.xal-loader-overlay__message',
+        }),
 
-
-
-
-
-        // Loaders
-        loaderToastMessage:             `.xal-loader-toast__message`,
-        loaderPlaceholder:              `.xal-loader-placeholder`,
-        loaderOverlayMessage:           `.xal-loader-overlay__message`,
-
-        // Modale de confirmation
-        confirmModal:                   '.xal-confirm',
-        confirmTitle:                   '.xal-confirm__title',
-        confirmBody:                    '.xal-confirm__body',
-        confirmFooter:                  '.xal-confirm__footer',
-        confirmButton:                  '.xal-confirm__button',
-        confirmIcon:                    '.xal-confirm__icon',
-        confirmCloseButton:             '.xal-confirm__close-button',
-        confirmModalDialog:             '.modal-dialog',
-
-        // Sidebar
-        sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
-        sidebarSubmenu:                 `.xal-sidebar__submenu`,
-        sidebarActiveNavLink:           `.nav-link.active`,
+        confirm: Object.freeze({ 
+            container:   '.xal-confirm',
+            title:       '.xal-confirm__title',
+            body:        '.xal-confirm__body',
+            footer:      '.xal-confirm__footer',
+            button:      '.xal-confirm__button',
+            icon:        '.xal-confirm__icon',
+            closeButton: '.xal-confirm__close-button',            
+        }),
+        
+        sidebar: Object.freeze({ 
+            submenuToggleBtn: '[data-xal-action="toggle-submenu"]',
+            submenu:          '.xal-sidebar__submenu',
+            activeNavLink:    '.nav-link.active',
+        }),
     }),
 });
 /**
@@ -698,7 +686,7 @@ const XalLoaderNav = (() => {
             // Assure l'idempotence : évite une double initialisation
             if (_barElt) return;
 
-            _barElt = document.getElementById(XalConstants.elementIds.loaderNavbar);
+            _barElt = document.getElementById(XalConstants.elementIds.loader.navbar);
         
             if (!_barElt) {
                 console.warn('[XalLoaderNav] Élément introuvable dans le DOM.');
@@ -770,7 +758,7 @@ const XalLoaderPlaceholder = (() => {
     const _insertPlaceholder = (el) => {
         const clone = document.importNode(_templateElt.content, true);
         el.prepend(clone);
-        return el.querySelector(XalConstants.cssQueries.loaderPlaceholder);
+        return el.querySelector(XalConstants.cssQueries.loader.placeholder);
     };
 
     return {
@@ -805,7 +793,7 @@ const XalLoaderPlaceholder = (() => {
 
             if (!el) return;
 
-            el.querySelector(XalConstants.cssQueries.loaderPlaceholder)?.remove();
+            el.querySelector(XalConstants.cssQueries.loader.placeholder)?.remove();
         },
 
         /**
@@ -816,7 +804,7 @@ const XalLoaderPlaceholder = (() => {
          */
         isActive(target) {
             const el = _resolveTarget(target);
-            return !!el?.querySelector(XalConstants.cssQueries.loaderPlaceholder);
+            return !!el?.querySelector(XalConstants.cssQueries.loader.placeholder);
         },
 
         /**
@@ -827,7 +815,7 @@ const XalLoaderPlaceholder = (() => {
          * avant tout appel à show().
          */
         init() {
-            _templateElt = document.getElementById(XalConstants.elementIds.loaderPlaceholderTemplate);
+            _templateElt = document.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
         },
     };
 })();
@@ -962,8 +950,8 @@ const XalLoaderToast = (() => {
          * avant tout appel à show() ou hide().
          */
         init() {
-            _toastElt   = document.getElementById(XalConstants.elementIds.loaderToast);
-            _messageElt = _toastElt?.querySelector(XalConstants.cssQueries.loaderToastMessage);
+            _toastElt   = document.getElementById(XalConstants.elementIds.loader.toast);
+            _messageElt = _toastElt?.querySelector(XalConstants.cssQueries.loader.toastMessage);
         },
     };
 })();
@@ -1080,8 +1068,8 @@ const XalLoaderOverlay = (() => {
             // Assure l'idempotence : évite une double initialisation
             if (_overlayElt) return;
 
-            _overlayElt = document.getElementById(XalConstants.elementIds.loaderOverlay);
-            _messageElt = _overlayElt?.querySelector(XalConstants.cssQueries.loaderOverlayMessage);
+            _overlayElt = document.getElementById(XalConstants.elementIds.loader.overlay);
+            _messageElt = _overlayElt?.querySelector(XalConstants.cssQueries.loader.overlayMessage);
 
             if (!_overlayElt) {
                 console.warn('[XalLoaderOverlay] Élément (overlay) introuvable dans le DOM.');
@@ -2108,7 +2096,7 @@ const XalSidebar = {
         submenu.hidden = true;
 
         const button = document.querySelector(
-            `${XalConstants.cssQueries.sidebarSubmenuToggleBtn}[${XalConstants.attributeNames.xalTarget}="#${submenu.id}"]`
+            `${XalConstants.cssQueries.sidebar.submenuToggleBtn}[${XalConstants.attributeNames.xalTarget}="#${submenu.id}"]`
         );
 
         if (button) {
@@ -2120,7 +2108,7 @@ const XalSidebar = {
      * Ferme tous les sous-menus ouverts de la sidebar.
      */
     closeAllSubmenus() {
-        document.querySelectorAll(XalConstants.cssQueries.sidebarSubmenu)
+        document.querySelectorAll(XalConstants.cssQueries.sidebar.submenu)
                 .forEach((submenu) => {
                     if (!submenu.hidden) {
                         this.closeSubmenu(submenu);
@@ -2179,11 +2167,11 @@ const XalSidebar = {
         }
 
         // Ferme les sous-menus ouverts selon le mode courant
-        document.querySelectorAll(XalConstants.cssQueries.sidebarSubmenu).forEach((el) => {
+        document.querySelectorAll(XalConstants.cssQueries.sidebar.submenu).forEach((el) => {
             if (el === submenu) return;
 
             // Mode étendu : préserve le sous-menu contenant un lien actif
-            if (!this.isCollapsed() && el.querySelector(XalConstants.cssQueries.sidebarActiveNavLink)) return;
+            if (!this.isCollapsed() && el.querySelector(XalConstants.cssQueries.sidebar.activeNavLink)) return;
 
             this.closeSubmenu(el);
         });
@@ -2203,7 +2191,7 @@ const XalSidebar = {
         if (!sidebar) return;
 
         sidebar.addEventListener('click', (e) => {
-            const button = e.target.closest(XalConstants.cssQueries.sidebarSubmenuToggleBtn);
+            const button = e.target.closest(XalConstants.cssQueries.sidebar.submenuToggleBtn);
 
             if (!button) return;
 
@@ -3502,7 +3490,7 @@ const XalConfirm = (() => {
         if (!_buttonTemplate) return;
 
         const clone     = document.importNode(_buttonTemplate.content, true);
-        const buttonElt = clone.querySelector(XalConstants.cssQueries.confirmButton);
+        const buttonElt = clone.querySelector(XalConstants.cssQueries.confirm.button);
 
         if (!buttonElt) return;
 
@@ -3515,7 +3503,7 @@ const XalConfirm = (() => {
         // sans aucune construction HTML dans le JS.
         if (icon && _iconTemplate) {
             const iconClone = document.importNode(_iconTemplate.content, true);
-            const iconElt   = iconClone.querySelector(XalConstants.cssQueries.confirmIcon);
+            const iconElt   = iconClone.querySelector(XalConstants.cssQueries.confirm.icon);
 
             if (iconElt) {
                 iconElt.classList.add(icon);
@@ -3566,32 +3554,32 @@ const XalConfirm = (() => {
 
             // Clonage du template
             const clone = document.importNode(_modalTemplate.content, true);
-            _modalElt   = clone.querySelector(XalConstants.cssQueries.confirmModal);
+            _modalElt   = clone.querySelector(XalConstants.cssQueries.confirm.container);
 
             if (!_modalElt) return;
 
             if (!showCloseButton) {
-                const closeBtn = _modalElt.querySelector(XalConstants.cssQueries.confirmCloseButton);
+                const closeBtn = _modalElt.querySelector(XalConstants.cssQueries.confirm.closeButton);
                 if (closeBtn) closeBtn.toggleAttribute(XalConstants.attributeNames.hidden, true);
             }
 
             // Ajout des classes sur la modale
             if (modalClasses.length > 0) {
-                const modalDialog = _modalElt.querySelector(XalConstants.cssQueries.confirmModalDialog);
+                const modalDialog = _modalElt.querySelector(XalConstants.cssQueries.modalDialog);
                 if (modalDialog) {
                     modalDialog.classList.add(...modalClasses);
                 }
             }
 
             // Injection du titre et du contenu
-            const titleElt = _modalElt.querySelector(XalConstants.cssQueries.confirmTitle);
-            const bodyElt  = _modalElt.querySelector(XalConstants.cssQueries.confirmBody);
+            const titleElt = _modalElt.querySelector(XalConstants.cssQueries.confirm.title);
+            const bodyElt  = _modalElt.querySelector(XalConstants.cssQueries.confirm.body);
 
             if (titleElt) titleElt.textContent = title;
             if (bodyElt)  bodyElt.innerHTML    = message;
 
             // Génération des boutons dans le pied de la modale
-            const footerElt = _modalElt.querySelector(XalConstants.cssQueries.confirmFooter);
+            const footerElt = _modalElt.querySelector(XalConstants.cssQueries.confirm.footer);
 
             if (footerElt) {
                 buttons.forEach(buttonConfig => _createButton(footerElt, buttonConfig));
@@ -3641,9 +3629,9 @@ const XalConfirm = (() => {
          * avant tout appel à show().
          */
         init() {
-            _modalTemplate  = document.getElementById(XalConstants.elementIds.confirmTemplate);
-            _buttonTemplate = document.getElementById(XalConstants.elementIds.confirmButtonTemplate);
-            _iconTemplate   = document.getElementById(XalConstants.elementIds.confirmIconTemplate);
+            _modalTemplate  = document.getElementById(XalConstants.elementIds.confirm.template);
+            _buttonTemplate = document.getElementById(XalConstants.elementIds.confirm.buttonTemplate);
+            _iconTemplate   = document.getElementById(XalConstants.elementIds.confirm.iconTemplate);
         },
     };
 

@@ -22,8 +22,8 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     ariaNames: Object.freeze({
-        expanded:   'aria-expanded',
-        hidden:     'aria-hidden',
+        expanded: 'aria-expanded',
+        hidden:   'aria-hidden',
     }),
 
     /**
@@ -37,8 +37,8 @@ const XalConstants = Object.freeze({
             target: 'data-xal-target',
         }),
 
-        tooltip:    'data-tooltip',
-        hidden:     'hidden',
+        tooltip: 'data-tooltip',
+        hidden:  'hidden',
     }),
 
     /**
@@ -62,26 +62,20 @@ const XalConstants = Object.freeze({
         btnToggleSidebar:           'xal-id-btn-toggle-sidebar',
         notificationCenter:         'xal-id-notification-center',
         notificationToastUndo:      'xal-id-notification-toast-undo',
-
-        // Toast
         toastTemplateFeedback:      'xal-id-toast-template-feedback',
 
+        loader: Object.freeze({ 
+            navbar:                 'xal-id-loader-nav',
+            toast:                  'xal-id-loader-toast',
+            placeholderTemplate:    'xal-id-loader-placeholder-template',
+            overlay:                'xal-id-loader-overlay',
+        }),
 
-
-
-
-
-
-        // Loaders
-        loaderNavbar:               'xal-id-loader-nav',
-        loaderToast:                'xal-id-loader-toast',
-        loaderPlaceholderTemplate:  'xal-id-loader-placeholder-template',
-        loaderOverlay:              'xal-id-loader-overlay',
-        
-        // Modale de confirmation
-        confirmTemplate:            'xal-id-confirm-template',
-        confirmButtonTemplate:      'xal-id-confirm-button-template',
-        confirmIconTemplate:        'xal-id-confirm-icon-template',
+        confirm: Object.freeze({ 
+            template:       'xal-id-confirm-template',
+            buttonTemplate: 'xal-id-confirm-button-template',
+            iconTemplate:   'xal-id-confirm-icon-template',
+        }),
     }),
 
     /**
@@ -111,14 +105,11 @@ const XalConstants = Object.freeze({
     /**
      * Sélecteurs CSS utilisés dans querySelector et querySelectorAll.
      *
-     * Note : les sélecteurs dérivés d'autres constantes sont écrits en dur
-     * car les propriétés d'un objet littéral ne peuvent pas se référencer
-     * entre elles lors de la définition.
-     *
      * @type {Readonly<Record<string, string>>}
      */
     cssQueries: Object.freeze({
-        tooltip: `[data-bs-toggle="tooltip"]`,
+        tooltip:     '[data-bs-toggle="tooltip"]',
+        modalDialog: '.modal-dialog',
         
         toast: Object.freeze({ 
             container:       '.toast-container',
@@ -129,29 +120,26 @@ const XalConstants = Object.freeze({
             xalToastMessage: '.xal-toast__message',
         }),
 
+        loader: Object.freeze({ 
+            toastMessage:   '.xal-loader-toast__message',
+            placeholder:    '.xal-loader-placeholder',
+            overlayMessage: '.xal-loader-overlay__message',
+        }),
 
-
-
-
-
-        // Loaders
-        loaderToastMessage:             `.xal-loader-toast__message`,
-        loaderPlaceholder:              `.xal-loader-placeholder`,
-        loaderOverlayMessage:           `.xal-loader-overlay__message`,
-
-        // Modale de confirmation
-        confirmModal:                   '.xal-confirm',
-        confirmTitle:                   '.xal-confirm__title',
-        confirmBody:                    '.xal-confirm__body',
-        confirmFooter:                  '.xal-confirm__footer',
-        confirmButton:                  '.xal-confirm__button',
-        confirmIcon:                    '.xal-confirm__icon',
-        confirmCloseButton:             '.xal-confirm__close-button',
-        confirmModalDialog:             '.modal-dialog',
-
-        // Sidebar
-        sidebarSubmenuToggleBtn:        `[data-xal-action="toggle-submenu"]`,
-        sidebarSubmenu:                 `.xal-sidebar__submenu`,
-        sidebarActiveNavLink:           `.nav-link.active`,
+        confirm: Object.freeze({ 
+            container:   '.xal-confirm',
+            title:       '.xal-confirm__title',
+            body:        '.xal-confirm__body',
+            footer:      '.xal-confirm__footer',
+            button:      '.xal-confirm__button',
+            icon:        '.xal-confirm__icon',
+            closeButton: '.xal-confirm__close-button',            
+        }),
+        
+        sidebar: Object.freeze({ 
+            submenuToggleBtn: '[data-xal-action="toggle-submenu"]',
+            submenu:          '.xal-sidebar__submenu',
+            activeNavLink:    '.nav-link.active',
+        }),
     }),
 });

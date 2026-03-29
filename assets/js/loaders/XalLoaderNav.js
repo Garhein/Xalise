@@ -104,7 +104,7 @@ const XalLoaderNav = (() => {
             // Assure l'idempotence : évite une double initialisation
             if (_barElt) return;
 
-            _barElt = document.getElementById(XalConstants.elementIds.loaderNavbar);
+            _barElt = document.getElementById(XalConstants.elementIds.loader.navbar);
         
             if (!_barElt) {
                 console.warn('[XalLoaderNav] Élément introuvable dans le DOM.');
