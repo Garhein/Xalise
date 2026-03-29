@@ -65,23 +65,23 @@ const XalToast = (() => {
     const ToastVariantConfig = Object.freeze({
         success: Object.freeze({
             title:      'Succès',
-            icon:       XalConstants.cssClasses.biCheckCircleFill,
-            color:      XalConstants.cssClasses.textBgSuccess,
+            icon:       XalConstants.cssClasses.bootstrapIcon.checkCircleFill,
+            color:      XalConstants.cssClasses.bootstrapTextBg.success,
         }),
         error: Object.freeze({
             title:      'Erreur',
-            icon:       XalConstants.cssClasses.biXCircleFill,
-            color:      XalConstants.cssClasses.textBgDanger,
+            icon:       XalConstants.cssClasses.bootstrapIcon.xCircleFill,
+            color:      XalConstants.cssClasses.bootstrapTextBg.danger,
         }),
         warning: Object.freeze({
             title:      'Avertissement',
-            icon:       XalConstants.cssClasses.biExclamationTriangleFill,
-            color:      XalConstants.cssClasses.textBgWarning,
+            icon:       XalConstants.cssClasses.bootstrapIcon.exclamationTriangleFill,
+            color:      XalConstants.cssClasses.bootstrapTextBg.warning,
         }),
         info: Object.freeze({
             title:      'Information',
-            icon:       XalConstants.cssClasses.biInfoCircleFill,
-            color:      XalConstants.cssClasses.textBgInfo,
+            icon:       XalConstants.cssClasses.bootstrapIcon.infoCircleFill,
+            color:      XalConstants.cssClasses.bootstrapTextBg.info,
         }),
     });
 
@@ -140,16 +140,16 @@ const XalToast = (() => {
 
         // Clone indépendant du template permettant d'afficher plusieurs toasts simultanément
         const fragment = document.importNode(_templateElt.content, true);
-        const toastElt = fragment.querySelector(XalConstants.cssQueries.xalToast);
+        const toastElt = fragment.querySelector(XalConstants.cssQueries.toast.xalToast);
 
         if (!toastElt) {
             console.warn('[XalToast] Template invalide : élément toast introuvable.');
             return;
         }
 
-        const header = toastElt.querySelector(XalConstants.cssQueries.toastHeader);
-        const icon   = toastElt.querySelector(XalConstants.cssQueries.xalToastIcon);
-        const label  = toastElt.querySelector(XalConstants.cssQueries.xalToastLabel);
+        const header = toastElt.querySelector(XalConstants.cssQueries.toast.header);
+        const icon   = toastElt.querySelector(XalConstants.cssQueries.toast.xalToastIcon);
+        const label  = toastElt.querySelector(XalConstants.cssQueries.toast.xalToastLabel);
 
         // Classe supplémentaire sur le toast
         if (options.color) toastElt.classList.add(options.color);
@@ -170,10 +170,10 @@ const XalToast = (() => {
         }
 
         // Injection du message dans le corps du toast
-        toastElt.querySelector(XalConstants.cssQueries.xalToastMessage).innerHTML = options.message;
+        toastElt.querySelector(XalConstants.cssQueries.toast.xalToastMessage).innerHTML = options.message;
 
         // Insertion dans le conteneur des toasts, ou dans body en dernier recours
-        const container = document.querySelector(XalConstants.cssQueries.toastContainer);
+        const container = document.querySelector(XalConstants.cssQueries.toast.container);
         const parent    = container ?? document.body;
         parent.appendChild(toastElt);
 

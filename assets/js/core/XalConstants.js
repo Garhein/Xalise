@@ -3,7 +3,7 @@
  *
  * Centralise l'ensemble des valeurs utilisées dynamiquement par le JS :
  * - attributs ARIA
- * - attributs data-xal-*
+ * - attributs (data-xal-* et autres)
  * - valeurs d'actions
  * - sélecteurs CSS
  * - identifiants DOM
@@ -17,7 +17,7 @@
 const XalConstants = Object.freeze({
 
     /**
-     * Noms des attributs ARIA manipulés par le JS.
+     * Noms des attributs ARIA.
      *
      * @type {Readonly<Record<string, string>>}
      */
@@ -32,8 +32,11 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     attributeNames: Object.freeze({
-        xalAction:  'data-xal-action',
-        xalTarget:  'data-xal-target',
+        xalise: Object.freeze({ 
+            action: 'data-xal-action',
+            target: 'data-xal-target',
+        }),
+
         tooltip:    'data-tooltip',
         hidden:     'hidden',
     }),
@@ -90,17 +93,19 @@ const XalConstants = Object.freeze({
         sidebarCollapsed:           'xal-application-layout--sidebar-collapsed',
         loaderPlacerholderActive:   'xal-loader-placeholder--active',
 
-        // Icônes Bootstrap
-        biCheckCircleFill:          'bi-check-circle-fill',
-        biXCircleFill:              'bi-x-circle-fill',
-        biExclamationTriangleFill:  'bi-exclamation-triangle-fill',
-        biInfoCircleFill:           'bi-info-circle-fill',
+        bootstrapIcon: Object.freeze({ 
+            checkCircleFill:          'bi-check-circle-fill',
+            xCircleFill:              'bi-x-circle-fill',
+            exclamationTriangleFill:  'bi-exclamation-triangle-fill',
+            infoCircleFill:           'bi-info-circle-fill',
+        }),
 
-        // Couleurs de fond
-        textBgSuccess:              'text-bg-success',
-        textBgDanger:               'text-bg-danger',
-        textBgWarning:              'text-bg-warning',
-        textBgInfo:                 'text-bg-info',
+        bootstrapTextBg: Object.freeze({ 
+            success: 'text-bg-success',
+            danger:  'text-bg-danger',
+            warning: 'text-bg-warning',
+            info:    'text-bg-info',
+        }),
     }),
 
     /**
@@ -113,15 +118,16 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     cssQueries: Object.freeze({
-        tooltip:                        `[data-bs-toggle="tooltip"]`,
+        tooltip: `[data-bs-toggle="tooltip"]`,
         
-        // Toasts
-        toastContainer:                 '.toast-container',
-        toastHeader:                    '.toast-header',
-        xalToast:                       '.xal-toast',
-        xalToastIcon:                   '.xal-toast__icon',
-        xalToastLabel:                  '.xal-toast__label',
-        xalToastMessage:                '.xal-toast__message',
+        toast: Object.freeze({ 
+            container:       '.toast-container',
+            header:          '.toast-header',
+            xalToast:        '.xal-toast',
+            xalToastIcon:    '.xal-toast__icon',
+            xalToastLabel:   '.xal-toast__label',
+            xalToastMessage: '.xal-toast__message',
+        }),
 
 
 

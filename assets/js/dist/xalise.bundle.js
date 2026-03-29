@@ -3,7 +3,7 @@
  *
  * Centralise l'ensemble des valeurs utilisées dynamiquement par le JS :
  * - attributs ARIA
- * - attributs data-xal-*
+ * - attributs (data-xal-* et autres)
  * - valeurs d'actions
  * - sélecteurs CSS
  * - identifiants DOM
@@ -17,7 +17,7 @@
 const XalConstants = Object.freeze({
 
     /**
-     * Noms des attributs ARIA manipulés par le JS.
+     * Noms des attributs ARIA.
      *
      * @type {Readonly<Record<string, string>>}
      */
@@ -32,8 +32,11 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     attributeNames: Object.freeze({
-        xalAction:  'data-xal-action',
-        xalTarget:  'data-xal-target',
+        xalise: Object.freeze({ 
+            action: 'data-xal-action',
+            target: 'data-xal-target',
+        }),
+
         tooltip:    'data-tooltip',
         hidden:     'hidden',
     }),
@@ -90,17 +93,19 @@ const XalConstants = Object.freeze({
         sidebarCollapsed:           'xal-application-layout--sidebar-collapsed',
         loaderPlacerholderActive:   'xal-loader-placeholder--active',
 
-        // Icônes Bootstrap
-        biCheckCircleFill:          'bi-check-circle-fill',
-        biXCircleFill:              'bi-x-circle-fill',
-        biExclamationTriangleFill:  'bi-exclamation-triangle-fill',
-        biInfoCircleFill:           'bi-info-circle-fill',
+        bootstrapIcon: Object.freeze({ 
+            checkCircleFill:          'bi-check-circle-fill',
+            xCircleFill:              'bi-x-circle-fill',
+            exclamationTriangleFill:  'bi-exclamation-triangle-fill',
+            infoCircleFill:           'bi-info-circle-fill',
+        }),
 
-        // Couleurs de fond
-        textBgSuccess:              'text-bg-success',
-        textBgDanger:               'text-bg-danger',
-        textBgWarning:              'text-bg-warning',
-        textBgInfo:                 'text-bg-info',
+        bootstrapTextBg: Object.freeze({ 
+            success: 'text-bg-success',
+            danger:  'text-bg-danger',
+            warning: 'text-bg-warning',
+            info:    'text-bg-info',
+        }),
     }),
 
     /**
@@ -113,15 +118,16 @@ const XalConstants = Object.freeze({
      * @type {Readonly<Record<string, string>>}
      */
     cssQueries: Object.freeze({
-        tooltip:                        `[data-bs-toggle="tooltip"]`,
+        tooltip: `[data-bs-toggle="tooltip"]`,
         
-        // Toasts
-        toastContainer:                 '.toast-container',
-        toastHeader:                    '.toast-header',
-        xalToast:                       '.xal-toast',
-        xalToastIcon:                   '.xal-toast__icon',
-        xalToastLabel:                  '.xal-toast__label',
-        xalToastMessage:                '.xal-toast__message',
+        toast: Object.freeze({ 
+            container:       '.toast-container',
+            header:          '.toast-header',
+            xalToast:        '.xal-toast',
+            xalToastIcon:    '.xal-toast__icon',
+            xalToastLabel:   '.xal-toast__label',
+            xalToastMessage: '.xal-toast__message',
+        }),
 
 
 
@@ -1156,23 +1162,23 @@ const XalToast = (() => {
     const ToastVariantConfig = Object.freeze({
         success: Object.freeze({
             title:      'Succès',
-            icon:       XalConstants.cssClasses.biCheckCircleFill,
-            color:      XalConstants.cssClasses.textBgSuccess,
+            icon:       XalConstants.cssClasses.bootstrapIcon.checkCircleFill,
+            color:      XalConstants.cssClasses.bootstrapTextBg.success,
         }),
         error: Object.freeze({
             title:      'Erreur',
-            icon:       XalConstants.cssClasses.biXCircleFill,
-            color:      XalConstants.cssClasses.textBgDanger,
+            icon:       XalConstants.cssClasses.bootstrapIcon.xCircleFill,
+            color:      XalConstants.cssClasses.bootstrapTextBg.danger,
         }),
         warning: Object.freeze({
             title:      'Avertissement',
-            icon:       XalConstants.cssClasses.biExclamationTriangleFill,
-            color:      XalConstants.cssClasses.textBgWarning,
+            icon:       XalConstants.cssClasses.bootstrapIcon.exclamationTriangleFill,
+            color:      XalConstants.cssClasses.bootstrapTextBg.warning,
         }),
         info: Object.freeze({
             title:      'Information',
-            icon:       XalConstants.cssClasses.biInfoCircleFill,
-            color:      XalConstants.cssClasses.textBgInfo,
+            icon:       XalConstants.cssClasses.bootstrapIcon.infoCircleFill,
+            color:      XalConstants.cssClasses.bootstrapTextBg.info,
         }),
     });
 
@@ -1231,16 +1237,16 @@ const XalToast = (() => {
 
         // Clone indépendant du template permettant d'afficher plusieurs toasts simultanément
         const fragment = document.importNode(_templateElt.content, true);
-        const toastElt = fragment.querySelector(XalConstants.cssQueries.xalToast);
+        const toastElt = fragment.querySelector(XalConstants.cssQueries.toast.xalToast);
 
         if (!toastElt) {
             console.warn('[XalToast] Template invalide : élément toast introuvable.');
             return;
         }
 
-        const header = toastElt.querySelector(XalConstants.cssQueries.toastHeader);
-        const icon   = toastElt.querySelector(XalConstants.cssQueries.xalToastIcon);
-        const label  = toastElt.querySelector(XalConstants.cssQueries.xalToastLabel);
+        const header = toastElt.querySelector(XalConstants.cssQueries.toast.header);
+        const icon   = toastElt.querySelector(XalConstants.cssQueries.toast.xalToastIcon);
+        const label  = toastElt.querySelector(XalConstants.cssQueries.toast.xalToastLabel);
 
         // Classe supplémentaire sur le toast
         if (options.color) toastElt.classList.add(options.color);
@@ -1261,10 +1267,10 @@ const XalToast = (() => {
         }
 
         // Injection du message dans le corps du toast
-        toastElt.querySelector(XalConstants.cssQueries.xalToastMessage).innerHTML = options.message;
+        toastElt.querySelector(XalConstants.cssQueries.toast.xalToastMessage).innerHTML = options.message;
 
         // Insertion dans le conteneur des toasts, ou dans body en dernier recours
-        const container = document.querySelector(XalConstants.cssQueries.toastContainer);
+        const container = document.querySelector(XalConstants.cssQueries.toast.container);
         const parent    = container ?? document.body;
         parent.appendChild(toastElt);
 
