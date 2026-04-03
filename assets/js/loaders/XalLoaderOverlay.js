@@ -12,21 +12,17 @@
 const XalLoaderOverlay = (() => {
     /**
      * Référence vers l'élément DOM de l'overlay.
-     * 
-     * Initialisée dans init().
+     * Résolu une seule fois dans init() depuis le HTML statique.
      *
      * @type {HTMLElement|null}
-     * @private
      */
     let _overlayElt = null;
 
     /**
      * Référence vers l'élément DOM du message.
-     * 
-     * Initialisée dans init().
+     * Résolu une seule fois dans init() depuis le HTML statique.
      *
      * @type {HTMLElement|null}
-     * @private
      */
     let _messageElt = null;
 
@@ -41,7 +37,6 @@ const XalLoaderOverlay = (() => {
      * Met à jour la visibilité de l'overlay.
      *
      * @param {boolean} isActive - `true` si l'overlay doit être affiché, sinon `false`.
-     * @private
      */
     const _update = (isActive) => {
         if (!_overlayElt) {

@@ -15,21 +15,17 @@
 const XalLoaderNav = (() => {
     /**
      * Nombre de traitements en cours.
-     * 
      * La barre est masquée uniquement quand ce compteur atteint 0.
      *
      * @type {number}
-     * @private
      */
     let _pendingCount = 0;
 
     /**
      * Référence vers l'élément DOM de la barre de progression.
-     * 
-     * Initialisée dans init().
+     * Résolu une seule fois dans init() depuis le HTML statique.
      *
      * @type {HTMLElement|null}
-     * @private
      */
     let _barElt = null;
 
@@ -46,8 +42,6 @@ const XalLoaderNav = (() => {
     /**
      * Met à jour la visibilité de la barre en fonction du nombre
      * de traitements en cours.
-     *
-     * @private
      */
     const _update = () => {
         if (!_barElt) {

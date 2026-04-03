@@ -87,11 +87,9 @@ const XalToast = (() => {
 
     /**
      * Référence vers le template HTML des toasts.
-     *
-     * Initialisée via init().
+     * Résolu une seule fois dans init() depuis le HTML statique.
      *
      * @type {HTMLTemplateElement|null}
-     * @private
      */
     let _templateElt = null;
 
@@ -104,8 +102,6 @@ const XalToast = (() => {
      * @param {keyof typeof ToastVariant} variant - Variante du toast (ex : success, error, warning, info)
      * @param {string}                    message - Message à afficher dans le toast
      * @returns {ToastOptions}
-     *
-     * @private
      */
     const _getOptions = (variant, message) => {
         if (!ToastVariantConfig[variant]) {
@@ -129,8 +125,6 @@ const XalToast = (() => {
      *
      * @param {ToastOptions} options    - Configuration du toast issue de _getOptions() ou de custom().
      * @param {number} [delay]          - Délai en ms avant masquage automatique.
-     * 
-     * @private
      */
     const _show = (options, delay = DEFAULT_DELAY_MS) => {
         if (!_templateElt) {
