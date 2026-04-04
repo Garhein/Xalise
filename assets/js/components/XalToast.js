@@ -12,7 +12,7 @@
  * - XalToast       → retour utilisateur (icône, masquage automatique)
  * 
  * Dépendances :
- * - XalConstants
+ * - XalConstants.js → XalConstants
  *
  * @namespace XalToast
  */

@@ -121,6 +121,7 @@ const XalConstants = Object.freeze({
         }),
 
         loader: Object.freeze({ 
+            toast:          '.xal-loader-toast',
             toastMessage:   '.xal-loader-toast__message',
             placeholder:    '.xal-loader-placeholder',
             overlayMessage: '.xal-loader-overlay__message',
@@ -823,138 +824,119 @@ const XalLoaderPlaceholder = (() => {
     };
 })();
 /**
- * Gestion du toast de chargement pour les opérations longues.
+ * API de gestion du toast de chargement.
  *
- * Affiche un toast Bootstrap non dismissible en bas à droite
- * avec un spinner et un message, pendant une opération longue
- * (export, génération de rapport, traitement batch, etc.).
- * 
- * Le toast reste affiché jusqu'à l'appel explicite de hide() et
- * affiche un spinner de chargement, et non une action à effectuer
+ * Affiche un toast Bootstrap non dismissible avec un spinner
+ * pendant une opération longue.
  *
- * Le toast est créé dynamiquement dans le DOM lors du premier
- * appel à show() et réutilisé pour les appels suivants.
- *
- * Dépendances :
- * - XalConstants.js → XalConstants
+ * Le toast repose sur un élément DOM existant (non dynamique).
  *
  * @namespace XalLoaderToast
- * @author Xavier VILLEMIN
  */
 const XalLoaderToast = (() => {
     /**
-     * Message affiché par défaut si aucun message n'est fourni à show().
+     * Message affiché par défaut.
      *
      * @type {string}
      */
     const DEFAULT_MESSAGE = 'Chargement en cours…';
 
     /**
-     * Instance Bootstrap Toast active.
-     * Créée lors du premier appel à show() et détruite dans hide().
+     * Élément DOM du toast.
+     *
+     * @type {HTMLElement|null}
+     * @private
+     */
+    let _toastElement = null;
+
+    /**
+     * Élément DOM du message.
+     *
+     * @type {HTMLElement|null}
+     * @private
+     */
+    let _messageElement = null;
+
+    /**
+     * Instance Bootstrap associée.
      *
      * @type {bootstrap.Toast|null}
+     * @private
      */
     let _toastInstance = null;
 
-    /**
-     * Élément DOM du toast.
-     * Créé une seule fois et réutilisé.
-     *
-     * @type {HTMLElement|null}
-     */
-    let _toastElt = null;
-
-    /**
-     * Élément DOM du message à l'intérieur du toast.
-     *
-     * @type {HTMLElement|null}
-     */
-    let _messageElt = null;
-
     return {
         /**
-         * Affiche le toast de chargement avec le message fourni.
+         * Initialise le composant en résolvant les éléments DOM.
          *
-         * Crée l'élément DOM si c'est le premier appel.
-         * Met à jour le message si le toast est déjà visible.
+         * @throws {Error} Si le toast ou le message est introuvable.
+         */
+        init() {
+            if (_toastElement) return;
+
+            _toastElement = document.getElementById(XalConstants.elementIds.loader.toast);
+
+            if (!_toastElement) {
+                throw new Error('[XalLoaderToast] Élément toast introuvable.');
+            }
+
+            _messageElement = _toastElement.querySelector(XalConstants.cssQueries.loader.toastMessage);
+
+            if (!_messageElement) {
+                throw new Error('[XalLoaderToast] Élément message introuvable.');
+            }
+
+            _toastInstance = bootstrap.Toast.getOrCreateInstance(_toastElement, {
+                autohide: false,
+            });
+        },
+
+        /**
+         * Affiche le toast de chargement.
          *
-         * @param {string} [message] - Message à afficher. Utilise DEFAULT_MESSAGE si absent.
+         * Met à jour le message puis affiche le toast.
+         *
+         * @param {string} [message] Message à afficher.
          */
         show(message = DEFAULT_MESSAGE) {
-            if (!_toastElt) {
-                _createToastElement();
-            }
-
-            // Mise à jour du message
-            if (_messageElt) {
-                _messageElt.textContent = message;
-            }
-
-            // Création ou réutilisation de l'instance Bootstrap Toast
             if (!_toastInstance) {
-                _toastInstance = new bootstrap.Toast(_toastElt, {
-                    autohide: false,
-                });
+                console.warn('[XalLoaderToast] init() doit être appelé avant utilisation.');
+                return;
             }
 
+            if (this.isVisible()) return;
+
+            _messageElement.textContent = message ?? DEFAULT_MESSAGE;
             _toastInstance.show();
         },
 
         /**
-         * Masque le toast de chargement et libère l'instance Bootstrap
-         * après la fin de l'animation de disparition.
-         *
-         * dispose() est appelé via l'événement hidden.bs.toast pour éviter
-         * une erreur "this._element is null" causée par l'appel synchrone
-         * de dispose() avant la fin de l'animation Bootstrap.
-         *
-         * Sans effet si le toast n'est pas affiché.
+         * Masque le toast.
          */
         hide() {
             if (!_toastInstance) return;
-
-            // Nettoyage différé après la fin de l'animation
-            _toastElt.addEventListener('hidden.bs.toast', () => {
-                _toastInstance?.dispose();
-                _toastInstance = null;
-            }, { once: true });
 
             _toastInstance.hide();
         },
 
         /**
-         * Indique si le toast de chargement est actuellement affiché.
+         * Met à jour le message affiché.
          *
-         * @returns {boolean} true si le toast est visible, false sinon.
+         * @param {string} message Nouveau message.
+         */
+        setMessage(message) {
+            if (!_messageElement) return;
+
+            _messageElement.textContent = message ?? '';
+        },
+
+        /**
+         * Indique si le toast est actuellement visible.
+         *
+         * @returns {boolean} `true` si visible, `false` sinon.
          */
         isVisible() {
-            return _toastInstance !== null;
-        },
-
-        /**
-         * Met à jour le message affiché sans masquer ni réafficher le toast.
-         *
-         * Sans effet si le toast n'est pas affiché.
-         *
-         * @param {string} message - Nouveau message à afficher.
-         */
-        updateMessage(message) {
-            if (!_messageElt || !_toastInstance) return;
-
-            _messageElt.textContent = message;
-        },
-
-        /**
-         * Initialise le composant toast de chargement.
-         *
-         * Résout les références DOM depuis le HTML statique.
-         * Doit être appelé une seule fois depuis xalise.js au DOMContentLoaded,
-         * avant tout appel à show() ou hide().
-         */
-        init() {
-            _toastElt   = document.getElementById(XalConstants.elementIds.loader.toast);
-            _messageElt = _toastElt?.querySelector(XalConstants.cssQueries.loader.toastMessage);
+            return _toastElement?.classList.contains('show') ?? false;
         },
     };
 })();
@@ -1095,7 +1077,7 @@ const XalLoaderOverlay = (() => {
  * - XalToast       → retour utilisateur (icône, masquage automatique)
  * 
  * Dépendances :
- * - XalConstants
+ * - XalConstants.js → XalConstants
  *
  * @namespace XalToast
  */

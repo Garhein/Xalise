@@ -121,6 +121,7 @@ const XalConstants = Object.freeze({
         }),
 
         loader: Object.freeze({ 
+            toast:          '.xal-loader-toast',
             toastMessage:   '.xal-loader-toast__message',
             placeholder:    '.xal-loader-placeholder',
             overlayMessage: '.xal-loader-overlay__message',

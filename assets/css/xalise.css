@@ -12631,7 +12631,7 @@ body:not([data-xal-page-fullheight]) {
   width: 1rem;
   height: 1rem;
   border: 2px solid var(--bs-border-color);
-  border-top-color: var(--bs-primary);
+  border-top-color: var(--bs-secondary-color);
   border-radius: 50%;
   animation: xal-loader-spinner-rotate 0.7s linear infinite;
 }
