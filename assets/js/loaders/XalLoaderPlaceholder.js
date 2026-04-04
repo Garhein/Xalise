@@ -62,18 +62,12 @@ const XalLoaderPlaceholder = (() => {
     return {
         /**
          * Initialise le composant en résolvant les éléments DOM.
-         *
-         * @throws {Error} Si le template est introuvable.
          */
         init() {
             // Assure l'idempotence : évite une double initialisation
             if (_templateElement) return;
 
-            _templateElement = document.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
-
-            if (!_templateElement) {
-                throw new Error('[XalLoaderPlaceholder] Template introuvable dans le DOM.');
-            }
+            _templateElement = XalUIService.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
         },
         
         /**

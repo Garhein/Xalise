@@ -582,6 +582,72 @@ const BsBreakpoints = (() => {
     });
 })();
 /**
+ * Utilitaires communs pour les composants UI.
+ *
+ * Fournit des helpers pour :
+ * - la résolution d'éléments DOM obligatoires
+ * - la manipulation standardisée de la visibilité
+ *
+ * Centralise la gestion des erreurs afin d'assurer un comportement
+ * homogène entre les composants.
+ *
+ * @namespace XalUIService
+ */
+const XalUIService = {
+    /**
+     * Résout un élément DOM par son identifiant.
+     *
+     * @param {string} id Identifiant de l'élément.
+     * @returns {HTMLElement} Élément DOM correspondant.
+     *
+     * @throws {Error} Si aucun élément ne correspond à l'identifiant.
+     */
+    getElementById(id) {
+        const element = document.getElementById(id);
+
+        if (!element) {
+            throw new Error(`[XalUIService] Élément introuvable : ${id}`);
+        }
+
+        return element;
+    },
+
+    /**
+     * Résout un élément enfant à partir d'un sélecteur CSS.
+     *
+     * @param {HTMLElement} parent Élément parent de recherche.
+     * @param {string} selector Sélecteur CSS de l'élément cible.
+     * @returns {HTMLElement} Élément DOM correspondant.
+     *
+     * @throws {Error} Si aucun élément ne correspond au sélecteur.
+     */
+    getRequiredElement(parent, selector) {
+        const element = parent.querySelector(selector);
+
+        if (!element) {
+            throw new Error(`[XalUIService] Élément introuvable : ${selector}`);
+        }
+
+        return element;
+    },
+
+    /**
+     * Met à jour la visibilité d'un élément.
+     *
+     * Synchronise les attributs `hidden` et `aria-hidden`
+     * afin de garantir :
+     * - un affichage correct
+     * - une accessibilité conforme
+     *
+     * @param {HTMLElement} element Élément cible.
+     * @param {boolean} isVisible Indique si l'élément doit être visible.
+     */
+    setVisible(element, isVisible) {
+        element.hidden = !isVisible;
+        element.setAttribute(XalConstants.ariaNames.hidden, !isVisible);
+    },
+};
+/**
  * API de gestion de la barre de progression indéterminée.
  *
  * Affiche une barre de progression indéterminée à l'exécution 
@@ -634,26 +700,18 @@ const XalLoaderNav = (() => {
         }
 
         const isActive = _isActive();
-
-        _barElement.hidden = !isActive;
-        _barElement.setAttribute(XalConstants.ariaNames.hidden, !isActive);
+        XalUIService.setVisible(_barElement, isActive);
     };
 
     return {
         /**
          * Initialise le composant en résolvant l'élément DOM.
-         * 
-         * @throws {Error} Si la barre de progression est introuvable.
          */
         init() {
             // Assure l'idempotence : évite une double initialisation
             if (_barElement) return;
 
-            _barElement = document.getElementById(XalConstants.elementIds.loader.navbar);
-        
-            if (!_barElement) {
-                throw new Error('[XalLoaderNav] Élément introuvable dans le DOM.');
-            }
+            _barElement = XalUIService.getElementById(XalConstants.elementIds.loader.navbar);
         },
         
         /**
@@ -751,18 +809,12 @@ const XalLoaderPlaceholder = (() => {
     return {
         /**
          * Initialise le composant en résolvant les éléments DOM.
-         *
-         * @throws {Error} Si le template est introuvable.
          */
         init() {
             // Assure l'idempotence : évite une double initialisation
             if (_templateElement) return;
 
-            _templateElement = document.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
-
-            if (!_templateElement) {
-                throw new Error('[XalLoaderPlaceholder] Template introuvable dans le DOM.');
-            }
+            _templateElement = XalUIService.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
         },
         
         /**
@@ -857,24 +909,13 @@ const XalLoaderToast = (() => {
     return {
         /**
          * Initialise le composant en résolvant les éléments DOM.
-         *
-         * @throws {Error} Si le toast ou le message est introuvable.
          */
         init() {
             // Assure l'idempotence : évite une double initialisation
             if (_toastElement) return;
 
-            _toastElement = document.getElementById(XalConstants.elementIds.loader.toast);
-
-            if (!_toastElement) {
-                throw new Error('[XalLoaderToast] Élément toast introuvable dans le DOM.');
-            }
-
-            _messageElement = _toastElement.querySelector(XalConstants.cssQueries.loader.toastMessage);
-
-            if (!_messageElement) {
-                throw new Error('[XalLoaderToast] Élément message introuvable dans le DOM.');
-            }
+            _toastElement   = XalUIService.getElementById(XalConstants.elementIds.loader.toast);
+            _messageElement = XalUIService.getRequiredElement(_toastElement, XalConstants.cssQueries.loader.toastMessage);
 
             _toastInstance = bootstrap.Toast.getOrCreateInstance(_toastElement, {
                 autohide: false,
@@ -977,31 +1018,19 @@ const XalLoaderOverlay = (() => {
             return;
         }
 
-        _overlayElement.hidden = !isActive;
-        _overlayElement.setAttribute(XalConstants.ariaNames.hidden, String(!isActive));
+        XalUIService.setVisible(_overlayElement, isActive);
     };
 
     return {
         /**
          * Initialise le composant en résolvant les éléments DOM.
-         *
-         * @throws {Error} Si l'overlay ou le message est introuvable.
          */
         init() {
             // Assure l'idempotence : évite une double initialisation
             if (_overlayElement) return;
 
-            _overlayElement = document.getElementById(XalConstants.elementIds.loader.overlay);
-            
-            if (!_overlayElement) {
-                throw new Error('[XalLoaderOverlay] Élément overlay introuvable dans le DOM.');
-            }
-            
-            _messageElement = _overlayElement.querySelector(XalConstants.cssQueries.loader.overlayMessage);
-
-            if (!_messageElement) {
-                throw new Error('[XalLoaderOverlay] Élément message introuvable dans le DOM.');
-            }
+            _overlayElement = XalUIService.getElementById(XalConstants.elementIds.loader.overlay);
+            _messageElement = XalUIService.getRequiredElement(_overlayElement, XalConstants.cssQueries.loader.overlayMessage);
         },
         
         /**
@@ -1239,18 +1268,12 @@ const XalToast = (() => {
     return {
         /**
          * Initialise le composant en résolvant le template HTML.
-         *
-         * @throws {Error} Si le template est introuvable.
          */
         init() {
             // Assure l'idempotence : évite une double initialisation
             if (_templateElement) return;
 
-            _templateElement = document.getElementById(XalConstants.elementIds.toastTemplateFeedback);
-        
-            if (!_templateElement) {
-                throw new Error('[XalToast] Élément introuvable dans le DOM.');
-            }
+            _templateElement = XalUIService.getElementById(XalConstants.elementIds.toastTemplateFeedback);
         },
         
         /**

@@ -51,26 +51,18 @@ const XalLoaderNav = (() => {
         }
 
         const isActive = _isActive();
-
-        _barElement.hidden = !isActive;
-        _barElement.setAttribute(XalConstants.ariaNames.hidden, !isActive);
+        XalUIService.setVisible(_barElement, isActive);
     };
 
     return {
         /**
          * Initialise le composant en résolvant l'élément DOM.
-         * 
-         * @throws {Error} Si la barre de progression est introuvable.
          */
         init() {
             // Assure l'idempotence : évite une double initialisation
             if (_barElement) return;
 
-            _barElement = document.getElementById(XalConstants.elementIds.loader.navbar);
-        
-            if (!_barElement) {
-                throw new Error('[XalLoaderNav] Élément introuvable dans le DOM.');
-            }
+            _barElement = XalUIService.getElementById(XalConstants.elementIds.loader.navbar);
         },
         
         /**

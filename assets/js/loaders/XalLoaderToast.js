@@ -43,24 +43,13 @@ const XalLoaderToast = (() => {
     return {
         /**
          * Initialise le composant en résolvant les éléments DOM.
-         *
-         * @throws {Error} Si le toast ou le message est introuvable.
          */
         init() {
             // Assure l'idempotence : évite une double initialisation
             if (_toastElement) return;
 
-            _toastElement = document.getElementById(XalConstants.elementIds.loader.toast);
-
-            if (!_toastElement) {
-                throw new Error('[XalLoaderToast] Élément toast introuvable dans le DOM.');
-            }
-
-            _messageElement = _toastElement.querySelector(XalConstants.cssQueries.loader.toastMessage);
-
-            if (!_messageElement) {
-                throw new Error('[XalLoaderToast] Élément message introuvable dans le DOM.');
-            }
+            _toastElement   = XalUIService.getElementById(XalConstants.elementIds.loader.toast);
+            _messageElement = XalUIService.getRequiredElement(_toastElement, XalConstants.cssQueries.loader.toastMessage);
 
             _toastInstance = bootstrap.Toast.getOrCreateInstance(_toastElement, {
                 autohide: false,

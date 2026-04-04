@@ -181,18 +181,12 @@ const XalToast = (() => {
     return {
         /**
          * Initialise le composant en résolvant le template HTML.
-         *
-         * @throws {Error} Si le template est introuvable.
          */
         init() {
             // Assure l'idempotence : évite une double initialisation
             if (_templateElement) return;
 
-            _templateElement = document.getElementById(XalConstants.elementIds.toastTemplateFeedback);
-        
-            if (!_templateElement) {
-                throw new Error('[XalToast] Élément introuvable dans le DOM.');
-            }
+            _templateElement = XalUIService.getElementById(XalConstants.elementIds.toastTemplateFeedback);
         },
         
         /**

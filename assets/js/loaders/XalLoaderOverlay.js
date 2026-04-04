@@ -45,31 +45,19 @@ const XalLoaderOverlay = (() => {
             return;
         }
 
-        _overlayElement.hidden = !isActive;
-        _overlayElement.setAttribute(XalConstants.ariaNames.hidden, String(!isActive));
+        XalUIService.setVisible(_overlayElement, isActive);
     };
 
     return {
         /**
          * Initialise le composant en résolvant les éléments DOM.
-         *
-         * @throws {Error} Si l'overlay ou le message est introuvable.
          */
         init() {
             // Assure l'idempotence : évite une double initialisation
             if (_overlayElement) return;
 
-            _overlayElement = document.getElementById(XalConstants.elementIds.loader.overlay);
-            
-            if (!_overlayElement) {
-                throw new Error('[XalLoaderOverlay] Élément overlay introuvable dans le DOM.');
-            }
-            
-            _messageElement = _overlayElement.querySelector(XalConstants.cssQueries.loader.overlayMessage);
-
-            if (!_messageElement) {
-                throw new Error('[XalLoaderOverlay] Élément message introuvable dans le DOM.');
-            }
+            _overlayElement = XalUIService.getElementById(XalConstants.elementIds.loader.overlay);
+            _messageElement = XalUIService.getRequiredElement(_overlayElement, XalConstants.cssQueries.loader.overlayMessage);
         },
         
         /**
