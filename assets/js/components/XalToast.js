@@ -1,18 +1,10 @@
 /**
  * API de gestion des toasts de notification.
  *
- * Permet d'afficher des toasts Bootstrap signalant le résultat
- * d'une action utilisateur : succès, erreur, avertissement, information ou personnalisé.
+ * Affiche des toasts Bootstrap signalant le résultat d'une action
+ * utilisateur : succès, erreur, avertissement, information ou personnalisé.
  *
- * Les toasts sont instanciés dynamiquement, injectés dans `.toast-container`,
- * puis automatiquement masqués et supprimés du DOM après expiration du délai configuré.
- *
- * Cette API est distincte de XalLoaderToast, dédié aux indicateurs de chargement :
- * - XalLoaderToast → opération en cours (spinner, non dismissible)
- * - XalToast       → retour utilisateur (icône, masquage automatique)
- * 
- * Dépendances :
- * - XalConstants.js → XalConstants
+ * Le composant repose sur un élément DOM existant (non dynamique).
  *
  * @namespace XalToast
  */
@@ -87,11 +79,11 @@ const XalToast = (() => {
 
     /**
      * Référence vers le template HTML des toasts.
-     * Résolu une seule fois dans init() depuis le HTML statique.
      *
      * @type {HTMLTemplateElement|null}
+     * @private
      */
-    let _templateElt = null;
+    let _templateElement = null;
 
     /**
      * Construit les options d'un toast à partir de sa variante.
@@ -99,13 +91,14 @@ const XalToast = (() => {
      * Fusionne la configuration associée à la variante avec le message fourni.
      * Si la variante est inconnue, la variante `info` est utilisée par défaut.
      *
-     * @param {keyof typeof ToastVariant} variant - Variante du toast (ex : success, error, warning, info)
-     * @param {string}                    message - Message à afficher dans le toast
+     * @param {keyof typeof ToastVariant} variant - Variante du toast (ex : success, error, warning, info).
+     * @param {string}                    message - Message à afficher dans le toast.
      * @returns {ToastOptions}
+     * @private
      */
     const _getOptions = (variant, message) => {
         if (!ToastVariantConfig[variant]) {
-            console.warn(`[XalToast] Variante inconnue "${variant}", fallback sur "info".`);
+            console.warn(`[XalToast] Variante "${variant}" inconnue, fallback sur "info".`);
         }
 
         const base = ToastVariantConfig[variant] ?? ToastVariantConfig[ToastVariant.info];
@@ -125,15 +118,16 @@ const XalToast = (() => {
      *
      * @param {ToastOptions} options    - Configuration du toast issue de _getOptions() ou de custom().
      * @param {number} [delay]          - Délai en ms avant masquage automatique.
+     * @private
      */
     const _show = (options, delay = DEFAULT_DELAY_MS) => {
-        if (!_templateElt) {
-            console.warn('[XalToast] init() doit être appelé avant utilisation.');
+        if (!_templateElement) {
+            console.warn('[XalToast] la méthode d\'initialisation doit être appelé avant utilisation.');
             return;
         }
 
         // Clone indépendant du template permettant d'afficher plusieurs toasts simultanément
-        const fragment = document.importNode(_templateElt.content, true);
+        const fragment = document.importNode(_templateElement.content, true);
         const toastElt = fragment.querySelector(XalConstants.cssQueries.toast.xalToast);
 
         if (!toastElt) {
@@ -186,6 +180,22 @@ const XalToast = (() => {
 
     return {
         /**
+         * Initialise le composant en résolvant le template HTML.
+         *
+         * @throws {Error} Si le template est introuvable.
+         */
+        init() {
+            // Assure l'idempotence : évite une double initialisation
+            if (_templateElement) return;
+
+            _templateElement = document.getElementById(XalConstants.elementIds.toastTemplateFeedback);
+        
+            if (!_templateElement) {
+                throw new Error('[XalToast] Élément introuvable dans le DOM.');
+            }
+        },
+        
+        /**
          * Affiche un toast de succès.
          *
          * @param {string} message  - Message à afficher.
@@ -236,23 +246,6 @@ const XalToast = (() => {
          */
         custom(options, delay = DEFAULT_DELAY_MS) {
             _show(options, delay);
-        },
-
-        /**
-         * Initialise le composant en résolvant le template HTML.
-         *
-         * Doit être appelé avant toute utilisation de l'API.
-         */
-        init() {
-            // Assure l'idempotence : évite une double initialisation
-            if (_templateElt) return;
-
-            _templateElt = document.getElementById(XalConstants.elementIds.toastTemplateFeedback);
-        
-            if (!_templateElt) {
-                console.warn('[XalToast] Élément introuvable dans le DOM.');
-                return;
-            }
         },
     };
 })();

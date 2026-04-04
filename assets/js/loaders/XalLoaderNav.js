@@ -1,39 +1,38 @@
 /**
- * API de gestion de la barre de progression globale.
+ * API de gestion de la barre de progression indéterminée.
  *
- * Permet d'afficher une barre de progression indéterminée à 
- * l'exécution de traitements.
+ * Affiche une barre de progression indéterminée à l'exécution 
+ * de traitements.
  *
- * Supporte les appels concurrents via un compteur interne :
- * la barre reste visible tant qu'au moins un appel est en cours.
- *
- * Dépendances :
- * - XalConstants.js → XalConstants
+ * Supporte les appels concurrents via un compteur interne.
+ * La barre reste visible tant qu'au moins un appel est en cours.
+ * 
+ * Le composant repose sur un élément DOM existant (non dynamique).
  *
  * @namespace XalLoaderNav
  */
 const XalLoaderNav = (() => {
     /**
      * Nombre de traitements en cours.
-     * La barre est masquée uniquement quand ce compteur atteint 0.
      *
      * @type {number}
+     * @private
      */
     let _pendingCount = 0;
 
     /**
-     * Référence vers l'élément DOM de la barre de progression.
-     * Résolu une seule fois dans init() depuis le HTML statique.
+     * Élément DOM de la barre de progression.
      *
      * @type {HTMLElement|null}
+     * @private
      */
-    let _barElt = null;
+    let _barElement = null;
 
     /**
      * Indique si au moins un traitement est en cours.
      *
-     * @returns {boolean} `true` si la barre de progression est active,
-     * `false` sinon.
+     * @returns {boolean} `true` si la barre de progression est active, `false` sinon.
+     * @private
      */
     const _isActive = () => {
         return _pendingCount > 0;
@@ -42,25 +41,42 @@ const XalLoaderNav = (() => {
     /**
      * Met à jour la visibilité de la barre en fonction du nombre
      * de traitements en cours.
+     * 
+     * @private
      */
     const _update = () => {
-        if (!_barElt) {
-            console.warn('[XalLoaderNav] init() doit être appelé avant utilisation.');
+        if (!_barElement) {
+            console.warn('[XalLoaderNav] la méthode d\'initialisation doit être appelé avant utilisation.');
             return;
         }
 
         const isActive = _isActive();
 
-        _barElt.hidden = !isActive;
-        _barElt.setAttribute(XalConstants.ariaNames.hidden, !isActive);
+        _barElement.hidden = !isActive;
+        _barElement.setAttribute(XalConstants.ariaNames.hidden, !isActive);
     };
 
     return {
         /**
+         * Initialise le composant en résolvant l'élément DOM.
+         * 
+         * @throws {Error} Si la barre de progression est introuvable.
+         */
+        init() {
+            // Assure l'idempotence : évite une double initialisation
+            if (_barElement) return;
+
+            _barElement = document.getElementById(XalConstants.elementIds.loader.navbar);
+        
+            if (!_barElement) {
+                throw new Error('[XalLoaderNav] Élément introuvable dans le DOM.');
+            }
+        },
+        
+        /**
          * Signale le début d'un traitement.
          *
          * Incrémente le compteur et affiche la barre si nécessaire.
-         * Supporte les appels concurrents.
          */
         start() {
             const wasActive = _isActive();
@@ -80,30 +96,11 @@ const XalLoaderNav = (() => {
         },
 
         /**
-         * Réinitialise le compteur et masque immédiatement la barre.
-         *
-         * Utile en cas d'erreur globale ou de navigation.
+         * Réinitialise le compteur et masque immédiatement la barre de progression.
          */
         reset() {
             _pendingCount = 0;
             _update();
-        },
-
-        /**
-         * Initialise le composant en résolvant l'élément DOM.
-         *
-         * Doit être appelé avant toute utilisation.
-         */
-        init() {
-            // Assure l'idempotence : évite une double initialisation
-            if (_barElt) return;
-
-            _barElt = document.getElementById(XalConstants.elementIds.loader.navbar);
-        
-            if (!_barElt) {
-                console.warn('[XalLoaderNav] Élément introuvable dans le DOM.');
-                return;
-            }
         },
     };
 })();

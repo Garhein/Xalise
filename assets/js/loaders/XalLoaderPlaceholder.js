@@ -4,30 +4,26 @@
  * Affiche des blocs animés dans une zone vide pendant le chargement
  * des données réelles. Le contenu réel est injecté par le JS après
  * réception des données.
- *
- * Utilisation typique :
- * - Chargement initial d'un tableau de données
- * - Premier affichage d'une liste
- *
- * Dépendances :
- * - XalConstants.js → XalConstants
+ * 
+ * Le composant repose sur un template HTML existant (non dynamique).
  *
  * @namespace XalLoaderPlaceholder
  */
 const XalLoaderPlaceholder = (() => {
     /**
      * Référence vers le template HTML du placeholder.
-     * Résolu une seule fois dans init() depuis le HTML statique.
      *
      * @type {HTMLTemplateElement|null}
+     * @private
      */
-    let _templateElt = null;
+    let _templateElement = null;
 
     /**
      * Résout un sélecteur CSS ou un élément DOM en élément HTML.
      *
      * @param {string|HTMLElement} target - Sélecteur CSS ou élément DOM.
      * @returns {HTMLElement|null} Élément résolu, ou null si introuvable.
+     * @private
      */
     const _resolveTarget = (target) => {
         if (target instanceof HTMLElement) return target;
@@ -43,6 +39,7 @@ const XalLoaderPlaceholder = (() => {
      *
      * @param {HTMLElement} el - Élément DOM cible déjà résolu.
      * @returns {boolean} `true` si le placeholder est présent, `false` sinon.
+     * @private
      */
     const _isActive = (el) => {
         return !!el.querySelector(XalConstants.cssQueries.loader.placeholder);
@@ -55,17 +52,32 @@ const XalLoaderPlaceholder = (() => {
      * plusieurs placeholders simultanés sur des zones différentes.
      *
      * @param {HTMLElement} el - Zone cible dans laquelle insérer le placeholder.
+     * @private
      */
     const _cloneAndInsert = (el) => {
-        const fragment = document.importNode(_templateElt.content, true);
+        const fragment = document.importNode(_templateElement.content, true);
         el.prepend(fragment);
     };
 
     return {
         /**
-         * Affiche le placeholder dans une zone de contenu.
+         * Initialise le composant en résolvant les éléments DOM.
          *
-         * Clone le template et l'insère en tête de la zone cible.
+         * @throws {Error} Si le template est introuvable.
+         */
+        init() {
+            // Assure l'idempotence : évite une double initialisation
+            if (_templateElement) return;
+
+            _templateElement = document.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
+
+            if (!_templateElement) {
+                throw new Error('[XalLoaderPlaceholder] Template introuvable dans le DOM.');
+            }
+        },
+        
+        /**
+         * Affiche le placeholder dans une zone de contenu.
          *
          * Sans effet si :
          * - la cible est introuvable dans le DOM
@@ -77,7 +89,7 @@ const XalLoaderPlaceholder = (() => {
         show(target) {
             const el = _resolveTarget(target);
 
-            if (!el || !_templateElt) return;
+            if (!el || !_templateElement) return;
             if (_isActive(el)) return;
 
             _cloneAndInsert(el);
@@ -85,9 +97,6 @@ const XalLoaderPlaceholder = (() => {
 
         /**
          * Retire le placeholder de la zone cible.
-         *
-         * Supprime le clone inséré par show().
-         * Sans effet si aucun placeholder n'est actif sur cette zone.
          *
          * @param {string|HTMLElement} target - Sélecteur CSS ou élément DOM cible.
          */
@@ -111,23 +120,6 @@ const XalLoaderPlaceholder = (() => {
         isActive(target) {
             const el = _resolveTarget(target);
             return el ? _isActive(el) : false;
-        },
-
-        /**
-         * Initialise le composant.
-         *
-         * Doit être appelé avant toute utilisation.
-         */
-        init() {
-            // Assure l'idempotence : évite une double initialisation
-            if (_templateElt) return;
-
-            _templateElt = document.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
-
-            if (!_templateElt) {
-                console.warn('[XalLoaderPlaceholder] Template introuvable dans le DOM.');
-                return;
-            }
         },
     };
 })();

@@ -47,18 +47,19 @@ const XalLoaderToast = (() => {
          * @throws {Error} Si le toast ou le message est introuvable.
          */
         init() {
+            // Assure l'idempotence : évite une double initialisation
             if (_toastElement) return;
 
             _toastElement = document.getElementById(XalConstants.elementIds.loader.toast);
 
             if (!_toastElement) {
-                throw new Error('[XalLoaderToast] Élément toast introuvable.');
+                throw new Error('[XalLoaderToast] Élément toast introuvable dans le DOM.');
             }
 
             _messageElement = _toastElement.querySelector(XalConstants.cssQueries.loader.toastMessage);
 
             if (!_messageElement) {
-                throw new Error('[XalLoaderToast] Élément message introuvable.');
+                throw new Error('[XalLoaderToast] Élément message introuvable dans le DOM.');
             }
 
             _toastInstance = bootstrap.Toast.getOrCreateInstance(_toastElement, {
@@ -75,7 +76,7 @@ const XalLoaderToast = (() => {
          */
         show(message = DEFAULT_MESSAGE) {
             if (!_toastInstance) {
-                console.warn('[XalLoaderToast] init() doit être appelé avant utilisation.');
+                console.warn('[XalLoaderToast] la méthode d\'initialisation doit être appelé avant utilisation.');
                 return;
             }
 

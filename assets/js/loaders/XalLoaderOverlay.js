@@ -3,33 +3,33 @@
  *
  * Affiche un voile semi-transparent sur la page afin de bloquer
  * toute interaction utilisateur pendant un traitement.
- *
- * Dépendances :
- * - XalConstants.js → XalConstants
+ * 
+ * L'overlay repose sur un élément DOM existant (non dynamique).
  *
  * @namespace XalLoaderOverlay 
  */
 const XalLoaderOverlay = (() => {
     /**
-     * Référence vers l'élément DOM de l'overlay.
-     * Résolu une seule fois dans init() depuis le HTML statique.
+     * Élément DOM de l'overlay.
      *
      * @type {HTMLElement|null}
+     * @private
      */
-    let _overlayElt = null;
+    let _overlayElement = null;
 
     /**
-     * Référence vers l'élément DOM du message.
-     * Résolu une seule fois dans init() depuis le HTML statique.
+     * Élément DOM du message.
      *
      * @type {HTMLElement|null}
+     * @private
      */
-    let _messageElt = null;
+    let _messageElement = null;
 
     /**
      * Indique si l'overlay est affiché.
      * 
      * @type {boolean} `true` si l'overlay' est affiché, `false` sinon.
+     * @private
      */
     let _isVisible = false;
 
@@ -37,28 +37,55 @@ const XalLoaderOverlay = (() => {
      * Met à jour la visibilité de l'overlay.
      *
      * @param {boolean} isActive - `true` si l'overlay doit être affiché, sinon `false`.
+     * @private
      */
     const _update = (isActive) => {
-        if (!_overlayElt) {
-            console.warn('[XalLoaderOverlay] init() doit être appelé avant utilisation.');
+        if (!_overlayElement) {
+            console.warn('[XalLoaderOverlay] la méthode d\'initialisation doit être appelé avant utilisation.');
             return;
         }
 
-        _overlayElt.hidden = !isActive;
-        _overlayElt.setAttribute(XalConstants.ariaNames.hidden, String(!isActive));
+        _overlayElement.hidden = !isActive;
+        _overlayElement.setAttribute(XalConstants.ariaNames.hidden, String(!isActive));
     };
 
     return {
         /**
-         * Affiche l'overlay et bloque les interactions utilisateur.
+         * Initialise le composant en résolvant les éléments DOM.
          *
-         * Incrémente le compteur interne et affiche l'overlay si nécessaire.
-         * Supporte les appels concurrents.
-         *
+         * @throws {Error} Si l'overlay ou le message est introuvable.
+         */
+        init() {
+            // Assure l'idempotence : évite une double initialisation
+            if (_overlayElement) return;
+
+            _overlayElement = document.getElementById(XalConstants.elementIds.loader.overlay);
+            
+            if (!_overlayElement) {
+                throw new Error('[XalLoaderOverlay] Élément overlay introuvable dans le DOM.');
+            }
+            
+            _messageElement = _overlayElement.querySelector(XalConstants.cssQueries.loader.overlayMessage);
+
+            if (!_messageElement) {
+                throw new Error('[XalLoaderOverlay] Élément message introuvable dans le DOM.');
+            }
+        },
+        
+        /**
+         * Affiche l'overlay de chargement.
+         * 
+         * Met à jour le message puis affiche l'overlay.
+         * 
          * @param {string} [message=''] - Message optionnel affiché sous le spinner.
          */
         show(message = '') {
-            if (_messageElt) _messageElt.textContent = message;
+            if (!_messageElement) {
+                console.warn('[XalLoaderOverlay] la méthode d\'initialisation doit être appelé avant utilisation.');
+                return;
+            }
+
+            if (_messageElement) _messageElement.textContent = message ?? '';
              
             if (!_isVisible) {
                 _isVisible = true;
@@ -67,17 +94,18 @@ const XalLoaderOverlay = (() => {
         },
 
         /**
-         * Masque l'overlay et restaure les interactions utilisateur.
+         * Masque l'overlay de chargement.
          */
         hide() {
+            if (!_overlayElement) return;
+            
             _isVisible = false;
             _update(false);
         },
 
         /**
-         * Réinitialise le compteur et masque immédiatement l'overlay.
+         * Masque immédiatement l'overlay de chargement.
          *
-         * Utile en cas d'erreur globale ou de navigation.
          */
         reset() {
             _isVisible = false;
@@ -85,39 +113,14 @@ const XalLoaderOverlay = (() => {
         },
 
         /**
-         * Met à jour le message affiché sans masquer ni réafficher l'overlay.
+         * Met à jour le message affiché.
          *
-         * Sans effet si l'overlay n'est pas affiché.
-         *
-         * @param {string} message - Nouveau message à afficher.
+         * @param {string} message - Nouveau message.
          */
-        updateMessage(message) {
-            if (!_messageElt || !_overlayElt) return;
+        setMessage(message) {
+            if (!_messageElement || !_overlayElement) return;
 
-            _messageElt.textContent = message;
-        },
-
-        /**
-         * Initialise le composant en résolvant les éléments DOM/.
-         *
-         * Doit être appelé avant toute utilisation.
-         */
-        init() {
-            // Assure l'idempotence : évite une double initialisation
-            if (_overlayElt) return;
-
-            _overlayElt = document.getElementById(XalConstants.elementIds.loader.overlay);
-            _messageElt = _overlayElt?.querySelector(XalConstants.cssQueries.loader.overlayMessage);
-
-            if (!_overlayElt) {
-                console.warn('[XalLoaderOverlay] Élément (overlay) introuvable dans le DOM.');
-                return;
-            }
-
-            if (!_messageElt) {
-                console.warn('[XalLoaderOverlay] Élément (message) introuvable dans le DOM.');
-                return;
-            }
+            _messageElement.textContent = message ?? '';
         },
     };
 })();

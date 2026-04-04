@@ -582,41 +582,40 @@ const BsBreakpoints = (() => {
     });
 })();
 /**
- * API de gestion de la barre de progression globale.
+ * API de gestion de la barre de progression indéterminée.
  *
- * Permet d'afficher une barre de progression indéterminée à 
- * l'exécution de traitements.
+ * Affiche une barre de progression indéterminée à l'exécution 
+ * de traitements.
  *
- * Supporte les appels concurrents via un compteur interne :
- * la barre reste visible tant qu'au moins un appel est en cours.
- *
- * Dépendances :
- * - XalConstants.js → XalConstants
+ * Supporte les appels concurrents via un compteur interne.
+ * La barre reste visible tant qu'au moins un appel est en cours.
+ * 
+ * Le composant repose sur un élément DOM existant (non dynamique).
  *
  * @namespace XalLoaderNav
  */
 const XalLoaderNav = (() => {
     /**
      * Nombre de traitements en cours.
-     * La barre est masquée uniquement quand ce compteur atteint 0.
      *
      * @type {number}
+     * @private
      */
     let _pendingCount = 0;
 
     /**
-     * Référence vers l'élément DOM de la barre de progression.
-     * Résolu une seule fois dans init() depuis le HTML statique.
+     * Élément DOM de la barre de progression.
      *
      * @type {HTMLElement|null}
+     * @private
      */
-    let _barElt = null;
+    let _barElement = null;
 
     /**
      * Indique si au moins un traitement est en cours.
      *
-     * @returns {boolean} `true` si la barre de progression est active,
-     * `false` sinon.
+     * @returns {boolean} `true` si la barre de progression est active, `false` sinon.
+     * @private
      */
     const _isActive = () => {
         return _pendingCount > 0;
@@ -625,25 +624,42 @@ const XalLoaderNav = (() => {
     /**
      * Met à jour la visibilité de la barre en fonction du nombre
      * de traitements en cours.
+     * 
+     * @private
      */
     const _update = () => {
-        if (!_barElt) {
-            console.warn('[XalLoaderNav] init() doit être appelé avant utilisation.');
+        if (!_barElement) {
+            console.warn('[XalLoaderNav] la méthode d\'initialisation doit être appelé avant utilisation.');
             return;
         }
 
         const isActive = _isActive();
 
-        _barElt.hidden = !isActive;
-        _barElt.setAttribute(XalConstants.ariaNames.hidden, !isActive);
+        _barElement.hidden = !isActive;
+        _barElement.setAttribute(XalConstants.ariaNames.hidden, !isActive);
     };
 
     return {
         /**
+         * Initialise le composant en résolvant l'élément DOM.
+         * 
+         * @throws {Error} Si la barre de progression est introuvable.
+         */
+        init() {
+            // Assure l'idempotence : évite une double initialisation
+            if (_barElement) return;
+
+            _barElement = document.getElementById(XalConstants.elementIds.loader.navbar);
+        
+            if (!_barElement) {
+                throw new Error('[XalLoaderNav] Élément introuvable dans le DOM.');
+            }
+        },
+        
+        /**
          * Signale le début d'un traitement.
          *
          * Incrémente le compteur et affiche la barre si nécessaire.
-         * Supporte les appels concurrents.
          */
         start() {
             const wasActive = _isActive();
@@ -663,30 +679,11 @@ const XalLoaderNav = (() => {
         },
 
         /**
-         * Réinitialise le compteur et masque immédiatement la barre.
-         *
-         * Utile en cas d'erreur globale ou de navigation.
+         * Réinitialise le compteur et masque immédiatement la barre de progression.
          */
         reset() {
             _pendingCount = 0;
             _update();
-        },
-
-        /**
-         * Initialise le composant en résolvant l'élément DOM.
-         *
-         * Doit être appelé avant toute utilisation.
-         */
-        init() {
-            // Assure l'idempotence : évite une double initialisation
-            if (_barElt) return;
-
-            _barElt = document.getElementById(XalConstants.elementIds.loader.navbar);
-        
-            if (!_barElt) {
-                console.warn('[XalLoaderNav] Élément introuvable dans le DOM.');
-                return;
-            }
         },
     };
 })();
@@ -696,30 +693,26 @@ const XalLoaderNav = (() => {
  * Affiche des blocs animés dans une zone vide pendant le chargement
  * des données réelles. Le contenu réel est injecté par le JS après
  * réception des données.
- *
- * Utilisation typique :
- * - Chargement initial d'un tableau de données
- * - Premier affichage d'une liste
- *
- * Dépendances :
- * - XalConstants.js → XalConstants
+ * 
+ * Le composant repose sur un template HTML existant (non dynamique).
  *
  * @namespace XalLoaderPlaceholder
  */
 const XalLoaderPlaceholder = (() => {
     /**
      * Référence vers le template HTML du placeholder.
-     * Résolu une seule fois dans init() depuis le HTML statique.
      *
      * @type {HTMLTemplateElement|null}
+     * @private
      */
-    let _templateElt = null;
+    let _templateElement = null;
 
     /**
      * Résout un sélecteur CSS ou un élément DOM en élément HTML.
      *
      * @param {string|HTMLElement} target - Sélecteur CSS ou élément DOM.
      * @returns {HTMLElement|null} Élément résolu, ou null si introuvable.
+     * @private
      */
     const _resolveTarget = (target) => {
         if (target instanceof HTMLElement) return target;
@@ -735,6 +728,7 @@ const XalLoaderPlaceholder = (() => {
      *
      * @param {HTMLElement} el - Élément DOM cible déjà résolu.
      * @returns {boolean} `true` si le placeholder est présent, `false` sinon.
+     * @private
      */
     const _isActive = (el) => {
         return !!el.querySelector(XalConstants.cssQueries.loader.placeholder);
@@ -747,17 +741,32 @@ const XalLoaderPlaceholder = (() => {
      * plusieurs placeholders simultanés sur des zones différentes.
      *
      * @param {HTMLElement} el - Zone cible dans laquelle insérer le placeholder.
+     * @private
      */
     const _cloneAndInsert = (el) => {
-        const fragment = document.importNode(_templateElt.content, true);
+        const fragment = document.importNode(_templateElement.content, true);
         el.prepend(fragment);
     };
 
     return {
         /**
-         * Affiche le placeholder dans une zone de contenu.
+         * Initialise le composant en résolvant les éléments DOM.
          *
-         * Clone le template et l'insère en tête de la zone cible.
+         * @throws {Error} Si le template est introuvable.
+         */
+        init() {
+            // Assure l'idempotence : évite une double initialisation
+            if (_templateElement) return;
+
+            _templateElement = document.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
+
+            if (!_templateElement) {
+                throw new Error('[XalLoaderPlaceholder] Template introuvable dans le DOM.');
+            }
+        },
+        
+        /**
+         * Affiche le placeholder dans une zone de contenu.
          *
          * Sans effet si :
          * - la cible est introuvable dans le DOM
@@ -769,7 +778,7 @@ const XalLoaderPlaceholder = (() => {
         show(target) {
             const el = _resolveTarget(target);
 
-            if (!el || !_templateElt) return;
+            if (!el || !_templateElement) return;
             if (_isActive(el)) return;
 
             _cloneAndInsert(el);
@@ -777,9 +786,6 @@ const XalLoaderPlaceholder = (() => {
 
         /**
          * Retire le placeholder de la zone cible.
-         *
-         * Supprime le clone inséré par show().
-         * Sans effet si aucun placeholder n'est actif sur cette zone.
          *
          * @param {string|HTMLElement} target - Sélecteur CSS ou élément DOM cible.
          */
@@ -803,23 +809,6 @@ const XalLoaderPlaceholder = (() => {
         isActive(target) {
             const el = _resolveTarget(target);
             return el ? _isActive(el) : false;
-        },
-
-        /**
-         * Initialise le composant.
-         *
-         * Doit être appelé avant toute utilisation.
-         */
-        init() {
-            // Assure l'idempotence : évite une double initialisation
-            if (_templateElt) return;
-
-            _templateElt = document.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
-
-            if (!_templateElt) {
-                console.warn('[XalLoaderPlaceholder] Template introuvable dans le DOM.');
-                return;
-            }
         },
     };
 })();
@@ -872,18 +861,19 @@ const XalLoaderToast = (() => {
          * @throws {Error} Si le toast ou le message est introuvable.
          */
         init() {
+            // Assure l'idempotence : évite une double initialisation
             if (_toastElement) return;
 
             _toastElement = document.getElementById(XalConstants.elementIds.loader.toast);
 
             if (!_toastElement) {
-                throw new Error('[XalLoaderToast] Élément toast introuvable.');
+                throw new Error('[XalLoaderToast] Élément toast introuvable dans le DOM.');
             }
 
             _messageElement = _toastElement.querySelector(XalConstants.cssQueries.loader.toastMessage);
 
             if (!_messageElement) {
-                throw new Error('[XalLoaderToast] Élément message introuvable.');
+                throw new Error('[XalLoaderToast] Élément message introuvable dans le DOM.');
             }
 
             _toastInstance = bootstrap.Toast.getOrCreateInstance(_toastElement, {
@@ -900,7 +890,7 @@ const XalLoaderToast = (() => {
          */
         show(message = DEFAULT_MESSAGE) {
             if (!_toastInstance) {
-                console.warn('[XalLoaderToast] init() doit être appelé avant utilisation.');
+                console.warn('[XalLoaderToast] la méthode d\'initialisation doit être appelé avant utilisation.');
                 return;
             }
 
@@ -945,33 +935,33 @@ const XalLoaderToast = (() => {
  *
  * Affiche un voile semi-transparent sur la page afin de bloquer
  * toute interaction utilisateur pendant un traitement.
- *
- * Dépendances :
- * - XalConstants.js → XalConstants
+ * 
+ * L'overlay repose sur un élément DOM existant (non dynamique).
  *
  * @namespace XalLoaderOverlay 
  */
 const XalLoaderOverlay = (() => {
     /**
-     * Référence vers l'élément DOM de l'overlay.
-     * Résolu une seule fois dans init() depuis le HTML statique.
+     * Élément DOM de l'overlay.
      *
      * @type {HTMLElement|null}
+     * @private
      */
-    let _overlayElt = null;
+    let _overlayElement = null;
 
     /**
-     * Référence vers l'élément DOM du message.
-     * Résolu une seule fois dans init() depuis le HTML statique.
+     * Élément DOM du message.
      *
      * @type {HTMLElement|null}
+     * @private
      */
-    let _messageElt = null;
+    let _messageElement = null;
 
     /**
      * Indique si l'overlay est affiché.
      * 
      * @type {boolean} `true` si l'overlay' est affiché, `false` sinon.
+     * @private
      */
     let _isVisible = false;
 
@@ -979,28 +969,55 @@ const XalLoaderOverlay = (() => {
      * Met à jour la visibilité de l'overlay.
      *
      * @param {boolean} isActive - `true` si l'overlay doit être affiché, sinon `false`.
+     * @private
      */
     const _update = (isActive) => {
-        if (!_overlayElt) {
-            console.warn('[XalLoaderOverlay] init() doit être appelé avant utilisation.');
+        if (!_overlayElement) {
+            console.warn('[XalLoaderOverlay] la méthode d\'initialisation doit être appelé avant utilisation.');
             return;
         }
 
-        _overlayElt.hidden = !isActive;
-        _overlayElt.setAttribute(XalConstants.ariaNames.hidden, String(!isActive));
+        _overlayElement.hidden = !isActive;
+        _overlayElement.setAttribute(XalConstants.ariaNames.hidden, String(!isActive));
     };
 
     return {
         /**
-         * Affiche l'overlay et bloque les interactions utilisateur.
+         * Initialise le composant en résolvant les éléments DOM.
          *
-         * Incrémente le compteur interne et affiche l'overlay si nécessaire.
-         * Supporte les appels concurrents.
-         *
+         * @throws {Error} Si l'overlay ou le message est introuvable.
+         */
+        init() {
+            // Assure l'idempotence : évite une double initialisation
+            if (_overlayElement) return;
+
+            _overlayElement = document.getElementById(XalConstants.elementIds.loader.overlay);
+            
+            if (!_overlayElement) {
+                throw new Error('[XalLoaderOverlay] Élément overlay introuvable dans le DOM.');
+            }
+            
+            _messageElement = _overlayElement.querySelector(XalConstants.cssQueries.loader.overlayMessage);
+
+            if (!_messageElement) {
+                throw new Error('[XalLoaderOverlay] Élément message introuvable dans le DOM.');
+            }
+        },
+        
+        /**
+         * Affiche l'overlay de chargement.
+         * 
+         * Met à jour le message puis affiche l'overlay.
+         * 
          * @param {string} [message=''] - Message optionnel affiché sous le spinner.
          */
         show(message = '') {
-            if (_messageElt) _messageElt.textContent = message;
+            if (!_messageElement) {
+                console.warn('[XalLoaderOverlay] la méthode d\'initialisation doit être appelé avant utilisation.');
+                return;
+            }
+
+            if (_messageElement) _messageElement.textContent = message ?? '';
              
             if (!_isVisible) {
                 _isVisible = true;
@@ -1009,17 +1026,18 @@ const XalLoaderOverlay = (() => {
         },
 
         /**
-         * Masque l'overlay et restaure les interactions utilisateur.
+         * Masque l'overlay de chargement.
          */
         hide() {
+            if (!_overlayElement) return;
+            
             _isVisible = false;
             _update(false);
         },
 
         /**
-         * Réinitialise le compteur et masque immédiatement l'overlay.
+         * Masque immédiatement l'overlay de chargement.
          *
-         * Utile en cas d'erreur globale ou de navigation.
          */
         reset() {
             _isVisible = false;
@@ -1027,57 +1045,24 @@ const XalLoaderOverlay = (() => {
         },
 
         /**
-         * Met à jour le message affiché sans masquer ni réafficher l'overlay.
+         * Met à jour le message affiché.
          *
-         * Sans effet si l'overlay n'est pas affiché.
-         *
-         * @param {string} message - Nouveau message à afficher.
+         * @param {string} message - Nouveau message.
          */
-        updateMessage(message) {
-            if (!_messageElt || !_overlayElt) return;
+        setMessage(message) {
+            if (!_messageElement || !_overlayElement) return;
 
-            _messageElt.textContent = message;
-        },
-
-        /**
-         * Initialise le composant en résolvant les éléments DOM/.
-         *
-         * Doit être appelé avant toute utilisation.
-         */
-        init() {
-            // Assure l'idempotence : évite une double initialisation
-            if (_overlayElt) return;
-
-            _overlayElt = document.getElementById(XalConstants.elementIds.loader.overlay);
-            _messageElt = _overlayElt?.querySelector(XalConstants.cssQueries.loader.overlayMessage);
-
-            if (!_overlayElt) {
-                console.warn('[XalLoaderOverlay] Élément (overlay) introuvable dans le DOM.');
-                return;
-            }
-
-            if (!_messageElt) {
-                console.warn('[XalLoaderOverlay] Élément (message) introuvable dans le DOM.');
-                return;
-            }
+            _messageElement.textContent = message ?? '';
         },
     };
 })();
 /**
  * API de gestion des toasts de notification.
  *
- * Permet d'afficher des toasts Bootstrap signalant le résultat
- * d'une action utilisateur : succès, erreur, avertissement, information ou personnalisé.
+ * Affiche des toasts Bootstrap signalant le résultat d'une action
+ * utilisateur : succès, erreur, avertissement, information ou personnalisé.
  *
- * Les toasts sont instanciés dynamiquement, injectés dans `.toast-container`,
- * puis automatiquement masqués et supprimés du DOM après expiration du délai configuré.
- *
- * Cette API est distincte de XalLoaderToast, dédié aux indicateurs de chargement :
- * - XalLoaderToast → opération en cours (spinner, non dismissible)
- * - XalToast       → retour utilisateur (icône, masquage automatique)
- * 
- * Dépendances :
- * - XalConstants.js → XalConstants
+ * Le composant repose sur un élément DOM existant (non dynamique).
  *
  * @namespace XalToast
  */
@@ -1152,11 +1137,11 @@ const XalToast = (() => {
 
     /**
      * Référence vers le template HTML des toasts.
-     * Résolu une seule fois dans init() depuis le HTML statique.
      *
      * @type {HTMLTemplateElement|null}
+     * @private
      */
-    let _templateElt = null;
+    let _templateElement = null;
 
     /**
      * Construit les options d'un toast à partir de sa variante.
@@ -1164,13 +1149,14 @@ const XalToast = (() => {
      * Fusionne la configuration associée à la variante avec le message fourni.
      * Si la variante est inconnue, la variante `info` est utilisée par défaut.
      *
-     * @param {keyof typeof ToastVariant} variant - Variante du toast (ex : success, error, warning, info)
-     * @param {string}                    message - Message à afficher dans le toast
+     * @param {keyof typeof ToastVariant} variant - Variante du toast (ex : success, error, warning, info).
+     * @param {string}                    message - Message à afficher dans le toast.
      * @returns {ToastOptions}
+     * @private
      */
     const _getOptions = (variant, message) => {
         if (!ToastVariantConfig[variant]) {
-            console.warn(`[XalToast] Variante inconnue "${variant}", fallback sur "info".`);
+            console.warn(`[XalToast] Variante "${variant}" inconnue, fallback sur "info".`);
         }
 
         const base = ToastVariantConfig[variant] ?? ToastVariantConfig[ToastVariant.info];
@@ -1190,15 +1176,16 @@ const XalToast = (() => {
      *
      * @param {ToastOptions} options    - Configuration du toast issue de _getOptions() ou de custom().
      * @param {number} [delay]          - Délai en ms avant masquage automatique.
+     * @private
      */
     const _show = (options, delay = DEFAULT_DELAY_MS) => {
-        if (!_templateElt) {
-            console.warn('[XalToast] init() doit être appelé avant utilisation.');
+        if (!_templateElement) {
+            console.warn('[XalToast] la méthode d\'initialisation doit être appelé avant utilisation.');
             return;
         }
 
         // Clone indépendant du template permettant d'afficher plusieurs toasts simultanément
-        const fragment = document.importNode(_templateElt.content, true);
+        const fragment = document.importNode(_templateElement.content, true);
         const toastElt = fragment.querySelector(XalConstants.cssQueries.toast.xalToast);
 
         if (!toastElt) {
@@ -1251,6 +1238,22 @@ const XalToast = (() => {
 
     return {
         /**
+         * Initialise le composant en résolvant le template HTML.
+         *
+         * @throws {Error} Si le template est introuvable.
+         */
+        init() {
+            // Assure l'idempotence : évite une double initialisation
+            if (_templateElement) return;
+
+            _templateElement = document.getElementById(XalConstants.elementIds.toastTemplateFeedback);
+        
+            if (!_templateElement) {
+                throw new Error('[XalToast] Élément introuvable dans le DOM.');
+            }
+        },
+        
+        /**
          * Affiche un toast de succès.
          *
          * @param {string} message  - Message à afficher.
@@ -1301,23 +1304,6 @@ const XalToast = (() => {
          */
         custom(options, delay = DEFAULT_DELAY_MS) {
             _show(options, delay);
-        },
-
-        /**
-         * Initialise le composant en résolvant le template HTML.
-         *
-         * Doit être appelé avant toute utilisation de l'API.
-         */
-        init() {
-            // Assure l'idempotence : évite une double initialisation
-            if (_templateElt) return;
-
-            _templateElt = document.getElementById(XalConstants.elementIds.toastTemplateFeedback);
-        
-            if (!_templateElt) {
-                console.warn('[XalToast] Élément introuvable dans le DOM.');
-                return;
-            }
         },
     };
 })();
