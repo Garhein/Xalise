@@ -277,7 +277,7 @@ XalHttp.mock(
     {
         overlay: 'Initialisation…',
         onSuccess: (data) => {
-            XalLoaderOverlay.updateMessage('Finalisation…');
+            XalLoaderOverlay.setMessage('Finalisation…');
         }
     }
 );
@@ -344,3 +344,26 @@ XalToast.success('Export généré avec succès.', 10000);
 // Toast affiché pendant 2 secondes
 XalToast.info('Recherche en cours…', 2000);
 ```
+
+### Toast personnalisé
+
+```js
+XalToast.custom( 
+    { 
+        title: 'Titre personnalisé', 
+        icon: 'bi-activity', 
+        color: 'text-bg-xalise', 
+        message: 'Message du toast' 
+    }
+);
+```
+
+| Paramètre | Type | Défaut | Description |
+|---|---|---|---|
+| `options.title` | `string` | — | Message à afficher dans le titre du toast |
+| `options.icon` | `string` | — | Classe de l'icône à afficher dans le titre du toast |
+| `options.color` | `string` | — | Classe de la couleur de fond |
+| `options.message` | `string` | — | Message à afficher dans le corps du toast |
+| `delay` | `number` | `5000` | Délai en ms avant masquage automatique |
+
+![Toast personnalisé](./screenshots/toast-custom.png)
