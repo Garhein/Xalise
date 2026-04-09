@@ -11,6 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     XalTooltips.init();
     XalSidebar.init();
     XalNotifications.init();
-    XalConfirm.init();
+    XalDialog.init();
     XalToast.init();
 });

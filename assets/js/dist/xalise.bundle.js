@@ -71,10 +71,10 @@ const XalConstants = Object.freeze({
             overlay:                'xal-id-loader-overlay',
         }),
 
-        confirm: Object.freeze({ 
-            template:       'xal-id-confirm-template',
-            buttonTemplate: 'xal-id-confirm-button-template',
-            iconTemplate:   'xal-id-confirm-icon-template',
+        dialog: Object.freeze({ 
+            template:       'xal-id-dialog-template',
+            buttonTemplate: 'xal-id-dialog-button-template',
+            iconTemplate:   'xal-id-dialog-icon-template',
         }),
     }),
 
@@ -99,6 +99,11 @@ const XalConstants = Object.freeze({
             danger:  'text-bg-danger',
             warning: 'text-bg-warning',
             info:    'text-bg-info',
+        }),
+
+        bootstrapBtn: Object.freeze({ 
+            primary:    'btn-primary',
+            secondary:  'btn-secondary',
         }),
     }),
 
@@ -127,14 +132,14 @@ const XalConstants = Object.freeze({
             overlayMessage: '.xal-loader-overlay__message',
         }),
 
-        confirm: Object.freeze({ 
-            container:   '.xal-confirm',
-            title:       '.xal-confirm__title',
-            body:        '.xal-confirm__body',
-            footer:      '.xal-confirm__footer',
-            button:      '.xal-confirm__button',
-            icon:        '.xal-confirm__icon',
-            closeButton: '.xal-confirm__close-button',            
+        dialog: Object.freeze({ 
+            container:   '.xal-dialog',
+            title:       '.xal-dialog__title',
+            body:        '.xal-dialog__body',
+            footer:      '.xal-dialog__footer',
+            button:      '.xal-dialog__button',
+            icon:        '.xal-dialog__icon',
+            closeButton: '.xal-dialog__close-button',            
         }),
         
         sidebar: Object.freeze({ 
@@ -3454,14 +3459,37 @@ const XalNotifications = (() => {
  * Dépendances :
  * - XalConstants.js → XalConstants
  *
- * @namespace XalConfirm
- * @author Xavier VILLEMIN
+ * @namespace XalDialog
  */
-const XalConfirm = (() => {
+const XalDialog = (() => {
+    /**
+     * @typedef {Object} ButtonConfig
+     * @property {string}   label               - Libellé du bouton.
+     * @property {string[]} [cssClasses=[]]     - Classes CSS Bootstrap à appliquer (ex : ['btn-outline-primary']).
+     *                                            Permet de combiner plusieurs classes (ex : ['btn-small', 'btn-primary']).
+     * @property {string}   [icon]              - Classe Bootstrap Icons à appliquer sur l'icône (ex : 'bi-trash').
+     *                                            L'icône est positionnée avant le libellé.
+     * @property {Function} [onClick]           - Callback exécuté au clic.
+     *                                            La modale est fermée après exécution.
+     */
+
+    /**
+     * @typedef {Object} DialogOptions
+     * @property {string}           title                   - Titre affiché dans l'en-tête.
+     * @property {string}           message                 - Contenu affiché dans le corps.
+     * @property {string[]}         [modalClasses=[]]       - Classes CSS à appliquer à la modale.
+     * @property {ButtonConfig[]}   [buttons=[]]            - Liste des boutons à afficher
+     * @property {boolean}          [dismissible=true]      - Si `true`, la modale peut être fermée via la touche Echap ou le clic extérieur.
+     * @property {boolean}          [showCloseButton=true]  - Si `true`, le bouton de fermeture présent dans l'entête est affiché.
+     * @property {boolean}          [allowHtml=false]       - Si `true`, le contenu du message est interprété comme du HTML.
+     *                                                        Sinon, il est injecté en tant que texte pour éviter les risques de XSS.
+     */
+    
     /**
      * Référence vers le template HTML de la modale.
      *
      * @type {HTMLTemplateElement|null}
+     * @private
      */
     let _modalTemplate = null;
 
@@ -3469,14 +3497,15 @@ const XalConfirm = (() => {
      * Référence vers le template HTML d'un bouton.
      *
      * @type {HTMLTemplateElement|null}
+     * @private
      */
     let _buttonTemplate = null;
 
     /**
-     * Référence vers le template HTML d'une icône Bootstrap Icons.
-     * Cloné uniquement si un bouton spécifie une icône.
+     * Référence vers le template HTML de l'icône affichée dans les boutons.
      *
      * @type {HTMLTemplateElement|null}
+     * @private
      */
     let _iconTemplate = null;
 
@@ -3485,82 +3514,83 @@ const XalConfirm = (() => {
      * Null si aucune modale n'est affichée.
      *
      * @type {HTMLElement|null}
+     * @private
      */
-    let _modalElt = null;
+    let _modalElement = null;
 
     /**
      * Instance Bootstrap Modal active.
      * Null si aucune modale n'est affichée.
      *
      * @type {bootstrap.Modal|null}
+     * @private
      */
     let _modalInstance = null;
 
     /**
      * Nettoie la modale après fermeture.
      *
-     * Détruit l'instance Bootstrap, retire l'élément du DOM
-     * et réinitialise les références internes.
+     * @private
      */
     const _cleanup = () => {
         _modalInstance?.dispose();
-        _modalElt?.remove();
+        _modalElement?.remove();
         _modalInstance = null;
-        _modalElt      = null;
+        _modalElement  = null;
     };
 
     /**
-     * Crée un bouton depuis le template HTML et l'insère dans le conteneur de boutons.
+     * Crée un bouton et l'insère dans le footer de la modale.
      *
-     * Si une icône est spécifiée, elle est clonée depuis le template d'icône
-     * et insérée avant le libellé du bouton.
-     * La modale est systématiquement fermée après exécution du callback onClick.
+     * Gère :
+     * - les classes CSS
+     * - l'ajout d'une icône (via template)
+     * - l'exécution du callback associé
+     * - la fermeture automatique de la modale
      *
-     * @param {HTMLElement} container                       - Conteneur des boutons de la modale.
-     * @param {Object}      buttonConfig                    - Configuration du bouton.
-     * @param {string}      buttonConfig.label              - Libellé du bouton.
-     * @param {string[]}    [buttonConfig.cssClasses=[]]    - Classes CSS Bootstrap à appliquer (ex : ['btn-outline-primary']).
-     *                                                        Permet de combiner plusieurs classes (ex : ['btn-small', 'btn-primary']).
-     * @param {string}      [buttonConfig.icon]             - Classe Bootstrap Icons à appliquer sur l'icône (ex : 'bi-trash').
-     *                                                        L'icône est positionnée avant le libellé.
-     * @param {Function}    [buttonConfig.onClick]          - Callback exécuté au clic.
-     *                                                        La modale est fermée après exécution.
+     * @param {HTMLElement}     container       - Conteneur cible
+     * @param {ButtonConfig}    buttonConfig    - Configuration du bouton
+     *
+     * @private
      */
-    const _createButton = (container, { label, cssClasses = [], icon, onClick }) => {
-        if (!_buttonTemplate) return;
+    const _createButton = (container, buttonConfig) => {
+        if (!_buttonTemplate) {
+            console.warn('[XalDialog] Template de bouton non trouvé.');
+            return;
+        }
 
         const clone     = document.importNode(_buttonTemplate.content, true);
-        const buttonElt = clone.querySelector(XalConstants.cssQueries.confirm.button);
+        const buttonElt = clone.querySelector(XalConstants.cssQueries.dialog.button);
 
         if (!buttonElt) return;
 
         // Application des classes CSS Bootstrap
-        if (cssClasses.length > 0) {
-            buttonElt.classList.add(...cssClasses);
+        if (buttonConfig.cssClasses.length > 0) {
+            buttonElt.classList.add(...buttonConfig.cssClasses);
         }
 
-        // Icône positionnée avant le libellé — clonée depuis le template
-        // sans aucune construction HTML dans le JS.
-        if (icon && _iconTemplate) {
+        // Icône positionnée avant le libellé.
+        // Clonée depuis le template sans aucune construction HTML dans le JS.
+        if (buttonConfig.icon && _iconTemplate) {
             const iconClone = document.importNode(_iconTemplate.content, true);
-            const iconElt   = iconClone.querySelector(XalConstants.cssQueries.confirm.icon);
+            const iconElt   = iconClone.querySelector(XalConstants.cssQueries.dialog.icon);
 
             if (iconElt) {
-                iconElt.classList.add(icon);
+                iconElt.classList.add(buttonConfig.icon);
                 buttonElt.appendChild(iconClone);
             }
         }
 
-        // Injection du libellé dans un nœud texte pour éviter tout XSS
-        buttonElt.appendChild(document.createTextNode(label));
+        // Injection du libellé dans un noeud texte pour éviter tout XSS
+        buttonElt.appendChild(document.createTextNode(buttonConfig.label));
 
         // La modale est toujours fermée après exécution du callback
-        buttonElt.addEventListener('click', () => {
-            if (typeof onClick === 'function') {
-                onClick();
+        buttonElt.addEventListener('click', async () => {
+            try {
+                await buttonConfig.onClick?.();
+            } finally {
+                api.hide();
             }
-
-            api.hide();
         });
 
         container.appendChild(clone);
@@ -3568,83 +3598,102 @@ const XalConfirm = (() => {
 
     const api = {
         /**
-         * Affiche la modale de confirmation.
+         * Affiche la modale.
          *
-         * Réinitialise toute modale précédente avant affichage.
-         * Clone le template, injecte le titre, le contenu et les boutons,
-         * puis affiche la modale via Bootstrap.
-         *
-         * @param {Object}      config                              - Configuration de la modale.
-         * @param {string}      config.title                        - Titre affiché dans l'en-tête.
-         * @param {string}      config.message                      - Contenu affiché dans le corps.
-         * @param {Object[]}    config.modalClasses                 - Classes CSS à appliquer à la modale.
-         * @param {Object[]}    [config.buttons=[]]                 - Liste des boutons à afficher.
-         * @param {string}      config.buttons[].label              - Libellé du bouton.
-         * @param {string[]}    [config.buttons[].cssClasses=[]]    - Classes CSS Bootstrap à appliquer.
-         * @param {string}      [config.buttons[].icon]             - Classe Bootstrap Icons (ex : 'bi-trash').
-         * @param {Function}    [config.buttons[].onClick]          - Callback exécuté au clic.
-         * @param {boolean}     [config.dismissible=true]           - Si true, la modale peut être fermée via la touche Echap ou le clic extérieur.
-         * @param {boolean}     [config.showCloseButton=true]       - Si true, le bouton de fermeture présent dans l'entête est affiché
+         * @param {DialogOptions} config - Configuration de la modale.
+         * @throws {Error} Si le template est introuvable
          */
-        show({ title, message, modalClasses = [], buttons = [], dismissible = true, showCloseButton = true } = {}) {
-            if (!_modalTemplate) return;
+        show(config = {}) {
+            if (!_modalTemplate) {
+                console.warn('[XalDialog] la méthode d\'initialisation doit être appelé avant utilisation.');
+                return;
+            }
+
+            const {
+                title,
+                message,
+                modalClasses = [],
+                buttons = [],
+                dismissible = true,
+                showCloseButton = true,
+                allowHtml = false,
+            } = config;
 
             // Nettoyage de toute modale précédente
             this.hide();
 
             // Clonage du template
             const clone = document.importNode(_modalTemplate.content, true);
-            _modalElt   = clone.querySelector(XalConstants.cssQueries.confirm.container);
+            _modalElement   = clone.querySelector(XalConstants.cssQueries.dialog.container);
 
-            if (!_modalElt) return;
+            if (!_modalElement) return;
 
             if (!showCloseButton) {
-                const closeBtn = _modalElt.querySelector(XalConstants.cssQueries.confirm.closeButton);
+                const closeBtn = _modalElement.querySelector(XalConstants.cssQueries.dialog.closeButton);
                 if (closeBtn) closeBtn.toggleAttribute(XalConstants.attributeNames.hidden, true);
             }
 
             // Ajout des classes sur la modale
             if (modalClasses.length > 0) {
-                const modalDialog = _modalElt.querySelector(XalConstants.cssQueries.modalDialog);
+                const modalDialog = _modalElement.querySelector(XalConstants.cssQueries.modalDialog);
                 if (modalDialog) {
                     modalDialog.classList.add(...modalClasses);
                 }
             }
 
             // Injection du titre et du contenu
-            const titleElt = _modalElt.querySelector(XalConstants.cssQueries.confirm.title);
-            const bodyElt  = _modalElt.querySelector(XalConstants.cssQueries.confirm.body);
+            const titleElt = _modalElement.querySelector(XalConstants.cssQueries.dialog.title);
+            const bodyElt  = _modalElement.querySelector(XalConstants.cssQueries.dialog.body);
 
             if (titleElt) titleElt.textContent = title;
-            if (bodyElt)  bodyElt.innerHTML    = message;
+
+            if (allowHtml) {
+                bodyElt.innerHTML = message;
+            } else {
+                bodyElt.textContent = message;
+            }
 
             // Génération des boutons dans le pied de la modale
-            const footerElt = _modalElt.querySelector(XalConstants.cssQueries.confirm.footer);
+            const footerElt = _modalElement.querySelector(XalConstants.cssQueries.dialog.footer);
 
             if (footerElt) {
-                buttons.forEach(buttonConfig => _createButton(footerElt, buttonConfig));
+                if (!buttons.length) {
+                    _createButton(footerElt, {
+                        label: 'Fermer',
+                        icon: XalConstants.cssClasses.bootstrapIcon.xCircleFill,
+                        cssClasses: [XalConstants.cssClasses.bootstrapBtn.primary],
+                    });
+                }
+                else {
+                    buttons.forEach(btnConfig => _createButton(footerElt, btnConfig));
+                }
             }
 
             // Insertion dans le DOM
-            document.body.appendChild(_modalElt);
+            document.body.appendChild(_modalElement);
 
             // Création de l'instance Bootstrap Modal
-            _modalInstance = new bootstrap.Modal(_modalElt, {
+            _modalInstance = new bootstrap.Modal(_modalElement, {
                 backdrop: dismissible ? true : 'static',
                 keyboard: dismissible,
             });
 
             // Nettoyage automatique après fermeture de l'animation Bootstrap
-            _modalElt.addEventListener('hidden.bs.modal', () => {
+            _modalElement.addEventListener('hidden.bs.modal', () => {
                 _cleanup();
             }, { once: true });
+
+            // Focus sur le premier bouton après affichage de la modale
+            _modalElement.addEventListener('shown.bs.modal', () => {
+                const btn = _modalElement.querySelector('button');
+                btn?.focus();
+            });
 
             _modalInstance.show();
         },
 
         /**
          * Ferme la modale de confirmation si elle est affichée.
-         * Sans effet si aucune modale n'est active.
          */
         hide() {
             if (!_modalInstance) return;
@@ -3655,23 +3704,22 @@ const XalConfirm = (() => {
         /**
          * Indique si la modale est actuellement affichée.
          *
-         * @returns {boolean} true si la modale est visible, false sinon.
+         * @returns {boolean} `true` si la modale est visible, `false` sinon.
          */
         isVisible() {
-            return _modalInstance !== null;
+            return _modalElement?.classList.contains('show') ?? false;
         },
 
         /**
          * Initialise le composant.
-         *
-         * Résout les références vers les templates HTML depuis le DOM statique.
-         * Doit être appelé une seule fois depuis xalise.js au DOMContentLoaded,
-         * avant tout appel à show().
          */
         init() {
-            _modalTemplate  = document.getElementById(XalConstants.elementIds.confirm.template);
-            _buttonTemplate = document.getElementById(XalConstants.elementIds.confirm.buttonTemplate);
-            _iconTemplate   = document.getElementById(XalConstants.elementIds.confirm.iconTemplate);
+            // Assure l'idempotence : évite une double initialisation
+            if (_modalTemplate) return;
+
+            _modalTemplate  = XalUIService.getElementById(XalConstants.elementIds.dialog.template);
+            _buttonTemplate = XalUIService.getElementById(XalConstants.elementIds.dialog.buttonTemplate);
+            _iconTemplate   = XalUIService.getElementById(XalConstants.elementIds.dialog.iconTemplate);
         },
     };
 
@@ -3690,6 +3738,6 @@ document.addEventListener('DOMContentLoaded', () => {
     XalTooltips.init();
     XalSidebar.init();
     XalNotifications.init();
-    XalConfirm.init();
+    XalDialog.init();
     XalToast.init();
 });

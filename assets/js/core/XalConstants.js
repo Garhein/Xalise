@@ -71,10 +71,10 @@ const XalConstants = Object.freeze({
             overlay:                'xal-id-loader-overlay',
         }),
 
-        confirm: Object.freeze({ 
-            template:       'xal-id-confirm-template',
-            buttonTemplate: 'xal-id-confirm-button-template',
-            iconTemplate:   'xal-id-confirm-icon-template',
+        dialog: Object.freeze({ 
+            template:       'xal-id-dialog-template',
+            buttonTemplate: 'xal-id-dialog-button-template',
+            iconTemplate:   'xal-id-dialog-icon-template',
         }),
     }),
 
@@ -99,6 +99,11 @@ const XalConstants = Object.freeze({
             danger:  'text-bg-danger',
             warning: 'text-bg-warning',
             info:    'text-bg-info',
+        }),
+
+        bootstrapBtn: Object.freeze({ 
+            primary:    'btn-primary',
+            secondary:  'btn-secondary',
         }),
     }),
 
@@ -127,14 +132,14 @@ const XalConstants = Object.freeze({
             overlayMessage: '.xal-loader-overlay__message',
         }),
 
-        confirm: Object.freeze({ 
-            container:   '.xal-confirm',
-            title:       '.xal-confirm__title',
-            body:        '.xal-confirm__body',
-            footer:      '.xal-confirm__footer',
-            button:      '.xal-confirm__button',
-            icon:        '.xal-confirm__icon',
-            closeButton: '.xal-confirm__close-button',            
+        dialog: Object.freeze({ 
+            container:   '.xal-dialog',
+            title:       '.xal-dialog__title',
+            body:        '.xal-dialog__body',
+            footer:      '.xal-dialog__footer',
+            button:      '.xal-dialog__button',
+            icon:        '.xal-dialog__icon',
+            closeButton: '.xal-dialog__close-button',            
         }),
         
         sidebar: Object.freeze({ 
