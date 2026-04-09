@@ -6,6 +6,117 @@
 
 </div>
 
+## Documentation JSDoc – Projet Xalise
+
+> Ce document définit les conventions JSDoc à appliquer dans tout le projet.
+
+### Fonction publique ou privée
+
+```js
+/**
+ * <Description courte de la fonction>
+ *
+ * <Description complémentaire si nécessaire>
+ *
+ * @public
+ * @private
+ *
+ * @param {Type}                    paramName                       Description
+ * @param {Type}                    [optionalParam=defaultValue]    Description
+ *
+ * @param {Object}                  [options={}]                    Options
+ * @param {Type}                    [options.prop=defaultValue]     Description
+ * @param {Type}                    [options.otherProp]             Description
+ *
+ * @param {(arg: Type) => void}     [options.onSuccess]             Callback succès
+ * @param {(error: Error) => void}  [options.onError]               Callback erreur
+ *
+ * @returns {ReturnType} Description
+ *
+ * @throws {TypeError}  Si paramètres invalides
+ * @throws {Error}      Si erreur d'exécution
+ *
+ * @example
+ * functionName(value, { prop: 'example' });
+ */
+```
+
+### Fonction asynchrone
+
+```js
+/**
+ * <Description courte de la fonction>
+ *
+ * <Description complémentaire si nécessaire>
+ *
+ * @public
+ * @private
+ *
+ * @param {Type}                    paramName                       Description
+ * @param {Type}                    [optionalParam=defaultValue]    Description
+ *
+ * @param {Object}                  [options={}]                    Options
+ * @param {Type}                    [options.prop=defaultValue]     Description
+ * @param {Type}                    [options.otherProp]             Description
+ *
+ * @param {(arg: Type) => void}     [options.onSuccess]             Callback succès
+ * @param {(error: Error) => void}  [options.onError]               Callback erreur
+ *
+ * @returns {Promise<Type>} Résultat
+ *
+ * @throws {Error} Si rejet de la promesse
+ *
+ * @example
+ * functionName(value, { prop: 'example' });
+ */
+```
+
+### Typedef (objet complexe)
+
+```js
+/**
+ * @typedef {Object} EntityOptions
+ *
+ * @property {string}                   id              Identifiant
+ * @property {string}                   name            Nom
+ * @property {boolean}                  [enabled=true]  Actif
+ * @property {string[]}                 [tags=[]]       Liste de tags
+ *
+ * @property {(data: any) => void}      [onSuccess]     Callback succès
+ * @property {(error: Error) => void}   [onError]       Callback erreur
+ */
+ ```
+
+ ### Constante
+
+```js
+/**
+ * <Description>
+ * 
+ * @public
+ * @private
+ *
+ * @type {Type}
+ */
+const CONSTANT = value;
+ ```
+
+### Module / namespace
+
+```js
+/**
+ * <Nom du module>
+ *
+ * <Description globale>
+ *
+ * Dépendances :
+ * - ModuleA
+ * - ModuleB
+ *
+ * @namespace ModuleName
+ */
+ ```
+
 ---
 
 ## XalHttp — Appels Ajax
