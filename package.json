@@ -2,7 +2,9 @@
     "name": "xalise",
     "version": "1.0.0",
     "description": "",
-    "keywords": ["bootstrap"],
+    "keywords": [
+        "bootstrap"
+    ],
     "main": "index.js",
     "type": "commonjs",
     "author": "Xavier VILLEMIN",
