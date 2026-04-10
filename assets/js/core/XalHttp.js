@@ -28,7 +28,7 @@ const XalHttp = (() => {
      *
      * @type {string}
      */
-    DEFAULT_NETWORK_ERROR_MESSAGE: 'Une erreur réseau est survenue. Veuillez réessayer.';
+    const DEFAULT_NETWORK_ERROR_MESSAGE = 'Une erreur réseau est survenue. Veuillez réessayer.';
 
     /**
      * Messages d'erreur par défaut associés aux statuts HTTP.
@@ -37,7 +37,7 @@ const XalHttp = (() => {
      * 
      * @type {Readonly<Record<number, string>>}
      */
-    DEFAULT_ERROR_MESSAGES: Object.freeze({
+    const DEFAULT_ERROR_MESSAGES = Object.freeze({
         400: 'Requête invalide.',
         401: 'Accès non autorisé à la ressource demandée.',
         403: 'Accès refusé à la ressource demandée.',
@@ -71,14 +71,21 @@ const XalHttp = (() => {
      * @param {boolean}         show                    `true` pour afficher les indicateurs, `false` pour masquer les indicateurs.
      */
     const _toggleLoadingIndicators = ({ placeholder, toast, overlay }, show) => {
-        const action = show ? 'show' : 'hide';
-
         if (!overlay) {
             show ? XalLoaderNav.start() : XalLoaderNav.stop();
         }
 
-        if (placeholder) XalLoaderPlaceholder[action](placeholder);
-        if (toast)       XalLoaderToast[action](toast);
+        if (placeholder) {
+            show
+                ? XalLoaderPlaceholder.show(placeholder)
+                : XalLoaderPlaceholder.hide(placeholder);
+        }
+
+        if (toast) {
+            show
+                ? XalLoaderToast.show(toast)
+                : XalLoaderToast.hide(toast);
+        }
 
         if (overlay) {
             show
@@ -102,7 +109,7 @@ const XalHttp = (() => {
      * 
      * @param {Response} response Réponse HTTP à analyser.
      * 
-     * @return {Promise<string>} Message d'erreur extrait ou message générique en cas d'échec.
+     * @returns {Promise<string>} Message d'erreur extrait ou message générique en cas d'échec.
      */
     const _extractErrorMessage = async (response) => {
         try {
@@ -110,7 +117,7 @@ const XalHttp = (() => {
 
             if (contentType?.includes('application/json')) {
                 const data = await response.json();
-                return data.message ?? JSON.stringify(data);
+                return data.message ?? data.error ?? JSON.stringify(data);
             }
 
             return await response.text();
@@ -137,11 +144,15 @@ const XalHttp = (() => {
     const _parseResponse = async (response) => {
         const contentType = response.headers.get('content-type');
 
-        if (contentType?.includes('application/json')) {
-            return response.json();
+        if (contentType?.includes('json')) {
+            try {
+                return await response.json();
+            } catch {
+                return null;
+            }
         }
 
-        return response.text();
+        return await response.text();
     };
 
     /**
@@ -160,22 +171,29 @@ const XalHttp = (() => {
      *                                                  Instance de `Response` (erreur HTTP) ou une `Error` (erreur réseau).
      * @param {Function|null}           onError         Callback d'erreur personnalisé fourni par l'appelant.
      * @param {Record<number, string>}  errorMessages   Messages d'erreur personnalisés par statut HTTP fournis par l'appelant.
+     * 
+     * @returns {Promise<void>} Promesse résolue une fois l'erreur traitée et le message affiché.
      */
     const _handleError = async (error, onError, errorMessages) => {
-        if (typeof onError === 'function') {
-            onError(error);
+        if (onError) {
+            await onError(error);
             return;
         }
 
         if (error instanceof Response) {
             // Utilisation de `error.clone()` pour éviter de consommer le corps de la réponse,
             // permettant à d'autres traitements d'y accéder si nécessaire.
-            const extractedMessage = await this._extractErrorMessage(error.clone());
+            const extractedMessage = await _extractErrorMessage(error.clone());
+
+            const safeExtracted =
+                    extractedMessage?.startsWith('<')
+                        ? null
+                        : extractedMessage;
 
             const message =
                 errorMessages[error.status]
-                ?? extractedMessage    
-                ?? this.DEFAULT_ERROR_MESSAGES[error.status]
+                ?? DEFAULT_ERROR_MESSAGES[error.status]
+                ?? safeExtracted
                 ?? `Erreur ${error.status} : ${error.statusText || 'Une erreur est survenue.'}`;
 
             error.status === 409
@@ -183,7 +201,7 @@ const XalHttp = (() => {
                 : XalToast.error(message);
 
         } else {
-            XalToast.error(this.DEFAULT_NETWORK_ERROR_MESSAGE);
+            XalToast.error(DEFAULT_NETWORK_ERROR_MESSAGE);
         }
     };
 
@@ -210,28 +228,22 @@ const XalHttp = (() => {
      * @param {Record<number, string>}  [indicators.errorMessages]  Messages d'erreur personnalisés par statut HTTP.
      *                                                              Prennent le pas sur DEFAULT_ERROR_MESSAGES pour les statuts concernés.
      * 
-     * @return {Promise<Response>}                                  Promesse résolue avec la `Response` ou rejetée en cas d'erreur réseau.
+     * @returns {Promise<Response>}                                 Promesse résolue avec la `Response` ou rejetée en cas d'erreur réseau.
      */
     return {
         fetch(url, fetchOptions = {}, { placeholder, toast, overlay = false, onError = null, onSuccess = null, errorMessages = {} } = {}) {
             const indicators = { placeholder, toast, overlay };
 
-            this._toggleLoadingIndicators(indicators, true);
+            _toggleLoadingIndicators(indicators, true);
 
             return fetch(url, fetchOptions)
                 .then(async response => {
-                    let parsedData;
-
-                    try {
-                        parsedData = await this._parseResponse(response.clone());
-                    } catch {
-                        parsedData = null;
-                    }
+                    const parsedData = await _parseResponse(response.clone());
 
                     // Les erreurs HTTP ne rejettent pas la promesse nativement.
                     // On doit vérifier response.ok et rejeter manuellement.
                     if (!response.ok) {
-                        await this._handleError(response, onError, errorMessages);
+                        await _handleError(response, onError, errorMessages);
                         return Promise.reject(response);
                     }
 
@@ -245,13 +257,13 @@ const XalHttp = (() => {
                 .catch(async error => {
                     // Évite de traiter deux fois les erreurs HTTP déjà gérées dans .then()
                     if (!(error instanceof Response)) {
-                        await this._handleError(error, onError, errorMessages);
+                        await _handleError(error, onError, errorMessages);
                     }
 
                     return Promise.reject(error);
                 })
                 .finally(() => {
-                    this._toggleLoadingIndicators(indicators, false);
+                    _toggleLoadingIndicators(indicators, false);
                 });
         },
 
@@ -285,22 +297,22 @@ const XalHttp = (() => {
         mock(data = null, { delay = 5000, fail = false } = {}, { placeholder, toast, overlay = false, onError = null, onSuccess = null, errorMessages = {} } = {}) {
             const indicators = { placeholder, toast, overlay };
 
-            this._toggleLoadingIndicators(indicators, true);
+            _toggleLoadingIndicators(indicators, true);
 
             return new Promise((resolve, reject) => {
                 setTimeout(async () => {
-                    this._toggleLoadingIndicators(indicators, false);
+                    _toggleLoadingIndicators(indicators, false);
 
                     if (fail) {
                         const error = new Error('[XalHttp.mock] Erreur simulée.');
-                        await this._handleError(error, onError, errorMessages);
-                        Promise.reject(error);
+                        await _handleError(error, onError, errorMessages);
+                        reject(error);
                     } else {
                         if (typeof onSuccess === 'function') {
-                            onSuccess(data);
+                            onSuccess(data, data);
                         }
 
-                        Promise.resolve(data);
+                        resolve(data);
                     }
                 }, delay);
             });
