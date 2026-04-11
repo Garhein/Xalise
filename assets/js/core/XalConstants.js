@@ -20,6 +20,7 @@ const XalConstants = Object.freeze({
      * 
      * @public
      *
+     * @constant
      * @type {Readonly<Record<string, string>>}
      */
     ariaNames: Object.freeze({
@@ -32,6 +33,7 @@ const XalConstants = Object.freeze({
      * 
      * @public
      *
+     * @constant
      * @type {Readonly<Record<string, string>>}
      */
     attributeNames: Object.freeze({
@@ -49,6 +51,7 @@ const XalConstants = Object.freeze({
      * 
      * @public
      *
+     * @constant
      * @type {Readonly<Record<string, string>>}
      */
     attributeValues: Object.freeze({
@@ -64,6 +67,7 @@ const XalConstants = Object.freeze({
      * 
      * @public
      *
+     * @constant
      * @type {Readonly<Record<string, string>>}
      */
     elementIds: Object.freeze({
@@ -93,6 +97,7 @@ const XalConstants = Object.freeze({
      * 
      * @public
      *
+     * @constant
      * @type {Readonly<Record<string, string>>}
      */
     cssClasses: Object.freeze({
@@ -124,6 +129,7 @@ const XalConstants = Object.freeze({
      * 
      * @public
      *
+     * @constant
      * @type {Readonly<Record<string, string>>}
      */
     cssQueries: Object.freeze({
