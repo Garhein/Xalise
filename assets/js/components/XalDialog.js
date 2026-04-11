@@ -195,7 +195,7 @@ const XalDialog = (() => {
 
             // Ajout des classes sur la modale
             if (modalClasses.length > 0) {
-                const modalDialog = _modalElement.querySelector(XalConstants.cssQueries.modalDialog);
+                const modalDialog = _modalElement.querySelector(XalConstants.cssQueries.dialog.dialog);
                 if (modalDialog) {
                     modalDialog.classList.add(...modalClasses);
                 }
@@ -220,7 +220,7 @@ const XalDialog = (() => {
                 if (!buttons.length) {
                     _createButton(footerElt, {
                         label: 'Fermer',
-                        icon: XalConstants.cssClasses.bootstrapIcon.xCircleFill,
+                        icon: XalConstants.cssClasses.bootstrapIcons.xCircleFill,
                         cssClasses: [XalConstants.cssClasses.bootstrapBtn.primary],
                     });
                 }

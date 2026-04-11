@@ -4,20 +4,21 @@
  * Centralise l'ensemble des valeurs utilisées dynamiquement par le JS :
  * - attributs ARIA
  * - attributs (data-xal-* et autres)
- * - valeurs d'actions
+ * - valeurs d'attributs
+ * - identifiants DOM 
+ * - classes CSS 
  * - sélecteurs CSS
- * - identifiants DOM
- * - classes CSS
  *
  * Toute modification d'une valeur doit être répercutée ici uniquement.
  *
  * @constant
- * @type {Readonly<Object>}
+ * @type {Readonly<Record<string, any>>}
  */
 const XalConstants = Object.freeze({
-
     /**
      * Noms des attributs ARIA.
+     * 
+     * @public
      *
      * @type {Readonly<Record<string, string>>}
      */
@@ -28,6 +29,8 @@ const XalConstants = Object.freeze({
 
     /**
      * Noms des attributs.
+     * 
+     * @public
      *
      * @type {Readonly<Record<string, string>>}
      */
@@ -43,16 +46,23 @@ const XalConstants = Object.freeze({
 
     /**
      * Valeurs attendues des attributs.
+     * 
+     * @public
      *
      * @type {Readonly<Record<string, string>>}
      */
     attributeValues: Object.freeze({
-        sidebarToggleSubmenu: 'toggle-submenu',
+        sidebar: Object.freeze({ 
+            toggleSubmenu: 'toggle-submenu',
+        }),
     }),
 
     /**
      * Identifiants des éléments uniques du DOM.
+     * 
      * Utilisés avec getElementById.
+     * 
+     * @public
      *
      * @type {Readonly<Record<string, string>>}
      */
@@ -79,15 +89,17 @@ const XalConstants = Object.freeze({
     }),
 
     /**
-     * Classes CSS ajoutées ou supprimées dynamiquement via classList.
+     * Classes CSS ajoutées ou supprimées dynamiquement via `classList`.
+     * 
+     * @public
      *
      * @type {Readonly<Record<string, string>>}
      */
     cssClasses: Object.freeze({
         sidebarCollapsed:           'xal-application-layout--sidebar-collapsed',
-        loaderPlacerholderActive:   'xal-loader-placeholder--active',
+        loaderPlaceholderActive:    'xal-loader-placeholder--active',
 
-        bootstrapIcon: Object.freeze({ 
+        bootstrapIcons: Object.freeze({ 
             checkCircleFill:          'bi-check-circle-fill',
             xCircleFill:              'bi-x-circle-fill',
             exclamationTriangleFill:  'bi-exclamation-triangle-fill',
@@ -108,13 +120,14 @@ const XalConstants = Object.freeze({
     }),
 
     /**
-     * Sélecteurs CSS utilisés dans querySelector et querySelectorAll.
+     * Sélecteurs CSS utilisés dans `querySelector` et `querySelectorAll`.
+     * 
+     * @public
      *
      * @type {Readonly<Record<string, string>>}
      */
     cssQueries: Object.freeze({
         tooltip:     '[data-bs-toggle="tooltip"]',
-        modalDialog: '.modal-dialog',
         
         toast: Object.freeze({ 
             container:       '.toast-container',
@@ -133,6 +146,7 @@ const XalConstants = Object.freeze({
         }),
 
         dialog: Object.freeze({ 
+            dialog:      '.modal-dialog',
             container:   '.xal-dialog',
             title:       '.xal-dialog__title',
             body:        '.xal-dialog__body',

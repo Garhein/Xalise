@@ -57,22 +57,22 @@ const XalToast = (() => {
     const ToastVariantConfig = Object.freeze({
         success: Object.freeze({
             title:      'Succès',
-            icon:       XalConstants.cssClasses.bootstrapIcon.checkCircleFill,
+            icon:       XalConstants.cssClasses.bootstrapIcons.checkCircleFill,
             color:      XalConstants.cssClasses.bootstrapTextBg.success,
         }),
         error: Object.freeze({
             title:      'Erreur',
-            icon:       XalConstants.cssClasses.bootstrapIcon.xCircleFill,
+            icon:       XalConstants.cssClasses.bootstrapIcons.xCircleFill,
             color:      XalConstants.cssClasses.bootstrapTextBg.danger,
         }),
         warning: Object.freeze({
             title:      'Avertissement',
-            icon:       XalConstants.cssClasses.bootstrapIcon.exclamationTriangleFill,
+            icon:       XalConstants.cssClasses.bootstrapIcons.exclamationTriangleFill,
             color:      XalConstants.cssClasses.bootstrapTextBg.warning,
         }),
         info: Object.freeze({
             title:      'Information',
-            icon:       XalConstants.cssClasses.bootstrapIcon.infoCircleFill,
+            icon:       XalConstants.cssClasses.bootstrapIcons.infoCircleFill,
             color:      XalConstants.cssClasses.bootstrapTextBg.info,
         }),
     });
