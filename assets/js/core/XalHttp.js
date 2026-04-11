@@ -205,32 +205,32 @@ const XalHttp = (() => {
         }
     };
 
-    /**
-     * Exécute une requête HTTP.
-     * 
-     * Gère les indicateurs de chargement et les erreurs selon la configuration fournie.
-     * Les indicateurs sont systématiquement masqués dans le bloc finally() pour garantir leur nettoyage même en cas d'erreur.
-     * 
-     * @public
-     * 
-     * @param {string}                  url                         URL de la ressource demandée.
-     * @param {Object}                  [fetchOptions={}]           Options de la requête HTTP.
-     * @param {Object}                  [indicators={}]             Indicateurs visuels et callbacks.
-     * @param {string}                  [indicators.placeholder]    Sélecteur CSS de la zone du placeholder.
-     * @param {string}                  [indicators.toast]          Message du toast.
-     * @param {boolean|string}          [indicators.overlay]        Si `true`, affiche l'overlay sans message.
-     *                                                              Si `string`, affiche l'overlay avec ce message.
-     * @param {Function|null}           [indicators.onSuccess]      Callback appelé après une requête HTTP réussie.
-     *                                                              Reçoit la `Response` en paramètre.
-     * @param {Function|null}           [indicators.onError]        Callback appelé en cas d'erreur réseau ou HTTP.
-     *                                                              Reçoit la `Response` (erreur HTTP) ou une `Error` (erreur réseau) en paramètre.
-     *                                                              Si absent, la résolution suit l'ordre de priorité défini.
-     * @param {Record<number, string>}  [indicators.errorMessages]  Messages d'erreur personnalisés par statut HTTP.
-     *                                                              Prennent le pas sur DEFAULT_ERROR_MESSAGES pour les statuts concernés.
-     * 
-     * @returns {Promise<Response>}                                 Promesse résolue avec la `Response` ou rejetée en cas d'erreur réseau.
-     */
     return {
+        /**
+         * Exécute une requête HTTP.
+         * 
+         * Gère les indicateurs de chargement et les erreurs selon la configuration fournie.
+         * Les indicateurs sont systématiquement masqués dans le bloc finally() pour garantir leur nettoyage même en cas d'erreur.
+         * 
+         * @public
+         * 
+         * @param {string}                  url                         URL de la ressource demandée.
+         * @param {Object}                  [fetchOptions={}]           Options de la requête HTTP.
+         * @param {Object}                  [indicators={}]             Indicateurs visuels et callbacks.
+         * @param {string}                  [indicators.placeholder]    Sélecteur CSS de la zone du placeholder.
+         * @param {string}                  [indicators.toast]          Message du toast.
+         * @param {boolean|string}          [indicators.overlay]        Si `true`, affiche l'overlay sans message.
+         *                                                              Si `string`, affiche l'overlay avec ce message.
+         * @param {Function|null}           [indicators.onSuccess]      Callback appelé après une requête HTTP réussie.
+         *                                                              Reçoit la `Response` en paramètre.
+         * @param {Function|null}           [indicators.onError]        Callback appelé en cas d'erreur réseau ou HTTP.
+         *                                                              Reçoit la `Response` (erreur HTTP) ou une `Error` (erreur réseau) en paramètre.
+         *                                                              Si absent, la résolution suit l'ordre de priorité défini.
+         * @param {Record<number, string>}  [indicators.errorMessages]  Messages d'erreur personnalisés par statut HTTP.
+         *                                                              Prennent le pas sur DEFAULT_ERROR_MESSAGES pour les statuts concernés.
+         * 
+         * @returns {Promise<Response>}                                 Promesse résolue avec la `Response` ou rejetée en cas d'erreur réseau.
+         */
         fetch(url, fetchOptions = {}, { placeholder, toast, overlay = false, onError = null, onSuccess = null, errorMessages = {} } = {}) {
             const indicators = { placeholder, toast, overlay };
 
