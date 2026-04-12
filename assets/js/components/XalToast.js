@@ -10,14 +10,13 @@
  * Chaque toast est automatiquement masqué après un délai configurable (5s par défaut) 
  * et nettoie le DOM à la fin de l'animation de masquage.
  * 
- * Dépendances :
- * - XalConstants
+ * @requires XalConstants
  * 
  * @namespace XalToast
  */
 const XalToast = (() => {
     /**
-     * @typedef {Object} ToastOptions
+     * @typedef {Object} ToastOptions           Options de configuration d'un toast.
      * @property {string}   title               Titre du toast.
      * @property {string}   message             Contenu HTML ou texte brut à afficher.
      * @property {string}   icon                Classes CSS de l'icône Bootstrap à afficher (ex : 'bi-check-circle-fill').
@@ -130,10 +129,12 @@ const XalToast = (() => {
      * 
      * @param {ToastOptions}    options Configuration du toast.
      * @param {number}          [delay] Délai en ms avant masquage automatique.
+     * 
+     * @returns {void}
      */
     const _show = (options, delay = DEFAULT_DELAY_MS) => {
         if (!_templateElement) {
-            console.warn('[XalToast] la méthode d\'initialisation doit être appelée avant utilisation.');
+            console.warn('[XalToast] La méthode d\'initialisation doit être appelée avant utilisation.');
             return;
         }
 
@@ -203,6 +204,8 @@ const XalToast = (() => {
          * @public
          * 
          * @throws {Error} Si le template du toast n'est pas trouvé dans le DOM.
+         * 
+         * @returns {void}
          */
         init() {
             if (_templateElement) return;
@@ -222,6 +225,8 @@ const XalToast = (() => {
          * @param {string}  message             Message à afficher.
          * @param {boolean} [allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
          * @param {number}  [delay]             Délai en ms avant masquage automatique.
+         * 
+         * @returns {void}
          */
         success(message, allowHtml = false, delay = DEFAULT_DELAY_MS) {
             _show(_getOptions(ToastVariant.success, message, allowHtml), delay);
@@ -235,6 +240,8 @@ const XalToast = (() => {
          * @param {string}  message             Message à afficher.
          * @param {boolean} [allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
          * @param {number}  [delay]             Délai en ms avant masquage automatique.
+         * 
+         * @returns {void}
          */
         error(message, allowHtml = false, delay = DEFAULT_DELAY_MS) {
             _show(_getOptions(ToastVariant.error, message, allowHtml), delay);
@@ -248,6 +255,8 @@ const XalToast = (() => {
          * @param {string}  message             Message à afficher.
          * @param {boolean} [allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
          * @param {number}  [delay]             Délai en ms avant masquage automatique.
+         * 
+         * @returns {void}
          */
         warning(message, allowHtml = false, delay = DEFAULT_DELAY_MS) {
             _show(_getOptions(ToastVariant.warning, message, allowHtml), delay);
@@ -261,6 +270,8 @@ const XalToast = (() => {
          * @param {string}  message             Message à afficher.
          * @param {boolean} [allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
          * @param {number}  [delay]             Délai en ms avant masquage automatique.
+         * 
+         * @returns {void}
          */
         info(message, allowHtml = false, delay = DEFAULT_DELAY_MS) {
             _show(_getOptions(ToastVariant.info, message, allowHtml), delay);
@@ -276,6 +287,8 @@ const XalToast = (() => {
          *
          * @param {ToastOptions} options    Configuration du toast.
          * @param {number}       [delay]    Délai en ms avant masquage automatique.
+         * 
+         * @returns {void}
          */
         custom(options, delay = DEFAULT_DELAY_MS) {
             _show(options, delay);

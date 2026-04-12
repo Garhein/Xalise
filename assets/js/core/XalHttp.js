@@ -11,12 +11,11 @@
  * - Erreur HTTP (statut 4xx, 5xx)   → toast d'erreur avec le statut HTTP
  * - Comportement personnalisable    → paramètre `onError` par appel
  * 
- * Dépendances :
- * - XalLoaderNav
- * - XalLoaderPlaceholder
- * - XalLoaderToast
- * - XalLoaderOverlay
- * - XalToast
+ * @requires XalLoaderNav
+ * @requires XalLoaderPlaceholder
+ * @requires XalLoaderToast
+ * @requires XalLoaderOverlay
+ * @requires XalToast
  * 
  * @namespace XalHttp
  */
