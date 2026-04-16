@@ -1334,13 +1334,14 @@ const XalToast = (() => {
          * 
          * @public
          *
-         * @param {string}  message             Message à afficher.
-         * @param {boolean} [allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
-         * @param {number}  [delay]             Délai en ms avant masquage automatique.
+         * @param {string}  message                     Message à afficher.
+         * @param {object}  [options]                   Options d'affichage du toast.
+         * @param {boolean} [options.allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
+         * @param {number}  [options.delay]             Délai en ms avant masquage automatique.
          * 
          * @returns {void}
          */
-        success(message, allowHtml = false, delay = DEFAULT_DELAY_MS) {
+        success(message, { allowHtml = false, delay = DEFAULT_DELAY_MS } = {}) {
             _show(_getOptions(ToastVariant.success, message, allowHtml), delay);
         },
 
@@ -1349,13 +1350,14 @@ const XalToast = (() => {
          * 
          * @public
          *
-         * @param {string}  message             Message à afficher.
-         * @param {boolean} [allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
-         * @param {number}  [delay]             Délai en ms avant masquage automatique.
+         * @param {string}  message                     Message à afficher.
+         * @param {object}  [options]                   Options d'affichage du toast.
+         * @param {boolean} [options.allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
+         * @param {number}  [options.delay]             Délai en ms avant masquage automatique.
          * 
          * @returns {void}
          */
-        error(message, allowHtml = false, delay = DEFAULT_DELAY_MS) {
+        error(message, { allowHtml = false, delay = DEFAULT_DELAY_MS } = {}) {
             _show(_getOptions(ToastVariant.error, message, allowHtml), delay);
         },
 
@@ -1364,13 +1366,14 @@ const XalToast = (() => {
          * 
          * @public
          *
-         * @param {string}  message             Message à afficher.
-         * @param {boolean} [allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
-         * @param {number}  [delay]             Délai en ms avant masquage automatique.
+         * @param {string}  message                     Message à afficher.
+         * @param {object}  [options]                   Options d'affichage du toast.
+         * @param {boolean} [options.allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
+         * @param {number}  [options.delay]             Délai en ms avant masquage automatique.
          * 
          * @returns {void}
          */
-        warning(message, allowHtml = false, delay = DEFAULT_DELAY_MS) {
+        warning(message, { allowHtml = false, delay = DEFAULT_DELAY_MS } = {}) {
             _show(_getOptions(ToastVariant.warning, message, allowHtml), delay);
         },
 
@@ -1379,13 +1382,14 @@ const XalToast = (() => {
          * 
          * @public
          *
-         * @param {string}  message             Message à afficher.
-         * @param {boolean} [allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
-         * @param {number}  [delay]             Délai en ms avant masquage automatique.
+         * @param {string}  message                     Message à afficher.
+         * @param {object}  [options]                   Options d'affichage du toast.
+         * @param {boolean} [options.allowHtml=false]   Si `true`, le message est interprété comme du HTML, sinon comme du texte brut.
+         * @param {number}  [options.delay]             Délai en ms avant masquage automatique.
          * 
          * @returns {void}
          */
-        info(message, allowHtml = false, delay = DEFAULT_DELAY_MS) {
+        info(message, { allowHtml = false, delay = DEFAULT_DELAY_MS } = {}) {
             _show(_getOptions(ToastVariant.info, message, allowHtml), delay);
         },
 
