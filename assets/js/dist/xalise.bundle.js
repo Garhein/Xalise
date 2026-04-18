@@ -906,6 +906,39 @@ const XalLoaderPlaceholder = (() => {
     };
 
     /**
+     * Modes d’insertion supportés pour le placeholder.
+     *
+     * Définit les stratégies d’injection du placeholder dans la zone cible :
+     * - `PREPREND` → insère le placeholder en tête sans modifier le contenu existant
+     * - `REPLACE`  → remplace entièrement le contenu de la zone cible
+     *
+     * Utilisé pour valider et normaliser l’option `mode` passée à `show()`.
+     *
+     * @private
+     *
+     * @type {Readonly<{ PREPEND: 'prepend', REPLACE: 'replace' }>}
+     */
+    const INSERTION_MODES = Object.freeze({
+        PREPEND:    'prepend',
+        REPLACE:    'replace',
+    });
+
+    /**
+     * Ensemble des modes d’insertion valides.
+     *
+     * Permet de vérifier rapidement si la valeur fournie pour l’option `mode`
+     * est supportée par le composant, avec une complexité constante (`O(1)`).
+     *
+     * Construit à partir de `INSERTION_MODES` afin de garantir la cohérence
+     * entre la définition des modes et leur validation.
+     *
+     * @private
+     *
+     * @type {Readonly<Set<'prepend'|'replace'>>}
+     */
+    const VALID_MODES = new Set(Object.values(INSERTION_MODES));
+
+    /**
      * Clone le template et l’insère en tête de la zone cible.
      *
      * @private
@@ -914,11 +947,16 @@ const XalLoaderPlaceholder = (() => {
      *
      * @returns {void}
      */
-    const _cloneAndInsert = (el) => {
+    const _insertPlaceholder = (el, mode) => {
         if (!_templateElement) return;
 
         const fragment = document.importNode(_templateElement.content, true);
-        el.prepend(fragment);
+
+        if (mode === INSERTION_MODES.REPLACE) {
+            el.replaceChildren(fragment);
+        } else {
+            el.prepend(fragment);
+        }
     };
 
     return {
@@ -947,9 +985,6 @@ const XalLoaderPlaceholder = (() => {
         /**
          * Affiche un placeholder dans la zone cible.
          *
-         * Insère le placeholder en tête de la zone sans supprimer le contenu existant,
-         * sauf si l’option `clear` est activée.
-         *
          * Aucun effet si :
          * - la cible est introuvable
          * - le composant n’est pas initialisé
@@ -957,29 +992,36 @@ const XalLoaderPlaceholder = (() => {
          *
          * @public
          *
-         * @param {string|HTMLElement} target                 Sélecteur CSS ou élément cible.
-         * @param {Object}             [options={}]           Options d’affichage.
-         * @param {boolean}            [options.clear=false]  Si `true`, supprime tout le contenu
-         *                                                    de la zone avant insertion du placeholder.
+         * @param {string|HTMLElement} target                   Sélecteur CSS ou élément cible.
+         * @param {Object}             [options={}]             Options d’affichage.
+         * @param {'prepend'|'replace'} [options.mode='prepend']  Mode d’insertion du placeholder :
+         *                                                      - `prepend` (par défaut) : insère le placeholder en tête de la zone sans supprimer le contenu existant.
+         *                                                      - `replace` : remplace tout le contenu de la zone par le placeholder.
          *
          * @returns {void}
          */
-        show(target, { clear = false } = {}) {
+        show(target, { mode = INSERTION_MODES.PREPEND } = {}) {
             if (!_templateElement) {
                 console.warn('[XalLoaderPlaceholder] La méthode d\'initialisation doit être appelée avant utilisation.');
                 return;
             }
 
             const el = _resolveTarget(target);
-            if (!el) return;
-
-            if (clear) {
-                el.replaceChildren();
+            
+            if (!el) {
+                console.warn('[XalLoaderPlaceholder] Cible introuvable : ', target);
+                return;
             }
 
-            if (_isActive(el)) return;
+            if (!VALID_MODES.has(mode)) {
+                console.warn(`[XalLoaderPlaceholder] Mode d\'insertion non valide "${mode}", fallback sur "prepend".`);
+                mode = INSERTION_MODES.PREPEND;
+            }
 
-            _cloneAndInsert(el);
+            // Idempotence uniquement en prepend
+            if (mode === INSERTION_MODES.PREPEND && _isActive(el)) return;
+
+            _insertPlaceholder(el, mode);
 
             el.classList.add(XalConstants.cssClasses.loaderPlaceholderActive);
         },
@@ -997,17 +1039,16 @@ const XalLoaderPlaceholder = (() => {
          * @returns {void}
          */
         hide(target) {
-            if (!_templateElement) return;
-
             const el = _resolveTarget(target);
 
-            if (!el) return;
+            if (!el) {
+                console.warn('[XalLoaderPlaceholder] Cible introuvable : ', target);
+                return;
+            }
 
-            const placeholder = el.querySelector(XalConstants.cssQueries.loader.placeholder);
+            el.querySelectorAll(XalConstants.cssQueries.loader.placeholder)
+              .forEach(p => p.remove());
 
-            if (!placeholder) return;
-
-            placeholder.remove();
             el.classList.remove(XalConstants.cssClasses.loaderPlaceholderActive);
         },
 
@@ -1021,8 +1062,6 @@ const XalLoaderPlaceholder = (() => {
          * @returns {boolean} `true` si un placeholder est présent, sinon `false`.
          */
         isActive(target) {
-            if (!_templateElement) return false;
-
             const el = _resolveTarget(target);
             return !!el && _isActive(el);
         },
@@ -1045,13 +1084,7 @@ const XalLoaderPlaceholder = (() => {
          * @returns {void}
          */
         reset(target) {
-            const el = _resolveTarget(target);
-            if (!el) return;
-
-            el.querySelectorAll(XalConstants.cssQueries.loader.placeholder)
-              .forEach(p => p.remove());
-
-            el.classList.remove(XalConstants.cssClasses.loaderPlaceholderActive);
+            this.hide(target);
         },
     };
 })();
