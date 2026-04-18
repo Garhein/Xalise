@@ -172,7 +172,7 @@ const XalLoaderPlaceholder = (() => {
             }
 
             if (!VALID_MODES.has(mode)) {
-                console.warn(`[XalLoaderPlaceholder] Mode d\'insertion non valide "${mode}", fallback sur "prepend".`);
+                console.warn(`[XalLoaderPlaceholder] Mode d\'insertion "${mode}" non valide, fallback sur "prepend".`);
                 mode = INSERTION_MODES.PREPEND;
             }
 
@@ -186,6 +186,9 @@ const XalLoaderPlaceholder = (() => {
 
         /**
          * Supprime le placeholder de la zone cible.
+         * 
+         * Supprime tous les placeholders présents (même multiples) et
+         * nettoie l’état visuel associé (classe CSS).
          *
          * Aucun effet si la cible est introuvable ou si aucun placeholder
          * n’est présent.
@@ -226,14 +229,6 @@ const XalLoaderPlaceholder = (() => {
 
         /**
          * Réinitialise complètement la zone cible.
-         *
-         * Supprime tous les placeholders présents (même multiples) et
-         * nettoie l’état visuel associé (classe CSS).
-         *
-         * Contrairement à `hide()`, cette méthode garantit un état propre
-         * même en cas d’incohérence du DOM (duplication ou insertion manuelle).
-         *
-         * Aucun effet si la cible est introuvable.
          *
          * @public
          *
