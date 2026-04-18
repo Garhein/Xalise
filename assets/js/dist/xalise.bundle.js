@@ -841,121 +841,217 @@ const XalLoaderNav = (() => {
     };
 })();
 /**
- * API de gestion des zones de contenu temporaire.
+ * API de gestion des placeholders de chargement.
  *
- * Affiche des blocs animés dans une zone vide pendant le chargement
- * des données réelles. Le contenu réel est injecté par le JS après
- * réception des données.
- * 
- * Le composant repose sur un template HTML existant (non dynamique).
+ * Affiche des blocs visuels temporaires dans une zone cible pendant
+ * le chargement de données asynchrones.
+ *
+ * Le contenu réel est injecté dynamiquement après chargement.
+ *
+ * Le composant repose sur un template HTML existant et permet
+ * plusieurs instances simultanées sur différentes zones.
+ *
+ * N’altère pas le contenu existant : le placeholder est simplement
+ * inséré en tête de la zone cible.
+ *
+ * @requires XalConstants
  *
  * @namespace XalLoaderPlaceholder
  */
 const XalLoaderPlaceholder = (() => {
     /**
-     * Référence vers le template HTML du placeholder.
+     * Template HTML du placeholder.
      *
-     * @type {HTMLTemplateElement|null}
+     * Résolu lors de l’appel à `init()`.
+     *
      * @private
+     * 
+     * @type {HTMLTemplateElement|null}
      */
     let _templateElement = null;
 
     /**
-     * Résout un sélecteur CSS ou un élément DOM en élément HTML.
+     * Résout une cible en élément DOM.
      *
-     * @param {string|HTMLElement} target - Sélecteur CSS ou élément DOM.
-     * @returns {HTMLElement|null} Élément résolu, ou null si introuvable.
+     * Accepte un sélecteur CSS ou un élément HTML directement.
+     *
      * @private
+     *
+     * @param {string|HTMLElement} target Sélecteur CSS ou élément DOM.
+     *
+     * @returns {HTMLElement|null} Élément résolu ou `null` si introuvable.
      */
     const _resolveTarget = (target) => {
         if (target instanceof HTMLElement) return target;
-        if (typeof target === 'string')    return document.querySelector(target);
+
+        if (typeof target === 'string') {
+            const el = document.querySelector(target);
+            return el instanceof HTMLElement ? el : null;
+        }
+
         return null;
     };
 
     /**
-     * Indique si un placeholder est actuellement présent dans un élément.
+     * Indique si un placeholder est présent dans un élément cible.
      *
-     * Opère directement sur l'élément DOM résolu pour éviter
-     * un second appel à _resolveTarget() dans les méthodes publiques.
-     *
-     * @param {HTMLElement} el - Élément DOM cible déjà résolu.
-     * @returns {boolean} `true` si le placeholder est présent, `false` sinon.
      * @private
+     *
+     * @param {HTMLElement} el Élément DOM cible.
+     *
+     * @returns {boolean} `true` si un placeholder est présent, sinon `false`.
      */
     const _isActive = (el) => {
-        return !!el.querySelector(XalConstants.cssQueries.loader.placeholder);
+        return el.querySelector(XalConstants.cssQueries.loader.placeholder) !== null;
     };
 
     /**
-     * Clone le template et l'insère en premier enfant de la zone cible.
+     * Clone le template et l’insère en tête de la zone cible.
      *
-     * Chaque appel produit un clone indépendant du template, ce qui permet
-     * plusieurs placeholders simultanés sur des zones différentes.
-     *
-     * @param {HTMLElement} el - Zone cible dans laquelle insérer le placeholder.
      * @private
+     *
+     * @param {HTMLElement} el Élément cible.
+     *
+     * @returns {void}
      */
     const _cloneAndInsert = (el) => {
+        if (!_templateElement) return;
+
         const fragment = document.importNode(_templateElement.content, true);
         el.prepend(fragment);
     };
 
     return {
         /**
-         * Initialise le composant en résolvant les éléments DOM.
+         * Initialise le composant en résolvant le template HTML.
+         *
+         * L’idempotence est assurée : les appels multiples n’ont aucun effet
+         * après la première initialisation réussie.
+         *
+         * @public
+         *
+         * @returns {void}
+         *
+         * @throws {Error} Si le template est introuvable.
          */
         init() {
-            // Assure l'idempotence : évite une double initialisation
             if (_templateElement) return;
 
-            _templateElement = XalUIService.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
+            _templateElement = document.getElementById(XalConstants.elementIds.loader.placeholderTemplate);
+
+            if (!_templateElement) {
+                throw new Error(`[XalLoaderPlaceholder] Template "${XalConstants.elementIds.loader.placeholderTemplate}" introuvable.`);
+            }
         },
         
         /**
-         * Affiche le placeholder dans une zone de contenu.
+         * Affiche un placeholder dans la zone cible.
          *
-         * Sans effet si :
-         * - la cible est introuvable dans le DOM
-         * - init() n'a pas été appelé ou le template est introuvable
-         * - un placeholder est déjà actif sur cette zone
+         * Insère le placeholder en tête de la zone sans supprimer le contenu existant,
+         * sauf si l’option `clear` est activée.
          *
-         * @param {string|HTMLElement} target - Sélecteur CSS ou élément DOM cible.
+         * Aucun effet si :
+         * - la cible est introuvable
+         * - le composant n’est pas initialisé
+         * - un placeholder est déjà présent (idempotence)
+         *
+         * @public
+         *
+         * @param {string|HTMLElement} target                 Sélecteur CSS ou élément cible.
+         * @param {Object}             [options={}]           Options d’affichage.
+         * @param {boolean}            [options.clear=false]  Si `true`, supprime tout le contenu
+         *                                                    de la zone avant insertion du placeholder.
+         *
+         * @returns {void}
          */
-        show(target) {
-            const el = _resolveTarget(target);
+        show(target, { clear = false } = {}) {
+            if (!_templateElement) {
+                console.warn('[XalLoaderPlaceholder] La méthode d\'initialisation doit être appelée avant utilisation.');
+                return;
+            }
 
-            if (!el || !_templateElement) return;
+            const el = _resolveTarget(target);
+            if (!el) return;
+
+            if (clear) {
+                el.replaceChildren();
+            }
+
             if (_isActive(el)) return;
 
             _cloneAndInsert(el);
+
+            el.classList.add(XalConstants.cssClasses.loaderPlaceholderActive);
         },
 
         /**
-         * Retire le placeholder de la zone cible.
+         * Supprime le placeholder de la zone cible.
          *
-         * @param {string|HTMLElement} target - Sélecteur CSS ou élément DOM cible.
+         * Aucun effet si la cible est introuvable ou si aucun placeholder
+         * n’est présent.
+         *
+         * @public
+         *
+         * @param {string|HTMLElement} target Sélecteur CSS ou élément cible.
+         *
+         * @returns {void}
          */
         hide(target) {
+            if (!_templateElement) return;
+
             const el = _resolveTarget(target);
 
             if (!el) return;
 
-            el.querySelector(XalConstants.cssQueries.loader.placeholder)?.remove();
+            const placeholder = el.querySelector(XalConstants.cssQueries.loader.placeholder);
+
+            if (!placeholder) return;
+
+            placeholder.remove();
+            el.classList.remove(XalConstants.cssClasses.loaderPlaceholderActive);
         },
 
         /**
-         * Indique si un placeholder est actuellement actif sur une zone.
+         * Indique si un placeholder est actif sur la zone cible.
          *
-         * Retourne `true` dès lors que show() a été appelé sur cette zone
-         * et que hide() n'a pas encore été appelé.
+         * @public
          *
-         * @param {string|HTMLElement} target - Sélecteur CSS ou élément DOM cible.
-         * @returns {boolean} `true` si le placeholder est présent, `false` sinon.
+         * @param {string|HTMLElement} target Sélecteur CSS ou élément cible.
+         *
+         * @returns {boolean} `true` si un placeholder est présent, sinon `false`.
          */
         isActive(target) {
+            if (!_templateElement) return false;
+
             const el = _resolveTarget(target);
-            return el ? _isActive(el) : false;
+            return !!el && _isActive(el);
+        },
+
+        /**
+         * Réinitialise complètement la zone cible.
+         *
+         * Supprime tous les placeholders présents (même multiples) et
+         * nettoie l’état visuel associé (classe CSS).
+         *
+         * Contrairement à `hide()`, cette méthode garantit un état propre
+         * même en cas d’incohérence du DOM (duplication ou insertion manuelle).
+         *
+         * Aucun effet si la cible est introuvable.
+         *
+         * @public
+         *
+         * @param {string|HTMLElement} target Sélecteur CSS ou élément cible.
+         *
+         * @returns {void}
+         */
+        reset(target) {
+            const el = _resolveTarget(target);
+            if (!el) return;
+
+            el.querySelectorAll(XalConstants.cssQueries.loader.placeholder)
+              .forEach(p => p.remove());
+
+            el.classList.remove(XalConstants.cssClasses.loaderPlaceholderActive);
         },
     };
 })();
