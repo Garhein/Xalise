@@ -182,7 +182,9 @@ XalHttp.fetch(
 | `url` | `string` | — | URL de la ressource demandée. |
 | `fetchOptions` | `Object` | `{}` | Options passées à `fetch()` (`method`, `headers`, `body`, etc.). |
 | `indicators` | `Object` | `{}` | |
-| `indicators.placeholder` | `string` | — | Sélecteur CSS de la zone où afficher le placeholder. |
+| `indicators.placeholder` | `Object|string` | — | Configuration du placeholder. |
+| `indicators.placeholder.target` | `string` | — | Sélecteur CSS ou élément cible. |
+| `indicators.placeholder.mode` | `'prepend'|'append'` | — | Mode d'insertion du placeholder. |
 | `indicators.toast` | `string` | — | Message du toast de chargement. Si renseigné, le toast est affiché. |
 | `indicators.overlay` | `boolean` | `false` | Si `true`, affiche l'overlay sans message. |
 | `indicators.overlay` | `string` | — | Si `string`, affiche l'overlay avec le message indiqué. |
@@ -197,11 +199,29 @@ XalHttp.fetch(
 L'appel ci-dessous insère un placeholder dans le container `#xal-id-table-fournisseurs` pendant le traitement. Il est automatiquement retiré à la fin du traitement.
 
 ```js
+// Utilisation d'un placeholder, sans précision du mode d'insertion
+// Le mode d'insertion par défaut ('prepend') est alors utilisé
 XalHttp.fetch(
     '/api/fournisseurs',
     {},
     {
         placeholder: '#xal-id-table-fournisseurs',
+        onSuccess: (response) => {
+            response.json().then(data => {
+                renderTable(data.items);
+                document.querySelector('#xal-id-counter').textContent = data.total;
+            });
+        },
+    });
+    
+// Utilisation d'un placeholder, avec précision du mode d'insertion
+// Les seuls modes d'insertion autorisés sont 'prepend' et 'replace'
+// Si le mode indiqué n'est pas connu, le mode d'insertion par défaut ('prepend') est utilisé.
+XalHttp.fetch(
+    '/api/fournisseurs',
+    {},
+    {
+        placeholder: { target: '#xal-id-table-fournisseurs', mode: 'replace' },
         onSuccess: (response) => {
             response.json().then(data => {
                 renderTable(data.items);
@@ -362,7 +382,9 @@ XalHttp.mock(
 | `delay` | `number` | `5000` | Délai en ms avant la résolution |
 | `fail` | `boolean` | `false` | Si `true`, simule une erreur réseau |
 | `indicators` | `Object` | `{}` | |
-| `indicators.placeholder` | `string` | — | Sélecteur CSS de la zone où afficher le placeholder. |
+| `indicators.placeholder` | `Object|string` | — | Configuration du placeholder. |
+| `indicators.placeholder.target` | `string` | — | Sélecteur CSS ou élément cible. |
+| `indicators.placeholder.mode` | `'prepend'|'append'` | — | Mode d'insertion du placeholder. |
 | `indicators.toast` | `string` | — | Message du toast de chargement. Si renseigné, le toast est affiché. |
 | `indicators.overlay` | `boolean` | `false` | Si `true`, affiche l'overlay sans message. |
 | `indicators.overlay` | `string` | — | Si `string`, affiche l'overlay avec le message indiqué. |

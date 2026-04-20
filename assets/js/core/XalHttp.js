@@ -55,6 +55,35 @@ const XalHttp = (() => {
     });
 
     /**
+     * Normalise la configuration du placeholder.
+     *
+     * Permet d’accepter deux formats d’entrée :
+     * - une chaîne de caractères   → interprétée comme un sélecteur CSS (`target`)
+     * - un objet de configuration  → utilisé tel quel
+     *
+     * Cette méthode garantit un format homogène en sortie, facilitant
+     * l’utilisation par les méthodes internes.
+     *
+     * Ne définit volontairement aucune valeur par défaut (ex: `mode`) afin de
+     * laisser cette responsabilité au composant `XalLoaderPlaceholder`.
+     *
+     * @private
+     *
+     * @param {string|Object|null|undefined} placeholder    Configuration du placeholder.
+     *                                                      - `string` → sélecteur CSS de la cible
+     *                                                      - `Object` → configuration avancée ({ target, mode, ... })
+     *
+     * @returns {Object|null} Objet normalisé `{ target, ... }` ou `null` si absent.
+     */
+    const _normalizePlaceholder = (placeholder) => {
+        if (!placeholder) return null;
+
+        return typeof placeholder === 'string'
+            ? { target: placeholder }
+            : { ...placeholder };
+    };
+
+    /**
      * Active ou désactive les indicateurs visuels de chargement.
      * 
      * La barre de progression située sous la barre de navigation est désactivée si
@@ -75,9 +104,14 @@ const XalHttp = (() => {
         }
 
         if (placeholder) {
-            show
-                ? XalLoaderPlaceholder.show(placeholder)
-                : XalLoaderPlaceholder.hide(placeholder);
+            const config = _normalizePlaceholder(placeholder);
+
+            if (show) {
+                XalLoaderPlaceholder.show(config.target, { mode: config.mode });
+            }
+            else {
+                XalLoaderPlaceholder.hide(config.target);
+            }
         }
 
         if (toast) {
@@ -213,22 +247,24 @@ const XalHttp = (() => {
          * 
          * @public
          * 
-         * @param {string}                  url                         URL de la ressource demandée.
-         * @param {Object}                  [fetchOptions={}]           Options de la requête HTTP.
-         * @param {Object}                  [indicators={}]             Indicateurs visuels et callbacks.
-         * @param {string}                  [indicators.placeholder]    Sélecteur CSS de la zone du placeholder.
-         * @param {string}                  [indicators.toast]          Message du toast.
-         * @param {boolean|string}          [indicators.overlay]        Si `true`, affiche l'overlay sans message.
-         *                                                              Si `string`, affiche l'overlay avec ce message.
-         * @param {Function|null}           [indicators.onSuccess]      Callback appelé après une requête HTTP réussie.
-         *                                                              Reçoit la `Response` en paramètre.
-         * @param {Function|null}           [indicators.onError]        Callback appelé en cas d'erreur réseau ou HTTP.
-         *                                                              Reçoit la `Response` (erreur HTTP) ou une `Error` (erreur réseau) en paramètre.
-         *                                                              Si absent, la résolution suit l'ordre de priorité défini.
-         * @param {Record<number, string>}  [indicators.errorMessages]  Messages d'erreur personnalisés par statut HTTP.
-         *                                                              Prennent le pas sur DEFAULT_ERROR_MESSAGES pour les statuts concernés.
+         * @param {string}                  url                              URL de la ressource demandée.
+         * @param {Object}                  [fetchOptions={}]                Options de la requête HTTP.
+         * @param {Object}                  [indicators={}]                  Indicateurs visuels et callbacks.
+         * @param {Object|string}           [indicators.placeholder]         Configuration du placeholder.
+         * @param {string}                  [indicators.placeholder.target]  Sélecteur CSS ou élément cible.
+         * @param {'prepend'|'replace'}     [indicators.placeholder.mode]    Mode d'insertion du placeholder (`prepend` ou `replace`).
+         * @param {string}                  [indicators.toast]               Message du toast.
+         * @param {boolean|string}          [indicators.overlay]             Si `true`, affiche l'overlay sans message.
+         *                                                                   Si `string`, affiche l'overlay avec ce message.
+         * @param {Function|null}           [indicators.onSuccess]           Callback appelé après une requête HTTP réussie.
+         *                                                                   Reçoit la `Response` en paramètre.
+         * @param {Function|null}           [indicators.onError]             Callback appelé en cas d'erreur réseau ou HTTP.
+         *                                                                   Reçoit la `Response` (erreur HTTP) ou une `Error` (erreur réseau) en paramètre.
+         *                                                                   Si absent, la résolution suit l'ordre de priorité défini.
+         * @param {Record<number, string>}  [indicators.errorMessages]       Messages d'erreur personnalisés par statut HTTP.
+         *                                                                   Prennent le pas sur DEFAULT_ERROR_MESSAGES pour les statuts concernés.
          * 
-         * @returns {Promise<Response>}                                 Promesse résolue avec la `Response` ou rejetée en cas d'erreur réseau.
+         * @returns {Promise<Response>}                                      Promesse résolue avec la `Response` ou rejetée en cas d'erreur réseau.
          */
         fetch(url, fetchOptions = {}, { placeholder, toast, overlay = false, onError = null, onSuccess = null, errorMessages = {} } = {}) {
             const indicators = { placeholder, toast, overlay };
@@ -274,24 +310,26 @@ const XalHttp = (() => {
          * 
          * @public
          * 
-         * @param {*}                       [data=null]                 Données fictives à retourner.
-         * @param {Object}                  [options={}]                Options de la simulation.
-         * @param {number}                  [options.delay=5000]        Délai en ms avant la résolution.
-         * @param {boolean}                 [options.fail=false]        Si `true`, simule une erreur réseau.
-         * @param {Object}                  [indicators={}]             Indicateurs visuels et callbacks.
-         * @param {string}                  [indicators.placeholder]    Sélecteur CSS de la zone du placeholder.
-         * @param {string}                  [indicators.toast]          Message du toast.
-         * @param {boolean|string}          [indicators.overlay]        Si `true`, affiche l'overlay sans message.
-         *                                                              Si `string`, affiche l'overlay avec ce message.
-         * @param {Function|null}           [indicators.onSuccess]      Callback appelé après une requête HTTP réussie.
-         *                                                              Reçoit les données directement.
-         * @param {Function|null}           [indicators.onError]        Callback appelé en cas d'erreur réseau ou HTTP.
-         *                                                              Reçoit la `Response` (erreur HTTP) ou une `Error` (erreur réseau) en paramètre.
-         *                                                              Si absent, la résolution suit l'ordre de priorité défini.
-         * @param {Record<number, string>}  [indicators.errorMessages]  Messages d'erreur personnalisés par statut HTTP.
-         *                                                              Prennent le pas sur DEFAULT_ERROR_MESSAGES pour les statuts concernés.
+         * @param {*}                       [data=null]                      Données fictives à retourner.
+         * @param {Object}                  [options={}]                     Options de la simulation.
+         * @param {number}                  [options.delay=5000]             Délai en ms avant la résolution.
+         * @param {boolean}                 [options.fail=false]             Si `true`, simule une erreur réseau.
+         * @param {Object}                  [indicators={}]                  Indicateurs visuels et callbacks.
+         * @param {Object|string}           [indicators.placeholder]         Configuration du placeholder.
+         * @param {string}                  [indicators.placeholder.target]  Sélecteur CSS ou élément cible.
+         * @param {'prepend'|'replace'}     [indicators.placeholder.mode]    Mode d'insertion du placeholder (`prepend` ou `replace`).
+         * @param {string}                  [indicators.toast]               Message du toast.
+         * @param {boolean|string}          [indicators.overlay]             Si `true`, affiche l'overlay sans message.
+         *                                                                   Si `string`, affiche l'overlay avec ce message.
+         * @param {Function|null}           [indicators.onSuccess]           Callback appelé après une requête HTTP réussie.
+         *                                                                   Reçoit les données directement.
+         * @param {Function|null}           [indicators.onError]             Callback appelé en cas d'erreur réseau ou HTTP.
+         *                                                                   Reçoit la `Response` (erreur HTTP) ou une `Error` (erreur réseau) en paramètre.
+         *                                                                   Si absent, la résolution suit l'ordre de priorité défini.
+         * @param {Record<number, string>}  [indicators.errorMessages]       Messages d'erreur personnalisés par statut HTTP.
+         *                                                                   Prennent le pas sur DEFAULT_ERROR_MESSAGES pour les statuts concernés.
          * 
-         * @returns {Promise<*>}                                        Promesse résolue avec les données ou rejetée si fail = `true`.
+         * @returns {Promise<*>}                                             Promesse résolue avec les données ou rejetée si fail = `true`.
          */
         mock(data = null, { delay = 5000, fail = false } = {}, { placeholder, toast, overlay = false, onError = null, onSuccess = null, errorMessages = {} } = {}) {
             const indicators = { placeholder, toast, overlay };
