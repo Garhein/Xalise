@@ -150,11 +150,11 @@ const XalLoaderPlaceholder = (() => {
          *
          * @public
          *
-         * @param {string|HTMLElement} target                   Sélecteur CSS ou élément cible.
-         * @param {Object}             [options={}]             Options d’affichage.
+         * @param {string|HTMLElement}  target                    Sélecteur CSS ou élément cible.
+         * @param {Object}              [options={}]              Options d’affichage.
          * @param {'prepend'|'replace'} [options.mode='prepend']  Mode d’insertion du placeholder :
-         *                                                      - `prepend` (par défaut) : insère le placeholder en tête de la zone sans supprimer le contenu existant.
-         *                                                      - `replace` : remplace tout le contenu de la zone par le placeholder.
+         *                                                        - `prepend` (par défaut) : insère le placeholder en tête de la zone sans supprimer le contenu existant.
+         *                                                        - `replace` : remplace tout le contenu de la zone par le placeholder.
          *
          * @returns {void}
          */
