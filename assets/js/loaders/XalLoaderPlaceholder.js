@@ -118,6 +118,9 @@ const XalLoaderPlaceholder = (() => {
     };
 
     return {
+        INSERTION_MODES,
+        VALID_MODES,
+
         /**
          * Initialise le composant en résolvant le template HTML.
          *
