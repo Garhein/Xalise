@@ -1960,76 +1960,51 @@ const XalHttp = (() => {
     });
 
     /**
-     * Normalise la configuration du placeholder.
+     * Construit et normalise la configuration des loaders à partir des indicateurs fournis.
      *
-     * Permet d’accepter deux formats d’entrée :
-     * - une chaîne de caractères   → interprétée comme un sélecteur CSS (`target`)
-     * - un objet de configuration  → utilisé tel quel
+     * Cette méthode adapte la configuration issue de `XalHttp.fetch()` vers un format
+     * compatible avec `XalLoader.run()` et `XalLoader.stop()`.
      *
-     * Cette méthode garantit un format homogène en sortie, facilitant
-     * l’utilisation par les méthodes internes.
-     *
-     * Ne définit volontairement aucune valeur par défaut (ex: `mode`) afin de
-     * laisser cette responsabilité au composant `XalLoaderPlaceholder`.
+     * Elle garantit :
+     * - une structure complète et cohérente (valeurs par défaut appliquées)
+     * - la normalisation du placeholder (string → objet)
+     * - l’absence de mutation de l’objet d’entrée
      *
      * @private
      *
-     * @param {string|Object|null|undefined} placeholder    Configuration du placeholder.
-     *                                                      - `string` → sélecteur CSS de la cible
-     *                                                      - `Object` → configuration avancée ({ target, mode, ... })
+     * @param {Object}              [indicators={}]                 Configuration brute des indicateurs.
+     * @param {boolean}             [indicators.nav=true]           Active la barre de progression de navigation.
+     * @param {boolean|string}      [indicators.overlay=false]      Active l’overlay :
+     *                                                              `true` → overlay sans message
+     *                                                              `string` → overlay avec message
+     * @param {string|null}         [indicators.toast=null]         Message du toast de chargement.
+     * @param {string|Object|null}  [indicators.placeholder=null]   Configuration du placeholder :
+     *                                                              `string` → sélecteur CSS de la cible
+     *                                                              `Object` → configuration avancée (ex: `{ target, mode }`)
      *
-     * @returns {Object|null} Objet normalisé `{ target, ... }` ou `null` si absent.
+     * @returns {Object} Configuration normalisée des loaders.
+     * @returns {boolean}               [return.nav]                Indique si la barre de navigation doit être activée.
+     * @returns {boolean|string}        [return.overlay]            Configuration de l’overlay.
+     * @returns {string|null}           [return.toast]              Message du toast de chargement.
+     * @returns {Object|null}           [return.placeholder]        Configuration normalisée du placeholder ou `null` si absent.
+     * @returns {string|HTMLElement}    [return.placeholder.target] Élément cible ou sélecteur CSS.
+     * @returns {'prepend'|'replace'}   [return.placeholder.mode]   Mode d’insertion du placeholder (si fourni).
      */
-    const _normalizePlaceholder = (placeholder) => {
-        if (!placeholder) return null;
+    const _buildLoaderConfig = (indicators = {}) => {
+        const placeholder = indicators.placeholder
+            ? (
+                typeof indicators.placeholder === 'string'
+                    ? { target: indicators.placeholder }
+                    : { ...indicators.placeholder }
+            )
+            : null;
 
-        return typeof placeholder === 'string'
-            ? { target: placeholder }
-            : { ...placeholder };
-    };
-
-    /**
-     * Active ou désactive les indicateurs visuels de chargement.
-     * 
-     * La barre de progression située sous la barre de navigation est désactivée si
-     * l'overlay est actif car le spinner de l'overlay suffit comme retour visuel.
-     * 
-     * @private
-     * 
-     * @param {Object}          indicators              Indicateurs visuels à activer ou désactiver.
-     * @param {string}          indicators.placeholder  Sélecteur CSS de la zone du placeholder.
-     * @param {string}          indicators.toast        Message du toast.
-     * @param {boolean|string}  indicators.overlay      Si `true`, affiche l'overlay sans message.
-     *                                                  Si `string`, affiche l'overlay avec ce message.
-     * @param {boolean}         show                    `true` pour afficher les indicateurs, `false` pour masquer les indicateurs.
-     */
-    const _toggleLoadingIndicators = ({ placeholder, toast, overlay }, show) => {
-        if (!overlay) {
-            show ? XalLoaderNav.start() : XalLoaderNav.stop();
-        }
-
-        if (placeholder) {
-            const config = _normalizePlaceholder(placeholder);
-
-            if (show) {
-                XalLoaderPlaceholder.show(config.target, { mode: config.mode });
-            }
-            else {
-                XalLoaderPlaceholder.hide(config.target);
-            }
-        }
-
-        if (toast) {
-            show
-                ? XalLoaderToast.show(toast)
-                : XalLoaderToast.hide(toast);
-        }
-
-        if (overlay) {
-            show
-                ? XalLoaderOverlay.show(typeof overlay === 'string' ? overlay : '')
-                : XalLoaderOverlay.hide();
-        }
+        return {
+            nav: indicators.nav ?? true,
+            overlay: indicators.overlay ?? false,
+            toast: indicators.toast ?? null,
+            placeholder,
+        };
     };
 
     /**
@@ -2172,9 +2147,8 @@ const XalHttp = (() => {
          * @returns {Promise<Response>}                                      Promesse résolue avec la `Response` ou rejetée en cas d'erreur réseau.
          */
         fetch(url, fetchOptions = {}, { placeholder, toast, overlay = false, onError = null, onSuccess = null, errorMessages = {} } = {}) {
-            const indicators = { placeholder, toast, overlay };
-
-            _toggleLoadingIndicators(indicators, true);
+            const loaderConfig = _buildLoaderConfig({ placeholder, toast, overlay });
+            XalLoader.run(loaderConfig);
 
             return fetch(url, fetchOptions)
                 .then(async response => {
@@ -2203,7 +2177,7 @@ const XalHttp = (() => {
                     return Promise.reject(error);
                 })
                 .finally(() => {
-                    _toggleLoadingIndicators(indicators, false);
+                    XalLoader.stop(loaderConfig);
                 });
         },
 
@@ -2237,13 +2211,12 @@ const XalHttp = (() => {
          * @returns {Promise<*>}                                             Promesse résolue avec les données ou rejetée si fail = `true`.
          */
         mock(data = null, { delay = 5000, fail = false } = {}, { placeholder, toast, overlay = false, onError = null, onSuccess = null, errorMessages = {} } = {}) {
-            const indicators = { placeholder, toast, overlay };
-
-            _toggleLoadingIndicators(indicators, true);
+            const loaderConfig = _buildLoaderConfig({ placeholder, toast, overlay });
+            XalLoader.run(loaderConfig);
 
             return new Promise((resolve, reject) => {
                 setTimeout(async () => {
-                    _toggleLoadingIndicators(indicators, false);
+                    XalLoader.stop(loaderConfig);
 
                     if (fail) {
                         const error = new Error('[XalHttp.mock] Erreur simulée.');
