@@ -2088,7 +2088,7 @@ const XalHttp = (() => {
      * @returns {Promise<void>} Promesse résolue une fois l'erreur traitée et le message affiché.
      */
     const _handleError = async (error, onError, errorMessages) => {
-        if (onError) {
+        if (typeof onError === 'function') {
             await onError(error);
             return;
         }
@@ -2099,9 +2099,10 @@ const XalHttp = (() => {
             const extractedMessage = await _extractErrorMessage(error.clone());
 
             const safeExtracted =
-                    extractedMessage?.startsWith('<')
-                        ? null
-                        : extractedMessage;
+                    typeof extractedMessage === 'string' &&
+                    !extractedMessage.trim().startsWith('<')
+                        ? extractedMessage
+                        : null;
 
             const message =
                 errorMessages[error.status]
