@@ -12,7 +12,7 @@
  * Toute modification d'une valeur doit être répercutée ici uniquement.
  *
  * @constant
- * @type {Readonly<Record<string, any>>}
+ * @type {const}
  */
 const XalConstants = Object.freeze({
     /**
@@ -21,7 +21,7 @@ const XalConstants = Object.freeze({
      * @public
      *
      * @constant
-     * @type {Readonly<Record<string, string>>}
+     * @type {const}
      */
     ariaNames: Object.freeze({
         expanded: 'aria-expanded',
@@ -34,7 +34,7 @@ const XalConstants = Object.freeze({
      * @public
      *
      * @constant
-     * @type {Readonly<Record<string, string>>}
+     * @type {const}
      */
     attributeNames: Object.freeze({
         xalise: Object.freeze({ 
@@ -52,7 +52,7 @@ const XalConstants = Object.freeze({
      * @public
      *
      * @constant
-     * @type {Readonly<Record<string, string>>}
+     * @type {const}
      */
     attributeValues: Object.freeze({
         sidebar: Object.freeze({ 
@@ -68,7 +68,7 @@ const XalConstants = Object.freeze({
      * @public
      *
      * @constant
-     * @type {Readonly<Record<string, string>>}
+     * @type {const}
      */
     elementIds: Object.freeze({
         layout:                     'xal-id-application-layout',
@@ -98,7 +98,7 @@ const XalConstants = Object.freeze({
      * @public
      *
      * @constant
-     * @type {Readonly<Record<string, string>>}
+     * @type {const}
      */
     cssClasses: Object.freeze({
         sidebarCollapsed:           'xal-application-layout--sidebar-collapsed',
@@ -130,7 +130,7 @@ const XalConstants = Object.freeze({
      * @public
      *
      * @constant
-     * @type {Readonly<Record<string, string>>}
+     * @type {const}
      */
     cssQueries: Object.freeze({
         tooltip:     '[data-bs-toggle="tooltip"]',
