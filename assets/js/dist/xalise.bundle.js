@@ -4361,7 +4361,7 @@ const XalDialog = (() => {
 
             // Focus sur le premier bouton après affichage de la modale
             _modalElement.addEventListener('shown.bs.modal', () => {
-                const btn = _modalElement.querySelector('button');
+                const btn = _modalElement.querySelector('button:not([disabled])');
                 btn?.focus();
             });
 
