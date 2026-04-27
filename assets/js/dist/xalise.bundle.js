@@ -882,8 +882,6 @@ const XalLoaderPlaceholder = (() => {
      * @returns {void}
      */
     const _insertPlaceholder = (el, mode) => {
-        if (!_templateElement) return;
-
         const fragment = document.importNode(_templateElement.content, true);
 
         if (mode === INSERTION_MODES.REPLACE) {
