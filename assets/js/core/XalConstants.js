@@ -118,7 +118,7 @@ const XalConstants = Object.freeze({
             info:    'text-bg-info',
         }),
 
-        bootstrapBtn: Object.freeze({ 
+        bootstrapButtons: Object.freeze({ 
             primary:    'btn-primary',
             secondary:  'btn-secondary',
         }),

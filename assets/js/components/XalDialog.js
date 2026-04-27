@@ -133,7 +133,7 @@ const XalDialog = (() => {
             buttonElt.classList.add(...buttonOptions.cssClasses);
         }
         else {
-            buttonElt.classList.add(XalConstants.cssClasses.bootstrapBtn.secondary);
+            buttonElt.classList.add(XalConstants.cssClasses.bootstrapButtons.secondary);
         }
 
         // Icône positionnée avant le libellé.
@@ -287,7 +287,7 @@ const XalDialog = (() => {
                     _createButton(footerElt, {
                         label: 'Fermer',
                         icon: XalConstants.cssClasses.bootstrapIcons.xCircleFill,
-                        cssClasses: [XalConstants.cssClasses.bootstrapBtn.secondary],
+                        cssClasses: [XalConstants.cssClasses.bootstrapButtons.secondary],
                     });
                 }
                 else {
