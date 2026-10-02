@@ -1,0 +1,7 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Mise en page générale
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+body:not([data-xal-page-fullheight]) {
+  padding-top: var(--xal-navbar-height);
+}

@@ -1,0 +1,24 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Thème personnalisé Xalise
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+[data-bs-theme="xalise"] {
+    --bs-primary: var(--xalise-color);
+    --bs-primary-rgb: var(--xalise-color-rgb);
+   
+    // =-=-=-=-=-=-
+    // Menu déroulant
+    // =-=-=-=-=-=-
+
+    .dropdown-menu {
+        --bs-dropdown-bg: var(--bs-primary);
+        --bs-dropdown-link-color: var(--bs-white);
+        --bs-dropdown-link-hover-color: var(--bs-white);
+        --bs-dropdown-link-active-color: var(--bs-white);
+        --bs-dropdown-link-hover-bg: color-mix(in srgb, var(--bs-primary) 70%, var(--bs-black));
+        --bs-dropdown-link-active-bg: color-mix(in srgb, var(--bs-primary) 55%, var(--bs-black));
+        --bs-dropdown-link-disabled-color: rgba(var(--bs-white-rgb), 0.5);
+        --bs-dropdown-header-color: var(--bs-white);
+        --bs-dropdown-header-padding-y: 0;
+    }
+}

@@ -1,0 +1,11 @@
+:root {
+  // Couleur primaire initiale de bootstrap
+  --bs-primary-default: #0d6efd;
+
+  // Couleur principale Xalise
+  --xalise-color:     #{$xalise-color};
+  --xalise-color-rgb: #{$xalise-color-rgb};
+
+  // Dimensions structurelles
+  --xal-navbar-height: 3rem;
+}

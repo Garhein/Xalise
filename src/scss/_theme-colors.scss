@@ -1,0 +1,9 @@
+// =-=-=-=-=-=-
+// Nouveau thème de couleur
+// =-=-=-=-=-=-
+
+$custom-xalise-themes-colors: (
+  "xalise": $xalise-color
+);
+
+$theme-colors: map-merge($theme-colors, $custom-xalise-themes-colors);

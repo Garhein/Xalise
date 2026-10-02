@@ -1,0 +1,28 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Barre de navigation
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-main-navbar {
+    .navbar-brand {
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+    }
+
+    .btn-outline-secondary {
+        border: none;
+        margin-left: 0.5rem;
+        color: var(--bs-white);
+        background-color: color-mix(in srgb, var(--bs-primary) 85%, var(--bs-black));
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--bs-primary) 70%, var(--bs-black));
+        }
+
+        .badge {
+            font-weight: 500;
+            font-size: 0.6rem;
+            margin-left: 0.1rem;
+            padding: 0.35rem 0.45rem;
+        }
+    }
+}

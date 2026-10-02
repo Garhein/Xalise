@@ -3,3 +3,10 @@
 // =-=-=-=-=-=-
 
 $body-bg: #f4f6f9;
+
+// =-=-=-=-=-=-
+// Définition des variables Sass personnalisées
+// =-=-=-=-=-=-
+
+$xalise-color: #166278;
+$xalise-color-rgb: red($xalise-color), green($xalise-color), blue($xalise-color);
