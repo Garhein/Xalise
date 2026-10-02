@@ -1,0 +1,21 @@
+// 1. Fonctions Bootstrap (sans variables, sans CSS)
+@import "../../node_modules/bootstrap/scss/functions";
+
+// 2. Variables Bootstrap par défaut
+@import "../../node_modules/bootstrap/scss/variables";
+
+// 3. Variables personnalisées et surcharge des variables Bootstrap
+@import "variables";
+
+// 4. Bootstrap complet
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// 5. Styles personnalisés
+@import "tokens";
+@import "utilities";
+@import "layout";
+@import "sidebar";
+@import "toolbar";
+@import "notifications";
+@import "loading";
+@import "theme-xalise";

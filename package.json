@@ -1,0 +1,28 @@
+{
+  "name": "xalise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Garhein/Xalise.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Garhein/Xalise/issues"
+  },
+  "homepage": "https://github.com/Garhein/Xalise#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.8"
+  },
+  "devDependencies": {
+    "sass": "^1.105.1"
+  },
+  "scripts": {
+    "build:css": "sass src/scss/app.scss public/assets/css/app.css",
+    "watch:css": "sass --watch src/scss/app.scss public/assets/css/app.css"
+  }
+}
