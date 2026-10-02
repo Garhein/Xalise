@@ -1,7 +1,7 @@
 /**
  * Constantes DOM partagées par les composants JavaScript de l'application Xalise.
  */
-const XalConstants = Object.freeze({
+export const XalConstants = Object.freeze({
     /**
      * Noms des attributs ARIA utilisés par les composants.
      */

@@ -1,3 +1,5 @@
+import { XalConstants } from '../core/XalConstants.js';
+
 /**
  * Barre de progression indéterminée de la barre de navigation.
  *
@@ -7,7 +9,7 @@
  * @requires XalConstants
  * @namespace XalLoaderNav
  */
-const XalLoaderNav = (() => {
+export const XalLoaderNav = (() => {
     /** 
      * Nombre de traitements en cours.
      * 
@@ -56,7 +58,7 @@ const XalLoaderNav = (() => {
 
     return Object.freeze({
         /**
-         * Initialise le composant en résolvant l’élément DOM de la barre.
+         * Initialise le module en résolvant l’élément DOM de la barre.
          * Les appels suivants sont sans effet.
          *
          * @throws {Error} Si l’élément requis est absent du DOM.
