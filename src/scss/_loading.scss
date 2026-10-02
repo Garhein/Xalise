@@ -1,0 +1,36 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Barre de progression
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-loader-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    overflow: hidden;
+    pointer-events: none;
+
+    &[aria-hidden="true"] {
+        .xal-loader-nav__track {
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+    }
+
+    &__track {
+        height: 100%;
+        width: 45%;
+        opacity: 1;
+        border-radius: 0 2px 2px 0;
+        background-color: var(--bs-white);
+        box-shadow: 0 0 8px rgba(255, 255, 255, .6);
+        animation: xal-loader-nav-fill 1.2s ease-in-out infinite;
+    }
+}
+
+@keyframes xal-loader-nav-fill {
+    0%   { transform: translateX(-100%); }
+    60%  { transform: translateX(280%); }
+    100% { transform: translateX(280%); }
+}

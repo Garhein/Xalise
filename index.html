@@ -1,98 +1,112 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="./public/assets/css/app.css" rel="stylesheet">
-    <title>Xalise > Dashboard</title>
-  </head>
-  <body data-bs-theme="xalise">
-    <!-- Barre de navigation -->
-    <header>
-        <nav role="navigation"
-             id="xal-id-main-navbar"
-             class="navbar navbar-expand fixed-top flex-md-nowrap p-0 xal-main-navbar xal-u-gradient"
-             aria-label="Navigation principale">
-            <div class="container-fluid justify-content-start p-0">
-                <!-- .navbar-brand -->
-                <a href="#" class="navbar-brand me-0 px-3 fs-6 text-white">Xalise</a>
-
-                <!-- .navbar-nav -->
-                 <div class="navbar-nav flex-row ms-auto me-3">
-                    <button type="button"
-                            class="btn btn-outline-secondary position-relative"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#xal-id-notification-center"
-                            aria-controls="xal-id-notification-center"
-                            aria-label="99+ notifications non lues">
-                        <i class="bi bi-bell" aria-hidden="true"></i>
-                        <span class="badge bg-danger rounded-pill d-none d-md-inline-block xal-notification-indicator">
-                            <span class="xal-notification-indicator__badge">99+</span>
-                            <span class="visually-hidden">notifications non lues</span>
-                        </span>
-                        <span class="ms-1 d-md-none bg-danger xal-notification-indicator__dot xal-u-dot-1-70" aria-hidden="true"></span>
-                    </button>
-                    <button type="button"
-                            class="btn btn-outline-secondary"
-                            aria-label="99+ messages non lus">
-                        <i class="bi bi-envelope" aria-hidden="true"></i>
-                        <span class="badge bg-danger rounded-pill d-none d-md-inline-block">
-                            99+
-                            <span class="visually-hidden">messages non lus</span>
-                        </span>
-                        <span class="xal-u-dot-1-70 ms-1 d-md-none bg-danger" aria-hidden="true"></span>
-                    </button>
-                    <div class="dropdown">
-                        <button type="button"
-                                class="btn btn-outline-secondary d-flex"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                aria-controls="xal-id-user-menu"
-                                aria-label="Menu du compte Laura Bellerose">
-                            <img src="./public/assets/img/user.jpg" alt="" class="rounded-circle me-2" width="24" height="24"/>
-                            <span class="d-none d-md-inline">Laura Bellerose</span>
-                            <i class="bi bi-chevron-down m-0 ms-md-2" aria-hidden="true"></i>
-                        </button>
-                        <ul id="xal-id-user-menu" class="dropdown-menu dropdown-menu-end mt-2">
-                            <li class="dropdown-header">
-                                <div class="fw-semibold">Laura Bellerose</div>
-                                <div class="fst-italic small fw-semibold text-body-secondary">Directrice Générale</div>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    <i class="bi bi-person-fill me-1" aria-hidden="true"></i>
-                                    Profil
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown-item active" aria-current="true">
-                                    <i class="bi bi-gear-fill me-1" aria-hidden="true"></i>
-                                    Paramètres
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown-item disabled" aria-disabled="true" tabindex="-1">
-                                    <i class="bi bi-envelope-fill me-1" aria-hidden="true"></i>
-                                    Menu désactivé
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    <i class="bi bi-door-closed-fill me-1" aria-hidden="true"></i>
-                                    Se déconnecter
-                                </a>
-                            </li>
-                        </ul>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+        <link href="./public/assets/css/app.css" rel="stylesheet">
+        <title>Xalise > Dashboard</title>
+    </head>
+    <body data-bs-theme="xalise">
+        <!-- Barre de navigation -->
+        <header>
+            <nav role="navigation"
+                id="xal-id-main-navbar"
+                class="navbar navbar-expand fixed-top flex-md-nowrap p-0 xal-main-navbar xal-u-gradient"
+                aria-label="Navigation principale">
+                <div class="container-fluid justify-content-start p-0">
+                    <!-- Barre de progression -->
+                    <div id="xal-id-loader-nav"
+                        class="xal-loader-nav"
+                        role="progressbar"
+                        aria-label="Chargement en cours"
+                        aria-hidden="true"
+                        hidden>
+                        <div class="xal-loader-nav__track"></div>
                     </div>
-                 </div>
-            </div>
-        </nav>
-    </header>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
-  </body>
+                    <!-- .navbar-brand -->
+                    <a href="#" class="navbar-brand me-0 px-3 fs-6 text-white">Xalise</a>
+
+                    <!-- .navbar-nav -->
+                    <div class="navbar-nav flex-row ms-auto me-3">
+                        <button type="button"
+                                class="btn btn-outline-secondary position-relative"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#xal-id-notification-center"
+                                aria-controls="xal-id-notification-center"
+                                aria-label="99+ notifications non lues">
+                            <i class="bi bi-bell" aria-hidden="true"></i>
+                            <span class="badge bg-danger rounded-pill d-none d-md-inline-block xal-notification-indicator">
+                                <span class="xal-notification-indicator__badge">99+</span>
+                                <span class="visually-hidden">notifications non lues</span>
+                            </span>
+                            <span class="ms-1 d-md-none bg-danger xal-notification-indicator__dot xal-u-dot-1-70" aria-hidden="true"></span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-outline-secondary"
+                                aria-label="99+ messages non lus">
+                            <i class="bi bi-envelope" aria-hidden="true"></i>
+                            <span class="badge bg-danger rounded-pill d-none d-md-inline-block">
+                                99+
+                                <span class="visually-hidden">messages non lus</span>
+                            </span>
+                            <span class="xal-u-dot-1-70 ms-1 d-md-none bg-danger" aria-hidden="true"></span>
+                        </button>
+                        <div class="dropdown">
+                            <button type="button"
+                                    class="btn btn-outline-secondary d-flex"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    aria-controls="xal-id-user-menu"
+                                    aria-label="Menu du compte Laura Bellerose">
+                                <img src="./public/assets/img/user.jpg" alt="" class="rounded-circle me-2" width="24" height="24"/>
+                                <span class="d-none d-md-inline">Laura Bellerose</span>
+                                <i class="bi bi-chevron-down m-0 ms-md-2" aria-hidden="true"></i>
+                            </button>
+                            <ul id="xal-id-user-menu" class="dropdown-menu dropdown-menu-end mt-2">
+                                <li class="dropdown-header">
+                                    <div class="fw-semibold">Laura Bellerose</div>
+                                    <div class="fst-italic small fw-semibold text-body-secondary">Directrice Générale</div>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="bi bi-person-fill me-1" aria-hidden="true"></i>
+                                        Profil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-item active" aria-current="true">
+                                        <i class="bi bi-gear-fill me-1" aria-hidden="true"></i>
+                                        Paramètres
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-item disabled" aria-disabled="true" tabindex="-1">
+                                        <i class="bi bi-envelope-fill me-1" aria-hidden="true"></i>
+                                        Menu désactivé
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="bi bi-door-closed-fill me-1" aria-hidden="true"></i>
+                                        Se déconnecter
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+  
+        <script src="./src/js/core/XalConstants.js"></script>
+        <script src="./src/js/loaders/XalLoaderNav.js"></script>
+        <script src="./src/js/main.js"></script>
+    </body>
 </html>
