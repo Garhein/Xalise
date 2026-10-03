@@ -32,7 +32,7 @@ export const XalLoaderNav = (() => {
     const _isActive = () => _pendingCount > 0;
 
     /**
-     * Vérifie si l’élément DOM a été résolu avant toute utilisation de celui-ci.
+     * Vérifie si l’élément DOM a été résolu avant toute utilisation.
      *
      * @throws {Error} Si `init()` n’a pas été appelé ou si l’élément DOM est manquant.
      */

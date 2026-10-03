@@ -9,6 +9,20 @@
         <link href="./public/assets/css/app.css" rel="stylesheet">
         <title>Xalise > Dashboard</title>
     </head>
+    
+    <div id="xal-id-portals">
+        <!-- Overlay appliqué sur la page lors de certaines actions -->
+        <div id="xal-id-loader-overlay"
+             class="xal-loader-overlay"
+             aria-hidden="true"
+             hidden>
+            <div class="xal-loader-overlay__content">
+                <div class="xal-loader-overlay__spinner" aria-hidden="true"></div>
+                <span class="xal-loader-overlay__message"></span>
+            </div>
+        </div>
+    </div>
+    
     <body data-bs-theme="xalise">
         <!-- Barre de navigation -->
         <header>
