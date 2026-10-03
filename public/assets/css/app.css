@@ -11985,6 +11985,14 @@ body:not([data-xal-page-fullheight]) {
   padding-top: var(--xal-navbar-height);
 }
 
+[data-bs-toggle=dropdown] .bi-chevron-down {
+  transition: transform 0.2s ease;
+}
+
+[data-bs-toggle=dropdown][aria-expanded=true] .bi-chevron-down {
+  transform: rotate(180deg);
+}
+
 .xal-main-navbar .navbar-brand {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
