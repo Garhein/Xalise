@@ -21,4 +21,20 @@
         --bs-dropdown-header-color: var(--bs-white);
         --bs-dropdown-header-padding-y: 0;
     }
+
+    // =-=-=-=-=-=-
+    // Règles appliquées en dessous du breakpoint "md" (768px)
+    // =-=-=-=-=-=-
+
+    @media (max-width: 767.98px) {
+        // Tooltips pour les boutons de la barre de navigation
+        .xal-main-navbar [data-xal-tooltip] {
+            position: relative;
+
+            &::after {
+                color: var(--bs-white);
+                background-color: var(--bs-primary);
+            }
+        }
+    }
 }

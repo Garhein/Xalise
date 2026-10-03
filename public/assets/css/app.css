@@ -12013,6 +12013,34 @@ body:not([data-xal-page-fullheight]) {
   padding: 0.35rem 0.45rem;
 }
 
+@media (max-width: 767.98px) {
+  .xal-main-navbar [data-xal-tooltip] {
+    position: relative;
+  }
+  .xal-main-navbar [data-xal-tooltip]::after {
+    content: attr(data-xal-tooltip);
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    z-index: 1080;
+    transform: translateX(-50%);
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--bs-border-radius);
+    color: var(--bs-white);
+    background-color: var(--bs-dark);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  }
+  .xal-main-navbar [data-xal-tooltip]:hover::after, .xal-main-navbar [data-xal-tooltip]:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+}
 .xal-loader-nav {
   position: absolute;
   bottom: 0;
@@ -12061,6 +12089,15 @@ body:not([data-xal-page-fullheight]) {
   --bs-dropdown-link-disabled-color: rgba(var(--bs-white-rgb), 0.5);
   --bs-dropdown-header-color: var(--bs-white);
   --bs-dropdown-header-padding-y: 0;
+}
+@media (max-width: 767.98px) {
+  [data-bs-theme=xalise] .xal-main-navbar [data-xal-tooltip] {
+    position: relative;
+  }
+  [data-bs-theme=xalise] .xal-main-navbar [data-xal-tooltip]::after {
+    color: var(--bs-white);
+    background-color: var(--bs-primary);
+  }
 }
 
 /*# sourceMappingURL=app.css.map */
