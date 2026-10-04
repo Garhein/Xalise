@@ -5,3 +5,12 @@
 body:not([data-xal-page-fullheight]) {
   padding-top: var(--xal-navbar-height);
 }
+
+// =-=-=-=-=-=-
+// Layout de l'application
+// =-=-=-=-=-=-
+
+.xal-application-layout {
+  min-height: calc(100vh - var(--xal-navbar-height));
+  display: flex;
+}

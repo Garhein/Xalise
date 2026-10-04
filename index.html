@@ -10,20 +10,33 @@
         <title>Xalise > Dashboard</title>
     </head>
     
-    <div id="xal-id-portals">
-        <!-- Overlay appliqué sur la page lors de certaines actions -->
-        <div id="xal-id-loader-overlay"
-             class="xal-loader-overlay"
-             aria-hidden="true"
-             hidden>
-            <div class="xal-loader-overlay__content">
-                <div class="xal-loader-overlay__spinner" aria-hidden="true"></div>
-                <span class="xal-loader-overlay__message"></span>
-            </div>
-        </div>
-    </div>
-    
     <body data-bs-theme="xalise">
+        <div id="xal-id-portals">
+            <!-- Overlay appliqué sur la page lors de certaines actions -->
+            <div id="xal-id-loader-overlay"
+                class="xal-loader-overlay"
+                aria-hidden="true"
+                hidden>
+                <div class="xal-loader-overlay__content">
+                    <div class="xal-loader-overlay__spinner" aria-hidden="true"></div>
+                    <span class="xal-loader-overlay__message"></span>
+                </div>
+            </div>
+
+            <!-- Template du loader -->
+            <template id="xal-id-loader-placeholder-template">
+                <div class="xal-loader-placeholder">
+                    <div class="xal-loader-placeholder__block"></div>
+                    <div class="xal-loader-placeholder__block"></div>
+                    <div class="xal-loader-placeholder__block"></div>
+                    <div class="xal-loader-placeholder__block"></div>
+                    <div class="xal-loader-placeholder__block"></div>
+                    <div class="xal-loader-placeholder__block"></div>
+                    <div class="xal-loader-placeholder__block"></div>
+                </div>
+            </template>
+        </div>
+        
         <!-- Barre de navigation -->
         <header>
             <nav role="navigation"

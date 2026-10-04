@@ -102,3 +102,47 @@
 @keyframes xal-loader-spinner-rotate {
     to { transform: rotate(360deg); }
 }
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Placeholder
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-loader-placeholder {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    pointer-events: none;
+
+    &__block {
+        display: block;
+        border-radius: .25rem;
+        background: linear-gradient(
+            90deg,
+            #ced4da 25%,
+            #dee2e6 50%,
+            #ced4da 75%
+        );
+        background-size: 200% 100%;
+        animation: xal-loader-placeholder-shimmer 1.5s ease-in-out infinite;
+        height: .75rem;
+        margin-bottom: .5rem;
+
+        &:first-child {
+            width: 60%;
+        }
+
+        &:nth-child(5) {
+            width: 80%;
+        }
+
+        &:last-child {
+            width: 90%;
+            margin-bottom: 0;
+        }
+    }
+}
+
+@keyframes xal-loader-placeholder-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}

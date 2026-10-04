@@ -11985,17 +11985,33 @@ body:not([data-xal-page-fullheight]) {
   padding-top: var(--xal-navbar-height);
 }
 
+.xal-application-layout {
+  min-height: calc(100vh - var(--xal-navbar-height));
+  display: flex;
+}
+
 [data-bs-toggle=dropdown] .bi-chevron-down {
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease;
 }
 
 [data-bs-toggle=dropdown][aria-expanded=true] .bi-chevron-down {
   transform: rotate(180deg);
 }
 
+.xal-main-navbar {
+  height: var(--xal-navbar-height);
+  z-index: 1030;
+}
 .xal-main-navbar .navbar-brand {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+.xal-main-navbar .btn {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+.xal-main-navbar .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 .xal-main-navbar .btn-outline-secondary {
   border: none;
@@ -12020,7 +12036,7 @@ body:not([data-xal-page-fullheight]) {
   .xal-main-navbar [data-xal-tooltip]::after {
     content: attr(data-xal-tooltip);
     position: absolute;
-    top: calc(100% + 0.5rem);
+    top: calc(100% + 0.6rem);
     left: 50%;
     z-index: 1080;
     transform: translateX(-50%);
@@ -12137,6 +12153,40 @@ body:not([data-xal-page-fullheight]) {
 @keyframes xal-loader-spinner-rotate {
   to {
     transform: rotate(360deg);
+  }
+}
+.xal-loader-placeholder {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  pointer-events: none;
+}
+.xal-loader-placeholder__block {
+  display: block;
+  border-radius: 0.25rem;
+  background: linear-gradient(90deg, #ced4da 25%, #dee2e6 50%, #ced4da 75%);
+  background-size: 200% 100%;
+  animation: xal-loader-placeholder-shimmer 1.5s ease-in-out infinite;
+  height: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.xal-loader-placeholder__block:first-child {
+  width: 60%;
+}
+.xal-loader-placeholder__block:nth-child(5) {
+  width: 80%;
+}
+.xal-loader-placeholder__block:last-child {
+  width: 90%;
+  margin-bottom: 0;
+}
+
+@keyframes xal-loader-placeholder-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
 [data-bs-theme=xalise] {
