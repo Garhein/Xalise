@@ -13,12 +13,11 @@ export const XalConstants = Object.freeze({
      * Identifiants des éléments uniques du DOM.
      */
     elementIds: Object.freeze({
-        loader: Object.freeze({ 
-            // Barre de progression placée dans la barre de navigation
+        toastTemplateFeedback: 'xal-id-toast-template-feedback',
+
+        loader: Object.freeze({
             navbar:                 'xal-id-loader-nav',
-            // Overlay de chargement global
             overlay:                'xal-id-loader-overlay',
-            // Template HTML du placeholder de chargement
             placeholderTemplate:    'xal-id-loader-placeholder-template',
         }),
     }),
@@ -29,10 +28,17 @@ export const XalConstants = Object.freeze({
      */
     cssQueries: Object.freeze({
         loader: Object.freeze({ 
-            // Conteneur du message dans l’overlay de chargement
             overlayMessage: '.xal-loader-overlay__message',
-            // Placeholder de chargement inséré dans une zone cible
             placeholder:    '.xal-loader-placeholder',
+        }),
+
+        toast: Object.freeze({ 
+            container:       '.toast-container',
+            header:          '.toast-header',
+            xalToast:        '.xal-toast',
+            xalToastIcon:    '.xal-toast__icon',
+            xalToastLabel:   '.xal-toast__label',
+            xalToastMessage: '.xal-toast__message',
         }),
     }),
 
@@ -42,5 +48,19 @@ export const XalConstants = Object.freeze({
     cssClasses: Object.freeze({
         // Classe appliquée à un placeholder actif dans une zone cible
         loaderPlaceholderActive: 'xal-loader-placeholder--active',
+
+        bootstrapIcons: Object.freeze({ 
+            checkCircleFill:          'bi-check-circle-fill',
+            xCircleFill:              'bi-x-circle-fill',
+            exclamationTriangleFill:  'bi-exclamation-triangle-fill',
+            infoCircleFill:           'bi-info-circle-fill',
+        }),
+
+        bootstrapTextBg: Object.freeze({ 
+            success: 'text-bg-success',
+            danger:  'text-bg-danger',
+            warning: 'text-bg-warning',
+            info:    'text-bg-info',
+        }),
     }),
 });

@@ -35,6 +35,21 @@
                     <div class="xal-loader-placeholder__block"></div>
                 </div>
             </template>
+        
+            <!-- Conteneur des toast -->
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <!-- Template des toast de feedback -->
+                <template id="xal-id-toast-template-feedback">
+                    <div class="toast xal-toast" role="status" aria-live="polite" aria-atomic="true">
+                        <div class="toast-header">
+                            <i class="bi me-2 xal-toast__icon" aria-hidden="true" hidden></i>
+                            <strong class="me-auto xal-toast__label"></strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+                        </div>
+                        <div class="toast-body xal-toast__message"></div>
+                    </div>
+                </template>
+            </div>
         </div>
         
         <!-- Barre de navigation -->
