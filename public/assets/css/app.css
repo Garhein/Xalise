@@ -12028,6 +12028,20 @@ body:not([data-xal-page-fullheight]) {
   margin-left: 0.1rem;
   padding: 0.35rem 0.45rem;
 }
+.xal-main-navbar__brand {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 1px;
+  border-radius: 0.5rem;
+  background-color: var(--bs-white);
+}
+.xal-main-navbar__brand img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 
 @media (max-width: 767.98px) {
   .xal-main-navbar [data-xal-tooltip] {
