@@ -40,6 +40,10 @@ export const XalConstants = Object.freeze({
             xalToastLabel:   '.xal-toast__label',
             xalToastMessage: '.xal-toast__message',
         }),
+
+        form: Object.freeze({
+            needsValidate: '.needs-validation',
+        }),
     }),
 
     /**
@@ -61,6 +65,10 @@ export const XalConstants = Object.freeze({
             danger:  'text-bg-danger',
             warning: 'text-bg-warning',
             info:    'text-bg-info',
+        }),
+
+        form: Object.freeze({
+            wasValidated: 'was-validated',
         }),
     }),
 });
