@@ -12071,6 +12071,15 @@ body:not([data-xal-page-fullheight]) {
     transition-delay: 0s;
   }
 }
+.xal-login__form-container {
+  max-width: 28rem;
+}
+
+.xal-login__logo {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
 .xal-loader-nav {
   position: absolute;
   bottom: 0;
