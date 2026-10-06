@@ -12071,13 +12071,17 @@ body:not([data-xal-page-fullheight]) {
     transition-delay: 0s;
   }
 }
-.xal-login__form-container {
+.xal-auth__form-container {
   max-width: 28rem;
 }
 
-.xal-login__logo {
+.xal-auth__logo {
   width: 4.5rem;
   height: 4.5rem;
+}
+
+.was-validated .xal-otp-form__inputs:has(.xal-otp-form__digit:invalid) + .invalid-feedback {
+  display: block;
 }
 
 .xal-loader-nav {

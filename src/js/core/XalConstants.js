@@ -20,6 +20,10 @@ export const XalConstants = Object.freeze({
             overlay:                'xal-id-loader-overlay',
             placeholderTemplate:    'xal-id-loader-placeholder-template',
         }),
+
+        form: Object.freeze({
+            login: 'xal-id-login-form'
+        }),
     }),
 
     /**
