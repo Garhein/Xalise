@@ -3,9 +3,9 @@ import { XalLoaderOverlay } from './loaders/XalLoaderOverlay.js';
 import { XalLoaderPlaceholder } from './loaders/XalLoaderPlaceholder.js';
 import { XalToast } from './components/XalToast.js';
 
-XalLoaderNav.init();
 XalLoaderOverlay.init();
 XalLoaderPlaceholder.init();
+XalLoaderNav.init();
 XalToast.init();
 
 // Debug des modules Xalise si le paramètre `debug` est présent dans l’URL
