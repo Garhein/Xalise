@@ -12084,6 +12084,27 @@ body:not([data-xal-page-fullheight]) {
   display: block;
 }
 
+.xal-otp__countdown-container {
+  position: relative;
+}
+
+.xal-otp__countdown-progress {
+  height: 1.25rem;
+  --bs-progress-bg: var(--bs-border-color);
+}
+
+.xal-otp__countdown-timer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  color: var(--bs-body-color);
+  background-color: transparent;
+  line-height: 1;
+}
+
 .xal-loader-nav {
   position: absolute;
   bottom: 0;

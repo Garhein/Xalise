@@ -7,6 +7,7 @@ export const XalConstants = Object.freeze({
      */
     ariaNames: Object.freeze({
         hidden: 'aria-hidden',
+        valueNow: 'aria-valuenow',
     }),
 
     /**
@@ -19,6 +20,13 @@ export const XalConstants = Object.freeze({
             navbar:                 'xal-id-loader-nav',
             overlay:                'xal-id-loader-overlay',
             placeholderTemplate:    'xal-id-loader-placeholder-template',
+        }),
+
+        otp: Object.freeze({
+            countdownTimer:         'xal-id-otp-countdown-timer',
+            countdownProgress:      'xal-id-otp-countdown-progress',
+            countdownProgressBar:   'xal-id-otp-countdown-progress-bar',
+            resendBtn:              'xal-id-otp-resend',
         }),
     }),
 
@@ -66,6 +74,13 @@ export const XalConstants = Object.freeze({
             danger:  'text-bg-danger',
             warning: 'text-bg-warning',
             info:    'text-bg-info',
+        }),
+
+        bootstrapBgColor: Object.freeze({
+            success:    'bg-success',
+            danger:     'bg-danger',
+            warning:    'bg-warning',
+            info:       'bg-info',
         }),
 
         form: Object.freeze({
