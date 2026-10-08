@@ -114,16 +114,60 @@ function focusNextOtpInput(index) {
     nextInput.focus();
 }
 
+/**
+ * Répartit la saisie dans les champs lors d'un collage ou d'un remplissage automatique.
+ * @param {string} value
+ * @param {number} startIndex
+ * @returns {void}
+ */
+function distributeOtpDigits(value, startIndex) {
+    let digits      = value.replace(/\D/g, '');
+    let targetIndex = startIndex;
+    
+    // Code complet ou trop long pour les champs restants : répartition depuis le premier champ
+    if (digits.length >= otpInputs.length || digits.length > otpInputs.length - targetIndex) {
+        targetIndex = 0;
+    }
+
+    digits = digits.slice(0, otpInputs.length - targetIndex);
+
+    if (digits.length < 2) return;
+
+    for (let index = targetIndex; index < otpInputs.length; index++) {
+        otpInputs[index].value = '';
+    }
+
+    [...digits].forEach((digit, offset) => {
+        otpInputs[targetIndex + offset].value = digit;
+    });
+
+    const firstEmptyInput = otpInputs.find((input) => !input.value);
+
+    if (firstEmptyInput) {
+        firstEmptyInput.focus();
+    }
+    else {
+        otpInputs[otpInputs.length - 1].blur();
+    }
+}
+
 otpInputs.forEach((input, index) => {
     input.addEventListener('focus', () => input.select());
     input.addEventListener('click', () => input.select());
 
     input.addEventListener('input', (event) => {
         // Conserver un seul chiffre
-        input.value = input.value.replace(/\D/g, '').slice(0, 1);
+        const digits = input.value.replace(/\D/g, '');
+
+        if (digits.length > 1) {
+            distributeOtpDigits(digits, index);
+            return;
+        }
+
+        input.value = digits;
 
         if (input.value) {
-            // Passer au champ suivant dès qu'un chiffre est saisi
+            // Passe au champ suivant dès qu'un chiffre est saisi
             if (index < otpInputs.length - 1) {
                 focusNextOtpInput(index);
             }
@@ -131,6 +175,7 @@ otpInputs.forEach((input, index) => {
                 // Saisie du dernier chiffre : on retire le focus
                 input.blur();
             }
+
             return;
         }
 
@@ -138,6 +183,17 @@ otpInputs.forEach((input, index) => {
         if (['deleteContentBackward', 'deleteContentForward'].includes(event.inputType)) {
             focusPreviousOtpInput(index);
         }
+    });
+
+    // Collage d'un code complet
+    input.addEventListener('paste', (event) => {
+        const pastedText = event.clipboardData?.getData('text') ?? '';
+        const digits     = pastedText.replace(/\D/g, '');
+
+        if (digits.length < 2) return;
+
+        event.preventDefault();
+        distributeOtpDigits(digits, index);
     });
 
     // Revenir au champ précédent si le champ courant est vide
