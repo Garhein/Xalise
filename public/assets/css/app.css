@@ -12113,6 +12113,14 @@ body:not([data-xal-page-fullheight]) {
   line-height: 1;
 }
 
+.xal-otp-form__digit.is-valid,
+.was-validated .xal-otp-form__digit:valid,
+.xal-otp-form__digit.is-invalid,
+.was-validated .xal-otp-form__digit:invalid {
+  background-image: none;
+  padding-right: 0.75rem;
+}
+
 .xal-loader-nav {
   position: absolute;
   bottom: 0;

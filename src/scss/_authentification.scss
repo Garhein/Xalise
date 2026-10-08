@@ -54,3 +54,12 @@
     background-color: transparent;
     line-height: 1;
 }
+
+// Retrait des icônes de réussite/échec pour éviter que les chiffres soient tronqués
+.xal-otp-form__digit.is-valid,
+.was-validated .xal-otp-form__digit:valid,
+.xal-otp-form__digit.is-invalid,
+.was-validated .xal-otp-form__digit:invalid {
+    background-image: none;
+    padding-right: .75rem;
+}
