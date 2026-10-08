@@ -53,6 +53,8 @@ export const XalConstants = Object.freeze({
             needsValidate: '.needs-validation',
             staticTarget:  'form[data-xal-target]',
         }),
+
+        otpDigits: '.xal-otp-form__digit',
     }),
 
     /**

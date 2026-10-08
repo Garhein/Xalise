@@ -1,5 +1,9 @@
 import { XalConstants } from './core/XalConstants.js';
 
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Gestion du compte à rebours
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
 const OTP_DURATION_SECONDS  = 1 * 60;
 const countdown             = document.getElementById(XalConstants.elementIds.otp.countdownTimer);
 const resendButton          = document.getElementById(XalConstants.elementIds.otp.resendBtn);
@@ -79,3 +83,70 @@ if (countdown && resendButton) {
         startCountdown();
     });
 }
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Passage de champ en champ
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+const otpInputs = Array.from(document.querySelectorAll(XalConstants.cssQueries.otpDigits));
+
+/**
+ * Déplace le curseur dans le champ précédent et sélectionne son contenu.
+ * @param {number} index
+ * @returns {void}
+ */
+function focusPreviousOtpInput(index) {
+    if (index === 0) return;
+
+    const previousInput = otpInputs[index - 1];
+    previousInput.focus();
+}
+
+/**
+ * Déplace le curseur dans le champ suivant et sélectionne son contenu.
+ * @param {number} index
+ * @returns {void}
+ */
+function focusNextOtpInput(index) {
+    if (index >= otpInputs.length - 1) return;
+
+    const nextInput = otpInputs[index + 1];
+    nextInput.focus();
+}
+
+otpInputs.forEach((input, index) => {
+    input.addEventListener('focus', () => input.select());
+    input.addEventListener('click', () => input.select());
+
+    input.addEventListener('input', (event) => {
+        // Conserver un seul chiffre
+        input.value = input.value.replace(/\D/g, '').slice(0, 1);
+
+        if (input.value) {
+            // Passer au champ suivant dès qu'un chiffre est saisi
+            if (index < otpInputs.length - 1) {
+                focusNextOtpInput(index);
+            }
+            else if (otpInputs.every((otpInput) => otpInput.value !== '')) {
+                // Saisie du dernier chiffre : on retire le focus
+                input.blur();
+            }
+            return;
+        }
+
+        // Revenir au champ précédent
+        if (['deleteContentBackward', 'deleteContentForward'].includes(event.inputType)) {
+            focusPreviousOtpInput(index);
+        }
+    });
+
+    // Revenir au champ précédent si le champ courant est vide
+    input.addEventListener('keydown', (event) => {
+        const isDeleteKey = ['Backspace', 'Delete'].includes(event.key);
+
+        if (isDeleteKey && !input.value && index > 0) {
+            event.preventDefault();
+            focusPreviousOtpInput(index);
+        }
+    });
+});
