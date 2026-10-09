@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="../../public/favicon.ico" sizes="any">
+        <link rel="icon" type="image/svg+xml" href="../../public/favicon.svg">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+        <link href="../../public/assets/css/app.css" rel="stylesheet">
+        <title>Xalise > Connexion</title>
+    </head>
+    
+    <body data-bs-theme="xalise" data-xal-page-fullheight>
+        <main class="container-fluid p-0">
+            <div class="row g-0 min-vh-100">
+                <!-- Colonne de présentation -->
+                <section class="d-none col-lg-6 d-lg-flex flex-column justify-content-center align-items-center p-5 text-white xal-u-gradient"
+                         aria-labelledby="xal-id-auth-brand-title">
+                    <img src="../../public/favicon.svg"
+                         alt=""
+                         aria-hidden="true"
+                         class="mb-4 xal-auth__logo">
+
+                    <p class="fw-semibold fs-4 opacity-75">
+                        Xalise
+                    </p>
+
+                    <h2 id="xal-id-auth-brand-title" class="fw-semibold">
+                        Toute votre activité, dans un espace unique.
+                    </h2>
+
+                    <p class="lead text-center mb-5">
+                        Une vue claire pour décider sereinement et avancer au quotidien.
+                    </p>
+
+                    <ul class="list-unstyled">
+                        <li class="d-flex align-items-center gap-3 mb-3">
+                            <i class="bi bi-graph-up-arrow" aria-hidden="true"></i>
+                            <span>Suivez vos indicateurs</span>
+                        </li>
+                        <li class="d-flex align-items-center gap-3 mb-3">
+                            <i class="bi bi-bell" aria-hidden="true"></i>
+                            <span>Gardez un œil sur vos notifications</span>
+                        </li>
+                        <li class="d-flex align-items-center gap-3 mb-3">
+                            <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+                            <span>Retrouvez vos documents</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Colonne de connexion -->
+                <section class="col-12 col-lg-6 d-flex justify-content-center align-items-center p-4 p-md-5"
+                         aria-labelledby="xal-id-auth-title">
+                    <div class="w-100 xal-auth__form-container">
+                        <div class="d-lg-none mb-4 text-center">
+                            <img src="../../public/favicon.svg"
+                                 alt=""
+                                 aria-hidden="true"
+                                 class="mb-3 xal-auth__logo">
+
+                            <p class="fw-semibold fs-4 mb-3">
+                                Xalise
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <h1 id="xal-id-auth-title" class="h3">Connexion</h1>
+                            <p class="text-body-secondary">
+                                Saisissez vos identifiants pour continuer.
+                            </p>
+                        </div>
+
+                        <div class="alert alert-danger text-center py-2 px-3 mb-4" role="alert">
+                            <i class="bi bi-x-circle-fill me-1" aria-hidden="true"></i>
+                            <span>Adresse e-mail ou mot de passe incorrect.</span>
+                        </div>
+
+                        <form id="xal-id-login-form"
+                              action="/login"
+                              method="post"
+                              data-xal-target="./otp.html"
+                              class="needs-validation"
+                              novalidate>
+                            <div class="mb-3">
+                                <label for="xal-id-login-email" class="form-label">Adresse e-mail</label>
+                                <input type="email"
+                                       class="form-control"
+                                       id="xal-id-login-email"
+                                       name="email"
+                                       autocomplete="username"
+                                       required>
+                                <div class="invalid-feedback">
+                                    Saisissez une adresse e-mail valide.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="xal-id-login-password" class="form-label">Mot de passe</label>
+                                <input type="password"
+                                       class="form-control"
+                                       id="xal-id-login-password"
+                                       name="password"
+                                       autocomplete="current-password"
+                                       required>
+                                <div class="invalid-feedback">
+                                    Saisissez votre mot de passe.
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-xalise w-100">Se connecter</button>
+                        </form>
+
+                        <div class="text-center mt-4">
+                            <a href="./forgot-password.html" class="small link-secondary text-decoration-none">
+                                Mot de passe oublié ?
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+        <script type="module" src="../../src/js/xalise.js"></script>
+    </body>
+</html>
