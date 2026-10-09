@@ -28,6 +28,12 @@ export const XalConstants = Object.freeze({
             countdownProgressBar:   'xal-id-otp-countdown-progress-bar',
             resendBtn:              'xal-id-otp-resend',
         }),
+
+        password: Object.freeze({
+            form:                       'xal-id-reset-password-form',
+            inputReset:                 'xal-id-reset-password',
+            inputResetConfirmation:     'xal-id-reset-password-confirm',
+        }),
     }),
 
     /**
@@ -55,6 +61,13 @@ export const XalConstants = Object.freeze({
         }),
 
         otpDigits: '.xal-otp-form__digit',
+
+        password: Object.freeze({
+            ruleLength:     '[data-password-rule="length"]',
+            ruleUppercase:  '[data-password-rule="uppercase"]',
+            ruleNumber:     '[data-password-rule="number"]',
+            ruleSpecial:    '[data-password-rule="special"]',
+        }),
     }),
 
     /**
@@ -83,6 +96,14 @@ export const XalConstants = Object.freeze({
             danger:     'bg-danger',
             warning:    'bg-warning',
             info:       'bg-info',
+        }),
+
+        bootstrapTextColor: Object.freeze({
+            success:        'text-success',
+            danger:         'text-danger',
+            warning:        'text-warning',
+            info:           'text-info',
+            bodySecondary:  'text-body-secondary',
         }),
 
         form: Object.freeze({
