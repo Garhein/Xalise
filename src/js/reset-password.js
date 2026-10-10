@@ -11,6 +11,8 @@ const ruleElements = {
     special:    document.querySelector(XalConstants.cssQueries.password.ruleSpecial),
 };
 
+const rulesStatus = document.getElementById(XalConstants.elementIds.password.rulesStatus);
+
 /**
  * Vérifie la validité des mots de passe saisis.
  */
@@ -24,10 +26,25 @@ function updatePasswordValidity() {
     };
 
     for (const [name, isValid] of Object.entries(rules)) {
-        const ruleElement = ruleElements[name];
+        updateRuleIndicator(ruleElements[name], isValid);
+    }
 
-        ruleElement.classList.toggle(XalConstants.cssClasses.bootstrapTextColor.success, isValid);
-        ruleElement.classList.toggle(XalConstants.cssClasses.bootstrapTextColor.bodySecondary, !isValid);
+    const validRuleCount = Object.values(rules).filter(Boolean).length;
+
+    let statusMessage;
+
+    if (validRuleCount === 4) {
+        statusMessage = 'Toutes les règles du mot de passe sont respectées.';
+    }
+    else if (validRuleCount === 1) {
+        statusMessage = 'Une règle du mot de passe sur quatre est respectée.';
+    }
+    else {
+        statusMessage = `${validRuleCount} règles du mot de passe sur quatre sont respectées.`;
+    }
+
+    if (rulesStatus.textContent !== statusMessage) {
+        rulesStatus.textContent = statusMessage;
     }
 
     const passwordIsValid = Object.values(rules).every(Boolean);
@@ -44,6 +61,19 @@ function updatePasswordValidity() {
             ? ''
             : 'Les deux mots de passe doivent être identiques.'
     );
+}
+
+function updateRuleIndicator(element, isValid) {
+    const icon  = element.querySelector('i');
+    const state = element.querySelector('[data-password-rule-state]');
+
+    icon.classList.toggle(XalConstants.cssClasses.bootstrapIcons.xCircleFill, !isValid);
+    icon.classList.toggle(XalConstants.cssClasses.bootstrapIcons.checkCircleFill, isValid);
+
+    element.classList.toggle(XalConstants.cssClasses.bootstrapTextColor.success, isValid);
+    element.classList.toggle(XalConstants.cssClasses.bootstrapTextColor.bodySecondary, !isValid);
+
+    state.textContent = isValid ? 'Validé' : 'À respecter';
 }
 
 passwordInput.addEventListener('input', updatePasswordValidity);

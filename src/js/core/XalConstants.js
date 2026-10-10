@@ -33,6 +33,7 @@ export const XalConstants = Object.freeze({
             form:                       'xal-id-reset-password-form',
             inputReset:                 'xal-id-reset-password',
             inputResetConfirmation:     'xal-id-reset-password-confirm',
+            rulesStatus:                'xal-id-password-rules-status',
         }),
     }),
 
@@ -82,6 +83,7 @@ export const XalConstants = Object.freeze({
             xCircleFill:              'bi-x-circle-fill',
             exclamationTriangleFill:  'bi-exclamation-triangle-fill',
             infoCircleFill:           'bi-info-circle-fill',
+            circle:                   'bi-circle',
         }),
 
         bootstrapTextBg: Object.freeze({ 
