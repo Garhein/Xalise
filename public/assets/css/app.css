@@ -12132,6 +12132,22 @@ body:not([data-xal-page-fullheight]) {
   padding-right: 0.75rem;
 }
 
+.xal-dashboard__metric-card {
+  background-color: color-mix(in srgb, var(--bs-body-bg) 90%, var(--xalise-color) 10%);
+}
+
+.xal-dashboard__metric-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  color: var(--xalise-color);
+  background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--xalise-color));
+}
+
+@media (min-width: 1400px) {
+  .xal-dashboard__metric-trend {
+    white-space: nowrap;
+  }
+}
 .xal-loader-nav {
   position: absolute;
   bottom: 0;

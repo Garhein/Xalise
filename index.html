@@ -197,7 +197,166 @@
                 </div>
             </nav>
         </header>
+        
+        <!-- Contenu de la page -->
         <div id="xal-id-application-layout" class="xal-application-layout">
+            <main class="container-fluid flex-grow-1 p-3 p-lg-4" aria-describedby="xal-id-dashboard-title">
+                <header class="mb-4 pb-3 border-bottom">
+                    <h1 id="xal-id-dashboard-title" class="h3 mb-1">
+                        Tableau de bord
+                    </h1>
+                    <p class="text-body-secondary mb-0">
+                        Les chiffres clés et les éléments à suivre dans votre activité.
+                    </p>
+                </header>
+
+                <section class="mb-4" aria-labelledby="xal-id-dashboard-indicators-title">
+                    <h2 id="xal-id-dashboard-indicators-title" class="h5 mb-3">
+                        Chiffres clés
+                    </h2>
+
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 g-3">
+                        <div class="col">
+                            <article class="card h-100 text-start xal-dashboard__metric-card">
+                                <div class="card-body p-3">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="xal-dashboard__metric-icon d-inline-flex justify-content-center align-items-center rounded-circle flex-shrink-0">
+                                            <i class="bi bi-currency-euro fs-3" aria-hidden="true"></i>
+                                        </span>
+                                        <div>
+                                            <h3 class="h6 text-body-secondary mb-0">
+                                                Chiffre d'affaires du mois
+                                            </h3>
+                                            <p class="fs-2 fw-semibold mb-0">
+                                                12 450 €
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="small text-success mt-2 mb-0 xal-dashboard__metric-trend">
+                                        <i class="bi bi-arrow-up-right me-1" aria-hidden="true"></i>
+                                        Hausse de 8,2 % vs. mois dernier
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 text-start xal-dashboard__metric-card">
+                                <div class="card-body p-3">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="xal-dashboard__metric-icon d-inline-flex justify-content-center align-items-center rounded-circle flex-shrink-0">
+                                            <i class="bi bi-cash-stack fs-3" aria-hidden="true"></i>
+                                        </span>
+                                        <div>
+                                            <h3 class="h6 text-body-secondary mb-0">
+                                                Dépenses du mois
+                                            </h3>
+                                            <p class="fs-2 fw-semibold mb-0">
+                                                4 820 €
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="small text-danger mt-2 mb-0 xal-dashboard__metric-trend">
+                                        <i class="bi bi-arrow-up-right me-1" aria-hidden="true"></i>
+                                        Hausse de 3,5 % vs. mois dernier
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 text-start xal-dashboard__metric-card">
+                                <div class="card-body p-3">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="xal-dashboard__metric-icon d-inline-flex justify-content-center align-items-center rounded-circle flex-shrink-0">
+                                            <i class="bi bi-receipt fs-3" aria-hidden="true"></i>
+                                        </span>
+                                        <div>
+                                            <h3 class="h6 text-body-secondary mb-0">
+                                                Factures en attente
+                                            </h3>
+                                            <p class="fs-2 fw-semibold mb-0">
+                                                8
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="small text-body-secondary mt-2 mb-0 xal-dashboard__metric-trend">
+                                        <i class="bi bi-clock-history me-1" aria-hidden="true"></i>
+                                        3 à échéance cette semaine
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 text-start xal-dashboard__metric-card">
+                                <div class="card-body p-3">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="xal-dashboard__metric-icon d-inline-flex justify-content-center align-items-center rounded-circle flex-shrink-0">
+                                            <i class="bi bi-calendar-x fs-3" aria-hidden="true"></i>
+                                        </span>
+                                        <div>
+                                            <h3 class="h6 text-body-secondary mb-0">
+                                                Factures en retard
+                                            </h3>
+                                            <p class="fs-2 fw-semibold mb-0">
+                                                3
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="small text-danger mt-2 mb-0 xal-dashboard__metric-trend">
+                                        <i class="bi bi-exclamation-circle me-1" aria-hidden="true"></i>
+                                        3 factures à relancer
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 text-start xal-dashboard__metric-card">
+                                <div class="card-body p-3">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="xal-dashboard__metric-icon d-inline-flex justify-content-center align-items-center rounded-circle flex-shrink-0">
+                                            <i class="bi bi-file-earmark-text fs-3" aria-hidden="true"></i>
+                                        </span>
+                                        <div>
+                                            <h3 class="h6 text-body-secondary mb-0">
+                                                Documents à traiter
+                                            </h3>
+                                            <p class="fs-2 fw-semibold mb-0">
+                                                5
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="small text-body-secondary mt-2 mb-0 xal-dashboard__metric-trend">
+                                        <i class="bi bi-hourglass-split me-1" aria-hidden="true"></i>
+                                        En attente de vérification
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 text-start xal-dashboard__metric-card">
+                                <div class="card-body p-3">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="xal-dashboard__metric-icon d-inline-flex justify-content-center align-items-center rounded-circle flex-shrink-0">
+                                            <i class="bi bi-calendar-event fs-3" aria-hidden="true"></i>
+                                        </span>
+                                        <div>
+                                            <h3 class="h6 text-body-secondary mb-0">
+                                                Échéances à venir
+                                            </h3>
+                                            <p class="fs-2 fw-semibold mb-0">
+                                                12
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="small text-body-secondary mt-2 mb-0 xal-dashboard__metric-trend">
+                                        <i class="bi bi-clock-history me-1" aria-hidden="true"></i>
+                                        Dans les 7 prochains jours
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+            </main>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
