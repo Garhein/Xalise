@@ -7,7 +7,7 @@
         <link rel="icon" type="image/svg+xml" href="./public/favicon.svg">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
         <link href="./public/assets/css/app.css" rel="stylesheet">
-        <title>Xalise > Dashboard</title>
+        <title>Xalise > Tableau de bord</title>
     </head>
     
     <body data-bs-theme="xalise">
@@ -79,6 +79,51 @@
 
                     <!-- .navbar-nav -->
                     <div class="navbar-nav flex-row ms-auto me-3">
+                        <div class="dropdown">
+                            <button type="button"
+                                    class="btn btn-outline-secondary d-flex"
+                                    title="Accèder aux raccourcis"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    aria-controls="xal-id-shortcuts-menu"
+                                    aria-label="Accèder aux raccourcis">
+                                <i class="bi bi-grid-3x3-gap me-2" aria-hidden="true"></i>
+                                <i class="bi bi-chevron-down m-0" aria-hidden="true"></i>
+                            </button>
+                            <ul id="xal-id-shortcuts-menu" class="dropdown-menu dropdown-menu-end mt-2">
+                                <li>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="bi bi-calendar3 me-1" aria-hidden="true"></i>
+                                        Planning
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="bi bi-bar-chart-line me-1" aria-hidden="true"></i>
+                                        Statistiques
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="bi bi-file-earmark-plus me-1" aria-hidden="true"></i>
+                                        Créer un devis
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="bi bi-receipt-cutoff me-1" aria-hidden="true"></i>
+                                        Créer une facture
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="bi bi-file-earmark-arrow-up me-1" aria-hidden="true"></i>
+                                        Ajouter un document
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                         <button type="button"
                                 class="btn btn-outline-secondary position-relative"
                                 data-bs-toggle="offcanvas"
