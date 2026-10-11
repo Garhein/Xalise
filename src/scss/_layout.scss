@@ -3,7 +3,7 @@
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
 body:not([data-xal-page-fullheight]) {
-  padding-top: var(--xal-navbar-height);
+    padding-top: var(--xal-navbar-height);
 }
 
 // =-=-=-=-=-=-
@@ -11,6 +11,47 @@ body:not([data-xal-page-fullheight]) {
 // =-=-=-=-=-=-
 
 .xal-application-layout {
-  min-height: calc(100vh - var(--xal-navbar-height));
-  display: flex;
+    min-height: calc(100vh - var(--xal-navbar-height));
+    display: flex;
+    flex-direction: column;
+}
+
+// =-=-=-=-=-=-
+// Fil d'Ariane
+// =-=-=-=-=-=-
+
+.xal-breadcrumb {
+  --bs-breadcrumb-divider: "›";
+  font-size: .9rem;
+
+  .breadcrumb-item {
+    &.active {
+      color: var(--xalise-color);
+    }
+
+    a {  
+      color: var(--bs-secondary-color);  
+      text-decoration: none;
+
+      &:hover {
+        color: var(--xalise-color);
+      }
+    }
+  }
+}
+
+// =-=-=-=-=-=-
+// Entête de page
+// =-=-=-=-=-=-
+
+@media (min-width: 768px) {
+  .xal-page-header__title {
+    min-width: 0;
+  }
+
+  .xal-page-header__subtitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }

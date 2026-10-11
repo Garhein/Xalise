@@ -11988,8 +11988,34 @@ body:not([data-xal-page-fullheight]) {
 .xal-application-layout {
   min-height: calc(100vh - var(--xal-navbar-height));
   display: flex;
+  flex-direction: column;
 }
 
+.xal-breadcrumb {
+  --bs-breadcrumb-divider: "›";
+  font-size: 0.9rem;
+}
+.xal-breadcrumb .breadcrumb-item.active {
+  color: var(--xalise-color);
+}
+.xal-breadcrumb .breadcrumb-item a {
+  color: var(--bs-secondary-color);
+  text-decoration: none;
+}
+.xal-breadcrumb .breadcrumb-item a:hover {
+  color: var(--xalise-color);
+}
+
+@media (min-width: 768px) {
+  .xal-page-header__title {
+    min-width: 0;
+  }
+  .xal-page-header__subtitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
 [data-bs-toggle=dropdown] .bi-chevron-down {
   transition: transform 0.3s ease;
 }
