@@ -12140,7 +12140,7 @@ body:not([data-xal-page-fullheight]) {
   width: 3.5rem;
   height: 3.5rem;
   color: var(--xalise-color);
-  background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--xalise-color));
+  background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--xalise-color) 30%);
 }
 
 @media (min-width: 1400px) {

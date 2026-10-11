@@ -10,3 +10,15 @@ $body-bg: #f4f6f9;
 
 $xalise-color: #166278;
 $xalise-color-rgb: red($xalise-color), green($xalise-color), blue($xalise-color);
+
+$xalise-body-bg-tint-10: color-mix(
+    in srgb,
+    var(--bs-body-bg) 90%,
+    var(--xalise-color) 10%
+);
+
+$xalise-body-bg-tint-30: color-mix(
+    in srgb,
+    var(--bs-body-bg) 70%,
+    var(--xalise-color) 30%
+);
