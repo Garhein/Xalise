@@ -17,9 +17,24 @@
     background-color: $xalise-body-bg-tint-30;
 }
 
+.xal-dashboard__metric-action {
+    color: var(--bs-secondary-color);
+    padding: .15rem .4rem;
+
+    &:hover,
+    &:focus-visible {
+        color: var(--xalise-color);
+        background-color: $xalise-body-bg-tint-30;
+        border-radius: var(--bs-border-radius-sm);
+    }
+
+    &:focus-visible {
+        outline: 1px solid currentColor;
+    }
+}
+
 @media (min-width: 1400px) {
     .xal-dashboard__metric-trend {
         white-space: nowrap;
     }
 }
-

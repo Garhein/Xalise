@@ -12143,6 +12143,19 @@ body:not([data-xal-page-fullheight]) {
   background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--xalise-color) 30%);
 }
 
+.xal-dashboard__metric-action {
+  color: var(--bs-secondary-color);
+  padding: 0.15rem 0.4rem;
+}
+.xal-dashboard__metric-action:hover, .xal-dashboard__metric-action:focus-visible {
+  color: var(--xalise-color);
+  background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--xalise-color) 30%);
+  border-radius: var(--bs-border-radius-sm);
+}
+.xal-dashboard__metric-action:focus-visible {
+  outline: 1px solid currentColor;
+}
+
 @media (min-width: 1400px) {
   .xal-dashboard__metric-trend {
     white-space: nowrap;
