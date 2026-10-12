@@ -23,6 +23,27 @@
     }
 
     // =-=-=-=-=-=-
+    // Indicateurs
+    // =-=-=-=-=-=-
+
+    .xal-dashboard__metric-card {
+        background-color: $xalise-body-bg-tint-10;
+
+        .xal-dashboard__metric-icon {
+            color: var(--xalise-color);
+            background-color: $xalise-body-bg-tint-30;
+        }
+
+        .xal-dashboard__metric-action {
+            &:hover,
+            &:focus-visible {
+                color: var(--xalise-color);
+                background-color: $xalise-body-bg-tint-30;
+            }
+        }
+    }
+
+    // =-=-=-=-=-=-
     // Règles appliquées en dessous du breakpoint "md" (768px)
     // =-=-=-=-=-=-
 

@@ -12173,26 +12173,22 @@ body:not([data-xal-page-fullheight]) {
 }
 
 .xal-dashboard__metric-card {
-  background-color: color-mix(in srgb, var(--bs-body-bg) 90%, var(--xalise-color) 10%);
+  background-color: color-mix(in srgb, var(--bs-body-bg) 90%, var(--bs-secondary-color) 10%);
 }
-
-.xal-dashboard__metric-icon {
+.xal-dashboard__metric-card .xal-dashboard__metric-icon {
   width: 3.5rem;
   height: 3.5rem;
-  color: var(--xalise-color);
-  background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--xalise-color) 30%);
+  background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--bs-secondary-color) 30%);
 }
-
-.xal-dashboard__metric-action {
+.xal-dashboard__metric-card .xal-dashboard__metric-action {
   color: var(--bs-secondary-color);
   padding: 0.15rem 0.4rem;
 }
-.xal-dashboard__metric-action:hover, .xal-dashboard__metric-action:focus-visible {
-  color: var(--xalise-color);
-  background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--xalise-color) 30%);
+.xal-dashboard__metric-card .xal-dashboard__metric-action:hover, .xal-dashboard__metric-card .xal-dashboard__metric-action:focus-visible {
+  background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--bs-secondary-color) 30%);
   border-radius: var(--bs-border-radius-sm);
 }
-.xal-dashboard__metric-action:focus-visible {
+.xal-dashboard__metric-card .xal-dashboard__metric-action:focus-visible {
   outline: 1px solid currentColor;
 }
 
@@ -12348,6 +12344,17 @@ body:not([data-xal-page-fullheight]) {
   --bs-dropdown-link-disabled-color: rgba(var(--bs-white-rgb), 0.5);
   --bs-dropdown-header-color: var(--bs-white);
   --bs-dropdown-header-padding-y: 0;
+}
+[data-bs-theme=xalise] .xal-dashboard__metric-card {
+  background-color: color-mix(in srgb, var(--bs-body-bg) 90%, var(--xalise-color) 10%);
+}
+[data-bs-theme=xalise] .xal-dashboard__metric-card .xal-dashboard__metric-icon {
+  color: var(--xalise-color);
+  background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--xalise-color) 30%);
+}
+[data-bs-theme=xalise] .xal-dashboard__metric-card .xal-dashboard__metric-action:hover, [data-bs-theme=xalise] .xal-dashboard__metric-card .xal-dashboard__metric-action:focus-visible {
+  color: var(--xalise-color);
+  background-color: color-mix(in srgb, var(--bs-body-bg) 70%, var(--xalise-color) 30%);
 }
 @media (max-width: 767.98px) {
   [data-bs-theme=xalise] .xal-main-navbar [data-xal-tooltip] {

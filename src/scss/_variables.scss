@@ -22,3 +22,15 @@ $xalise-body-bg-tint-30: color-mix(
     var(--bs-body-bg) 70%,
     var(--xalise-color) 30%
 );
+
+$secondary-body-bg-tint-10: color-mix(
+    in srgb,
+    var(--bs-body-bg) 90%,
+    var(--bs-secondary-color) 10%
+);
+
+$secondary-body-bg-tint-30: color-mix(
+    in srgb,
+    var(--bs-body-bg) 70%,
+    var(--bs-secondary-color) 30%
+);

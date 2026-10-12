@@ -7,29 +7,27 @@
 // =-=-=-=-=-=-
 
 .xal-dashboard__metric-card {
-    background-color: $xalise-body-bg-tint-10;
-}
+    background-color: $secondary-body-bg-tint-10;
 
-.xal-dashboard__metric-icon {
-    width: 3.5rem;
-    height: 3.5rem;
-    color: var(--xalise-color);
-    background-color: $xalise-body-bg-tint-30;
-}
-
-.xal-dashboard__metric-action {
-    color: var(--bs-secondary-color);
-    padding: .15rem .4rem;
-
-    &:hover,
-    &:focus-visible {
-        color: var(--xalise-color);
-        background-color: $xalise-body-bg-tint-30;
-        border-radius: var(--bs-border-radius-sm);
+    .xal-dashboard__metric-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+        background-color: $secondary-body-bg-tint-30;
     }
 
-    &:focus-visible {
-        outline: 1px solid currentColor;
+    .xal-dashboard__metric-action {
+        color: var(--bs-secondary-color);
+        padding: .15rem .4rem;
+
+        &:hover,
+        &:focus-visible {
+            background-color: $secondary-body-bg-tint-30;
+            border-radius: var(--bs-border-radius-sm);
+        }
+
+        &:focus-visible {
+            outline: 1px solid currentColor;
+        }
     }
 }
 
