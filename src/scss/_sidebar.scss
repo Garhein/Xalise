@@ -1,0 +1,14 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Barre latérale
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-main-sidebar {
+    --bs-offcanvas-width: 16rem;
+}
+
+@include media-breakpoint-up(lg) {
+    .xal-main-sidebar {
+        flex: 0 0 16rem;
+        width: 16rem;
+    }
+}

@@ -16,6 +16,10 @@ body:not([data-xal-page-fullheight]) {
     flex-direction: column;
 }
 
+.xal-main-content {
+  min-width: 0;
+}
+
 // =-=-=-=-=-=-
 // Fil d'Ariane
 // =-=-=-=-=-=-

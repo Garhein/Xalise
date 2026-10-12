@@ -11991,6 +11991,10 @@ body:not([data-xal-page-fullheight]) {
   flex-direction: column;
 }
 
+.xal-main-content {
+  min-width: 0;
+}
+
 .xal-breadcrumb {
   --bs-breadcrumb-divider: "›";
   font-size: 0.9rem;
@@ -12097,6 +12101,16 @@ body:not([data-xal-page-fullheight]) {
     transition-delay: 0s;
   }
 }
+.xal-main-sidebar {
+  --bs-offcanvas-width: 16rem;
+}
+
+@media (min-width: 992px) {
+  .xal-main-sidebar {
+    flex: 0 0 16rem;
+    width: 16rem;
+  }
+}
 .xal-auth__card {
   max-width: 65rem;
   border: 1px solid var(--bs-border-color-translucent);
@@ -12183,8 +12197,9 @@ body:not([data-xal-page-fullheight]) {
 }
 
 @media (min-width: 1400px) {
-  .xal-dashboard__metric-trend {
-    white-space: nowrap;
+  .xal-dashboard__metric-icon {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }
 .xal-loader-nav {

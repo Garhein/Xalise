@@ -33,8 +33,9 @@
     }
 }
 
-@media (min-width: 1400px) {
-    .xal-dashboard__metric-trend {
-        white-space: nowrap;
+@include media-breakpoint-up(xxl) {
+    .xal-dashboard__metric-icon {
+        width: 2.5rem;
+        height: 2.5rem;
     }
 }
