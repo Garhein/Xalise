@@ -3,7 +3,101 @@
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
 .xal-main-sidebar {
+    display: flex;
+    flex-direction: column;
     --bs-offcanvas-width: 16rem;
+
+    .offcanvas-body {
+        display: block;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+    }
+
+    .nav {
+        gap: .25rem;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .nav-link {
+        width: 100%;
+        display: flex;
+        border-radius: 0;
+        font-weight: 400;
+        position: relative;
+        min-height: 2.5rem;
+        align-items: center;
+        padding: .5rem .75rem;
+        background-color: transparent;
+        color: var(--bs-secondary-color);
+        transition: color .15s ease-in-out, background-color .15s ease-in-out;
+
+        .bi {
+            flex: 0 0 1.5rem;
+            text-align: center;
+            color: var(--bs-secondary-color);
+        }
+
+        &::before {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 2px;
+            border-radius: 2px;
+            background-color: var(--bs-secondary-color);
+            content: "";
+            opacity: 0;
+            transition: opacity .15s ease-in-out;
+        }
+
+        &:hover {
+            color: $secondary-text-emphasis;
+            background-color: $secondary-body-bg-tint-10;
+
+            .bi {
+                color: inherit;
+            }
+
+            &::before {
+                opacity: 1;
+            }
+        }
+
+        &.active {
+            font-weight: 600;
+            color: $secondary-text-emphasis;
+            background-color: transparent;
+
+            .bi {
+                color: inherit;
+            }
+
+            &::before {
+                top: .35rem;
+                bottom: .35rem;
+                left: 0;
+                background-color: var(--bs-secondary-color);
+                opacity: 1;
+            }
+        }
+
+        &:focus-visible {
+            outline: 1px solid var(--bs-secondary-color);
+            box-shadow: none;
+        }
+    }
+
+    .offcanvas-header {
+        border-bottom: 1px solid var(--bs-border-color);
+    }
+
+    &__footer {
+        flex: 0 0 auto;
+    }
 }
 
 @include media-breakpoint-up(lg) {

@@ -44,6 +44,35 @@
     }
 
     // =-=-=-=-=-=-
+    // Barre latérale
+    // =-=-=-=-=-=-
+    
+    .xal-main-sidebar {
+        .nav-link {
+            &:hover {
+                color: var(--xalise-color);
+                background-color: $xalise-body-bg-tint-10;
+
+                &::before {
+                    background-color: var(--xalise-color);
+                }
+            }
+
+            &.active {
+                color: var(--xalise-color);
+
+                &::before {
+                    background-color: var(--xalise-color);
+                }
+            }
+
+            &:focus-visible {
+                outline: 1px solid var(--xalise-color);
+            }
+        }
+    }
+    
+    // =-=-=-=-=-=-
     // Règles appliquées en dessous du breakpoint "md" (768px)
     // =-=-=-=-=-=-
 

@@ -210,7 +210,7 @@
         
         <div id="xal-id-application-layout" class="xal-application-layout" aria-describedby="xal-id-dashboard-title">
             <!-- Entête de page : fil d'Ariane, titre -->
-            <header class="bg-body border-bottom shadow-sm px-3 px-lg-4 py-2">
+            <header class="bg-white border-bottom shadow-sm px-3 px-lg-4 py-2">
                 <div class="container-fluid p-0">
                     <div class="d-flex flex-column flex-md-row align-items-md-start gap-2 gap-md-4">
                         <nav class="flex-shrink-0" aria-label="Fil d'Ariane">
@@ -257,10 +257,10 @@
             <div class="d-lg-flex flex-grow-1">
                 <!-- Barre latérale -->
                 <aside id="xal-id-main-sidebar"
-                       class="offcanvas-lg offcanvas-start xal-main-sidebar border-end"
+                       class="offcanvas-lg offcanvas-start xal-main-sidebar border-end bg-white"
                        tabindex="-1"
                        aria-label="Menu principal">
-                    <div class="offcanvas-header d-lg-none">
+                    <div class="offcanvas-header d-lg-none py-2">
                         <h2 class="offcanvas-title h5">Menu principal</h2>
                         <button type="button"
                                 class="btn-close"
@@ -269,9 +269,9 @@
                                 aria-label="Fermer le menu principal">    
                         </button>
                     </div>
-                    <div class="offcanvas-body p-0 p-lg-3">
+                    <div class="offcanvas-body py-3 px-2">
                         <nav aria-label="Navigation principale">
-                            <ul class="nav nav-pills flex-column gap-1 p-3 p-lg-0">
+                            <ul class="nav nav-pills flex-column p-0">
                                 <li class="nav-item">
                                     <a href="#" class="nav-link active" aria-current="page">
                                         <i class="bi bi-speedometer2 me-2" aria-hidden="true"></i>
@@ -299,6 +299,16 @@
                             </ul>
                         </nav>
                     </div>
+                
+                    <footer class="xal-main-sidebar__footer border-top p-2">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                            <span class="small text-body-secondary">Version 1.0.1</span>
+                            <span class="badge text-bg-success">Production</span>
+                            <!--<span class="badge text-bg-warning">Recette</span>-->
+                            <!--<span class="badge text-bg-secondary">Développement</span>-->
+                            <!--<span class="badge text-bg-dark">Local</span>-->
+                        </div>
+                    </footer>
                 </aside>
             
                 <!-- Contenu de la page -->
