@@ -83,6 +83,11 @@
                 background-color: var(--bs-secondary-color);
                 opacity: 1;
             }
+
+            &:hover::before {
+                top: 0;
+                bottom: 0;
+            }
         }
 
         &:focus-visible {
@@ -93,6 +98,42 @@
 
     .offcanvas-header {
         border-bottom: 1px solid var(--bs-border-color);
+    }
+
+    &__group-toggle {
+        border: 0;
+        text-align: left;
+        font: inherit;
+        cursor: pointer;
+
+        &[aria-expanded=true] {
+            .xal-main-sidebar__caret {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    &__caret {
+        margin-left: auto;
+        transition: transform .15s ease-in-out;
+    }
+
+    &__submenu {
+        font-size: .9rem;
+        margin-left: 1.5rem;
+        padding-left: .5rem;
+        border-left: 1px dashed color-mix(
+            in srgb,
+            var(--bs-border-color) 80%,
+            var(--bs-secondary-color) 20%
+        );
+
+        .nav-link {
+            &::before,
+            &.active::before {
+                left: -1px;
+            }
+        }
     }
 
     &__footer {

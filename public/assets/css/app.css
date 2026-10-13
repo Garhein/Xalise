@@ -12173,12 +12173,38 @@ body:not([data-xal-page-fullheight]) {
   background-color: var(--bs-secondary-color);
   opacity: 1;
 }
+.xal-main-sidebar .nav-link.active:hover::before {
+  top: 0;
+  bottom: 0;
+}
 .xal-main-sidebar .nav-link:focus-visible {
   outline: 1px solid var(--bs-secondary-color);
   box-shadow: none;
 }
 .xal-main-sidebar .offcanvas-header {
   border-bottom: 1px solid var(--bs-border-color);
+}
+.xal-main-sidebar__group-toggle {
+  border: 0;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.xal-main-sidebar__group-toggle[aria-expanded=true] .xal-main-sidebar__caret {
+  transform: rotate(180deg);
+}
+.xal-main-sidebar__caret {
+  margin-left: auto;
+  transition: transform 0.15s ease-in-out;
+}
+.xal-main-sidebar__submenu {
+  font-size: 0.9rem;
+  margin-left: 1.5rem;
+  padding-left: 0.5rem;
+  border-left: 1px dashed color-mix(in srgb, var(--bs-border-color) 80%, var(--bs-secondary-color) 20%);
+}
+.xal-main-sidebar__submenu .nav-link::before, .xal-main-sidebar__submenu .nav-link.active::before {
+  left: -1px;
 }
 .xal-main-sidebar__footer {
   flex: 0 0 auto;

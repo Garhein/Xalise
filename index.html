@@ -271,11 +271,17 @@
                     </div>
                     <div class="offcanvas-body py-3 px-2">
                         <nav aria-label="Navigation principale">
-                            <ul class="nav nav-pills flex-column p-0">
+                            <ul id="xal-id-main-sidebar-navigation" class="nav nav-pills flex-column p-0">
                                 <li class="nav-item">
                                     <a href="#" class="nav-link active" aria-current="page">
                                         <i class="bi bi-speedometer2 me-2" aria-hidden="true"></i>
                                         Tableau de bord
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <i class="bi bi-people me-2" aria-hidden="true"></i>
+                                        Clients
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -291,15 +297,70 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        <i class="bi bi-people me-2" aria-hidden="true"></i>
-                                        Clients
-                                    </a>
+                                    <button type="button"
+                                            class="nav-link xal-main-sidebar__group-toggle"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#xal-id-main-sidebar-menu-administration"
+                                            aria-expanded="false"
+                                            aria-controls="xal-id-main-sidebar-menu-administration">
+                                        <i class="bi bi-gear me-2" aria-hidden="true"></i>
+                                        <span>Administration</span>
+                                        <i class="bi bi-chevron-down xal-main-sidebar__caret" aria-hidden="true"></i>
+                                    </button>
+                                    <div id="xal-id-main-sidebar-menu-administration"
+                                         class="collapse"
+                                         data-bs-parent="#xal-id-main-sidebar-navigation">
+                                        <ul class="nav flex-column p-0 xal-main-sidebar__submenu">
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">Workflow</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">Règles de corrélation</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">Événements HL7</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">Connecteurs</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <button type="button"
+                                            class="nav-link xal-main-sidebar__group-toggle"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#xal-id-main-sidebar-menu-supervision"
+                                            aria-expanded="false"
+                                            aria-controls="xal-id-main-sidebar-menu-supervision">
+                                        <i class="bi bi-display me-2" aria-hidden="true"></i>
+                                        <span>Supervision</span>
+                                        <i class="bi bi-chevron-down xal-main-sidebar__caret" aria-hidden="true"></i>
+                                    </button>
+                                    <div id="xal-id-main-sidebar-menu-supervision"
+                                         class="collapse"
+                                         data-bs-parent="#xal-id-main-sidebar-navigation">
+                                        <ul class="nav flex-column p-0 xal-main-sidebar__submenu">
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">Demandes d'intégration</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">Messages</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">Workflows bloqués</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link">Historique des traitements</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </li>
                             </ul>
                         </nav>
                     </div>
                 
+                    <!-- Informations sur la version et l'environnement -->
                     <footer class="xal-main-sidebar__footer border-top p-2">
                         <div class="d-flex align-items-center justify-content-center gap-2">
                             <span class="small text-body-secondary">Version 1.0.1</span>
