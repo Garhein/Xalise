@@ -2,7 +2,7 @@
 // Surcharge des variables Sass bootstrap
 // =-=-=-=-=-=-
 
-$body-bg: #f4f6f9;
+$body-bg: #fff; //#f4f6f9;
 
 // =-=-=-=-=-=-
 // Définition des variables Sass personnalisées
@@ -11,16 +11,22 @@ $body-bg: #f4f6f9;
 $xalise-color: #166278;
 $xalise-color-rgb: red($xalise-color), green($xalise-color), blue($xalise-color);
 
-$xalise-body-bg-tint-10: color-mix(
+$xalise-body-bg-tint-15: color-mix(
     in srgb,
-    var(--bs-body-bg) 90%,
-    var(--xalise-color) 10%
+    var(--bs-body-bg) 85%,
+    var(--xalise-color) 15%
 );
 
 $xalise-body-bg-tint-30: color-mix(
     in srgb,
     var(--bs-body-bg) 70%,
     var(--xalise-color) 30%
+);
+
+$xalise-body-bg-tint-40: color-mix(
+    in srgb,
+    var(--bs-body-bg) 60%,
+    var(--xalise-color) 40%
 );
 
 $secondary-body-bg-tint-10: color-mix(
@@ -33,4 +39,4 @@ $secondary-body-bg-tint-30: color-mix(
     in srgb,
     var(--bs-body-bg) 70%,
     var(--bs-secondary-color) 30%
-);
+)

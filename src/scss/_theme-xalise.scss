@@ -27,7 +27,7 @@
     // =-=-=-=-=-=-
 
     .xal-dashboard__metric-card {
-        background-color: $xalise-body-bg-tint-10;
+        background-color: $xalise-body-bg-tint-15;
 
         .xal-dashboard__metric-icon {
             color: var(--xalise-color);
@@ -51,7 +51,7 @@
         .nav-link {
             &:hover {
                 color: var(--xalise-color);
-                background-color: $xalise-body-bg-tint-10;
+                background-color: $xalise-body-bg-tint-15;
 
                 &::before {
                     background-color: var(--xalise-color);
@@ -69,6 +69,51 @@
             &:focus-visible {
                 outline: 1px solid var(--xalise-color);
             }
+        }
+    }
+
+    // =-=-=-=-=-=-
+    // Pagination
+    // =-=-=-=-=-=-
+
+    .pagination {
+        --bs-pagination-color: var(--xalise-color);
+        --bs-pagination-border-color: var(--bs-border-color);
+
+        --bs-pagination-hover-color: var(--xalise-color);
+        --bs-pagination-hover-bg: #{$xalise-body-bg-tint-15};
+        --bs-pagination-hover-border-color: var(--bs-border-color);
+
+        --bs-pagination-active-bg: var(--xalise-color);
+        --bs-pagination-active-border-color: var(--xalise-color);
+
+        --bs-pagination-disabled-color: var(--bs-white);
+        --bs-pagination-disabled-bg: #{$xalise-body-bg-tint-40};
+        --bs-pagination-disabled-border-color: var(--bs-pagination-disabled-bg);
+
+        --bs-pagination-focus-box-shadow: 0 0 0 .25rem rgba(var(--xalise-color), .25);
+
+        .page-item.active .page-link {
+            font-weight: 600;
+        }
+
+        .page-item:not(.disabled):not(.active) .page-link:hover {
+            color: var(--bs-pagination-hover-color);
+            background-color: var(--bs-pagination-hover-bg);
+            border-color: var(--bs-pagination-hover-border-color);
+        }
+
+        .page-link {
+            min-width: 2rem;
+            text-align: center;
+            transition: background-color .15s ease-in-out, color .15s ease-in-out;
+        }
+        
+        .page-link:focus-visible {
+            outline: 1px solid var(--xalise-color);
+            position: relative;
+            box-shadow: none;
+            z-index: 2;
         }
     }
     

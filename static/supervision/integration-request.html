@@ -238,18 +238,7 @@
                         </div>
                         <!--
                         <div class="align-self-stretch align-self-md-center ms-md-auto flex-shrink-0 btn-group">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                <i class="bi bi-plus-square" aria-hidden="true"></i>
-                                <span class="">Ajouter</span>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                <i class="bi bi-upload" aria-hidden="true"></i>
-                                <span class="">Télécharger</span>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                <i class="bi bi-download" aria-hidden="true"></i>
-                                <span class="">Exporter</span>
-                            </button>
+                            
                         </div>
                         -->
                     </div>
@@ -377,7 +366,81 @@
             
                 <!-- Contenu de la page -->
                 <main class="xal-main-content container-fluid flex-grow-1 p-3 p-lg-4">
-                    
+                    <section aria-labelledby="xal-id-integration-results-title">
+                        <h2 id="xal-id-integration-results-title" class="visually-hidden">
+                            Résultats des demandes d'intégration
+                        </h2>
+
+                        <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
+                            <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
+                                <button type="button" class="btn btn-sm btn-xalise">
+                                    <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
+                                    <span class="">Rejouer</span>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-secondary">
+                                    <i class="bi bi-download" aria-hidden="true"></i>
+                                    <span class="">Exporter</span>
+                                </button>
+                            </div>
+                            <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
+                                <p class="mb-0 text-body-secondary small">
+                                    42 demandes
+                                </p>
+                                <nav aria-label="Pagination des demandes d'intégration">
+                                    <ul class="pagination pagination-sm mb-0">
+                                        <li class="page-item disabled">
+                                            <span class="page-link">
+                                                <i class="bi bi-chevron-double-left" aria-hidden="true"></i>
+                                                <span class="visually-hidden">Première page</span>
+                                            </span>
+                                        </li>
+                                        <li class="page-item disabled">
+                                            <span class="page-link">
+                                                <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                                                <span class="visually-hidden">Page précédente</span>
+                                            </span>
+                                        </li>
+                                        <li class="page-item active" aria-current="page">
+                                            <span class="page-link">1</span>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">4</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">
+                                                <i class="bi bi-chevron-right" aria-hidden="true"></i>    
+                                                <span class="visually-hidden">Page suivante</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">
+                                                <i class="bi bi-chevron-double-right" aria-hidden="true"></i>
+                                                <span class="visually-hidden">Dernière page</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <form class="d-flex align-items-center gap-2"
+                                      aria-label="Accéder directement à une page">
+                                    <label for="xal-id-pagination-jump" class="visually-hidden">
+                                        Choisir une page
+                                    </label>
+                                    <select id="xal-id-pagination-jump" class="form-select form-select-sm w-auto">
+                                        <option value="1" selected>Page 1</option>
+                                        <option value="2">Page 2</option>
+                                        <option value="3">Page 3</option>
+                                        <option value="4">Page 4</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
                 </main>
             </div>
         </div>

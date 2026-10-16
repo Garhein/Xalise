@@ -1,0 +1,72 @@
+<!-- Dialogue d'historique : les trois historiques sont regroupés ici -->
+<div class="modal fade" id="integration-history-modal" tabindex="-1"
+     aria-labelledby="integration-history-title" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="integration-history-title">
+                    Historique de la demande EVT-008421
+                </h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Fermer"></button>
+            </div>
+
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="reception-tab"
+                                data-bs-toggle="tab" data-bs-target="#reception-history"
+                                type="button" role="tab" aria-controls="reception-history"
+                                aria-selected="true">
+                            Réception
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="transport-tab"
+                                data-bs-toggle="tab" data-bs-target="#transport-history"
+                                type="button" role="tab" aria-controls="transport-history"
+                                aria-selected="false">
+                            Transport
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="integration-tab"
+                                data-bs-toggle="tab" data-bs-target="#integration-history"
+                                type="button" role="tab" aria-controls="integration-history"
+                                aria-selected="false">
+                            Intégration
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content pt-3">
+                    <div class="tab-pane fade show active" id="reception-history"
+                         role="tabpanel" aria-labelledby="reception-tab" tabindex="0">
+                        <ol class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between gap-3">
+                                    <span class="badge text-bg-success">Reçu</span>
+                                    <time class="text-body-secondary"
+                                          datetime="2026-10-14T09:42:00">
+                                        14/10/2026 09:42
+                                    </time>
+                                </div>
+                                <p class="mb-0 mt-1">Message reçu depuis la source.</p>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="tab-pane fade" id="transport-history"
+                         role="tabpanel" aria-labelledby="transport-tab" tabindex="0">
+                        <!-- Historique des statuts de transport -->
+                    </div>
+
+                    <div class="tab-pane fade" id="integration-history"
+                         role="tabpanel" aria-labelledby="integration-tab" tabindex="0">
+                        <!-- Historique des statuts d'intégration -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

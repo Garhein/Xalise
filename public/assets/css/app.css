@@ -82,8 +82,8 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
   --bs-body-color-rgb: 33, 37, 41;
-  --bs-body-bg: #f4f6f9;
-  --bs-body-bg-rgb: 244, 246, 249;
+  --bs-body-bg: #fff;
+  --bs-body-bg-rgb: 255, 255, 255;
   --bs-emphasis-color: #000;
   --bs-emphasis-color-rgb: 0, 0, 0;
   --bs-secondary-color: rgba(33, 37, 41, 0.75);
@@ -2462,10 +2462,10 @@ textarea.form-control-lg {
   outline: 0;
 }
 .form-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #f4f6f9, 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 .form-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #f4f6f9, 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 .form-range::-moz-focus-outer {
   border: 0;
@@ -12451,7 +12451,7 @@ body:not([data-xal-page-fullheight]) {
   --bs-dropdown-header-padding-y: 0;
 }
 [data-bs-theme=xalise] .xal-dashboard__metric-card {
-  background-color: color-mix(in srgb, var(--bs-body-bg) 90%, var(--xalise-color) 10%);
+  background-color: color-mix(in srgb, var(--bs-body-bg) 85%, var(--xalise-color) 15%);
 }
 [data-bs-theme=xalise] .xal-dashboard__metric-card .xal-dashboard__metric-icon {
   color: var(--xalise-color);
@@ -12463,7 +12463,7 @@ body:not([data-xal-page-fullheight]) {
 }
 [data-bs-theme=xalise] .xal-main-sidebar .nav-link:hover {
   color: var(--xalise-color);
-  background-color: color-mix(in srgb, var(--bs-body-bg) 90%, var(--xalise-color) 10%);
+  background-color: color-mix(in srgb, var(--bs-body-bg) 85%, var(--xalise-color) 15%);
 }
 [data-bs-theme=xalise] .xal-main-sidebar .nav-link:hover::before {
   background-color: var(--xalise-color);
@@ -12476,6 +12476,38 @@ body:not([data-xal-page-fullheight]) {
 }
 [data-bs-theme=xalise] .xal-main-sidebar .nav-link:focus-visible {
   outline: 1px solid var(--xalise-color);
+}
+[data-bs-theme=xalise] .pagination {
+  --bs-pagination-color: var(--xalise-color);
+  --bs-pagination-border-color: var(--bs-border-color);
+  --bs-pagination-hover-color: var(--xalise-color);
+  --bs-pagination-hover-bg: color-mix(in srgb, var(--bs-body-bg) 85%, var(--xalise-color) 15%);
+  --bs-pagination-hover-border-color: var(--bs-border-color);
+  --bs-pagination-active-bg: var(--xalise-color);
+  --bs-pagination-active-border-color: var(--xalise-color);
+  --bs-pagination-disabled-color: var(--bs-white);
+  --bs-pagination-disabled-bg: color-mix(in srgb, var(--bs-body-bg) 60%, var(--xalise-color) 40%);
+  --bs-pagination-disabled-border-color: var(--bs-pagination-disabled-bg);
+  --bs-pagination-focus-box-shadow: 0 0 0 .25rem rgba(var(--xalise-color), .25);
+}
+[data-bs-theme=xalise] .pagination .page-item.active .page-link {
+  font-weight: 600;
+}
+[data-bs-theme=xalise] .pagination .page-item:not(.disabled):not(.active) .page-link:hover {
+  color: var(--bs-pagination-hover-color);
+  background-color: var(--bs-pagination-hover-bg);
+  border-color: var(--bs-pagination-hover-border-color);
+}
+[data-bs-theme=xalise] .pagination .page-link {
+  min-width: 2rem;
+  text-align: center;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+[data-bs-theme=xalise] .pagination .page-link:focus-visible {
+  outline: 1px solid var(--xalise-color);
+  position: relative;
+  box-shadow: none;
+  z-index: 2;
 }
 @media (max-width: 767.98px) {
   [data-bs-theme=xalise] .xal-main-navbar [data-xal-tooltip] {
