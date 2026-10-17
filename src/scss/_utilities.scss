@@ -39,6 +39,11 @@
   );
 }
 
+.xal-u-popover--fit-content {
+  width: max-content;
+  --bs-popover-max-width: calc(100vw - 2rem);
+}
+
 .xal-u-gradient {
     background: linear-gradient(10deg, #499699 0%, #135f76 100%);
 }

@@ -7,6 +7,18 @@ initStaticFormNavigation();
 // Activation des popovers
 document
     .querySelectorAll('[data-bs-toggle="popover"]')
-    .forEach((popoverTriggerEl) => {
-        bootstrap.Popover.getOrCreateInstance(popoverTriggerEl);
+    .forEach((trigger) => {
+        const selector  = trigger.dataset.xalPopoverContent;
+        const source    = selector ? document.querySelector(selector) : null;
+
+        const options = {
+            container: 'body'
+        };
+
+        if (source) {
+            options.html = true;
+            options.content = () => source.innerHTML;
+        }
+
+        bootstrap.Popover.getOrCreateInstance(trigger, options);
     });

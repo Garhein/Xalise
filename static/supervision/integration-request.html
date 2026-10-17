@@ -486,10 +486,10 @@
                                                       tabindex="0"
                                                       aria-label="Détails de la source"
                                                       data-bs-toggle="popover"
-                                                      data-bs-custom-class="xal-u-popover"
+                                                      data-bs-custom-class="xal-u-popover xal-u-popover--fit-content"
                                                       data-bs-trigger="focus"
                                                       data-bs-title="Détails de la source"
-                                                      data-bs-content="Fichier : \\serveur\hl7\in\patient.hl7">
+                                                      data-xal-popover-content="#xal-integration-source-file">
                                                     <i class="bi bi-question" aria-hidden="true"></i>
                                                 </span>
                                             </div>
@@ -550,7 +550,7 @@
                                                       tabindex="0"
                                                       aria-label="Détails de la source"
                                                       data-bs-toggle="popover"
-                                                      data-bs-custom-class="xal-u-popover"
+                                                      data-bs-custom-class="xal-u-popover xal-u-popover--fit-content"
                                                       data-bs-trigger="focus"
                                                       data-bs-title="Détails de la source"
                                                       data-bs-content="API : POST /api/patients">
@@ -619,7 +619,7 @@
                                                       tabindex="0"
                                                       aria-label="Détails de la source"
                                                       data-bs-toggle="popover"
-                                                      data-bs-custom-class="xal-u-popover"
+                                                      data-bs-custom-class="xal-u-popover xal-u-popover--fit-content"
                                                       data-bs-trigger="focus"
                                                       data-bs-title="Détails de la source"
                                                       data-bs-content="MLLP : 192.168.1.10:2575">
@@ -675,6 +675,10 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+
+                        <div id="xal-integration-source-file" class="d-none">
+                            Fichier : <span class="font-monospace">\\serveur\hl7\in\patient.hl7</span>
                         </div>
                     </section>
                 </main>
