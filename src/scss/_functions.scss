@@ -1,0 +1,9 @@
+// Mélange le fond de page Bootstrap avec la couleur Xalise.
+// @param {Percentage} $percentage Part de couleur Xalise dans le mélange.
+@function xalise-body-bg-tint($percentage) {
+    @return color-mix(
+        in srgb,
+        var(--bs-body-bg) #{100% - $percentage},
+        var(--xalise-color) $percentage
+    );
+}

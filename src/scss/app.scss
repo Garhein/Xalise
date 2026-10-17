@@ -1,19 +1,22 @@
 // 1. Fonctions Bootstrap (sans variables, sans CSS)
 @import "../../node_modules/bootstrap/scss/functions";
 
-// 2. Surchages des surchages des variables Bootstrap
+// 2. Import des fonctions personnalisées
+@import "functions";
+
+// 3. Surchages des surchages des variables Bootstrap
 @import "variables";
 
-// 3. Variables Bootstrap par défaut
+// 4. Variables Bootstrap par défaut
 @import "../../node_modules/bootstrap/scss/variables";
 
-// 4. Variables Bootstrap personnalisées
+// 5. Variables Bootstrap personnalisées
 @import "theme-colors";
 
-// 5. Bootstrap complet
+// 6. Bootstrap complet
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
-// 5. Styles personnalisés
+// 7. Styles personnalisés
 @import "tokens";
 @import "utilities";
 @import "layout";

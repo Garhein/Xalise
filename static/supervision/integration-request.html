@@ -233,7 +233,7 @@
                                 Demandes d'intégration
                             </h1>
                             <p class="small text-body-secondary mb-0 xal-page-header__subtitle">
-                                Consultez les messages reçus et suivez leur progression
+                                Consultez les messages reçus et suivez leur avancement
                             </p>
                         </div>
                         <!--
@@ -371,7 +371,8 @@
                             Résultats des demandes d'intégration
                         </h2>
 
-                        <div class="d-flex align-items-center justify-content-between gap-2 mb-2">
+                        <!-- Actions et pagination -->
+                        <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
                             <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
                                 <button type="button" class="btn btn-sm btn-xalise">
                                     <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
@@ -439,6 +440,140 @@
                                     </select>
                                 </form>
                             </div>
+                        </div>
+
+                        <!-- Résultats de la recherche -->
+                        <div class="table-responsive">
+                            <table class="table table-hover xal-table">
+                                <caption class="visually-hidden">
+                                    Liste des demandes d'intégration
+                                </caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">
+                                            <input type="checkbox" class="form-check-input" id="form-check-input" aria-label="Sélectionner toutes les demandes d'intégration">
+                                        </th>
+                                        <th scope="col">Réception</th>
+                                        <th scope="col">Source</th>
+                                        <th scope="col">Corrélation</th>
+                                        <th scope="col">Workflow</th>
+                                        <th scope="col">Réception</th>
+                                        <th scope="col">Transport</th>
+                                        <th scope="col">Intégration</th>
+                                        <th scope="col">
+                                            <span class="visually-hidden">Actions</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-check-input">
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <time datetime="2026-10-14T09:42:00">14/10/2026 09:42</time>
+                                        </td>
+                                        <td>
+                                            <span class="d-block">Laboratoire Nord</span>
+                                            <small class="text-body-secondary">Type : HL7 v2</small>
+                                        </td>
+                                        <td><code>EVT-008421</code></td>
+                                        <td>
+                                            <a href="#">WF-1084</a>
+                                        </td>
+                                        <td><span class="badge text-bg-success">Reçu</span></td>
+                                        <td><span class="badge text-bg-warning">En attente</span></td>
+                                        <td><span class="badge text-bg-secondary">Non démarré</span></td>
+                                        <td class="text-nowrap align-middle">
+                                            <div class="d-flex justify-content-end gap-1 xal-table__actions">
+                                                <button type="button"
+                                                        class="btn btn-sm btn-link xal-table__actions--edit"
+                                                        aria-label="Modifier la demande EVT-008421"
+                                                        title="Modifier la demande">
+                                                    <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-sm btn-link"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#xal-id-integration-message-modal"
+                                                        aria-label="Afficher le message brut de la demande EVT-008421"
+                                                        title="Afficher le message brut">
+                                                    <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-sm btn-link"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#xal-id-integration-history-modal"
+                                                        aria-label="Afficher l'historique de la demande EVT-008421"
+                                                        title="Afficher l'historique">
+                                                    <i class="bi bi-clock-history" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-sm btn-link xal-table__actions--delete"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#xal-id-integration-history-modal"
+                                                        aria-label="Supprimer la demande EVT-008421"
+                                                        title="Supprimer la demande">
+                                                    <i class="bi bi-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-check-input">
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <time datetime="2026-10-14T09:42:00">14/10/2026 09:42</time>
+                                        </td>
+                                        <td>
+                                            <span class="d-block">Laboratoire Nord</span>
+                                            <small class="text-body-secondary">Type : HL7 v2</small>
+                                        </td>
+                                        <td><code>EVT-008421</code></td>
+                                        <td>
+                                            <a href="#">WF-1084</a>
+                                        </td>
+                                        <td><span class="badge text-bg-success">Reçu</span></td>
+                                        <td><span class="badge text-bg-warning">En attente</span></td>
+                                        <td><span class="badge text-bg-secondary">Non démarré</span></td>
+                                        <td class="text-nowrap align-middle">
+                                            <div class="d-flex justify-content-end gap-1 xal-table__actions">
+                                                <button type="button"
+                                                        class="btn btn-sm btn-link xal-table__actions--edit"
+                                                        aria-label="Modifier la demande EVT-008421"
+                                                        title="Modifier la demande">
+                                                    <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-sm btn-link"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#xal-id-integration-message-modal"
+                                                        aria-label="Afficher le message brut de la demande EVT-008421"
+                                                        title="Afficher le message brut">
+                                                    <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-sm btn-link"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#xal-id-integration-history-modal"
+                                                        aria-label="Afficher l'historique de la demande EVT-008421"
+                                                        title="Afficher l'historique">
+                                                    <i class="bi bi-clock-history" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button"
+                                                        class="btn btn-sm btn-link xal-table__actions--delete"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#xal-id-integration-history-modal"
+                                                        aria-label="Supprimer la demande EVT-008421"
+                                                        title="Supprimer la demande">
+                                                    <i class="bi bi-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </section>
                 </main>

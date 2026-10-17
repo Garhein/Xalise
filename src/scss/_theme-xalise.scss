@@ -27,18 +27,18 @@
     // =-=-=-=-=-=-
 
     .xal-dashboard__metric-card {
-        background-color: $xalise-body-bg-tint-15;
+        background-color: xalise-body-bg-tint(15%);
 
         .xal-dashboard__metric-icon {
             color: var(--xalise-color);
-            background-color: $xalise-body-bg-tint-30;
+            background-color: xalise-body-bg-tint(30%);
         }
 
         .xal-dashboard__metric-action {
             &:hover,
             &:focus-visible {
                 color: var(--xalise-color);
-                background-color: $xalise-body-bg-tint-30;
+                background-color: xalise-body-bg-tint(30%);
             }
         }
     }
@@ -51,7 +51,7 @@
         .nav-link {
             &:hover {
                 color: var(--xalise-color);
-                background-color: $xalise-body-bg-tint-15;
+                background-color: xalise-body-bg-tint(15%);
 
                 &::before {
                     background-color: var(--xalise-color);
@@ -81,17 +81,17 @@
         --bs-pagination-border-color: var(--bs-border-color);
 
         --bs-pagination-hover-color: var(--xalise-color);
-        --bs-pagination-hover-bg: #{$xalise-body-bg-tint-15};
+        --bs-pagination-hover-bg: #{xalise-body-bg-tint(15%)};
         --bs-pagination-hover-border-color: var(--bs-border-color);
 
         --bs-pagination-active-bg: var(--xalise-color);
         --bs-pagination-active-border-color: var(--xalise-color);
 
         --bs-pagination-disabled-color: var(--bs-white);
-        --bs-pagination-disabled-bg: #{$xalise-body-bg-tint-40};
+        --bs-pagination-disabled-bg: #{xalise-body-bg-tint(40%)};
         --bs-pagination-disabled-border-color: var(--bs-pagination-disabled-bg);
 
-        --bs-pagination-focus-box-shadow: 0 0 0 .25rem rgba(var(--xalise-color), .25);
+        --bs-pagination-focus-box-shadow: 0 0 0 .25rem rgba(var(--xalise-color-rgb), .25);
 
         .page-item.active .page-link {
             font-weight: 600;
@@ -114,6 +114,98 @@
             position: relative;
             box-shadow: none;
             z-index: 2;
+        }
+    }
+
+    // =-=-=-=-=-=-
+    // Table
+    // =-=-=-=-=-=-
+
+    .xal-table {
+        --bs-table-bg: color-mix(
+            in srgb,
+            var(--bs-light-bg-subtle) 96%,
+            var(--bs-body-color) 4%
+        );
+
+        --bs-table-hover-bg: #{xalise-body-bg-tint(10%)};
+
+        border-collapse: separate;
+        border-spacing: 0;
+        background-color: var(--bs-table-bg);
+        border-radius: var(--xal-table-border-radius);
+
+        thead {
+            tr {
+                th {
+                    text-align: left;
+                    font-weight: 600;
+                    border-bottom: 2px solid var(--xalise-color);
+                    background-color: #{xalise-body-bg-tint(20%)};
+
+                    &:first-child {
+                        border-top-left-radius: var(--xal-table-border-radius);
+                    }
+
+                    &:last-child {
+                        border-top-right-radius: var(--xal-table-border-radius);
+                    }
+                }
+            }
+        }
+
+        tbody > tr > td {
+            --bs-table-bg: var(--bs-white);
+            background-clip: padding-box;
+            border-top: var(--xal-table-cell-gap) solid transparent;
+            border-bottom: none;
+
+            &:first-child {
+                border-left: var(--xal-table-cell-gap) solid transparent;
+                border-top-left-radius: calc(var(--xal-table-border-radius) + var(--xal-table-cell-gap));
+                border-bottom-left-radius: calc(var(--xal-table-border-radius) + var(--xal-table-cell-gap));
+            }
+
+            &:last-child {
+                border-right: var(--xal-table-cell-gap) solid transparent;
+                border-top-right-radius: calc(var(--xal-table-border-radius) + var(--xal-table-cell-gap));
+                border-bottom-right-radius: calc(var(--xal-table-border-radius) + var(--xal-table-cell-gap));
+            }
+        }
+
+        tbody > tr:last-child > td {
+            border-bottom: var(--xal-table-cell-gap) solid transparent;
+        }
+
+        &__actions {
+            .btn {
+                font-size: 1.05rem;
+                text-decoration: none;
+                color: var(--bs-secondary-color);
+
+                &:hover {
+                    color: var(--bs-white);
+                    background-color: var(--xalise-color);
+                }
+            }
+
+            .xal-table__actions--edit {
+                color: var(--bs-warning);
+
+                &:hover {
+                    color: var(--bs-white);
+                    background-color: var(--bs-warning);
+                }
+            }
+
+            .xal-table__actions--delete {
+                color: var(--bs-danger);
+
+                &:hover {
+                    color: var(--bs-white);
+                    background-color: var(--bs-danger);
+                }
+            }
         }
     }
     
