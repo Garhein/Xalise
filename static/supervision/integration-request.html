@@ -366,6 +366,49 @@
             
                 <!-- Contenu de la page -->
                 <main class="xal-main-content container-fluid flex-grow-1 p-3 p-lg-4">
+                    <!--
+                    <form class="card mb-3" role="search" aria-label="Recherche des demandes d'intégration">
+                        <div class="card-body p-2">
+                            <div class="row g-3 align-items-end">
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <label for="search-source" class="form-label">Source</label>
+                                    <select id="search-source" class="form-select form-select-sm">
+                                        <option value="">Toutes les sources</option>
+                                        <option value="1">Répertoire physique</option>
+                                        <option value="2">API REST</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <label for="search-status" class="form-label">Statut</label>
+                                    <select id="search-status" class="form-select form-select-sm">
+                                        <option value="">Tous les statuts</option>
+                                        <option value="1">En attente</option>
+                                        <option value="2">En erreur</option>
+                                        <option value="3">Terminé</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <label for="search-from" class="form-label">Reçue à partir du</label>
+                                    <input id="search-from" type="datetime-local" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <label for="search-correlation" class="form-label">Valeur de corrélation</label>
+                                    <input id="search-correlation" type="search" class="form-control form-control-sm" placeholder="Identifiant...">
+                                </div>
+                                <div class="col-12 d-flex flex-wrap justify-content-between gap-2">
+                                    <button type="reset" class="btn btn-outline-secondary">
+                                        Réinitialiser
+                                    </button>
+                                    <button type="submit" class="btn btn-xalise">
+                                        <i class="bi bi-search me-1" aria-hidden="true"></i>
+                                        Rechercher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    -->
+
                     <section aria-labelledby="xal-id-integration-results-title">
                         <h2 id="xal-id-integration-results-title" class="visually-hidden">
                             Résultats des demandes d'intégration
@@ -441,9 +484,6 @@
                                 </form>
                             </div>
                         </div>
-
-                        <!-- Colonne "Valeur de corrélation" : tooltip pour afficher les détails (PV1-19 pour admission et PID-3 pour identité)-->
-                        <!-- Afficher cette valeur dans le tooltip de "workflow d'intégration" ? -->
 
                         <!-- Colonne "workflow d'intégration" : tooltip pour afficher les détails, dont le nombre de demandes d'intégration associées -->
                         
@@ -564,7 +604,20 @@
                                             <small class="text-body-secondary d-block">Admission : PV1-19</small>
                                         </td>
                                         <td>
-                                            <a href="#">WF-1085</a>
+                                            <div class="d-flex justify-content-start align-items-center gap-2">
+                                                <a href="#" class="text-body text-decoration-none">WF-1085</a>
+                                                <span class="xal-u-info-trigger"
+                                                      role="button"
+                                                      tabindex="0"
+                                                      aria-label="Détails du workflow d'intégration"
+                                                      data-bs-toggle="popover"
+                                                      data-bs-custom-class="xal-u-popover xal-u-popover--fit-content"
+                                                      data-bs-trigger="focus"
+                                                      data-bs-title="Détails du workflow d'intégration"
+                                                      data-xal-popover-content="#xal-integration-workflow-details-1085">
+                                                    <i class="bi bi-question" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
                                         </td>
                                         <td><span class="badge text-bg-success">Validé</span></td>
                                         <td><span class="badge text-bg-danger">Erreur</span></td>
@@ -633,7 +686,20 @@
                                             <small class="text-body-secondary d-block">Identité patient : PID-3</small>
                                         </td>
                                         <td>
-                                            <a href="#">WF-1084</a>
+                                            <div class="d-flex justify-content-start align-items-center gap-2">
+                                                <a href="#" class="text-body text-decoration-none">WF-1084</a>
+                                                <span class="xal-u-info-trigger"
+                                                      role="button"
+                                                      tabindex="0"
+                                                      aria-label="Détails du workflow d'intégration"
+                                                      data-bs-toggle="popover"
+                                                      data-bs-custom-class="xal-u-popover xal-u-popover--fit-content"
+                                                      data-bs-trigger="focus"
+                                                      data-bs-title="Détails du workflow d'intégration"
+                                                      data-xal-popover-content="#xal-integration-workflow-details-1084">
+                                                    <i class="bi bi-question" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
                                         </td>
                                         <td><span class="badge text-bg-success">Validé</span></td>
                                         <td><span class="badge text-bg-success">Envoyé</span></td>
@@ -679,6 +745,32 @@
 
                         <div id="xal-integration-source-file" class="d-none">
                             Fichier : <span class="font-monospace">\\serveur\hl7\in\patient.hl7</span>
+                        </div>
+
+                        <div id="xal-integration-workflow-details-1084" class="d-none">
+                            <dl class="mb-0 xal-workflow-popover__details">
+                                <dt>Identifiant de l'instance</dt>
+                                <dd><code>WF-1084</code></dd>
+
+                                <dt>Créé le</dt>
+                                <dd>
+                                    <time datetime="2026-10-14T10:05:00">14/10/2026 à 10:05</time>
+                                </dd>
+
+                                <dt>Dernier événement reçu</dt>
+                                <dd>
+                                    <time datetime="2026-10-15T11:25:00">15/10/2026 à 11:25</time>
+                                </dd>
+
+                                <dt>Valeur de corrélation</dt>
+                                <dd>
+                                    <code>EVT-008421</code>
+                                    <span class="d-block">Identité patient : PID-3</span>
+                                </dd>
+
+                                <dt>Événements associés</dt>
+                                <dd>18 événements</dd>
+                            </dl>
                         </div>
                     </section>
                 </main>

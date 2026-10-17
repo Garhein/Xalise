@@ -1,0 +1,27 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Demandes d'intégration
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-workflow-popover__details {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 1rem;
+  row-gap: .5rem;
+
+  dt,
+  dd {
+    margin: 0;
+    font-size: .8125rem;
+    line-height: 1.35;
+  }
+
+  dt {
+    color: var(--bs-secondary-color);
+    font-weight: 500;
+  }
+
+  dd {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}

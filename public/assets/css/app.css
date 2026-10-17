@@ -11971,6 +11971,17 @@ textarea.form-control-lg {
   text-align: justify;
 }
 
+.xal-u-gradient {
+  background: linear-gradient(10deg, #499699 0%, #135f76 100%);
+}
+
+.xal-u-dot-1-70 {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
 .xal-u-tooltip {
   --bs-tooltip-opacity: 1;
   --bs-tooltip-bg: var(--xalise-color);
@@ -12003,17 +12014,6 @@ textarea.form-control-lg {
 .xal-u-popover--fit-content {
   width: max-content;
   --bs-popover-max-width: calc(100vw - 2rem);
-}
-
-.xal-u-gradient {
-  background: linear-gradient(10deg, #499699 0%, #135f76 100%);
-}
-
-.xal-u-dot-1-70 {
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
-  display: inline-block;
 }
 
 .xal-u-info-trigger {
@@ -12491,6 +12491,27 @@ body:not([data-xal-page-fullheight]) {
     background-position: -200% 0;
   }
 }
+.xal-workflow-popover__details {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 1rem;
+  row-gap: 0.5rem;
+}
+.xal-workflow-popover__details dt,
+.xal-workflow-popover__details dd {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+.xal-workflow-popover__details dt {
+  color: var(--bs-secondary-color);
+  font-weight: 500;
+}
+.xal-workflow-popover__details dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 [data-bs-theme=xalise] {
   --bs-primary: var(--xalise-color);
   --bs-primary-rgb: var(--xalise-color-rgb);

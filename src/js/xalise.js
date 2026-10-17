@@ -4,7 +4,12 @@ import { initStaticFormNavigation } from './core/XalFormNavigation.js';
 initBootstrapFormValidation();
 initStaticFormNavigation();
 
-// Activation des popovers
+// Activation des popovers, en autorisant les balises 'time'
+const popoverAllowList = {
+    ...bootstrap.Popover.Default.allowList,
+    time: ['datetime']
+};
+
 document
     .querySelectorAll('[data-bs-toggle="popover"]')
     .forEach((trigger) => {
@@ -12,7 +17,8 @@ document
         const source    = selector ? document.querySelector(selector) : null;
 
         const options = {
-            container: 'body'
+            container: 'body',
+            allowList: popoverAllowList
         };
 
         if (source) {
