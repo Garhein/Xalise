@@ -12,4 +12,10 @@
   // Variables liées aux tables
   --xal-table-border-radius: var(--bs-border-radius-lg);
   --xal-table-cell-gap: .4rem;
+
+  --xal-info-trigger-bg: color-mix(
+    in srgb,
+    var(--bs-purple) 65%,
+    var(--bs-body-bg) 35%
+  );
 }

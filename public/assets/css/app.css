@@ -11960,6 +11960,11 @@ textarea.form-control-lg {
   --xal-navbar-height: 3rem;
   --xal-table-border-radius: var(--bs-border-radius-lg);
   --xal-table-cell-gap: .4rem;
+  --xal-info-trigger-bg: color-mix(
+    in srgb,
+    var(--bs-purple) 65%,
+    var(--bs-body-bg) 35%
+  );
 }
 
 .text-justify {
@@ -11972,6 +11977,29 @@ textarea.form-control-lg {
   --bs-tooltip-color: var(--bs-white);
 }
 
+.xal-u-popover {
+  --bs-popover-bg: color-mix(
+    in srgb,
+    var(--bs-body-bg) 92%,
+    var(--xal-info-trigger-bg) 8%
+  );
+  --bs-popover-header-bg: color-mix(
+    in srgb,
+    var(--bs-body-bg) 78%,
+    var(--xal-info-trigger-bg) 22%
+  );
+  --bs-popover-header-color: var(--bs-body-color);
+  --bs-popover-header-font-size: .9rem;
+  --bs-popover-header-padding-x: .9rem;
+  --bs-popover-body-padding-x: .9rem;
+  --bs-popover-body-padding-y: .9rem;
+  --bs-popover-border-color: color-mix(
+    in srgb,
+    var(--bs-body-bg) 65%,
+    var(--xal-info-trigger-bg) 35%
+  );
+}
+
 .xal-u-gradient {
   background: linear-gradient(10deg, #499699 0%, #135f76 100%);
 }
@@ -11981,6 +12009,27 @@ textarea.form-control-lg {
   height: 0.7rem;
   border-radius: 50%;
   display: inline-block;
+}
+
+.xal-u-info-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 1rem;
+  width: 1rem;
+  height: 1rem;
+  color: var(--bs-white);
+  background-color: var(--xal-info-trigger-bg);
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: 0.25rem;
+}
+.xal-u-info-trigger:hover {
+  filter: brightness(0.9);
+}
+.xal-u-info-trigger .bi {
+  font-size: 0.85rem;
+  line-height: 1;
 }
 
 body:not([data-xal-page-fullheight]) {
