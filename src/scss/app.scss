@@ -24,9 +24,9 @@
 @import "navbar";
 @import "sidebar";
 @import "toolbar";
-@import "authentification";
-@import "dashboard";
 @import "notifications";
 @import "loading";
-@import "integrations-request";
+@import "pages/authentification";
+@import "pages/dashboard";
+@import "pages/integration-request";
 @import "theme-xalise";
