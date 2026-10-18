@@ -30,14 +30,15 @@ if (new URLSearchParams(window.location.search).has('debug')) {
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
 function createSourcePopoverContent(trigger) {
-    const content   = document.createElement('span');
-    const label     = trigger.dataset.xalPopoverLabel;
-    const valueText = trigger.dataset.xalPopoverValue;
+    const content    = document.createElement('span');
+    const label      = trigger.dataset.xalPopoverLabel;
+    const valueText  = trigger.dataset.xalPopoverValue;
+    const cssClasses = trigger.dataset.xalPopoverValueCssClasses;
 
     content.append(`${label} : `);
 
     const value = document.createElement('span');
-    value.classList.add(XalConstants.cssClasses.bootstrapFont.monospace);
+    value.classList.add(cssClasses);
     value.textContent = valueText;
 
     content.append(value);
