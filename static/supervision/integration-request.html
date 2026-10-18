@@ -485,8 +485,6 @@
                             </div>
                         </div>
 
-                        <!-- Colonne "workflow d'intégration" : tooltip pour afficher les détails, dont le nombre de demandes d'intégration associées -->
-                        
                         <!-- Résultats de la recherche -->
                         <div class="table-responsive">
                             <table class="table table-hover xal-table">
@@ -521,7 +519,7 @@
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
                                                 <span>Dépôt interne</span>
-                                                <span class="xal-u-info-trigger"
+                                                <span class="xal-u-contextual-info-trigger"
                                                       role="button"
                                                       tabindex="0"
                                                       aria-label="Détails de la source"
@@ -585,7 +583,7 @@
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
                                                 <span>Transmission interne</span>
-                                                <span class="xal-u-info-trigger"
+                                                <span class="xal-u-contextual-info-trigger"
                                                       role="button"
                                                       tabindex="0"
                                                       aria-label="Détails de la source"
@@ -593,7 +591,7 @@
                                                       data-bs-custom-class="xal-u-popover xal-u-popover--fit-content"
                                                       data-bs-trigger="focus"
                                                       data-bs-title="Détails de la source"
-                                                      data-bs-content="API : POST /api/patients">
+                                                      data-bs-content="API : POST /api/patients/">
                                                     <i class="bi bi-question" aria-hidden="true"></i>
                                                 </span>
                                             </div>
@@ -606,7 +604,7 @@
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
                                                 <a href="#" class="text-body text-decoration-none">WF-1085</a>
-                                                <span class="xal-u-info-trigger"
+                                                <span class="xal-u-contextual-info-trigger"
                                                       role="button"
                                                       tabindex="0"
                                                       aria-label="Détails du workflow d'intégration WF-1085"
@@ -614,7 +612,7 @@
                                                       data-bs-custom-class="xal-u-popover xal-u-popover--fit-content"
                                                       data-bs-trigger="focus"
                                                       data-bs-title="Détails du workflow d'intégration"
-                                                      data-xal-popover-content="#xal-integration-workflow-details-1085">
+                                                      data-xal-popover-content="#xal-id-integration-workflow-details-1085">
                                                     <i class="bi bi-question" aria-hidden="true"></i>
                                                 </span>
                                             </div>
@@ -667,7 +665,7 @@
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
                                                 <span>Transmission externe</span>
-                                                <span class="xal-u-info-trigger"
+                                                <span class="xal-u-contextual-info-trigger"
                                                       role="button"
                                                       tabindex="0"
                                                       aria-label="Détails de la source"
@@ -688,7 +686,7 @@
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
                                                 <a href="#" class="text-body text-decoration-none">WF-1084</a>
-                                                <span class="xal-u-info-trigger"
+                                                <span class="xal-u-contextual-info-trigger"
                                                       role="button"
                                                       tabindex="0"
                                                       aria-label="Détails du workflow d'intégration WF-1084"
@@ -696,7 +694,7 @@
                                                       data-bs-custom-class="xal-u-popover xal-u-popover--fit-content"
                                                       data-bs-trigger="focus"
                                                       data-bs-title="Détails du workflow d'intégration"
-                                                      data-xal-popover-content="#xal-integration-workflow-details-1084">
+                                                      data-xal-popover-content="#xal-id-integration-workflow-details-1084">
                                                     <i class="bi bi-question" aria-hidden="true"></i>
                                                 </span>
                                             </div>
@@ -746,9 +744,8 @@
                         <div id="xal-integration-source-file" class="d-none">
                             Fichier : <span class="font-monospace">\\serveur\hl7\in\patient.hl7</span>
                         </div>
-
-                        <div id="xal-integration-workflow-details-1084" class="d-none">
-                            <dl class="mb-0 xal-workflow-popover__details">
+                        <div id="xal-id-integration-workflow-details-1084" class="d-none">
+                            <dl class="mb-0 xal-integration-workflow__details">
                                 <dt>Identifiant de l'instance</dt>
                                 <dd><code>WF-1084</code></dd>
 
@@ -770,6 +767,31 @@
 
                                 <dt>Événements associés</dt>
                                 <dd>18 événements</dd>
+                            </dl>
+                        </div>
+                        <div id="xal-id-integration-workflow-details-1085" class="d-none">
+                            <dl class="mb-0 xal-integration-workflow__details">
+                                <dt>Identifiant de l'instance</dt>
+                                <dd><code>WF-1085</code></dd>
+
+                                <dt>Créé le</dt>
+                                <dd>
+                                    <time datetime="2026-10-15T20:01:00">15/10/2026 à 20:01</time>
+                                </dd>
+
+                                <dt>Dernier événement reçu</dt>
+                                <dd>
+                                    <time datetime="2026-10-16T06:11:00">16/10/2026 à 06:11</time>
+                                </dd>
+
+                                <dt>Valeur de corrélation</dt>
+                                <dd>
+                                    <code>EVT-008422</code>
+                                    <span class="d-block">Admission : PV1-19</span>
+                                </dd>
+
+                                <dt>Événement associé</dt>
+                                <dd>1 événement</dd>
                             </dl>
                         </div>
                     </section>

@@ -12016,7 +12016,7 @@ textarea.form-control-lg {
   --bs-popover-max-width: calc(100vw - 2rem);
 }
 
-.xal-u-info-trigger {
+.xal-u-contextual-info-trigger {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -12029,10 +12029,10 @@ textarea.form-control-lg {
   cursor: pointer;
   margin-top: 0.25rem;
 }
-.xal-u-info-trigger:hover {
+.xal-u-contextual-info-trigger:hover {
   filter: brightness(0.9);
 }
-.xal-u-info-trigger .bi {
+.xal-u-contextual-info-trigger .bi {
   font-size: 0.85rem;
   line-height: 1;
 }
@@ -12491,23 +12491,23 @@ body:not([data-xal-page-fullheight]) {
     height: 2.5rem;
   }
 }
-.xal-workflow-popover__details {
+.xal-integration-workflow__details {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
   column-gap: 1rem;
   row-gap: 0.5rem;
 }
-.xal-workflow-popover__details dt,
-.xal-workflow-popover__details dd {
+.xal-integration-workflow__details dt,
+.xal-integration-workflow__details dd {
   margin: 0;
   font-size: 0.8125rem;
   line-height: 1.35;
 }
-.xal-workflow-popover__details dt {
+.xal-integration-workflow__details dt {
   color: var(--bs-secondary-color);
   font-weight: 500;
 }
-.xal-workflow-popover__details dd {
+.xal-integration-workflow__details dd {
   min-width: 0;
   overflow-wrap: anywhere;
 }
