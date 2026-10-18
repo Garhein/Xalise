@@ -12516,6 +12516,9 @@ body:not([data-xal-page-fullheight]) {
   --bs-primary: var(--xalise-color);
   --bs-primary-rgb: var(--xalise-color-rgb);
 }
+[data-bs-theme=xalise] .xal-modal__header--default {
+  background-color: color-mix(in srgb, var(--bs-body-bg) 80%, var(--xalise-color) 20%);
+}
 [data-bs-theme=xalise] .dropdown-menu {
   --bs-dropdown-bg: var(--bs-primary);
   --bs-dropdown-link-color: var(--bs-white);

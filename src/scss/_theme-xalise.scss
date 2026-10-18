@@ -5,6 +5,10 @@
 [data-bs-theme="xalise"] {
     --bs-primary: var(--xalise-color);
     --bs-primary-rgb: var(--xalise-color-rgb);
+
+    .xal-modal__header--default {
+        background-color: #{xalise-body-bg-tint(20%)};
+    }
    
     // =-=-=-=-=-=-
     // Menu déroulant

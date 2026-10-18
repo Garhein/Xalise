@@ -6,8 +6,10 @@ export const XalConstants = Object.freeze({
      * Noms des attributs ARIA utilisés par les composants.
      */
     ariaNames: Object.freeze({
-        hidden: 'aria-hidden',
-        valueNow: 'aria-valuenow',
+        hidden:     'aria-hidden',
+        valueNow:   'aria-valuenow',
+        labelledBy: 'aria-labelledby',
+        label:      'aria-label',
     }),
 
     /**
@@ -43,6 +45,10 @@ export const XalConstants = Object.freeze({
             inputReset:                 'xal-id-reset-password',
             inputResetConfirmation:     'xal-id-reset-password-confirm',
             rulesStatus:                'xal-id-password-rules-status',
+        }),
+
+        modal: Object.freeze({
+            xalTitle: 'xal-id-modal-title',
         }),
     }),
 
@@ -88,6 +94,15 @@ export const XalConstants = Object.freeze({
             selectAll:  '[data-xal-table-select-all]',
             selectRow:  'tbody [data-xal-table-select-row]',
         }),
+
+        modal: Object.freeze({
+            bootstrapClass:    '.modal-dialog',
+            xalHeader:         '.xal-modal__header',
+            xalTitle:          '.xal-modal__title',
+            xalBody:           '.xal-modal__body',
+            xalFooter:         '.xal-modal__footer',
+            xalCloseButton:    '.xal-modal__close-button',
+        }),
     }),
 
     /**
@@ -96,6 +111,9 @@ export const XalConstants = Object.freeze({
     cssClasses: Object.freeze({
         // Classe appliquée à un placeholder actif dans une zone cible
         loaderPlaceholderActive: 'xal-loader-placeholder--active',
+
+        displayNone: 'd-none',
+        btnCloseWhite: 'btn-close-white',
 
         bootstrapIcons: Object.freeze({ 
             checkCircleFill:          'bi-check-circle-fill',
@@ -129,6 +147,19 @@ export const XalConstants = Object.freeze({
 
         bootstrapFont: Object.freeze({
             monospace: 'font-monospace',
+        }),
+
+        bootstrapModal: Object.freeze({
+            size: Object.freeze({
+                sm:         'modal-sm',
+                lg:         'modal-lg',
+                xl:         'modal-xl',
+                fullScreen: 'modal-fullscreen',
+            }),
+        }),
+
+        modal: Object.freeze({
+            xalHeaderDefault: 'xal-modal__header--default',
         }),
 
         form: Object.freeze({

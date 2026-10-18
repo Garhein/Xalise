@@ -5,7 +5,9 @@ import { initTableSelection } from './core/XalTableSelection.js';
 import { XalLoaderNav } from './loaders/XalLoaderNav.js';
 import { XalLoaderOverlay } from './loaders/XalLoaderOverlay.js';
 import { XalLoaderPlaceholder } from './loaders/XalLoaderPlaceholder.js';
+
 import { XalToast } from './components/XalToast.js';
+import { XalDialog } from './components/XalDialog.js';
 
 initBootstrapFormValidation();
 initTableSelection();
@@ -22,6 +24,7 @@ if (new URLSearchParams(window.location.search).has('debug')) {
         XalLoaderOverlay: XalLoaderOverlay,
         XalLoaderPlaceholder: XalLoaderPlaceholder,
         XalToast: XalToast,
+        XalDialog: XalDialog,
     });
 }
 
@@ -73,4 +76,44 @@ document
         }
 
         bootstrap.Popover.getOrCreateInstance(trigger, options);
+    });
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Demande d'intégration - Suppression
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+document
+    .querySelectorAll('.xal-table__actions--delete')
+    .forEach((deleteButton) => {
+        deleteButton.addEventListener('click', async () => {
+            const recordRow = deleteButton.closest('[data-xal-record-id]');
+            const recordId  = recordRow?.dataset.xalRecordId;
+
+            if (!recordId) {
+                console.error('Identifiant de la demande d\'intégration introuvable.');
+                return;
+            }
+
+            await XalDialog.show({
+                title: 'Supprimer la demande',
+                content: `Êtes-vous sûr de vouloir supprimer la demande d\'intégration ${recordId} ?`,
+                size: 'lg',
+                buttons: [
+                    {
+                        title: 'Annuler',
+                        classes: ['btn-sm', 'btn-outline-secondary'],
+                        icon: 'bi-x-lg',
+                        action: () => {},
+                    },
+                    {
+                        title: 'Supprimer',
+                        classes: ['btn-sm', 'btn-danger'],
+                        icon: 'bi-trash',
+                        action: async () => {
+                            recordRow.remove();
+                        }
+                    }
+                ]
+            });
+        });
     });
