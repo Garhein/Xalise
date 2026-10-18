@@ -11,6 +11,15 @@ export const XalConstants = Object.freeze({
     }),
 
     /**
+     * Nom des attributs de données.
+     */
+    dataNames: Object.freeze({
+        xalise: Object.freeze({
+            popoverValue: 'data-xal-popover-value',
+        }),
+    }),
+
+    /**
      * Identifiants des éléments uniques du DOM.
      */
     elementIds: Object.freeze({
@@ -116,6 +125,10 @@ export const XalConstants = Object.freeze({
             warning:        'text-warning',
             info:           'text-info',
             bodySecondary:  'text-body-secondary',
+        }),
+
+        bootstrapFont: Object.freeze({
+            monospace: 'font-monospace',
         }),
 
         form: Object.freeze({
