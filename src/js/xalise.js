@@ -1,8 +1,11 @@
+import { XalConstants } from './core/XalConstants.js';
 import { initBootstrapFormValidation } from './core/XalFormValidation.js';
 import { initStaticFormNavigation } from './core/XalFormNavigation.js';
+import { initTableSelection } from './core/XalTableSelection.js';
 
 initBootstrapFormValidation();
 initStaticFormNavigation();
+initTableSelection();
 
 // Activation des popovers, en autorisant les balises 'time'
 const popoverAllowList = {
@@ -11,7 +14,7 @@ const popoverAllowList = {
 };
 
 document
-    .querySelectorAll('[data-bs-toggle="popover"]')
+    .querySelectorAll(XalConstants.cssQueries.bootstrap.togglePopover)
     .forEach((trigger) => {
         const selector  = trigger.dataset.xalPopoverContent;
         const source    = selector ? document.querySelector(selector) : null;

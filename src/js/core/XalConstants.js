@@ -42,6 +42,10 @@ export const XalConstants = Object.freeze({
      * Ces sélecteurs sont utilisés pour rechercher des éléments enfants dans des composants spécifiques.
      */
     cssQueries: Object.freeze({
+        bootstrap: Object.freeze({
+            togglePopover: '[data-bs-toggle="popover"]',
+        }),
+
         loader: Object.freeze({ 
             overlayMessage: '.xal-loader-overlay__message',
             placeholder:    '.xal-loader-placeholder',
@@ -68,6 +72,12 @@ export const XalConstants = Object.freeze({
             ruleUppercase:  '[data-password-rule="uppercase"]',
             ruleNumber:     '[data-password-rule="number"]',
             ruleSpecial:    '[data-password-rule="special"]',
+        }),
+
+        tableSelection: Object.freeze({
+            selectable: '[data-xal-table-selectable]',
+            selectAll:  '[data-xal-table-select-all]',
+            selectRow:  'tbody [data-xal-table-select-row]',
         }),
     }),
 

@@ -487,14 +487,17 @@
 
                         <!-- Résultats de la recherche -->
                         <div class="table-responsive">
-                            <table class="table table-hover xal-table">
+                            <table class="table table-hover xal-table" data-xal-table-selectable>
                                 <caption class="visually-hidden">
                                     Liste des demandes d'intégration
                                 </caption>
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">
-                                            <input type="checkbox" class="form-check-input" id="form-check-input" aria-label="Sélectionner toutes les demandes d'intégration">
+                                            <input type="checkbox"
+                                                   class="form-check-input"
+                                                   id="form-check-input" aria-label="Sélectionner toutes les demandes affichées"
+                                                   data-xal-table-select-all>
                                         </th>
                                         <th scope="col">Réception</th>
                                         <th scope="col">Source</th>
@@ -511,7 +514,10 @@
                                 <tbody>
                                     <tr>
                                         <td class="text-center">
-                                            <input type="checkbox" class="form-check-input">
+                                            <input type="checkbox"
+                                                   class="form-check-input"
+                                                   aria-label="Sélectionner la demande"
+                                                   data-xal-table-select-row>
                                         </td>
                                         <td class="text-nowrap">
                                             <time datetime="2026-10-17T11:25:00">17/10/2026 11:25</time>
@@ -575,7 +581,10 @@
                                     </tr>
                                     <tr>
                                         <td class="text-center">
-                                            <input type="checkbox" class="form-check-input">
+                                            <input type="checkbox"
+                                                   class="form-check-input"
+                                                   aria-label="Sélectionner la demande EVT-008422"
+                                                   data-xal-table-select-row>
                                         </td>
                                         <td class="text-nowrap">
                                             <time datetime="2026-10-15T09:42:00">15/10/2026 19:42</time>
@@ -657,7 +666,10 @@
                                     </tr>
                                     <tr>
                                         <td class="text-center">
-                                            <input type="checkbox" class="form-check-input">
+                                            <input type="checkbox"
+                                                   class="form-check-input"
+                                                   aria-label="Sélectionner la demande EVT-008421"
+                                                   data-xal-table-select-row>
                                         </td>
                                         <td class="text-nowrap">
                                             <time datetime="2026-10-14T09:42:00">14/10/2026 09:42</time>
