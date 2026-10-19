@@ -113,14 +113,16 @@ export const XalConstants = Object.freeze({
         loaderPlaceholderActive: 'xal-loader-placeholder--active',
 
         displayNone: 'd-none',
-        btnCloseWhite: 'btn-close-white',
 
         bootstrapIcons: Object.freeze({ 
-            checkCircleFill:          'bi-check-circle-fill',
-            xCircleFill:              'bi-x-circle-fill',
-            exclamationTriangleFill:  'bi-exclamation-triangle-fill',
-            infoCircleFill:           'bi-info-circle-fill',
-            circle:                   'bi-circle',
+            checkCircleFill:            'bi-check-circle-fill',
+            checkLg:                    'bi-check-lg',
+            circle:                     'bi-circle',
+            exclamationTriangleFill:    'bi-exclamation-triangle-fill',
+            infoCircleFill:             'bi-info-circle-fill',
+            trash:                      'bi-trash',
+            xCircleFill:                'bi-x-circle-fill',
+            xLg:                        'bi-x-lg',
         }),
 
         bootstrapTextBg: Object.freeze({ 
@@ -156,6 +158,19 @@ export const XalConstants = Object.freeze({
                 xl:         'modal-xl',
                 fullScreen: 'modal-fullscreen',
             }),
+        }),
+
+        bootstrapBtn: Object.freeze({
+            size: Object.freeze({
+                sm: 'btn-sm',
+            }),
+            
+            closeWhite:             'btn-close-white',
+            primary:                'btn-primary',
+            danger:                 'btn-danger',
+            xalise:                 'btn-xalise',
+            outlineSecondary:       'btn-outline-secondary',
+
         }),
 
         modal: Object.freeze({
