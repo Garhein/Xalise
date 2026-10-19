@@ -77,3 +77,15 @@ document
 
         bootstrap.Popover.getOrCreateInstance(trigger, options);
     });
+
+document.addEventListener('show.bs.popover', (event) => {
+    const openedTrigger = event.target;
+
+    document
+        .querySelectorAll(XalConstants.cssQueries.bootstrap.togglePopover)
+        .forEach((trigger) => {
+            if (trigger === openedTrigger) return;
+
+            bootstrap.Popover.getInstance(trigger)?.hide();
+        });
+});
