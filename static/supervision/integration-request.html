@@ -396,48 +396,82 @@
             
                 <!-- Contenu de la page -->
                 <main class="xal-main-content container-fluid flex-grow-1 p-3 p-lg-4">
-                    <!--
-                    <form class="card mb-3" role="search" aria-label="Recherche des demandes d'intégration">
-                        <div class="card-body p-2">
-                            <div class="row g-3 align-items-end">
-                                <div class="col-12 col-md-6 col-xl-3">
+                    <form class="card mb-3 xal-form-search" role="search" aria-label="Recherche des demandes d'intégration">
+                        <div class="card-body">
+                            <div class="row gy-2 gx-3 align-items-end">
+                                <!-- Critères principaux -->
+                                <div class="col-12 col-xl-6">
+                                    <div class="row gy-2 gx-3">
+                                        <div class="col-12 col-sm-6">
+                                            <label for="search-date-start" class="form-label">Reçue à partir du</label>
+                                            <input name="startDate" id="search-date-start" type="datetime-local" class="form-control form-control-sm">
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <label for="search-date-end" class="form-label">Reçue jusqu'au</label>
+                                            <input name="endDate" id="search-date-end" type="datetime-local" class="form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-xl-3">
                                     <label for="search-source" class="form-label">Source</label>
-                                    <select id="search-source" class="form-select form-select-sm">
+                                    <select name="sourceId" id="search-source" class="form-select form-select-sm">
                                         <option value="">Toutes les sources</option>
-                                        <option value="1">Répertoire physique</option>
-                                        <option value="2">API REST</option>
+                                        <option value="1">Dépôt interne</option>
+                                        <option value="2">Transmission interne</option>
+                                        <option value="3">Transmission externe</option>
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-6 col-xl-3">
-                                    <label for="search-status" class="form-label">Statut</label>
-                                    <select id="search-status" class="form-select form-select-sm">
-                                        <option value="">Tous les statuts</option>
-                                        <option value="1">En attente</option>
-                                        <option value="2">En erreur</option>
-                                        <option value="3">Terminé</option>
-                                    </select>
+                                <div class="col-12 col-sm-6 col-xl-3">
+                                    <label for="search-correlation-value" class="form-label">Valeur de corrélation</label>
+                                    <input name="correlationValue" id="search-correlation-value" type="search" class="form-control form-control-sm" placeholder="Identifiant...">
                                 </div>
-                                <div class="col-12 col-md-6 col-xl-3">
-                                    <label for="search-from" class="form-label">Reçue à partir du</label>
-                                    <input id="search-from" type="datetime-local" class="form-control form-control-sm">
+
+                                <!-- Statuts et actions -->
+                                <div class="col-12 col-xl-9">
+                                    <div class="row gy-2 gx-3">
+                                        <div class="col-12 col-sm-4">
+                                            <label for="search-status-reception" class="form-label">Statut de réception</label>
+                                            <select name="receptionStatusId" id="search-status-reception" class="form-select form-select-sm">
+                                                <option value="">Tous les statuts</option>
+                                                <option value="1">En attente</option>
+                                                <option value="2">En erreur</option>
+                                                <option value="3">Terminé</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <label for="search-status-transport" class="form-label">Statut de transport</label>
+                                            <select name="transportStatusId" id="search-status-transport" class="form-select form-select-sm">
+                                                <option value="">Tous les statuts</option>
+                                                <option value="1">En attente</option>
+                                                <option value="2">En erreur</option>
+                                                <option value="3">Terminé</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-sm-4">
+                                            <label for="search-status-integration" class="form-label">Statut d'intégration</label>
+                                            <select name="integrationStatusId" id="search-status-integration" class="form-select form-select-sm">
+                                                <option value="">Tous les statuts</option>
+                                                <option value="1">En attente</option>
+                                                <option value="2">En erreur</option>
+                                                <option value="3">Terminé</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-xl-3">
-                                    <label for="search-correlation" class="form-label">Valeur de corrélation</label>
-                                    <input id="search-correlation" type="search" class="form-control form-control-sm" placeholder="Identifiant...">
-                                </div>
-                                <div class="col-12 d-flex flex-wrap justify-content-between gap-2">
-                                    <button type="reset" class="btn btn-outline-secondary">
-                                        Réinitialiser
-                                    </button>
-                                    <button type="submit" class="btn btn-xalise">
+
+                                <div class="col-12 col-xl-3 d-flex justify-content-end gap-2 mt-3 mt-xl-0">
+                                    <button type="submit" class="btn btn-sm btn-xalise">
                                         <i class="bi bi-search me-1" aria-hidden="true"></i>
                                         Rechercher
+                                    </button>
+                                    <button type="reset" class="btn btn-sm btn-secondary">
+                                        <i class="bi bi-eraser me-1" aria-hidden="true"></i>
+                                        Vider les filtres
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </form>
-                    -->
 
                     <section aria-labelledby="xal-id-integration-results-title">
                         <h2 id="xal-id-integration-results-title" class="visually-hidden">

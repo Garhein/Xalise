@@ -1,0 +1,19 @@
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Formulaires
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+.xal-form-search {
+    background-color: #{xalise-body-bg-tint(5%)};
+    border-color: var(--bs-border-color);
+    box-shadow: var(--bs-box-shadow-sm);
+
+    .card-body {
+        --bs-card-spacer-x: .75rem;
+        --bs-card-spacer-y: .75rem;
+    }
+
+    .form-label {
+        @extend .small;
+        margin-bottom: .25rem;
+    }
+}
