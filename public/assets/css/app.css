@@ -12508,7 +12508,6 @@ body:not([data-xal-page-fullheight]) {
 .xal-integration-workflow__details dt,
 .xal-integration-workflow__details dd {
   margin: 0;
-  font-size: 0.8125rem;
   line-height: 1.35;
 }
 .xal-integration-workflow__details dt {
