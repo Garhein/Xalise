@@ -12037,6 +12037,14 @@ textarea.form-control-lg {
   line-height: 1;
 }
 
+.xal-empty-state {
+  padding: 0.75rem 0;
+  background-color: color-mix(in srgb, var(--bs-body-bg) 90%, var(--xalise-color) 10%);
+  border-radius: var(--bs-border-radius-lg);
+  box-shadow: var(--bs-box-shadow-sm);
+  border: 1px solid var(--bs-border-color);
+}
+
 body:not([data-xal-page-fullheight]) {
   padding-top: var(--xal-navbar-height);
 }
