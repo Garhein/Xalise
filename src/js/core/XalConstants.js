@@ -77,8 +77,9 @@ export const XalConstants = Object.freeze({
         }),
 
         form: Object.freeze({
-            needsValidate: '.needs-validation',
-            staticTarget:  'form[data-xal-target]',
+            needsValidate:      '.needs-validation',
+            staticTarget:       'form[data-xal-target]',
+            formClearCriteria:  '[data-xal-form-clear-criteria]',
         }),
 
         otpDigits: '.xal-otp-form__digit',
@@ -180,7 +181,8 @@ export const XalConstants = Object.freeze({
         }),
 
         form: Object.freeze({
-            wasValidated: 'was-validated',
+            wasValidated:   'was-validated',
+            doNotEmpty:     'xal-form-do-not-empty',
         }),
     }),
 });
