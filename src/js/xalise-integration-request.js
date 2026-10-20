@@ -5,7 +5,7 @@ import { XalDialog } from './components/XalDialog.js';
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
 document
-    .querySelectorAll('.xal-table__actions--delete')
+    .querySelectorAll('.xal-table__row-actions--delete')
     .forEach((deleteButton) => {
         deleteButton.addEventListener('click', async () => {
             const recordRow = deleteButton.closest('[data-xal-record-id]');

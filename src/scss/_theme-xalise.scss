@@ -181,7 +181,7 @@
             border-bottom: var(--xal-table-cell-gap) solid transparent;
         }
 
-        &__actions {
+        &__row-actions {
             .btn {
                 font-size: 1.05rem;
                 text-decoration: none;
@@ -193,7 +193,7 @@
                 }
             }
 
-            .xal-table__actions--edit {
+            .xal-table__row-actions--edit {
                 color: var(--bs-warning);
 
                 &:hover {
@@ -202,7 +202,7 @@
                 }
             }
 
-            .xal-table__actions--delete {
+            .xal-table__row-actions--delete {
                 color: var(--bs-danger);
 
                 &:hover {

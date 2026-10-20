@@ -12652,26 +12652,26 @@ body:not([data-xal-page-fullheight]) {
 [data-bs-theme=xalise] .xal-table tbody > tr:last-child > td {
   border-bottom: var(--xal-table-cell-gap) solid transparent;
 }
-[data-bs-theme=xalise] .xal-table__actions .btn {
+[data-bs-theme=xalise] .xal-table__row-actions .btn {
   font-size: 1.05rem;
   text-decoration: none;
   color: var(--bs-secondary-color);
 }
-[data-bs-theme=xalise] .xal-table__actions .btn:hover {
+[data-bs-theme=xalise] .xal-table__row-actions .btn:hover {
   color: var(--bs-white);
   background-color: var(--xalise-color);
 }
-[data-bs-theme=xalise] .xal-table__actions .xal-table__actions--edit {
+[data-bs-theme=xalise] .xal-table__row-actions .xal-table__row-actions--edit {
   color: var(--bs-warning);
 }
-[data-bs-theme=xalise] .xal-table__actions .xal-table__actions--edit:hover {
+[data-bs-theme=xalise] .xal-table__row-actions .xal-table__row-actions--edit:hover {
   color: var(--bs-white);
   background-color: var(--bs-warning);
 }
-[data-bs-theme=xalise] .xal-table__actions .xal-table__actions--delete {
+[data-bs-theme=xalise] .xal-table__row-actions .xal-table__row-actions--delete {
   color: var(--bs-danger);
 }
-[data-bs-theme=xalise] .xal-table__actions .xal-table__actions--delete:hover {
+[data-bs-theme=xalise] .xal-table__row-actions .xal-table__row-actions--delete:hover {
   color: var(--bs-white);
   background-color: var(--bs-danger);
 }
