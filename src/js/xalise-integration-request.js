@@ -34,3 +34,32 @@ document
             });
         });
     });
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Tri des colonnes
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+const table = document.querySelector('#xal-id-table-integration-request');
+
+table?.addEventListener('xal-table:sort', (event) => {
+    // Prépare les paramètres que le serveur utilisera pour trier les résultats
+    const { key, direction } = event.detail;
+    const url = new URL(table.dataset.xalTableSortUrl, window.location.origin);
+
+    url.searchParams.set('sort', key);
+    url.searchParams.set('direction', direction);
+
+    // TODO: appeler le serveur et remplacer les lignes du tableau avec sa réponse (penser à mettre async (event))
+    /*
+    const response = await fetch(url);
+    if (!response.ok) {
+        console.error('Impossible de trier les demandes d\'intégration.');
+        return;
+    }
+
+    const rowsHtml = await response.text();
+    table.querySelector('tbody').innerHTML = rowsHtml;
+    */
+
+    console.log(url);
+});

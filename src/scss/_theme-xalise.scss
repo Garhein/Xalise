@@ -215,6 +215,33 @@
         &__selection-count {
             font-size: .75rem;
         }
+
+        &__sort {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            border: 0;
+            padding: 0;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            font-weight: inherit;
+            text-align: left;
+
+            &:hover {
+                color: var(--xalise-color);
+            }
+
+            &:focus-visible {
+                outline: 2px solid var(--xalise-color);
+                outline-offset: 3px;
+                border-radius: var(--bs-border-radius-sm);
+            }
+
+            i {
+                font-size: .75rem;
+            }
+        }
     }
     
     // =-=-=-=-=-=-

@@ -7,9 +7,10 @@ export const XalConstants = Object.freeze({
      */
     ariaNames: Object.freeze({
         hidden:     'aria-hidden',
-        valueNow:   'aria-valuenow',
-        labelledBy: 'aria-labelledby',
         label:      'aria-label',
+        labelledBy: 'aria-labelledby',
+        sort:       'aria-sort',
+        valueNow:   'aria-valuenow',
     }),
 
     /**
@@ -99,6 +100,11 @@ export const XalConstants = Object.freeze({
             actionNotSelectable:    '.xal-table__actions--not-selectable',
         }),
 
+        tableSort: Object.freeze({
+            sortColumn: '[data-xal-table-sort-column]',
+            sortIcon:   '.xal-table__sort-icon',
+        }),
+
         modal: Object.freeze({
             bootstrapClass:    '.modal-dialog',
             xalHeader:         '.xal-modal__header',
@@ -119,6 +125,9 @@ export const XalConstants = Object.freeze({
         displayNone: 'd-none',
 
         bootstrapIcons: Object.freeze({ 
+            arrowUp:                    'bi-arrow-up',
+            arrowDown:                  'bi-arrow-down',
+            arrowDownUp:                'bi-arrow-down-up',
             checkCircleFill:            'bi-check-circle-fill',
             checkLg:                    'bi-check-lg',
             circle:                     'bi-circle',

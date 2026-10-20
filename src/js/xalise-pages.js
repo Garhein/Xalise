@@ -1,6 +1,7 @@
 import { XalConstants } from './core/XalConstants.js';
 import { initBootstrapFormValidation } from './core/XalFormValidation.js';
 import { initTableSelection } from './core/XalTableSelection.js';
+import { initTableSort } from './core/XalTableSort.js';
 import { initFormClearButtons  } from './core/XalForm.js';
 
 import { XalLoaderNav } from './loaders/XalLoaderNav.js';
@@ -12,6 +13,7 @@ import { XalDialog } from './components/XalDialog.js';
 
 initBootstrapFormValidation();
 initTableSelection();
+initTableSort();
 initFormClearButtons();
 
 XalLoaderOverlay.init();
