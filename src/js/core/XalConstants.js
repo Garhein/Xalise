@@ -17,7 +17,8 @@ export const XalConstants = Object.freeze({
      */
     dataNames: Object.freeze({
         xalise: Object.freeze({
-            popoverValue: 'data-xal-popover-value',
+            popoverValue:           'data-xal-popover-value',
+            tableTargetActions :    'data-xal-table-target-actions',
         }),
     }),
 
@@ -90,9 +91,10 @@ export const XalConstants = Object.freeze({
         }),
 
         tableSelection: Object.freeze({
-            selectable: '[data-xal-table-selectable]',
-            selectAll:  '[data-xal-table-select-all]',
-            selectRow:  'tbody [data-xal-table-select-row]',
+            selectable:             '[data-xal-table-selectable]',
+            selectAll:              '[data-xal-table-select-all]',
+            selectRow:              'tbody [data-xal-table-select-row]',
+            actionNotSelectable:    '.xal-table__actions--not-selectable',
         }),
 
         modal: Object.freeze({

@@ -16,14 +16,27 @@ export function initTableSelection(root = document) {
         // Les cases désactivées ne participent pas à la sélection globale
         const getEnabledRows = () => rowCheckboxes.filter((checkbox) => !checkbox.disabled);
 
-        // Reflète dans l'entête le nombre de lignes activées qui sont sélectionnées
-        const updateSelectAll = () => {
+        // Récupération du conteneur des actions associées à la table
+        const getContainerActions = () => document.querySelector(`div[${XalConstants.dataNames.xalise.tableTargetActions}="#${table.id}"]`);
+
+        // Reflète dans l'entête le nombre de lignes activées qui sont sélectionnées et 
+        // active/désactive automatiquement les actions associées à la table
+        const updateSelectAllAndActions = () => {
             const enabledRows   = getEnabledRows();
             const selectedCount = enabledRows.filter((checkbox) => checkbox.checked).length;
+            const container     = getContainerActions();
 
             selectAll.checked       = enabledRows.length > 0 && selectedCount === enabledRows.length;
             selectAll.indeterminate = selectedCount > 0 && selectedCount < enabledRows.length;
             selectAll.disabled      = enabledRows.length === 0;
+
+            if (container) {
+                const actionsBtn = [...container.querySelectorAll('button')].filter((btn) => !btn.matches(XalConstants.cssQueries.tableSelection.actionNotSelectable));
+
+                actionsBtn.forEach((btn) => {
+                    btn.disabled = selectedCount === 0;
+                });                
+            }
         };
 
         // La case d'entête applique son état à toute les lignes activées
@@ -32,15 +45,15 @@ export function initTableSelection(root = document) {
                 checkbox.checked = selectAll.checked;
             });
 
-            updateSelectAll();
+            updateSelectAllAndActions();
         });
 
         // Une modification individuelle recalcule l'état de la case d'entête
         rowCheckboxes.forEach((checkbox) => {
-            checkbox.addEventListener('change', updateSelectAll);
+            checkbox.addEventListener('change', updateSelectAllAndActions);
         });
 
         // Synchronise l'entête au chargement, y compris si des lignes sont précochées
-        updateSelectAll();
+        updateSelectAllAndActions();
     });
 }

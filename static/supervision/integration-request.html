@@ -482,12 +482,13 @@
 
                         <!-- Actions et pagination -->
                         <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
-                            <div class="d-flex flex-wrap align-items-center justify-content-start gap-2">
-                                <button type="button" class="btn btn-sm btn-xalise">
+                            <div class="d-flex flex-wrap align-items-center justify-content-start gap-2 xal-table__actions"
+                                 data-xal-table-target-actions="#xal-id-table-integration-request">
+                                <button type="button" class="btn btn-sm btn-xalise" disabled>
                                     <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
                                     <span class="">Rejouer</span>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-secondary">
+                                <button type="button" class="btn btn-sm btn-secondary xal-table__actions--not-selectable">
                                     <i class="bi bi-download" aria-hidden="true"></i>
                                     <span class="">Exporter</span>
                                 </button>
@@ -567,7 +568,7 @@
 
                         <!-- Résultats de la recherche -->
                         <div class="table-responsive">
-                            <table class="table table-hover xal-table" data-xal-table-selectable>
+                            <table id="xal-id-table-integration-request" class="table table-hover xal-table" data-xal-table-selectable>
                                 <caption class="visually-hidden">
                                     Liste des demandes d'intégration
                                 </caption>
