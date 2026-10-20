@@ -17,8 +17,9 @@ export const XalConstants = Object.freeze({
      */
     dataNames: Object.freeze({
         xalise: Object.freeze({
-            popoverValue:           'data-xal-popover-value',
-            tableTargetActions :    'data-xal-table-target-actions',
+            popoverValue:               'data-xal-popover-value',
+            tableTargetActions :        'data-xal-table-target-actions',
+            tableTargetSelectionCount:  'data-xal-table-target-selection-count',
         }),
     }),
 

@@ -35,7 +35,16 @@ export function initTableSelection(root = document) {
 
                 actionsBtn.forEach((btn) => {
                     btn.disabled = selectedCount === 0;
-                });                
+                });
+            }
+
+            const selectionCount = document.querySelector(`[${XalConstants.dataNames.xalise.tableTargetSelectionCount}="#${table.id}"]`);
+            if (selectionCount) {
+                const plural = selectedCount > 1 ? 's' : '';
+
+                selectionCount.textContent = selectedCount > 0 
+                    ? ` (${selectedCount} ligne${plural} sélectionnée${plural})`
+                    : '';
             }
         };
 
