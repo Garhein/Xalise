@@ -356,7 +356,7 @@ export const XalDialog = (() => {
      * @param   {Node|string|null}                                      [options.content]               Contenu de la modale.
      * @param   {'sm'|'lg'|'xl'|'fullscreen'}                           [options.size]                  Taille Bootstrap de la modale.
      * @param   {'success'|'danger'|'info'|'warning'}                   [options.variant]               Variante de couleur de l'en-tête et de l'icône de fermeture.
-     * @param   {string[]}                                              [options.headerClasses]         Classes personnalisées de l'en-tête, incompatibles avec `variant`.
+     * @param   {string[]}                                              [options.headerClasses=[]]      Classes personnalisées de l'en-tête, incompatibles avec `variant`.
      * @param   {string[]}                                              [options.titleClasses=[]]       Classes personnalisées du titre.
      * @param   {'confirmation'|'deleteConfirmation'|'information'}     [options.preset]                Preset de boutons à afficher.
      * @param   {Object}                                                [options.buttonOverrides={}]    Surcharge des boutons du preset, indexées par leur nom.

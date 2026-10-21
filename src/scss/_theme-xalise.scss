@@ -8,6 +8,7 @@
 
     .xal-modal__header--default {
         background-color: #{xalise-body-bg-tint(20%)};
+        border-bottom: 2px solid #{xalise-body-bg-tint(40%)};
     }
    
     // =-=-=-=-=-=-
@@ -240,6 +241,44 @@
 
             i {
                 font-size: .75rem;
+            }
+        }
+    }
+
+    // Ajout d'un padding sur la première cellule lorsque celle-ci ne contient pas une case à cocher
+    // Pour éviter que le contenu soit collé à la bordure
+    .xal-table:not(:has(tbody > tr > td:first-child input[type="checkbox"])) {
+        thead th:first-child,
+        tbody > tr > td:first-child {
+            padding-inline-start: .75rem;
+        }        
+    }
+
+    // =-=-=-=-=-=-
+    // Onglet de navigation
+    // =-=-=-=-=-=-
+
+    .xal-nav-tabs {
+        --bs-nav-link-color: var(--bs-secondary-color);
+        --bs-nav-link-hover-color: var(--xalise-color);
+        --bs-nav-tabs-link-active-color: var(--xalise-color);
+
+        &__count {
+            min-width: 1.5rem;
+            color: var(--bs-secondary-color);
+            background-color: var(--bs-secondary-bg);
+            font-weight: 500;
+            margin-inline-start: .25rem;
+        }
+
+        .nav-link {
+            &.active {
+                font-weight: 600;
+            }
+
+            &.active .xal-nav-tabs__count {
+                color: var(--bs-white);
+                background-color: var(--xalise-color);
             }
         }
     }

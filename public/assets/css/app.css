@@ -12538,6 +12538,7 @@ body:not([data-xal-page-fullheight]) {
 }
 [data-bs-theme=xalise] .xal-modal__header--default {
   background-color: color-mix(in srgb, var(--bs-body-bg) 80%, var(--xalise-color) 20%);
+  border-bottom: 2px solid color-mix(in srgb, var(--bs-body-bg) 60%, var(--xalise-color) 40%);
 }
 [data-bs-theme=xalise] .dropdown-menu {
   --bs-dropdown-bg: var(--bs-primary);
@@ -12700,6 +12701,29 @@ body:not([data-xal-page-fullheight]) {
 }
 [data-bs-theme=xalise] .xal-table__sort i {
   font-size: 0.75rem;
+}
+[data-bs-theme=xalise] .xal-table:not(:has(tbody > tr > td:first-child input[type=checkbox])) thead th:first-child,
+[data-bs-theme=xalise] .xal-table:not(:has(tbody > tr > td:first-child input[type=checkbox])) tbody > tr > td:first-child {
+  padding-inline-start: 0.75rem;
+}
+[data-bs-theme=xalise] .xal-nav-tabs {
+  --bs-nav-link-color: var(--bs-secondary-color);
+  --bs-nav-link-hover-color: var(--xalise-color);
+  --bs-nav-tabs-link-active-color: var(--xalise-color);
+}
+[data-bs-theme=xalise] .xal-nav-tabs__count {
+  min-width: 1.5rem;
+  color: var(--bs-secondary-color);
+  background-color: var(--bs-secondary-bg);
+  font-weight: 500;
+  margin-inline-start: 0.25rem;
+}
+[data-bs-theme=xalise] .xal-nav-tabs .nav-link.active {
+  font-weight: 600;
+}
+[data-bs-theme=xalise] .xal-nav-tabs .nav-link.active .xal-nav-tabs__count {
+  color: var(--bs-white);
+  background-color: var(--xalise-color);
 }
 @media (max-width: 767.98px) {
   [data-bs-theme=xalise] .xal-main-navbar [data-xal-tooltip] {

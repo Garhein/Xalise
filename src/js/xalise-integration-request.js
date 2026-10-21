@@ -36,6 +36,27 @@ document
     });
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Historique
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+document
+    .querySelectorAll('.xal-table__row-actions--history')
+    .forEach((historyButton) => {
+        const details   = document.getElementById('xal-id-static-integration-history');
+        const recordRow = historyButton.closest('[data-xal-record-id]');
+        const recordId  = recordRow?.dataset.xalRecordId;
+
+        historyButton.addEventListener('click', async (event) => {
+            await XalDialog.show({
+                title: `Historique de la demande ${recordId}`,
+                content: details.innerHTML,
+                contentIsHtml: true,
+                size: 'lg',
+            });
+        });
+    });
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 // Tri des colonnes
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
