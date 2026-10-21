@@ -473,6 +473,7 @@
 
                         <!-- Actions et pagination -->
                         <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+                            <!-- Actions -->
                             <div class="d-flex flex-wrap align-items-center justify-content-start gap-2 xal-table__actions"
                                  data-xal-table-target-actions="#xal-id-table-integration-request">
                                 <button type="button" class="btn btn-sm btn-xalise" disabled>
@@ -485,6 +486,7 @@
                                 </button>
                             </div>
 
+                            <!-- Pagination -->
                             <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
                                 <p class="mb-0 text-body-secondary small">
                                     42 demandes
@@ -494,6 +496,21 @@
                                           role="status">
                                     </span>
                                 </p>
+                                
+                                <div class="d-flex align-items-center gap-2">
+                                    <label for="xal-id-page-size" class="visually-hidden">
+                                        Nombre de demandes par page
+                                    </label>
+                                    <select id="xal-id-page-size"
+                                            name="pageSize"
+                                            class="form-select form-select-sm w-auto"
+                                            data-xal-table-page-size="#xal-id-table-integration-request">
+                                        <option value="10" selected>10 demandes par page</option>
+                                        <option value="25">25 demandes par page</option>
+                                        <option value="50">50 demandes par page</option>
+                                    </select>
+                                </div>
+
                                 <nav aria-label="Pagination des demandes d'intégration">
                                     <ul class="pagination pagination-sm mb-0">
                                         <li class="page-item disabled">
@@ -534,6 +551,7 @@
                                         </li>
                                     </ul>
                                 </nav>
+
                                 <form class="d-flex align-items-center gap-2"
                                       aria-label="Accéder directement à une page">
                                     <label for="xal-id-pagination-jump" class="visually-hidden">
@@ -568,7 +586,7 @@
                             <table id="xal-id-table-integration-request"
                                    class="table table-hover xal-table"
                                    data-xal-table-selectable
-                                   data-xal-table-sort-url="/integration-requests">
+                                   data-xal-table-url="/integration-requests">
                                 <caption class="visually-hidden">
                                     Liste des demandes d'intégration
                                 </caption>

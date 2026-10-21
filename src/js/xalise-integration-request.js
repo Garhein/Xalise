@@ -80,19 +80,21 @@ document
 // Tri des colonnes
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
-const table = document.querySelector('#xal-id-table-integration-request');
+document.addEventListener('xal-table:sort', (event) => {
+    const table = event.target;
+    const url   = table.dataset.xalTableUrl;
 
-table?.addEventListener('xal-table:sort', (event) => {
-    // Prépare les paramètres que le serveur utilisera pour trier les résultats
+    if (!url) return;
+
     const { key, direction } = event.detail;
-    const url = new URL(table.dataset.xalTableSortUrl, window.location.origin);
+    const urlSearch = new URL(url, window.location.origin);
 
-    url.searchParams.set('sort', key);
-    url.searchParams.set('direction', direction);
+    urlSearch.searchParams.set('sort', key);
+    urlSearch.searchParams.set('direction', direction);
 
     // TODO: appeler le serveur et remplacer les lignes du tableau avec sa réponse (penser à mettre async (event))
     /*
-    const response = await fetch(url);
+    const response = await fetch(urlSearch);
     if (!response.ok) {
         console.error('Impossible de trier les demandes d\'intégration.');
         return;
@@ -102,5 +104,26 @@ table?.addEventListener('xal-table:sort', (event) => {
     table.querySelector('tbody').innerHTML = rowsHtml;
     */
 
-    console.log(url);
+    console.log(urlSearch);
+});
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Taille de la pagination
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+document.addEventListener('xal-table:page-size-change', (event) => {
+    const table = event.target;
+    const url   = table.dataset.xalTableUrl;
+
+    if (!url) return;
+
+    const { pageSize, page } = event.detail;
+    const urlSearch = new URL(url, window.location.origin);
+
+    urlSearch.searchParams.set('pageSize', pageSize);
+    urlSearch.searchParams.set('page', page);
+
+    // TODO: appeler le serveur pour mettre à jour les lignes du tableau et la pagination (penser à mettre async (event))
+
+    console.log(urlSearch);
 });

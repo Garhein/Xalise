@@ -3,6 +3,7 @@ import { initBootstrapFormValidation } from './core/XalFormValidation.js';
 import { initTableSelection } from './core/XalTableSelection.js';
 import { initTableSort } from './core/XalTableSort.js';
 import { initFormClearButtons  } from './core/XalForm.js';
+import { initTablePagination  } from './core/XalTablePagination.js';
 
 import { XalLoaderNav } from './loaders/XalLoaderNav.js';
 import { XalLoaderOverlay } from './loaders/XalLoaderOverlay.js';
@@ -15,6 +16,7 @@ initBootstrapFormValidation();
 initTableSelection();
 initTableSort();
 initFormClearButtons();
+initTablePagination();
 
 XalLoaderOverlay.init();
 XalLoaderPlaceholder.init();
