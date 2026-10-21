@@ -49,7 +49,7 @@ document
         historyButton.addEventListener('click', async (event) => {
             await XalDialog.show({
                 title: `Historique de la demande ${recordId}`,
-                content: details.innerHTML,
+                content: details.content,
                 contentIsHtml: true,
                 size: 'lg',
             });
