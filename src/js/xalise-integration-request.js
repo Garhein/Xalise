@@ -57,6 +57,26 @@ document
     });
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Contenu brut
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+document
+    .querySelectorAll('.xal-table__row-actions--content')
+    .forEach((contentButton) => {
+        const details   = document.getElementById('xal-id-static-integration-raw-content');
+        const recordRow = contentButton.closest('[data-xal-record-id]');
+        const recordId  = recordRow?.dataset.xalRecordId;
+
+        contentButton.addEventListener('click', async (event) => {
+            await XalDialog.show({
+                title: `Contenu brut de la demande ${recordId}`,
+                content: details.content,
+                size: 'xl',
+            });
+        });
+    });
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 // Tri des colonnes
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 

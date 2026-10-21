@@ -660,9 +660,7 @@
                                                     <i class="bi bi-pencil-square" aria-hidden="true"></i>
                                                 </button>
                                                 <button type="button"
-                                                        class="btn btn-sm btn-link"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#xal-id-integration-message-modal"
+                                                        class="btn btn-sm btn-link xal-table__row-actions--content"
                                                         aria-label="Afficher le message brut de la demande INT-20261017"
                                                         title="Afficher le message brut">
                                                     <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
@@ -744,9 +742,7 @@
                                                     <i class="bi bi-pencil-square" aria-hidden="true"></i>
                                                 </button>
                                                 <button type="button"
-                                                        class="btn btn-sm btn-link"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#xal-id-integration-message-modal"
+                                                        class="btn btn-sm btn-link xal-table__row-actions--content"
                                                         aria-label="Afficher le message brut de la demande INT-20261015"
                                                         title="Afficher le message brut">
                                                     <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
@@ -828,9 +824,7 @@
                                                     <i class="bi bi-pencil-square" aria-hidden="true"></i>
                                                 </button>
                                                 <button type="button"
-                                                        class="btn btn-sm btn-link"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#xal-id-integration-message-modal"
+                                                        class="btn btn-sm btn-link xal-table__row-actions--content"
                                                         aria-label="Afficher le message brut de la demande INT-20261014"
                                                         title="Afficher le message brut">
                                                     <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
@@ -1036,6 +1030,22 @@
                                         Aucun historique d'intégration enregistré pour cette demande.
                                     </p>
                                 </section>
+                            </div>
+                        </template>
+                        
+                        <!-- Contenu de la modale du message brut -->
+                        <template id="xal-id-static-integration-raw-content">
+                            <textarea id="xal-id-raw-content"
+                                      class="form-control font-monospace"
+                                      rows="16"
+                                      readonly
+                                      aria-describedby="xal-id-raw-content-help">
+MSH|^~\&|XALISE|HOPITAL_DEMO|SIH|HOPITAL_DEMO|20261021103000||ADT^A01^ADT_A01|MSG-20261021-001|P|2.5.1
+EVN|A01|20261021102900
+PID|1||PAT-000184^^^HOPITAL_DEMO^MR||DUPONT^MARTIN^JEAN||19850314|M|||12 RUE DES LILAS^^LYON^^69003^FRA||0472000000
+PV1|1|I|MED^CH-12^01^HOPITAL_DEMO^^^MEDECINE||URGENCES||||1234^DURAND^ALICE|||MED||||ADM|V20261021-0042</textarea>
+                            <div id="xal-id-raw-content-help" class="form-text fst-italic">
+                                Le contenu est affiché en lecture seule
                             </div>
                         </template>
                     </section>
