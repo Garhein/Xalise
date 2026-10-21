@@ -382,8 +382,19 @@
                     <form class="card mb-3 xal-form-search" role="search" aria-label="Recherche des demandes d'intégration">
                         <div class="card-body">
                             <div class="row gy-2 gx-3 align-items-end">
+                                <!-- Numéro de demande -->
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <label for="search-request-id" class="form-label">N°de demande</label>
+                                    <input name="requestId" 
+                                            id="search-request-id"
+                                            type="search"
+                                            class="form-control form-control-sm"
+                                            autocomplete="off"
+                                            placeholder="Ex : INT-20261021">
+                                </div>
+                                
                                 <!-- Critères principaux -->
-                                <div class="col-12 col-xl-6">
+                                <div class="col-12 col-md-6 col-xl-6">
                                     <div class="row gy-2 gx-3">
                                         <div class="col-12 col-sm-6">
                                             <label for="search-date-start" class="form-label">Reçue à partir du</label>
@@ -410,7 +421,7 @@
                                 </div>
 
                                 <!-- Statuts et actions -->
-                                <div class="col-12 col-xl-9">
+                                <div class="col-12 col-xl-6">
                                     <div class="row gy-2 gx-3">
                                         <div class="col-12 col-sm-4">
                                             <label for="search-status-reception" class="form-label">Statut de réception</label>
@@ -441,7 +452,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-12 col-xl-3 d-flex justify-content-end gap-2 mt-3 mt-xl-0">
                                     <button type="submit" class="btn btn-sm btn-xalise">
                                         <i class="bi bi-search me-1" aria-hidden="true"></i>
@@ -582,6 +592,15 @@
                                         <th scope="col">
                                             <button type="button"
                                                     class="xal-table__sort"
+                                                    data-xal-table-sort-column="requestId"
+                                                    data-xal-table-sort-label="Numéro de demande">
+                                                N°demande
+                                                <i class="bi bi-arrow-down-up xal-table__sort-icon" aria-hidden="true"></i>
+                                            </button>
+                                        </th>
+                                        <th scope="col">
+                                            <button type="button"
+                                                    class="xal-table__sort"
                                                     data-xal-table-sort-column="source"
                                                     data-xal-table-sort-label="Source">
                                                 Source
@@ -609,6 +628,7 @@
                                         <td class="text-nowrap">
                                             <time datetime="2026-10-17T11:25:00">17/10/2026 11:25</time>
                                         </td>
+                                        <td>INT-20261017</td>
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
                                                 <span>Dépôt interne</span>
@@ -674,6 +694,7 @@
                                         <td class="text-nowrap">
                                             <time datetime="2026-10-15T09:42:00">15/10/2026 19:42</time>
                                         </td>
+                                        <td>INT-20261015</td>
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
                                                 <span>Transmission interne</span>
@@ -759,6 +780,7 @@
                                         <td class="text-nowrap">
                                             <time datetime="2026-10-14T09:42:00">14/10/2026 09:42</time>
                                         </td>
+                                        <td>INT-20261014</td>
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center gap-2">
                                                 <span>Transmission externe</span>
@@ -838,6 +860,7 @@
                             </table>
                         </div>
 
+                        <!-- Contenu des popovers non déclarés directement sur les boutons -->
                         <div id="xal-id-integration-source-file" class="d-none">
                             Fichier : <span class="font-monospace">\\serveur\hl7\in\patient.hl7</span>
                         </div>
