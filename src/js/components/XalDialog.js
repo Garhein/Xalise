@@ -260,19 +260,67 @@ export const XalDialog = (() => {
     };
 
     /**
+     * Attend le prochain événement Bootstrap émis par la modale.
+     * 
+     * L'écouteur est retiré automatiquement après le premier déclenchement.
+     * 
+     * @param   {string}          eventName     Nom de l'événement Bootstrap à attendre.
+     * @returns {Promise<Event>}                Promesse résolue avec l'événement reçu.
+     */
+    const waitForModalEvent = (eventName) => new Promise((resolve) => {
+        modalElement.addEventListener(eventName, resolve, { once: true });
+    });
+
+    /**
+     * Ferme la modale et attend la fin de sa transition.
+     * 
+     * Si une fermeture est déjà en cours, attend l'événement `hidden.bs.modal`.
+     * Si la modale est déjà masquée, la fonction se termine sans action.
+     * 
+     * @returns {Promise<void>} Promesse résolue lorsque la modale est masquée.
+     */
+    const hideModalAndWait = async () => {
+        if (isClosing) {
+            await waitForModalEvent('hidden.bs.modal');
+            return;
+        }
+
+        if (!modalElement.classList.contains('show')) return;
+
+        const hidden = waitForModalEvent('hidden.bs.modal');
+        modalInstance.hide();
+        await hidden;
+    };
+
+    /**
+     * Affiche la modale et attend la fin de sa transition.
+     * 
+     * Si la modale est déjà affichée, la fonction se termine sans action.
+     * 
+     * @returns {Promise<void>} Promesse résolue lorsque la modale est affichée.
+     */
+    const showModalAndWait = async () => {
+        if (modalElement.classList.contains('show')) return;
+
+        const shown = waitForModalEvent('shown.bs.modal');
+        modalInstance.show();
+        await shown;
+    };
+
+    /**
      * Crée un bouton à partir du template, puis configure son apparence et son comportement au clic.
      * 
-     * Au clic, le bouton est désactivé et le callback éventuel de `config.action` est exécuté. La modale 
-     * se ferme si le callback réussit, sauf si `config.closeOnClick` est positionné sur `false`. En l'absence
-     * de callback, la modale se ferme après le clic. Si le callback échoue, l'événement `xal-dialog:error` est
-     * émis et la modale reste ouverte.
+     * Au clic, le bouton est désactivé. Si `config.closeOnClick` est positionné sur `true`, la fermeture
+     * de la modale est terminée avant l'exécution du callback. Si le callback échoue, la modale est rouverte
+     * avant l'émission de `xal-dialog:error`. Lorsque `config.closeOnClick` est positionné sur `false`, le
+     * callback s'exécute sans fermer la modale.
      *
      * @param   {Object}    config                      Configuration du bouton.
      * @param   {string}    config.title                Libellé visible du bouton.
      * @param   {string[]}  config.classes              Classes CSS à appliquer au bouton.
      * @param   {string}    [config.icon]               Classe Bootstrap Icons à insérer avant le libellé.
      * @param   {Function}  [config.action]             Callback exécuté au clic.
-     * @param   {boolean}   [config.closeOnClick=true]  `true` si la modale est fermée après l'appel au callback, sinon `false`.
+     * @param   {boolean}   [config.closeOnClick=true]  `true` si la modale est fermée avant le callback, sinon `false`.
      * @param   {string}    [config.ariaLabel]          Libellé accessible appliqué si aucune icône n'est affichée.
      * @param   {Object}    context                     Données et méthodes transmises au callback.
      * @returns {HTMLButtonElement}                     Bouton créé, prêt à être ajouté au pied de la modale.
@@ -312,13 +360,21 @@ export const XalDialog = (() => {
         button.addEventListener('click', async (event) => {
             button.disabled = true;
 
-            try {
-                await config.action?.({ ...context, button, event });
+            const closeOnClick = config.closeOnClick !== false;
+            let modalWasHidden = false;
 
-                if (config.closeOnClick !== false) {
-                    modalInstance.hide();
+            try {
+                if (closeOnClick) {
+                    await hideModalAndWait();
+                    modalWasHidden = true;
                 }
+
+                await config.action?.({ ...context, button, event });
             } catch (error) {
+                if (modalWasHidden) {
+                    await showModalAndWait();
+                }
+
                 modalElement.dispatchEvent(
                     new CustomEvent(
                         'xal-dialog:error',

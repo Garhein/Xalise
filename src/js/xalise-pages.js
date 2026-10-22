@@ -84,6 +84,7 @@ document
         bootstrap.Popover.getOrCreateInstance(trigger, options);
     });
 
+// Pour afficher une seule popover à la fois
 document.addEventListener('show.bs.popover', (event) => {
     const openedTrigger = event.target;
 
@@ -217,4 +218,14 @@ document.addEventListener('xal-table:page-size-change', (event) => {
     // TODO: appeler le serveur pour mettre à jour les lignes du tableau et la pagination (penser à mettre async (event))
 
     console.log(url);
+});
+
+document.addEventListener('xal-dialog:error', (event) => {
+    const { error, button } = event.detail;
+
+    console.log('Événement reçu : xal-dialog:error');
+    console.log('Bouton concerné : ', button.title);
+    console.error(error);
+
+    XalToast.error('Le rejeu a échoué.');
 });

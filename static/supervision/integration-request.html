@@ -749,7 +749,15 @@
                                             </div>
                                         </td>
                                         <td><span class="badge text-bg-success">Validé</span></td>
-                                        <td><span class="badge text-bg-danger">Erreur</span></td>
+                                        <td>
+                                            <button type="button"
+                                                    class="border-0 badge text-bg-danger xal-table__failure-trigger"
+                                                    aria-label="Afficher les détails de l'échec de transport de la demande INT-20261015"
+                                                    data-xal-failure-stage="transport">
+                                                Erreur
+                                                <i class="bi bi-info-circle ms-1" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
                                         <td aria-label="Aucun statut d'intégration">—</td>
                                         <td class="text-nowrap align-middle">
                                             <div class="d-flex justify-content-end gap-1 xal-table__row-actions">
@@ -1066,6 +1074,45 @@ PV1|1|I|MED^CH-12^01^HOPITAL_DEMO^^^MEDECINE||URGENCES||||1234^DURAND^ALICE|||ME
                                 Le contenu est affiché en lecture seule
                             </div>
                         </template>
+
+                        <!-- Contenu de la modale d'échec -->
+                         <template id="xal-id-static-integration-error">
+                            <div class="vstack gap-3">
+                                <!-- Résumé de l'erreur -->
+                                <div class="d-flex align-items-center gap-3 p-2 rounded bg-danger-subtle text-danger-emphasis">
+                                    <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                                    <p class="mb-0 text-justify">
+                                        Aucun accusé de réception applicatif reçu dans le délai imparti.
+                                    </p>
+                                </div>
+
+                                <!-- Métadonnées -->
+                                 <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <div class="small text-body-secondary">Code d'erreur</div>
+                                        <code class="d-inline-block mt-1 p-2 rounded bg-body-secondary text-body">
+                                            ACK_TIMEOUT
+                                        </code>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="small text-body-secondary">Date et heure</div>
+                                        <code class="d-inline-block mt-1 p-2 rounded bg-body-secondary text-body">
+                                            <time class="d-block mt-1" datetime="2026-10-15T19:43:00">
+                                                15/10/2026 à 19:43
+                                            </time>
+                                        </code>
+                                    </div>
+                                 </div>
+
+                                <!-- Action recommandée -->
+                                <div class="border-start border-3 border-primary ps-3">
+                                    <div class="small text-body-secondary mb-1">Action recommandée</div>
+                                    <p class="mb-0 text-justify">
+                                        Vérifier la disponibilité du système destinataire, puis rejouer l'intégration.
+                                    </p>
+                                </div>
+                            </div>
+                         </template>
                     </section>
                 </main>
             </div>

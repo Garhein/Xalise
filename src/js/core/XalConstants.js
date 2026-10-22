@@ -139,6 +139,7 @@ export const XalConstants = Object.freeze({
             arrowUp:                    'bi-arrow-up',
             arrowDown:                  'bi-arrow-down',
             arrowDownUp:                'bi-arrow-down-up',
+            arrowRepeat:                'bi-arrow-repeat',
             checkCircleFill:            'bi-check-circle-fill',
             checkLg:                    'bi-check-lg',
             circle:                     'bi-circle',
@@ -154,6 +155,7 @@ export const XalConstants = Object.freeze({
             danger:  'text-bg-danger',
             warning: 'text-bg-warning',
             info:    'text-bg-info',
+            xalise:  'text-bg-xalise',
         }),
 
         bootstrapBgColor: Object.freeze({

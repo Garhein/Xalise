@@ -1,5 +1,8 @@
 import { XalConstants } from './core/XalConstants.js';
 import { XalDialog } from './components/XalDialog.js';
+import { XalToast } from './components/XalToast.js';
+import { XalLoaderOverlay } from './loaders/XalLoaderOverlay.js';
+
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 // Suppression
@@ -76,3 +79,59 @@ document
             });
         });
     });
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Échec d'intégration
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+document
+    .querySelectorAll('.xal-table__failure-trigger')
+    .forEach((failButton) => {
+        const details   = document.getElementById('xal-id-static-integration-error');
+        const recordRow = failButton.closest('[data-xal-record-id]');
+        const recordId  = recordRow?.getAttribute(XalConstants.dataNames.xalise.recordId);
+
+        failButton.addEventListener('click', async (event) => {
+            await XalDialog.show({
+                title: `Échec du transport - Demande ${recordId}`,
+                content: details.content,
+                variant: 'danger',
+                dismissible: false,
+                buttons: [
+                    {
+                        title:      'Fermer',
+                        classes:    [XalConstants.cssClasses.bootstrapBtn.size.sm, XalConstants.cssClasses.bootstrapBtn.outlineSecondary],
+                        icon:       XalConstants.cssClasses.bootstrapIcons.xLg,
+                    },
+                    {
+                        title: 'Rejouer l\'intégration',
+                        classes: [XalConstants.cssClasses.bootstrapBtn.size.sm, XalConstants.cssClasses.bootstrapBtn.xalise],
+                        icon: XalConstants.cssClasses.bootstrapIcons.arrowRepeat,
+                        action: () => replayIntegrationRequest(recordId),
+                    },
+                ],
+            });
+        });
+    });
+
+async function replayIntegrationRequest(recordId) {
+    // TODO: appel serveur pour enregistrer la demande, mise à jour de l'affichage de la demande et toast
+
+    XalLoaderOverlay.show('Enregistrement en cours...');
+
+    try {
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+    }
+    finally {
+        XalLoaderOverlay.hide();
+    }
+
+    XalToast.custom(
+        {
+            title: 'Rejeu demandé',
+            message: `Demande ${recordId} transmise pour rejeu.`,
+            icon: XalConstants.cssClasses.bootstrapIcons.arrowRepeat,
+            color: XalConstants.cssClasses.bootstrapTextBg.xalise,
+        }
+    );
+}
