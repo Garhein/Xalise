@@ -10,7 +10,7 @@ document
     .forEach((deleteButton) => {
         deleteButton.addEventListener('click', async () => {
             const recordRow = deleteButton.closest('[data-xal-record-id]');
-            const recordId  = recordRow?.dataset.xalRecordId;
+            const recordId  = recordRow?.getAttribute(XalConstants.dataNames.xalise.recordId);
 
             if (!recordId) {
                 console.error('Identifiant de la demande d\'intégration introuvable.');
@@ -45,7 +45,7 @@ document
     .forEach((historyButton) => {
         const details   = document.getElementById('xal-id-static-integration-history');
         const recordRow = historyButton.closest('[data-xal-record-id]');
-        const recordId  = recordRow?.dataset.xalRecordId;
+        const recordId  = recordRow?.getAttribute(XalConstants.dataNames.xalise.recordId);
 
         historyButton.addEventListener('click', async (event) => {
             await XalDialog.show({
@@ -66,7 +66,7 @@ document
     .forEach((contentButton) => {
         const details   = document.getElementById('xal-id-static-integration-raw-content');
         const recordRow = contentButton.closest('[data-xal-record-id]');
-        const recordId  = recordRow?.dataset.xalRecordId;
+        const recordId  = recordRow?.getAttribute(XalConstants.dataNames.xalise.recordId);
 
         contentButton.addEventListener('click', async (event) => {
             await XalDialog.show({

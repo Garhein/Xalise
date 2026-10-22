@@ -40,9 +40,9 @@ if (new URLSearchParams(window.location.search).has('debug')) {
 
 function createSourcePopoverContent(trigger) {
     const content    = document.createElement('span');
-    const label      = trigger.dataset.xalPopoverLabel;
-    const valueText  = trigger.dataset.xalPopoverValue;
-    const cssClasses = trigger.dataset.xalPopoverValueCssClasses;
+    const label      = trigger.getAttribute(XalConstants.dataNames.xalise.popoverLabel);
+    const valueText  = trigger.getAttribute(XalConstants.dataNames.xalise.popoverValue);
+    const cssClasses = trigger.getAttribute(XalConstants.dataNames.xalise.popoverValueCssClasses);
 
     content.append(`${label} : `);
 
@@ -64,7 +64,7 @@ const popoverAllowList = {
 document
     .querySelectorAll(XalConstants.cssQueries.bootstrap.togglePopover)
     .forEach((trigger) => {
-        const selector  = trigger.dataset.xalPopoverContent;
+        const selector  = trigger.getAttribute(XalConstants.dataNames.xalise.popoverContent);
         const source    = selector ? document.querySelector(selector) : null;
 
         const options = {

@@ -23,7 +23,7 @@ export function initStaticFormNavigation(root = document) {
             }
 
             // Récupération de la cible
-            const target = form.dataset.xalTarget?.trim();
+            const target = form.getAttribute(XalConstants.dataNames.xalise.target)?.trim();
 
             if (!target) {
                 console.error('[XalFormNavigation] Attribut "data-xal-target" vide.');
