@@ -490,7 +490,7 @@
                                 </button>
                             </div>
 
-                            <!-- Pagination -->
+                            <!-- Pagination standard
                             <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
                                 <p class="mb-0 text-body-secondary small">
                                     43 demandes
@@ -572,6 +572,80 @@
                                         <option value="5" selected>Page 5</option>
                                     </select>
                                 </form>
+                            </div>
+                            -->
+
+                            <!-- Pagination avec liste déroulante -->
+                            <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
+                                <p class="mb-0 text-body-secondary small">
+                                    43 demandes
+                                    <span data-xal-table-container-selection-count="#xal-id-table-integration-request"
+                                          class="xal-table__selection-count fst-italic"
+                                          aria-live="polite"
+                                          role="status">
+                                    </span>
+                                </p>
+
+                                <div class="d-flex align-items-center gap-2">
+                                    <label for="xal-id-page-size" class="visually-hidden">
+                                        Nombre de demandes par page
+                                    </label>
+                                    <select id="xal-id-page-size"
+                                            name="pageSize"
+                                            class="form-select form-select-sm w-auto"
+                                            data-xal-table-page-size="#xal-id-table-integration-request">
+                                        <option value="10" selected>10 demandes par page</option>
+                                        <option value="25">25 demandes par page</option>
+                                        <option value="50">50 demandes par page</option>
+                                    </select>
+                                </div>
+
+                                <nav aria-label="Pagination des demandes d'intégration">
+                                    <ul class="pagination pagination-sm mb-0">
+                                        <li class="page-item">
+                                            <button type="button"
+                                                    class="page-link"
+                                                    aria-label="Première page">
+                                                <i class="bi bi-chevron-double-left" aria-hidden="true"></i>
+                                            </button>
+                                        </li>
+                                        <li class="page-item">
+                                            <button type="button"
+                                                    class="page-link"
+                                                    aria-label="Page précédente">
+                                                <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                                            </button>
+                                        </li>
+                                        <li class="page-item">
+                                            <label for="xal-id-pagination-jump" class="visually-hidden">
+                                                Choisir une page
+                                            </label>
+                                            <select id="xal-id-pagination-jump" class="form-select form-select-sm xal-pagination__select">
+                                                <option value="1">Page 1</option>
+                                                <option value="2">Page 2</option>
+                                                <option value="3">Page 3</option>
+                                                <option value="4">Page 4</option>
+                                                <option value="5" selected>Page 5</option>
+                                            </select>
+                                        </li>
+                                        <li class="page-item disabled">
+                                            <button type="button"
+                                                    class="page-link"
+                                                    aria-label="Page suivante"
+                                                    disabled>
+                                                <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                                            </button>
+                                        </li>
+                                        <li class="page-item disabled">
+                                            <button type="button"
+                                                    class="page-link"
+                                                    aria-label="Dernière page"
+                                                    disabled>
+                                                <i class="bi bi-chevron-double-right" aria-hidden="true"></i>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
 

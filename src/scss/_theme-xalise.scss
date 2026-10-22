@@ -120,6 +120,23 @@
             box-shadow: none;
             z-index: 2;
         }
+
+        .xal-pagination__select {
+            width: auto;
+            color: var(--bs-pagination-color);
+            background-color: var(--bs-body-bg);
+            border-color: var(--bs-pagination-border-color);
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+            cursor: pointer;
+
+            &:focus-visible {
+                outline: 1px solid var(--xalise-color);
+                outline-offset: -1px;
+                box-shadow: none;
+            }
+        }
     }
 
     // =-=-=-=-=-=-

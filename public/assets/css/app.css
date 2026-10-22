@@ -12618,6 +12618,21 @@ body:not([data-xal-page-fullheight]) {
   box-shadow: none;
   z-index: 2;
 }
+[data-bs-theme=xalise] .pagination .xal-pagination__select {
+  width: auto;
+  color: var(--bs-pagination-color);
+  background-color: var(--bs-body-bg);
+  border-color: var(--bs-pagination-border-color);
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  cursor: pointer;
+}
+[data-bs-theme=xalise] .pagination .xal-pagination__select:focus-visible {
+  outline: 1px solid var(--xalise-color);
+  outline-offset: -1px;
+  box-shadow: none;
+}
 [data-bs-theme=xalise] .xal-table {
   --bs-table-bg: color-mix(
       in srgb,
