@@ -12164,6 +12164,14 @@ body:not([data-xal-page-fullheight]) {
     visibility: visible;
     transition-delay: 0s;
   }
+  .xal-main-navbar .navbar-nav.ms-auto {
+    gap: 0.25rem;
+    margin-right: 0.5rem !important;
+  }
+  .xal-main-navbar .navbar-nav.ms-auto > .dropdown > .btn-outline-secondary,
+  .xal-main-navbar .navbar-nav.ms-auto > .btn-outline-secondary {
+    margin-left: 0;
+  }
 }
 .xal-main-sidebar {
   display: flex;
