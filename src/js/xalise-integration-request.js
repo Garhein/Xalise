@@ -1,3 +1,4 @@
+import { XalConstants } from './core/XalConstants.js';
 import { XalDialog } from './components/XalDialog.js';
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
@@ -80,9 +81,17 @@ document
 // Tri des colonnes
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
+/**
+ * Écoute les événements de tri émis par les tables et prépare l'URL de la requête.
+ * 
+ * La table émettrice est récupérée depuis `event.target`. Ses paramètres de tri sont
+ * ajoutés à l'URL définie dans son attribut `data-xal-refresh-url`.
+ * 
+ * @param {CustomEvent} event Événement émis par une table.
+ */
 document.addEventListener('xal-table:sort', (event) => {
     const table = event.target;
-    const url   = table.dataset.xalTableUrl;
+    const url   = table.getAttribute(XalConstants.dataNames.xalise.refreshUrl);
 
     if (!url) return;
 
@@ -113,7 +122,7 @@ document.addEventListener('xal-table:sort', (event) => {
 
 document.addEventListener('xal-table:page-size-change', (event) => {
     const table = event.target;
-    const url   = table.dataset.xalTableUrl;
+    const url   = table.getAttribute(XalConstants.dataNames.xalise.refreshUrl);
 
     if (!url) return;
 

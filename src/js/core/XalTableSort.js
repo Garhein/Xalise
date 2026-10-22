@@ -12,7 +12,7 @@ import { XalConstants } from './XalConstants.js';
 export function initTableSort(root = document) {
     root.addEventListener('click', (event) => {
         // Le clic peut provenir de l'icône ou du texte à l'intérieur du bouton
-        const button = event.target.closest(XalConstants.cssQueries.tableSort.sortColumn);
+        const button = event.target.closest(XalConstants.cssQueries.table.sort.column);
         if (!button) return;
 
         const table  = button.closest('table');
@@ -26,10 +26,10 @@ export function initTableSort(root = document) {
         const direction         = currentDirection === 'ascending' ? 'descending' : 'ascending';
 
         // Réinitialise l'état et l'icône de toutes les colonnes triables
-        table.querySelectorAll(XalConstants.cssQueries.tableSort.sortColumn)
+        table.querySelectorAll(XalConstants.cssQueries.table.sort.column)
              .forEach((sortButton) => {
                 const sortHeader = sortButton.closest('th');
-                const sortIcon   = sortButton.querySelector(XalConstants.cssQueries.tableSort.sortIcon);
+                const sortIcon   = sortButton.querySelector(XalConstants.cssQueries.table.sort.icon);
 
                 sortHeader?.removeAttribute(XalConstants.ariaNames.sort);
 
@@ -47,7 +47,7 @@ export function initTableSort(root = document) {
         header.setAttribute(XalConstants.ariaNames.sort, direction);
 
         // Synchronise l'icône avec le sens annoncé par aria-sort
-        const icon = button.querySelector(XalConstants.cssQueries.tableSort.sortIcon);
+        const icon = button.querySelector(XalConstants.cssQueries.table.sort.icon);
         if (icon) {
             icon.classList.add(
                 direction === 'ascending'
@@ -60,9 +60,9 @@ export function initTableSort(root = document) {
         table.dispatchEvent(new CustomEvent('xal-table:sort', {
             bubbles: true,
             detail: {
-                key: button.dataset.xalTableSortColumn,
+                key: button.getAttribute(XalConstants.dataNames.xalise.tableSortColumn),
                 direction,
-                label: button.dataset.xalTableSortLabel
+                label: button.getAttribute(XalConstants.dataNames.xalise.tableSortLabel),
             },
         }));
     });

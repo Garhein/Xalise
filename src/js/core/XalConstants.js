@@ -21,8 +21,11 @@ export const XalConstants = Object.freeze({
             popoverValue:               'data-xal-popover-value',
             tablePageSize:              'data-xal-table-page-size',
             
-            tableContainerActions :        'data-xal-table-container-actions',
-            tableContainerSelectionCount:  'data-xal-table-container-selection-count',
+            refreshUrl:                     'data-xal-refresh-url',
+            tableContainerActions :         'data-xal-table-container-actions',
+            tableContainerSelectionCount:   'data-xal-table-container-selection-count',
+            tableSortColumn:                'data-xal-table-sort-column',
+            tableSortLabel:                 'data-xal-table-sort-label',
         }),
     }),
 
@@ -102,11 +105,11 @@ export const XalConstants = Object.freeze({
                 checkRow:                   'tbody [data-xal-table-check-row]',
                 actionNotDynamicState:      '.xal-table__actions--not-dynamic-state',
             }),
-        }),
 
-        tableSort: Object.freeze({
-            sortColumn: '[data-xal-table-sort-column]',
-            sortIcon:   '.xal-table__sort-icon',
+            sort: Object.freeze({
+                column: '[data-xal-table-sort-column]',
+                icon:   '.xal-table__sort-icon',
+            }),
         }),
 
         modal: Object.freeze({
