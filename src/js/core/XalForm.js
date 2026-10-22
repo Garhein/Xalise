@@ -92,7 +92,7 @@ export function clearFormFields(form) {
  */
 export function initFormClearButtons(root = document) {
     root
-        .querySelectorAll(XalConstants.cssQueries.form.formClearCriteria)
+        .querySelectorAll(XalConstants.cssQueries.form.xalClearCriteria)
         .forEach((button) => {
             button.addEventListener('click', () => {
                 if (button.form) {
