@@ -475,12 +475,12 @@
                         <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
                             <!-- Actions -->
                             <div class="d-flex flex-wrap align-items-center justify-content-start gap-2 xal-table__actions"
-                                 data-xal-table-target-actions="#xal-id-table-integration-request">
+                                 data-xal-table-container-actions="#xal-id-table-integration-request">
                                 <button type="button" class="btn btn-sm btn-xalise" disabled>
                                     <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
                                     <span class="">Rejouer</span>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-secondary xal-table__actions--not-selectable">
+                                <button type="button" class="btn btn-sm btn-secondary xal-table__actions--not-dynamic-state">
                                     <i class="bi bi-download" aria-hidden="true"></i>
                                     <span class="">Exporter</span>
                                 </button>
@@ -490,7 +490,7 @@
                             <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
                                 <p class="mb-0 text-body-secondary small">
                                     42 demandes
-                                    <span data-xal-table-target-selection-count="#xal-id-table-integration-request"
+                                    <span data-xal-table-container-selection-count="#xal-id-table-integration-request"
                                           class="xal-table__selection-count fst-italic"
                                           aria-live="polite"
                                           role="status">
@@ -596,7 +596,7 @@
                                             <input type="checkbox"
                                                    class="form-check-input"
                                                    id="form-check-input" aria-label="Sélectionner toutes les demandes affichées"
-                                                   data-xal-table-select-all>
+                                                   data-xal-table-check-all>
                                         </th>
                                         <th scope="col" aria-sort="descending">
                                             <button type="button"
@@ -641,7 +641,7 @@
                                             <input type="checkbox"
                                                    class="form-check-input"
                                                    aria-label="Sélectionner la demande"
-                                                   data-xal-table-select-row>
+                                                   data-xal-table-check-row>
                                         </td>
                                         <td class="text-nowrap">
                                             <time datetime="2026-10-17T11:25:00">17/10/2026 11:25</time>
@@ -703,7 +703,7 @@
                                             <input type="checkbox"
                                                    class="form-check-input"
                                                    aria-label="Sélectionner la demande EVT-008422"
-                                                   data-xal-table-select-row>
+                                                   data-xal-table-check-row>
                                         </td>
                                         <td class="text-nowrap">
                                             <time datetime="2026-10-15T09:42:00">15/10/2026 19:42</time>
@@ -785,7 +785,7 @@
                                             <input type="checkbox"
                                                    class="form-check-input"
                                                    aria-label="Sélectionner la demande EVT-008421"
-                                                   data-xal-table-select-row>
+                                                   data-xal-table-check-row>
                                         </td>
                                         <td class="text-nowrap">
                                             <time datetime="2026-10-14T09:42:00">14/10/2026 09:42</time>

@@ -19,9 +19,10 @@ export const XalConstants = Object.freeze({
     dataNames: Object.freeze({
         xalise: Object.freeze({
             popoverValue:               'data-xal-popover-value',
-            tableTargetActions :        'data-xal-table-target-actions',
-            tableTargetSelectionCount:  'data-xal-table-target-selection-count',
             tablePageSize:              'data-xal-table-page-size',
+            
+            tableContainerActions :        'data-xal-table-container-actions',
+            tableContainerSelectionCount:  'data-xal-table-container-selection-count',
         }),
     }),
 
@@ -94,11 +95,13 @@ export const XalConstants = Object.freeze({
             ruleSpecial:    '[data-password-rule="special"]',
         }),
 
-        tableSelection: Object.freeze({
-            selectable:             '[data-xal-table-selectable]',
-            selectAll:              '[data-xal-table-select-all]',
-            selectRow:              'tbody [data-xal-table-select-row]',
-            actionNotSelectable:    '.xal-table__actions--not-selectable',
+        table: Object.freeze({
+            selection: Object.freeze({
+                selectable:                 '[data-xal-table-selectable]',
+                checkAll:                   '[data-xal-table-check-all]',
+                checkRow:                   'tbody [data-xal-table-check-row]',
+                actionNotDynamicState:      '.xal-table__actions--not-dynamic-state',
+            }),
         }),
 
         tableSort: Object.freeze({
