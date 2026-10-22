@@ -18,12 +18,11 @@ export const XalConstants = Object.freeze({
      */
     dataNames: Object.freeze({
         xalise: Object.freeze({
-            popoverValue:               'data-xal-popover-value',
-            tablePageSize:              'data-xal-table-page-size',
-            
+            popoverValue:                   'data-xal-popover-value',
             refreshUrl:                     'data-xal-refresh-url',
             tableContainerActions :         'data-xal-table-container-actions',
             tableContainerSelectionCount:   'data-xal-table-container-selection-count',
+            tablePageSize:                  'data-xal-table-page-size',
             tableSortColumn:                'data-xal-table-sort-column',
             tableSortLabel:                 'data-xal-table-sort-label',
         }),

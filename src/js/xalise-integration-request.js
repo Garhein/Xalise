@@ -120,6 +120,15 @@ document.addEventListener('xal-table:sort', (event) => {
 // Taille de la pagination
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
+/**
+ * Écoute les changements de taille de page émis par les tables et prépare l'URL de la requête.
+ * 
+ * La table émettrice est récupérée depuis `event.target`. La nouvelle taille de page et le
+ * numéro de page sont ajoutés à l'URL définie dans son attribut `data-xal-refresh-url`.
+ * 
+ * @param {CustomEvent} event Événement de changement de taille émis par une table.
+ * 
+ */
 document.addEventListener('xal-table:page-size-change', (event) => {
     const table = event.target;
     const url   = table.getAttribute(XalConstants.dataNames.xalise.refreshUrl);

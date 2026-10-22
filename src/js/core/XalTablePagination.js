@@ -1,7 +1,7 @@
 import { XalConstants } from './XalConstants.js';
 
 /**
- * Initialise la gestion de la taille de page pour les tables ciblées dans la racine fournie.
+ * Initialise la gestion du nombre de résultats par page pour les tables ciblées dans la racine fournie.
  * 
  * Un seul écouteur délégué peut gérer plusieurs sélecteurs. Chaque sélecteur désigne sa table
  * via `data-xal-table-page-size`. Lors d'un changement, la table émet `xal-table:page-size-change`
