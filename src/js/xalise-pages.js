@@ -97,6 +97,61 @@ document.addEventListener('show.bs.popover', (event) => {
 });
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+// Gestion de l'état des tables
+// Pour combiner les tris et pagination
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
+
+const tableStates = new WeakMap();
+
+/**
+ * Récupère l'état de la pagination et de tri associé à la table.
+ * 
+ * Si aucun état n'existe encore pour cette table, un état est céé avec les valeurs initiales.
+ * 
+ * @param   {HTMLTableElement} table Table dont l'état est demandé.
+ * @returns {{sort: string|null, direction: string|null, pageSize: number, page: number}} État de tri et de pagination de la table.
+ */
+function getTableState(table) {
+    if (!tableStates.has(table)) {
+        tableStates.set(
+            table,
+            {
+                sort: null,
+                direction: null,
+                pageSize: 10,
+                page: 1
+            }
+        );
+    }
+
+    return tableStates.get(table);
+}
+
+/**
+ * Construit l'URL de rafraîchissement d'une table à partir de son état courant.
+ * 
+ * L'URL de base est lue depuis l'attribut `xal-data-refresh-url`. Les paramètres de tri et de pagination
+ * présents dans `state` sont ajoutés à l'URL.
+ * 
+ * @param {HTMLTableElement} table Table dont l'URL de rafraîchissement est construite.
+ * @param {{sort: string|null, direction: string|null, pageSize: number, page: number}} state État de tri et de pagination à transmettre.
+ * @returns {URL} URL de rafraîchissement avec les paramètres de la table.
+ */
+function buildTableRefreshUrl(table, state) {
+    const url = new URL(table.getAttribute(XalConstants.dataNames.xalise.refreshUrl), window.location.origin);
+
+    if (state.sort) {
+        url.searchParams.set('sort', state.sort);
+        url.searchParams.set('direction', state.direction);
+    }
+
+    url.searchParams.set('pageSize', state.pageSize);
+    url.searchParams.set('page', state.page);
+
+    return url;
+}
+
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 // Tri des colonnes
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
 
@@ -110,19 +165,20 @@ document.addEventListener('show.bs.popover', (event) => {
  */
 document.addEventListener('xal-table:sort', (event) => {
     const table = event.target;
-    const url   = table.getAttribute(XalConstants.dataNames.xalise.refreshUrl);
+    if (!(table instanceof HTMLTableElement)) return;
 
-    if (!url) return;
-
+    const state = getTableState(table);
     const { key, direction } = event.detail;
-    const urlSearch = new URL(url, window.location.origin);
 
-    urlSearch.searchParams.set('sort', key);
-    urlSearch.searchParams.set('direction', direction);
+    state.sort      = key;
+    state.direction = direction;
+    state.page      = 1;
+
+    const url = buildTableRefreshUrl(table, state);
 
     // TODO: appeler le serveur et remplacer les lignes du tableau avec sa réponse (penser à mettre async (event))
     /*
-    const response = await fetch(urlSearch);
+    const response = await fetch(url);
     if (!response.ok) {
         console.error('Impossible de trier les demandes d\'intégration.');
         return;
@@ -132,7 +188,7 @@ document.addEventListener('xal-table:sort', (event) => {
     table.querySelector('tbody').innerHTML = rowsHtml;
     */
 
-    console.log(urlSearch);
+    console.log(url);
 });
 
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- //
@@ -150,17 +206,15 @@ document.addEventListener('xal-table:sort', (event) => {
  */
 document.addEventListener('xal-table:page-size-change', (event) => {
     const table = event.target;
-    const url   = table.getAttribute(XalConstants.dataNames.xalise.refreshUrl);
+    if (!(table instanceof HTMLTableElement)) return;
 
-    if (!url) return;
+    const state     = getTableState(table);
+    state.pageSize  = event.detail.pageSize;
+    state.page      = 1;
 
-    const { pageSize, page } = event.detail;
-    const urlSearch = new URL(url, window.location.origin);
-
-    urlSearch.searchParams.set('pageSize', pageSize);
-    urlSearch.searchParams.set('page', page);
+    const url = buildTableRefreshUrl(table, state);
 
     // TODO: appeler le serveur pour mettre à jour les lignes du tableau et la pagination (penser à mettre async (event))
 
-    console.log(urlSearch);
+    console.log(url);
 });
